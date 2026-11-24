@@ -1,65 +1,66 @@
-# Reskin audit v2 — post recupero CDN (24 archivi)
+# Reskin audit V4 — post recupero integrale e smoke test locale
 
-**Classifica aggiornata:** [RESKIN_AUDIT_V3_BROWSER.md](RESKIN_AUDIT_V3_BROWSER.md) — 24 giochi, correzione Nut Sort, asset recuperati tramite Chrome e motivazioni dei punteggi. Questa v2 è un'istantanea storica.
+**Data:** 24 novembre 2026 · **Sorgente:** 24 ZIP, manifest/CDN recuperati con download HTTP e Chrome sulla macchina Windows · **Copia locale:** `C:\Users\jessi\Downloads\_chatgpt_games_full_mirrors`.
 
-> **Aggiornamento successivo (24 novembre 2026):** una cattura tramite il browser ufficiale CrazyGames ha recuperato ulteriori file, fra cui quelli di Car OUT!, Nut Sort: Build the City, Home Design, Jewel Academy, Jigpic e Lava and Aqua. **Questa classifica v2 è ora provvisoria e i punteggi non comprendono la seconda passata.** Lo ZIP `find-the-cow(cat).zip` corrisponde a **Nut Sort: Build the City** (Defold), quindi la riga con punteggio 0 non è più valida. Vedere [il resoconto della cattura browser](MIRROR_RECOVERY_BROWSER_2026-11-24.md). Nessun gioco è ancora certificato come build completa verificata offline.
+## Risultato verificato
 
-**Data:** 24 novembre 2026. **Fonte:** i 24 ZIP originali in `C:\Users\jessi\Downloads\Puzzles Crazygames mirror`, i loader `__NEXT_DATA__` salvati, i mirror CDN nel workspace Windows e il file `_reskin_structural_audit.json`. Nessuna build è stata validata avviandola in un browser offline.
+- **24/24 giochi con almeno un file** dopo il recupero di Mahjongg. **1.611 file locali** per **638.847.887 byte (~638,8 MB)**. I numeri si riferiscono ai file dei domini di gameplay, non a immagini/banner del portale.
+- **Mahjongg Solitaire:** dal caricamento CrazyGames sono stati recuperati **35 file** per **2.623.816 byte**, senza richieste fallite: 13 codice/config, 12 visuali e 10 audio. In uno **smoke test con server solo locale e richieste esterne bloccate**, `index.html` ha risposto HTTP 200, il browser ha creato un canvas 1080×740, non ha riportato errori HTTP/JavaScript e uno screenshot ridotto conteneva 1.691 colori distinti: **render iniziale non vuoto confermato**. Questo non equivale a verificare tutti i livelli.
+- **Altri smoke test locali:** Hexa Stack (`index.html` HTTP 200, **0 canvas** durante la prova), Color Water Sort 3D (HTTP 200, **0 canvas**), Cut the Rope (HTTP 200, **0 canvas**, errore `Failed to fetch`). Durante la prova erano bloccati SDK e servizi esterni: esito **non conclusivo sulla completezza dei build**, ma la riproduzione offline non è confermata.
+- **Core dei loader:** 46 dei 48 **URL che indicano file** risultano presenti localmente; i due mancanti sono gli entrypoint di Lava and Aqua e Sandtrix. Un audit grezzo rileva 46/52 includendo anche quattro riferimenti Unity a directory `StreamingAssets`, non valutabili come file. La presenza dell'entrypoint di un iframe (per esempio Park Town) **non** prova la presenza del gameplay.
+- **Non collaudato:** livelli, scene opzionali, progressione, physics deterministica, acquisti/pubblicità, responsiveness, avvio indipendente da tutti gli SDK. Non considerare «completi» tutti i 24 mirror.
 
-**Risultato verificato:** analizzati **24/24 archivi**, identificati i loader di tutti e 24, recuperati **1.470 file** pertinenti ai game host, per **587.359.151 byte (~587,4 MB)**. **17/24 cartelle** contengono almeno un file, ma alcune non hanno ancora un vero runtime utilizzabile. Degli **48 URL core** dichiarati dai loader (quattro per Unity, uno per gli altri) **40** hanno un file locale corrispondente. Tutti gli **8 giochi Unity** hanno i 4 componenti core dichiarati; questo non significa scene/editabilità garantite.
+## Modello dei voti
 
-**Copia locale:** `C:\Users\jessi\Downloads\_chatgpt_games_full_mirrors`. Asset mancanti trovati sui CDN sono stati salvati **solo localmente**, senza pubblicarli nel repository GitHub pubblico. Ogni gioco contiene `mirror_inventory.json` con URL, esiti e limiti; `_all_games_status.json` e `_reskin_structural_audit.json` sono gli indici aggregati.
+**Facilità teorica 0–100:** rappresentazione 2D/3D, complessità meccanica, interazioni, scene e animazioni, e difficoltà di sostituzione degli oggetti senza alterare il gameplay.
 
-### Metodo dei punteggi
+**Ispezionabilità pratica 0–100:** asset grafici/3D separati, atlas, codice e configurazioni, binari/engine, dipendenze mancanti e risultato dell'avvio locale quando testato. **Punteggio oggi = 35% teorica + 65% ispezionabilità**, arrotondato all'intero. 🟢 ≥ 75; 🟡 55–74; 🔴 < 55. I punteggi sono **stime ingegneristiche comparative**, non valori misurati da 24 test end-to-end. Schermate = fasce **stimate** (Poche/Medie/Molte), non un conteggio verificato in runtime.
 
-**Semplicità teorica (0–100)** = stima della facilità di modificare la grafica senza alterare meccaniche, considerando 2D/3D, complessità interazioni, animazioni, numero di stati/schermate e accessibilità del motore. **Ispezionabilità dopo il mirror (0–100)** = disponibilità di codice, asset visivi e asset binari, presenza degli entrypoint e difficoltà di associare file a oggetti runtime. Un Unity scaricato integralmente può avere un punteggio di ispezionabilità inferiore a PixiJS con immagini separate. 
+## Tabella completa
 
-**Fattibilità attuale = 35% semplicità teorica + 65% ispezionabilità dopo il mirror (arrotondata).** 🟢 ≥75; 🟡 55–74; 🔴 <55. I voti sono **stime ingegneristiche comparative**, non misure provenienti da test di avvio/reskin E2E. La colonna «Schermate» è una **stima per fasce** (Poche/Medie/Molte), non un numero di menu effettivamente verificato.
-
-| # | ZIP / gioco | Motore | Grafica* | Schermate* | File recuperati | Teorica | Mirror | **Oggi** | Semaforo | Perché questo voto |
+| # | Gioco / ZIP | Motore | Render | Schermate* | File | Teorica | Ispezionabilità | **Oggi** | 🚦 | Motivazione |
 |---:|---|---|---|---|---:|---:|---:|---:|:---:|---|
-| 1 | `hexastack` | PixiJS | 2D/2.5D | Molte | 1134 | 76 | 92 | **86** | 🟢 | 766 file visuali, 277 codice/config, 88 audio; file facilmente mappabili. Penalità per stati UI, effetti e animazioni. Crawl profondo parziale. |
-| 2 | `color-water-sort-3d` | PlayCanvas | 3D | Medie | 122 | 50 | 88 | **75** | 🟢 | 49 modelli, 35 file visuali, 20 audio, una scena PlayCanvas e manifest con 73 download verificati MD5; animazioni 3D rendono più impegnativo l'override. |
-| 3 | `cuttherope` | JS proprietario | 2D | Medie | 16 | 65 | 65 | **65** | 🟡 | DDS, JSON degli atlas e JS reale: risorse selezionabili, ma cambi a personaggio e frame devono rispettare fisica/corde e tempi animazioni. |
-| 4 | `blocks-and-that'it` | Cocos 3.8.8 | 2D | Poche | 21 | 90 | 43 | **59** | 🟡 | Griglia e meccaniche semplici; runtime e pack Cocos recuperato, ma quasi tutte le texture native sono ancora assenti. Solo una scena engine identificata. |
-| 5 | `drop-merge-numbers` | Unity 2021 | 2D | Poche | 13 | 69 | 53 | **59** | 🟡 | Quattro componenti Unity recuperati, circa 55,5 MB. Facile il concept a blocchi, ma sprite e scene rimangono incorporati nei pacchetti compilati. |
-| 6 | `block-puzzle-master` | Unity 6 | 2D | Poche | 5 | 67 | 53 | **58** | 🟡 | Quattro componenti core Unity recuperati, circa 57 MB; skin semplice come gameplay, meno semplice tecnicamente: asset non ancora esposti separatamente. |
-| 7 | `find-differences` | Unity 2022 | 2D | Poche–medie | 5 | 62 | 54 | **57** | 🟡 | Build Unity core 4/4, circa 53 MB; coppie di immagini facili da tematizzare in teoria, ma vanno estratte dai pacchetti Unity e sincronizzate alle aree cliccabili. |
-| 8 | `nuts-puzzle-sort-by-color` | Unity 2020 | 2.5D/3D | Poche–medie | 5 | 49 | 52 | **51** | 🔴 | Quattro componenti Unity recuperati, 26,3 MB; modelli e animazioni delle viti non direttamente leggibili. |
-| 9 | `hexasort` | Unity 2022 | 2.5D/3D | Medie | 5 | 47 | 52 | **50** | 🔴 | Build Unity core 4/4 recuperata, 88,6 MB. Impilamento e profondità aumentano il numero di stati da verificare. |
-| 10 | `watersort` | Unity 2022 | 3D | Medie | 5 | 42 | 52 | **49** | 🔴 | Quattro componenti Unity recuperati, 77,4 MB. Fluidi, contenitori, shader e animazioni più complessi di uno skin swap su sprite. |
-| 11 | `PieceOfCakeMerge` | Defold / iframe | 2D | Molte | 104 | 28 | 58 | **48** | 🔴 | 104 risorse del gioco e 19 file binari compilati; 41 riferimenti aggiuntivi non recuperati. Progressione, narrativa e molte UI rendono difficile il mapping 1:1. |
-| 12 | `pixelblast` | Unity 6 | Da verificare | Medie | 5 | 37 | 52 | **47** | 🔴 | Build Unity core 4/4, circa 63,1 MB. Senza estrazione dal bundle non sono verificabili la struttura grafica e la sostituibilità dei materiali. |
-| 13 | `twistedtangle` | Unity 6 | 3D | Medie | 5 | 26 | 52 | **43** | 🔴 | Build Unity core 4/4, circa 78 MB; intrecci, corde, deformazioni e fisica rendono lo skinning intrinsecamente complesso. |
-| 14 | `what-s-the-difference-online` | Iframe esterno | 2D | Poche–medie | 8 | 72 | 22 | **40** | 🔴 | Host esterno raggiunto e 8 file JS/HTML scaricati (0,2 MB), ma numerosi riferimenti mancanti/404 e nessuna collezione immagini di livelli verificata. |
-| 15 | `goodstriplematch` | Cocos | 3D | Medie | 15 | 43 | 29 | **34** | 🔴 | Cocos e pack interno recuperati, ma solo 2 immagini e nessuna libreria concreta di modelli 3D del gameplay; 4,6 MB totali. |
-| 16 | `jigpic-solitaire` | HTML5 | 2D | Poche–medie | 0 | 86 | 0 | **30** | 🔴 | Sostituzione delle immagini e dei tasselli facile in teoria; CDN del build non recuperabile dal contesto disponibile (403). |
-| 17 | `mahjongg` | HTML5 | 2D/2.5D | Poche | 0 | 86 | 0 | **30** | 🔴 | Tessere e fondale generalmente adatti a uno skin swap; zero file gioco recuperati per blocco sull'endpoint. |
-| 18 | `sandtrix` | HTML5 | 2D | Poche | 1 | 64 | 7 | **27** | 🔴 | Un solo script di bootstrap, 70 KB; entrypoint del gioco non recuperato. La simulazione di sabbia aggiunge sensibilità a colori e particelle. |
-| 19 | `jewel academy` | HTML5 | 2D | Medie | 0 | 70 | 0 | **25** | 🔴 | Match-3 con gemme, VFX e livelli; nessun asset di gameplay corretto recuperato a causa del blocco CDN. |
-| 20 | `lavaoraqua` | HTML5 | 2D | Poche–medie | 0 | 69 | 0 | **24** | 🔴 | Fisica e interazioni ambientali moderate; nessun file del build reale recuperabile. Il vecchio ZIP conteneva un file appartenente a un altro gioco. |
-| 21 | `carout` | HTML5 | 2.5D/3D | Medie | 0 | 52 | 0 | **18** | 🔴 | URL del build identificato ma richiesta GET all'entrypoint HTTP 403: zero modelli, texture o codice disponibili. |
-| 22 | `home-design-decorate` | HTML5 | 2D | Molte | 0 | 34 | 0 | **12** | 🔴 | Match-3 più decorazione e ambienti: molte UI e materiali. Endpoint CDN 403 e nessun asset del gioco recuperato. |
-| 23 | `complex-merge-3-park-town` | Iframe esterno | 2D/2.5D | Molte | 1 | 26 | 5 | **12** | 🔴 | Solo 1 risorsa minima dell'iframe da 1,8 KB: non è il build. Merge, decorazioni, progressione e numerose schermate. |
-| 24 | `find-the-cow(cat)` | HTML5: Nut Sort | n.d. | n.d. | 0 | n.d. | 0 | **0** | 🔴 | Lo ZIP apre 'nut-sort-build-the-city' e conteneva file estranei di Jewel Academy; non è una sorgente verificata di Find the Cow. Score 0 = asset corretti assenti, NON difficoltà intrinseca. |
+| 1 | `mahjongg` | HTML5, canvas 2D | 2D | Poche | 35 | 86 | 94 | **91** | 🟢 | 12 file visuali, 13 codice/config e 10 audio; 35 richieste locali riuscite, canvas 1080×740 e screenshot non vuoto offline. Mancano test di livelli e controlli |
+| 2 | `hexastack` | PixiJS | 2D/2.5D | Molte | 1134 | 75 | 86 | **82** | 🟢 | 766 file visuali, 277 codice/config e 88 audio: ottimo mapping sprite/texture. Il test offline apre HTML ma non crea un canvas; dipendenza di sessione esterna |
+| 3 | `color-water-sort-3d` | PlayCanvas | 3D | Medie | 122 | 50 | 82 | **71** | 🟡 | 49 modelli, 35 immagini, 20 audio; manifest e modelli ben identificabili. Nel test offline l'entrypoint apre senza canvas per dipendenza SDK: animazioni e fluidi 3D impegnativi |
+| 4 | `cuttherope` | JS + atlas DDS | 2D | Medie | 16 | 65 | 62 | **63** | 🟡 | 5 immagini/atlas DDS e 8 file codice/config. Stato animato e fisica delle corde complicano la sostituzione; smoke offline senza canvas e con errore fetch |
+| 5 | `blocks-and-that'it` | Cocos 3.8.8 | 2D | Poche | 21 | 90 | 43 | **59** | 🟡 | Griglia e pochi oggetti semplici da ritexturizzare. Mirror con config/runtime Cocos e una sola immagine: mancano molti texture asset nativi |
+| 6 | `nut-sort-build-the-city` | Defold | 2D/2.5D | Medie–molte | 16 | 43 | 67 | **59** | 🟡 | 16 file / ~18 MB; browser ha caricato WASM, ARCD, ARCI e projectc. Reskin gravato da dati compilati, ordinamento pezzi e progressione città; sostituisce il vecchio ZIP find-the-cow(cat) |
+| 7 | `drop-merge-numbers` | Unity 2021 | 2D | Poche | 13 | 69 | 53 | **59** | 🟡 | ~55,5 MB e componenti Unity scaricati: meccaniche numeriche semplici, ma sprite/scene sono impacchettati e non ispezionati |
+| 8 | `block-puzzle-master` | Unity 6 | 2D | Poche | 5 | 67 | 53 | **58** | 🟡 | ~57 MB di Unity; gameplay a griglia teoricamente semplice. Texture ancora all'interno di pacchetti binari e senza prova di avvio offline |
+| 9 | `find-differences` | Unity 2022 | 2D | Poche–medie | 5 | 62 | 54 | **57** | 🟡 | ~53 MB del build Unity disponibili. Cambiare immagini richiede preservare regioni cliccabili e risolvere l'estrazione dai binari |
+| 10 | `carout` | Unity/Playgama | 2.5D/3D | Medie | 10 | 50 | 57 | **55** | 🟡 | 10 file / 20,9 MB ottenuti con il browser ufficiale, inclusi dati Unity. Auto e percorsi animati; non collaudati livelli o menu offline |
+| 11 | `nuts-puzzle-sort-by-color` | Unity 2020 | 2.5D/3D | Poche–medie | 55 | 49 | 54 | **52** | 🔴 | 55 file, molti config/codice aggiuntivi e core Unity; modelli, movimenti delle viti e texture ancora soprattutto nei binari |
+| 12 | `hexasort` | Unity 2022 | 2.5D/3D | Medie | 5 | 47 | 52 | **50** | 🔴 | ~88,6 MB di core Unity. Pile esagonali, profondità e selezione: più stati rispetto a un puzzle 2D semplice |
+| 13 | `watersort` | Unity 2022 | 3D | Medie | 5 | 42 | 52 | **49** | 🔴 | ~77,4 MB di core Unity; liquidi, shader e movimenti dei bicchieri da mappare negli archivi |
+| 14 | `PieceOfCakeMerge` | Defold / iframe | 2D | Molte | 104 | 28 | 58 | **48** | 🔴 | 104 file, 19 binari e 81 file codice/config; archivi Defold, molte schermate e progressione. Numerose dipendenze non recuperate |
+| 15 | `jigpic-solitaire` | HTML5 | 2D | Poche–medie | 6 | 86 | 27 | **48** | 🔴 | 6 file / 3,3 MB, prevalentemente codice: gioco semplice da tematizzare per immagini, ma il set visivo dei livelli non è verificato |
+| 16 | `pixelblast` | Unity 6 | Da verificare | Medie | 5 | 37 | 52 | **47** | 🔴 | ~63,1 MB e file core Unity; struttura delle risorse grafiche interna ancora da estrarre/identificare |
+| 17 | `twistedtangle` | Unity 6 | 3D | Medie | 5 | 26 | 52 | **43** | 🔴 | ~78 MB di Unity; intrecci delle corde, deformazioni continue e fisica complicano il mapping dei materiali |
+| 18 | `what-s-the-difference-online` | HTML/iframe | 2D | Poche–medie | 8 | 72 | 22 | **40** | 🔴 | 8 file codice e circa 0,2 MB. Semplice sostituire coppie di immagini, ma i dati dei livelli e le immagini non sono disponibili nel mirror |
+| 19 | `goodstriplematch` | Cocos | 3D | Medie | 25 | 43 | 35 | **38** | 🔴 | 25 file, 4 immagini, 6 binari e 14 codice/config. Recupero migliorato rispetto ai 15 file precedenti, ma modelli 3D e materiali incompleti |
+| 20 | `jewel academy` | HTML5 | 2D | Medie | 8 | 70 | 20 | **38** | 🔴 | 8 file codice (~4,2 MB) catturati dal player, senza immagini di gemme separatamente visibili; match-3 con animazioni ed effetti |
+| 21 | `lavaoraqua` | HTML5 | 2D | Poche–medie | 1 | 69 | 7 | **29** | 🔴 | Solo un file visuale (~0,4 MB) nella struttura verificata; manca ancora l'entrypoint e il gameplay completo |
+| 22 | `sandtrix` | HTML5 | 2D | Poche | 1 | 64 | 7 | **27** | 🔴 | Solo uno script bootstrap (~70 KB); codice e simulazione della sabbia non recuperati in forma utilizzabile |
+| 23 | `home-design-decorate` | HTML5/Unity launcher | 2D/2.5D | Molte | 5 | 34 | 17 | **23** | 🔴 | 5 file / ~0,8 MB: solo loader/script; numerosi ambienti, decorazioni, stato e progressione non disponibili |
+| 24 | `complex-merge-3-park-town` | Iframe | 2D/2.5D | Molte | 1 | 26 | 5 | **12** | 🔴 | Un file wrapper da 1,8 KB: praticamente nessun asset di gioco. Molte scene, oggetti decorativi e progressione |
 
-### Interpretazione della classifica
+## Cosa scegliere ora
 
-1. **Hexa Stack:** asset graficamente editabili e motore PixiJS; nella copia locale risultano **766 file visuali, 277 di codice/configurazione e 88 audio**. **1134 file totali**; il crawler profondo si è fermato prima di esaurire tutte le dipendenze, quindi non è certificata la completezza.
-2. **Color Water Sort 3D:** PlayCanvas, **49 modelli** e **35 texture/immagini**, 20 audio; download dal manifest con 73/73 hash MD5 verificati nel passaggio precedente. Ottimo candidato per l'inspector 3D, ma più difficile da skinning 2D.
-3. **Cut the Rope:** buon esperimento per texture DDS + atlas JSON con vincoli di fisica e animazione.
-4. **Blocks and That's It:** rimane tra i più semplici come meccaniche, ma l'archivio/mirror ha appena **1 immagine (loading GIF)** e pack/config Cocos; le **texture native dei blocchi** non sono recuperate in modo completo. Non trattarlo come asset-complete.
-5. **Otto build Unity:** tutti i loader, data, framework e wasm core sono presenti localmente, anche dove lo ZIP aveva solo un HTML. Per il reskin vanno ancora estratti sprite/materiali/scene dai file binari e testata la compatibilità dei modificatori.
-6. **Defold/Piece of Cake:** conservati 104 file, inclusi archivi compilati; molte risorse dinamiche non sono state recuperate (41 richieste fallite). La complessità intrinseca resta elevata.
-7. **CDN bloccati o non completi:** Car OUT!, Home Design, Jewel Academy, Jigpic, Lava and Aqua e Mahjongg hanno 0 file di gioco nel mirror, e Sandtrix ha solo un bootstrap. Il blocco (HTTP 403/404) non può essere risolto inventando file mancanti.
-8. **Etichetta errata:** `find-the-cow(cat).zip` contiene la pagina `nut-sort-build-the-city`, non Find the Cow; non usare questo ZIP come prova per il titolo indicato nel nome.
+**Primo MVP da eseguire e reskinnare localmente: Mahjongg Solitaire.** La sua combinazione di asset grafici/atlas, meccaniche a tessere 2D e **render iniziale offline osservato** riduce sensibilmente il rischio di partire da una build che mostra soltanto un loader.
 
-### Cosa è stato testato / non testato
+**Secondo: Hexa Stack**, se la priorità è l'inspector PixiJS con texture individuali, animazioni e moltissimi stati UI; il mirror è ricco ma l'avvio standalone deve ancora risolvere la dipendenza dalla sessione.
 
-**Confermato:** presenza del vero loader; richieste CDN effettuate; copia per host del gioco con limiti di sicurezza; lettura dei manifest, presenza dei componenti core, conteggio di immagini/modelli/audio; controlli MD5 espliciti per i 73 file PlayCanvas recuperati nella prova precedente.
+**Terzo: Color Water Sort 3D** per un adapter PlayCanvas su modelli/mesh/materiali e animazioni GLB. Il mirror offre 49 modelli; la verifica offline iniziale non è riuscita a creare un canvas.
 
-**Non ancora verificato:** riproduzione offline completa di tutte le scene, dipendenze richieste soltanto durante gameplay avanzato, loader SDK compatibili al di fuori di CrazyGames, scene Unity realmente editabili, viewport mobile e il mapping 1:1 degli oggetti ai file sorgenti. Non definire questi 24 giochi «tutti completi» o «tutti eseguibili».
+**Da rimandare:** Unity (prima studiare contenuti interni ai bundle e tool di mapping), Park Town (solo wrapper), Lava and Aqua e Sandtrix (entrypoint mancante), e i giochi HTML5 con set di immagini di livello non dimostrato.
 
-### Scelta operativa per il reskinner
+## Evidenze replicabili
 
-**MVP:** Hexa Stack con inspector PixiJS per texture/sprite/frame e timeline dello stato. **Secondo adapter:** PlayCanvas su Color Water Sort 3D per modello→materiale→animazione; **terzo test:** Cut the Rope per atlanti DDS e sincronizzazione degli sprite con la fisica. **Sfida successiva:** Unity per estrazione/mapping di asset impacchettati. Prima di distribuire file originali, verificare licenze e diritti sui contenuti dei rispettivi editori.
+- Inventario aggregato: `_reskin_reaudit_after_browser.json`.
+- Cattura Mahjongg: `mahjongg\_browser_recovery_final.json` e directory `mahjongg\hosts\mahjongg-solitaire.game-files.crazygames.com\mahjongg-solitaire\4\`.
+- Smoke tests: `_offline_smoke_report.json`, con blocco esplicito delle richieste esterne.
+- Snapshot della seconda passata: `_browser_capture_20261124\_browser_capture_summary.json`.
+- Rapporto precedente: [V3 browser](RESKIN_AUDIT_V3_BROWSER.md), che non include i 35 file Mahjongg né il nuovo smoke test.
+
+I file originali sono conservati soltanto sul PC per analisi locale: **non sono stati aggiunti al repo GitHub pubblico**. La capacità tecnica di scaricare un asset non stabilisce il diritto a redistribuirlo.
