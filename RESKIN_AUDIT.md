@@ -1,5 +1,7 @@
 # Reskin audit v2 — post recupero CDN (24 archivi)
 
+**Classifica aggiornata:** [RESKIN_AUDIT_V3_BROWSER.md](RESKIN_AUDIT_V3_BROWSER.md) — 24 giochi, correzione Nut Sort, asset recuperati tramite Chrome e motivazioni dei punteggi. Questa v2 è un'istantanea storica.
+
 > **Aggiornamento successivo (24 novembre 2026):** una cattura tramite il browser ufficiale CrazyGames ha recuperato ulteriori file, fra cui quelli di Car OUT!, Nut Sort: Build the City, Home Design, Jewel Academy, Jigpic e Lava and Aqua. **Questa classifica v2 è ora provvisoria e i punteggi non comprendono la seconda passata.** Lo ZIP `find-the-cow(cat).zip` corrisponde a **Nut Sort: Build the City** (Defold), quindi la riga con punteggio 0 non è più valida. Vedere [il resoconto della cattura browser](MIRROR_RECOVERY_BROWSER_2026-11-24.md). Nessun gioco è ancora certificato come build completa verificata offline.
 
 **Data:** 24 novembre 2026. **Fonte:** i 24 ZIP originali in `C:\Users\jessi\Downloads\Puzzles Crazygames mirror`, i loader `__NEXT_DATA__` salvati, i mirror CDN nel workspace Windows e il file `_reskin_structural_audit.json`. Nessuna build è stata validata avviandola in un browser offline.
