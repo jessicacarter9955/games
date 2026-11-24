@@ -1,0 +1,18 @@
+{
+  "game": "cubes2048",
+  "category": "io games",
+  "source_zip": "io games/cubes2048.zip",
+  "zip_sha256": "148eaad839f8e1061c9f00678da6c151b296d156ef3f15226277196492251896",
+  "official_slug": "cubes-2048-io",
+  "loader_type": "html5",
+  "game_hosts": [
+    "cubes-2048-io.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://cubes-2048-io.game-files.crazygames.com/cubes-2048-io/19/index.html"
+  ],
+  "game_host_files": 3,
+  "unpacked_game_bytes": 5816103,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

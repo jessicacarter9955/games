@@ -1,0 +1,18 @@
+{
+  "game": "diepio",
+  "category": "io games",
+  "source_zip": "io games/diepio.zip",
+  "zip_sha256": "01f8783bc380a06abf73c8c4cf5b460c0d8c9878663ff7f2c3d18fefa320287a",
+  "official_slug": "diepio",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "diep.io"
+  ],
+  "loader_urls": [
+    "https://diep.io/"
+  ],
+  "game_host_files": 32,
+  "unpacked_game_bytes": 72086468,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

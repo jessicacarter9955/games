@@ -1,0 +1,18 @@
+{
+  "game": "uno-online",
+  "category": "io games",
+  "source_zip": "io games/uno-online.zip",
+  "zip_sha256": "b14ef7ae6c6c3c7972e4d388aa53af7dc6729121b4f84098e44528e262330513",
+  "official_slug": "uno-online",
+  "loader_type": "html5",
+  "game_hosts": [
+    "uno-online.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://uno-online.game-files.crazygames.com/uno-online/29/index.html"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 69703,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

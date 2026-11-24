@@ -1,0 +1,18 @@
+{
+  "game": "cubes2048royale",
+  "category": "io games",
+  "source_zip": "io games/cubes2048royale.zip",
+  "zip_sha256": "76ddad2553c01335197df3458f741e447b11cea88adb727312b1b2b0884c06d1",
+  "official_slug": "cubes-2048-royale",
+  "loader_type": "html5",
+  "game_hosts": [
+    "cubes-2048-royale.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://cubes-2048-royale.game-files.crazygames.com/cubes-2048-royale/57/index.html"
+  ],
+  "game_host_files": 100,
+  "unpacked_game_bytes": 11567146,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

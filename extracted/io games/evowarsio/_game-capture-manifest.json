@@ -1,0 +1,18 @@
+{
+  "game": "evowarsio",
+  "category": "io games",
+  "source_zip": "io games/evowarsio.zip",
+  "zip_sha256": "de8643927d052f8aa23a2660414d42177b66a05d8a13e7a4ad0513971039f60a",
+  "official_slug": "evowarsio",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "evowars.io"
+  ],
+  "loader_urls": [
+    "https://evowars.io/?fref=crazygames.com"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

@@ -1,0 +1,56 @@
+.daily-competition-days-container.svelte-bkqr2z {
+  background-color: var(--box-color);
+  padding: var(--box-margin);
+  border-radius: var(--box-margin);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  transition: opacity 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.compact-container.svelte-bkqr2z {
+  margin-top: calc(-1 * var(--box-margin));
+  padding-top: calc(var(--layout-margin) + var(--content-margin));
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  -webkit-mask-image: linear-gradient(#0000, #000 40%);
+  mask-image: linear-gradient(#0000, #000 40%);
+}
+.days-scroll.svelte-bkqr2z {
+  scrollbar-width: none;
+  justify-content: safe center;
+  gap: var(--box-margin);
+  display: flex;
+  overflow-x: auto;
+}
+.compact-container.svelte-bkqr2z .days-scroll:where(.svelte-bkqr2z) {
+  gap: var(--content-margin);
+}
+.streak-day-item.svelte-bkqr2z {
+  min-width: 35px;
+  padding: var(--content-margin);
+  background-color: var(--box-color);
+  border-radius: var(--content-margin);
+  box-shadow: var(--box-shadow);
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 0;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.25s;
+  display: flex;
+}
+.streak-day-item.svelte-bkqr2z div:where(.svelte-bkqr2z) {
+  color: #fff;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.streak-day-name.svelte-bkqr2z {
+  opacity: 0.5;
+  text-wrap: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  font-size: 18px;
+}

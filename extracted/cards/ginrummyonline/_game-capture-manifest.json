@@ -1,0 +1,18 @@
+{
+  "game": "ginrummyonline",
+  "category": "cards",
+  "source_zip": "cards/ginrummyonline.zip",
+  "zip_sha256": "4f973c4cbb8cd73a3d1be5631cebaece647b45c7c1c2d150324d049853c20864",
+  "official_slug": "gin-rummy-online",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "play.famobi.com"
+  ],
+  "loader_urls": [
+    "https://play.famobi.com/gin-rummy-plus/A-CRAZYGAMES"
+  ],
+  "game_host_files": 4,
+  "unpacked_game_bytes": 145743,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

@@ -1,0 +1,23 @@
+{
+  "game": "memebattle",
+  "category": "trivia",
+  "source_zip": "trivia/memebattle.zip",
+  "zip_sha256": "44811c8f2c258569638cf73bab249279ec0057ee4a0237490fe9d7e47a20df9f",
+  "official_slug": "memebattle-what-s-that-meme",
+  "loader_type": "unity2022",
+  "game_hosts": [
+    "files.crazygames.com",
+    "memebattle-what-s-that-meme.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://files.crazygames.com/memebattle-what-s-that-meme/16/Build4/Build/cg.loader.js",
+    "https://files.crazygames.com/memebattle-what-s-that-meme/16/Build4/Build/cg.wasm.br",
+    "https://files.crazygames.com/memebattle-what-s-that-meme/16/Build4/Build/cg.data.br",
+    "https://files.crazygames.com/memebattle-what-s-that-meme/16/Build4/Build/cg.framework.js.br",
+    "https://files.crazygames.com/memebattle-what-s-that-meme/16/Build4/StreamingAssets"
+  ],
+  "game_host_files": 4,
+  "unpacked_game_bytes": 509956,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

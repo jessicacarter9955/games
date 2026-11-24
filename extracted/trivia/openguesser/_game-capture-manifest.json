@@ -1,0 +1,18 @@
+{
+  "game": "openguesser",
+  "category": "trivia",
+  "source_zip": "trivia/openguesser.zip",
+  "zip_sha256": "65d0aba692d853cb22846f601a33024a41bb00ada49c19bb19fff18b17303d1e",
+  "official_slug": "openguessr",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "openguessr.com"
+  ],
+  "loader_urls": [
+    "https://openguessr.com?crazy-games=true"
+  ],
+  "game_host_files": 58,
+  "unpacked_game_bytes": 4236685,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

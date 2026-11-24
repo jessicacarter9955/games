@@ -1,0 +1,18 @@
+{
+  "game": "four-uno",
+  "category": "cards",
+  "source_zip": "cards/four-uno.zip",
+  "zip_sha256": "2ca2728ad15430ef4ad052ed657818387ae9d46b2f0012d5be9c59b7a5449085",
+  "official_slug": "foono-online-multiplayer-card-game",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "foony.com"
+  ],
+  "loader_urls": [
+    "https://foony.com/games/foono-online-card-game?platform=crazygames"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

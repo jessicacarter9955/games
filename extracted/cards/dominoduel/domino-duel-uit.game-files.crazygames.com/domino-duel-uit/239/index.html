@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="sm-build-id" content="bundle-20056a6e" />
+    <script type="text/javascript">
+      (function runBundleLoadingRecoveryBootstrap(config, injected = {}) {
+        const BRIDGE_VERSION = 1;
+        const DEDUPE_KEY = "sm_bundle_recovery_v1_dedupe";
+        const PENDING_KEY = "sm_bundle_recovery_v1_pending";
+        const RELOAD_KEY = "sm_bundle_recovery_v1_reload";
+        const RELOAD_PARAM = "_sm_bundle_reload";
+        const CHECK_PARAM = "_sm_bundle_check";
+        const DEFAULT_TTL = 24 * 60 * 60 * 1000;
+        const DEFAULT_QUEUE_LIMIT = 20;
+        const DEDUPE_LIMIT = 100;
+        const COMPONENT_LIMIT = 80;
+        const METADATA_KEY_LIMIT = 40;
+        const METADATA_VALUE_LIMIT = 100;
+        const FALLBACK_ID = "sm-bundle-loading-recovery-fallback";
+        const FAILURE_TYPES = [
+          "lazy_import",
+          "main_bundle",
+          "vite_preload",
+          "script_asset",
+          "modulepreload_asset",
+          "stylesheet_asset",
+          "worker_asset",
+          "unknown",
+        ];
+        const ASSET_KINDS = [
+          "script",
+          "modulepreload",
+          "stylesheet",
+          "worker",
+          "component",
+          "unknown",
+        ];
+        const ACTIONS = [
+          "none",
+          "auto_reload",
+          "player_reload",
+          "continue",
+          "guard_blocked",
+          "unavailable",
+        ];
+        const globalObject =
+          injected.window ||
+          (typeof window !== "undefined" ? window : undefined);
+        const documentObject = injected.document || globalObject?.document;
+        const locationObject = injected.location || globalObject?.location;
+        const fetchFunction =
+          injected.fetch ||
+          (typeof globalObject?.fetch === "function"
+            ? globalObject.fetch.bind(globalObject)
+            : undefined);
+        const now = injected.now || (() => Date.now());
+        const schedule =
+          injected.setTimeout ||
+          globalObject?.setTimeout?.bind(globalObject) ||
+          setTimeout;
+        const navigate =
+          injected.navigate ||
+          ((url) => {
+            locationObject?.replace(url);
+          });
+        const ttl =
+          Number.isFinite(config.pendingTtlMs) &&
+          Number(config.pendingTtlMs) > 0
+            ? Number(config.pendingTtlMs)
+            : DEFAULT_TTL;
+        const queueLimit =
+          Number.isInteger(config.pendingQueueLimit) &&
+          Number(config.pendingQueueLimit) > 0
+            ? Math.min(Number(config.pendingQueueLimit), DEFAULT_QUEUE_LIMIT)
+            : DEFAULT_QUEUE_LIMIT;
+        if (!globalObject || !documentObject || !locationObject)
+          return undefined;
+        const isSafeBuildId = (value) =>
+          typeof value === "string" && /^[A-Za-z0-9._-]{1,128}$/.test(value);
+        if (!isSafeBuildId(config.currentBuildId)) return undefined;
+        const existingBridge = globalObject.__SM_BUNDLE_RECOVERY__;
+        if (
+          existingBridge?.version === BRIDGE_VERSION &&
+          existingBridge.currentBuildId === config.currentBuildId
+        ) {
+          return existingBridge;
+        }
+        const URLConstructor = globalObject.URL || URL;
+        const memoryStorage = new Map();
+        let sessionStorageObject = injected.storage;
+        if (sessionStorageObject === undefined) {
+          try {
+            sessionStorageObject = globalObject.sessionStorage;
+          } catch {
+            sessionStorageObject = null;
+          }
+        }
+        const readStorage = (key) => {
+          const memoryValue = memoryStorage.get(key);
+          if (memoryValue !== undefined) return memoryValue;
+          try {
+            const value = sessionStorageObject?.getItem(key);
+            if (typeof value === "string") return value;
+          } catch {}
+          return memoryStorage.get(key) || null;
+        };
+        const writeStorage = (key, value) => {
+          if (sessionStorageObject) {
+            try {
+              sessionStorageObject.setItem(key, value);
+              memoryStorage.delete(key);
+              return;
+            } catch {}
+          }
+          memoryStorage.set(key, value);
+        };
+        const removeStorage = (key) => {
+          try {
+            sessionStorageObject?.removeItem(key);
+          } catch {}
+          memoryStorage.delete(key);
+        };
+        const readJson = (key) => {
+          const value = readStorage(key);
+          if (!value) return undefined;
+          try {
+            return JSON.parse(value);
+          } catch {
+            removeStorage(key);
+            return undefined;
+          }
+        };
+        const normalizeAssetUrl = (value) => {
+          if (typeof value !== "string" && !(value instanceof URLConstructor))
+            return undefined;
+          try {
+            const parsed = new URLConstructor(
+              String(value),
+              locationObject.href
+            );
+            if (parsed.origin !== locationObject.origin) return undefined;
+            return parsed.pathname.startsWith("/")
+              ? parsed.pathname
+              : `/${parsed.pathname}`;
+          } catch {
+            return undefined;
+          }
+        };
+        const sanitizeComponentName = (value) => {
+          if (typeof value !== "string") return undefined;
+          const sanitized = value
+            .trim()
+            .replace(/[^A-Za-z0-9_.:-]+/g, "_")
+            .replace(/^_+|_+$/g, "")
+            .slice(0, COMPONENT_LIMIT);
+          return sanitized || undefined;
+        };
+        const sanitizeMetadata = (value) => {
+          if (!value || typeof value !== "object" || Array.isArray(value))
+            return undefined;
+          const safe = {};
+          Object.entries(value)
+            .slice(0, 12)
+            .forEach(([rawKey, rawValue]) => {
+              const key = rawKey
+                .replace(/[^A-Za-z0-9_.:-]+/g, "_")
+                .slice(0, METADATA_KEY_LIMIT);
+              if (!key || /token|secret|auth|password|stack/i.test(key)) return;
+              if (
+                typeof rawValue === "number" ||
+                typeof rawValue === "boolean" ||
+                rawValue === null
+              ) {
+                safe[key] = rawValue;
+                return;
+              }
+              if (typeof rawValue === "string") {
+                const normalized = rawValue
+                  .replace(/[?#].*$/g, "")
+                  .replace(/[^A-Za-z0-9 _.,:-]+/g, "_")
+                  .slice(0, METADATA_VALUE_LIMIT);
+                safe[key] = normalized;
+              }
+            });
+          return Object.keys(safe).length ? safe : undefined;
+        };
+        const safeHttpStatus = (value) => {
+          const status = Number(value);
+          return Number.isInteger(status) && status >= 100 && status <= 599
+            ? status
+            : undefined;
+        };
+        const extractAssetFromError = (error) => {
+          if (!error || typeof error !== "object") return undefined;
+          const message = error.message;
+          if (typeof message !== "string") return undefined;
+          const absolute = message.match(/https?:\/\/[^\s)'"`]+/i)?.[0];
+          const relative = message.match(/\/(?:assets|src)\/[^\s)'"`]+/i)?.[0];
+          return normalizeAssetUrl(absolute || relative);
+        };
+        const normalizeEntryPath = (value) => {
+          if (typeof value !== "string") return undefined;
+          const withoutQuery = value
+            .replace(/[?#].*$/g, "")
+            .replace(/^\.\//, "/");
+          if (!withoutQuery || withoutQuery.includes("..")) return undefined;
+          return withoutQuery.startsWith("/")
+            ? withoutQuery
+            : `/${withoutQuery}`;
+        };
+        const entryPaths = (
+          Array.isArray(config.entryPaths) ? config.entryPaths : []
+        )
+          .map(normalizeEntryPath)
+          .filter((value) => Boolean(value));
+        const isFailureType = (value) => FAILURE_TYPES.includes(value);
+        const isAssetKind = (value) => ASSET_KINDS.includes(value);
+        const isAction = (value) => ACTIONS.includes(value);
+        const sanitizeFailurePayload = (value) => {
+          if (!value || typeof value !== "object" || Array.isArray(value))
+            return undefined;
+          const raw = value;
+          if (
+            typeof raw.recovery_id !== "string" ||
+            raw.recovery_id.length > 160 ||
+            !isFailureType(raw.failure_type) ||
+            !isAssetKind(raw.asset_kind) ||
+            !isSafeBuildId(raw.current_build_id) ||
+            ![true, false, "unknown"].includes(raw.version_skew_confirmed) ||
+            !["bootstrap", "runtime"].includes(String(raw.phase)) ||
+            typeof raw.gameplay_active !== "boolean" ||
+            !isAction(raw.recovery_action)
+          ) {
+            return undefined;
+          }
+          const assetPath = normalizeAssetUrl(raw.failed_asset_url);
+          const latestBuildId = isSafeBuildId(raw.latest_build_id)
+            ? raw.latest_build_id
+            : undefined;
+          return {
+            recovery_id: raw.recovery_id,
+            failure_type: raw.failure_type,
+            asset_kind: raw.asset_kind,
+            current_build_id: raw.current_build_id,
+            version_skew_confirmed: raw.version_skew_confirmed,
+            phase: raw.phase,
+            gameplay_active: raw.gameplay_active,
+            recovery_action: raw.recovery_action,
+            ...(assetPath && { failed_asset_url: assetPath }),
+            ...(sanitizeComponentName(raw.component_name) && {
+              component_name: sanitizeComponentName(raw.component_name),
+            }),
+            ...(latestBuildId && { latest_build_id: latestBuildId }),
+            ...(safeHttpStatus(raw.http_status) && {
+              http_status: safeHttpStatus(raw.http_status),
+            }),
+            ...(sanitizeMetadata(raw.metadata) && {
+              metadata: sanitizeMetadata(raw.metadata),
+            }),
+          };
+        };
+        const sanitizeRecoveryPayload = (value) => {
+          if (!value || typeof value !== "object" || Array.isArray(value))
+            return undefined;
+          const raw = value;
+          if (
+            typeof raw.recovery_id !== "string" ||
+            raw.recovery_id.length > 160 ||
+            !isSafeBuildId(raw.current_build_id) ||
+            !["success", "failed"].includes(String(raw.result)) ||
+            !isAction(raw.action)
+          ) {
+            return undefined;
+          }
+          const latestBuildId = isSafeBuildId(raw.latest_build_id)
+            ? raw.latest_build_id
+            : undefined;
+          return {
+            recovery_id: raw.recovery_id,
+            current_build_id: raw.current_build_id,
+            result: raw.result,
+            action: raw.action,
+            ...(latestBuildId && { latest_build_id: latestBuildId }),
+          };
+        };
+        const loadDedupe = () => {
+          const value = readJson(DEDUPE_KEY);
+          if (!Array.isArray(value)) return [];
+          const currentTime = now();
+          return value
+            .filter(
+              (entry) =>
+                Boolean(entry) &&
+                typeof entry.key === "string" &&
+                entry.key.length <= 512 &&
+                typeof entry.recoveryId === "string" &&
+                Number.isFinite(entry.expiresAt) &&
+                entry.expiresAt > currentTime
+            )
+            .slice(-DEDUPE_LIMIT);
+        };
+        const saveDedupe = (entries) => {
+          writeStorage(
+            DEDUPE_KEY,
+            JSON.stringify(entries.slice(-DEDUPE_LIMIT))
+          );
+        };
+        const loadPending = () => {
+          const value = readJson(PENDING_KEY);
+          if (!Array.isArray(value)) return [];
+          const currentTime = now();
+          const sanitized = [];
+          value.forEach((raw) => {
+            if (
+              !raw ||
+              typeof raw !== "object" ||
+              typeof raw.eventId !== "string" ||
+              raw.eventId.length > 180 ||
+              !Number.isFinite(raw.expiresAt) ||
+              raw.expiresAt <= currentTime
+            ) {
+              return;
+            }
+            if (raw.eventName === "bundle_loading_failed") {
+              const payload = sanitizeFailurePayload(raw.payload);
+              if (payload) {
+                sanitized.push({
+                  eventId: raw.eventId,
+                  eventName: raw.eventName,
+                  payload,
+                  expiresAt: Number(raw.expiresAt),
+                });
+              }
+            } else if (raw.eventName === "bundle_loading_recovery") {
+              const payload = sanitizeRecoveryPayload(raw.payload);
+              if (payload) {
+                sanitized.push({
+                  eventId: raw.eventId,
+                  eventName: raw.eventName,
+                  payload,
+                  expiresAt: Number(raw.expiresAt),
+                });
+              }
+            }
+          });
+          const bounded = sanitized.slice(-queueLimit);
+          writeStorage(PENDING_KEY, JSON.stringify(bounded));
+          return bounded;
+        };
+        const savePending = (events) => {
+          writeStorage(PENDING_KEY, JSON.stringify(events.slice(-queueLimit)));
+        };
+        const loadReloadAttempt = () => {
+          const value = readJson(RELOAD_KEY);
+          if (!value || typeof value !== "object" || Array.isArray(value))
+            return undefined;
+          const raw = value;
+          if (
+            !isSafeBuildId(raw.sourceBuildId) ||
+            typeof raw.recoveryId !== "string" ||
+            !isAction(raw.action) ||
+            !Number.isFinite(raw.expiresAt) ||
+            Number(raw.expiresAt) <= now()
+          ) {
+            removeStorage(RELOAD_KEY);
+            return undefined;
+          }
+          return {
+            sourceBuildId: raw.sourceBuildId,
+            recoveryId: raw.recoveryId,
+            action: raw.action,
+            expiresAt: Number(raw.expiresAt),
+            ...(isSafeBuildId(raw.latestBuildId) && {
+              latestBuildId: raw.latestBuildId,
+            }),
+          };
+        };
+        const saveReloadAttempt = (attempt) => {
+          writeStorage(RELOAD_KEY, JSON.stringify(attempt));
+        };
+        let dedupeEntries = loadDedupe();
+        let pendingEvents = loadPending();
+        let runtimeReady = false;
+        let gameplayActive = false;
+        let navigationCommitted = false;
+        let sequence = 0;
+        let freshBuildPromise = null;
+        const records = new Map();
+        const objectAliases =
+          typeof WeakMap === "function" ? new WeakMap() : null;
+        const turnAliases = new Map();
+        const createId = (prefix) =>
+          `${prefix}-${now().toString(36)}-${(++sequence).toString(36)}`;
+        const makeDedupeKey = (failureType, assetPath, componentName) =>
+          [
+            config.currentBuildId,
+            failureType,
+            assetPath || componentName || "unknown",
+          ].join("|");
+        const rememberAliases = (record) => {
+          const expiresAt = now() + ttl;
+          record.aliasKeys.forEach((key) => {
+            dedupeEntries = dedupeEntries.filter((entry) => entry.key !== key);
+            dedupeEntries.push({ key, recoveryId: record.id, expiresAt });
+          });
+          dedupeEntries = dedupeEntries.slice(-DEDUPE_LIMIT);
+          saveDedupe(dedupeEntries);
+        };
+        const enqueue = (event) => {
+          if (
+            pendingEvents.some((existing) => existing.eventId === event.eventId)
+          )
+            return;
+          pendingEvents.push({ ...event, expiresAt: now() + ttl });
+          pendingEvents = pendingEvents.slice(-queueLimit);
+          savePending(pendingEvents);
+        };
+        const failurePayload = (record) => ({
+          recovery_id: record.id,
+          failure_type: record.failureType,
+          asset_kind: record.assetKind,
+          current_build_id: config.currentBuildId,
+          version_skew_confirmed: record.versionSkew,
+          phase: record.phase,
+          gameplay_active: record.gameplayActive,
+          recovery_action: record.action,
+          ...(record.assetPath && { failed_asset_url: record.assetPath }),
+          ...(record.componentName && { component_name: record.componentName }),
+          ...(record.latestBuildId && {
+            latest_build_id: record.latestBuildId,
+          }),
+          ...(record.httpStatus && { http_status: record.httpStatus }),
+          ...(record.metadata && { metadata: record.metadata }),
+        });
+        const queueFailure = (record) => {
+          if (record.failureQueued) return;
+          record.failureQueued = true;
+          rememberAliases(record);
+          enqueue({
+            eventId: `${record.id}:failure`,
+            eventName: "bundle_loading_failed",
+            payload: failurePayload(record),
+          });
+        };
+        const queueOutcome = (
+          recoveryId,
+          result,
+          action,
+          currentBuildId = config.currentBuildId,
+          latestBuildId
+        ) => {
+          enqueue({
+            eventId: `${recoveryId}:recovery:${result}:${action}`,
+            eventName: "bundle_loading_recovery",
+            payload: {
+              recovery_id: recoveryId,
+              current_build_id: currentBuildId,
+              result,
+              action,
+              ...(latestBuildId && { latest_build_id: latestBuildId }),
+            },
+          });
+        };
+        const buildReloadUrl = () => {
+          const url = new URLConstructor(locationObject.href);
+          url.searchParams.set(RELOAD_PARAM, now().toString(36));
+          return url.toString();
+        };
+        const readFreshBuild = async () => {
+          if (!fetchFunction) return { skew: "unknown" };
+          if (freshBuildPromise) return freshBuildPromise;
+          const currentPromise = (async () => {
+            try {
+              const url = new URLConstructor(locationObject.href);
+              url.searchParams.set(CHECK_PARAM, now().toString(36));
+              url.hash = "";
+              const response = await fetchFunction(url.toString(), {
+                cache: "no-store",
+                credentials: "same-origin",
+                headers: { Accept: "text/html" },
+              });
+              if (!response.ok) return { skew: "unknown" };
+              const contentType = response.headers?.get?.("content-type");
+              if (contentType && !/text\/html/i.test(contentType)) {
+                return { skew: "unknown" };
+              }
+              const html = await response.text();
+              const parser = new globalObject.DOMParser();
+              const parsed = parser.parseFromString(html, "text/html");
+              const latestBuildId = parsed
+                .querySelector('meta[name="sm-build-id"]')
+                ?.getAttribute("content");
+              if (!isSafeBuildId(latestBuildId)) return { skew: "unknown" };
+              return {
+                skew: latestBuildId === config.currentBuildId ? false : true,
+                latestBuildId,
+              };
+            } catch {
+              return { skew: "unknown" };
+            }
+          })();
+          freshBuildPromise = currentPromise;
+          try {
+            return await currentPromise;
+          } finally {
+            if (freshBuildPromise === currentPromise) freshBuildPromise = null;
+          }
+        };
+        const showFallback = (record) => {
+          if (
+            record.consumerOwned ||
+            runtimeReady ||
+            documentObject.getElementById(FALLBACK_ID)
+          ) {
+            return;
+          }
+          const insert = () => {
+            if (
+              !documentObject.body ||
+              documentObject.getElementById(FALLBACK_ID)
+            )
+              return;
+            const container = documentObject.createElement("div");
+            container.id = FALLBACK_ID;
+            container.setAttribute("role", "alert");
+            container.style.cssText =
+              "position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;font:16px/1.4 sans-serif;padding:24px;text-align:center";
+            const panel = documentObject.createElement("div");
+            panel.style.cssText = "max-width:520px";
+            const title = documentObject.createElement("h1");
+            title.textContent =
+              config.messages?.title || "The game could not be loaded";
+            const body = documentObject.createElement("p");
+            body.textContent =
+              config.messages?.body ||
+              "Please reload the page to try the latest version.";
+            const button = documentObject.createElement("button");
+            button.type = "button";
+            button.textContent = config.messages?.reload || "Reload";
+            button.style.cssText =
+              "font:inherit;padding:10px 18px;border:0;border-radius:6px;cursor:pointer";
+            button.addEventListener("click", () => bridge.reload(record.id), {
+              once: true,
+            });
+            panel.append(title, body, button);
+            container.append(panel);
+            documentObject.body.append(container);
+          };
+          if (documentObject.body) insert();
+          else
+            documentObject.addEventListener("DOMContentLoaded", insert, {
+              once: true,
+            });
+        };
+        const classifyAsset = (failureType, assetKind, assetPath) => {
+          if (failureType && isFailureType(failureType)) {
+            return {
+              failureType,
+              assetKind:
+                assetKind && isAssetKind(assetKind) ? assetKind : "unknown",
+            };
+          }
+          if (assetKind === "script") {
+            const main = Boolean(
+              assetPath &&
+                entryPaths.some(
+                  (entry) => assetPath === entry || assetPath.endsWith(entry)
+                )
+            );
+            return {
+              failureType: main ? "main_bundle" : "script_asset",
+              assetKind,
+            };
+          }
+          if (assetKind === "modulepreload") {
+            return { failureType: "modulepreload_asset", assetKind };
+          }
+          if (assetKind === "stylesheet") {
+            return { failureType: "stylesheet_asset", assetKind };
+          }
+          if (assetKind === "worker")
+            return { failureType: "worker_asset", assetKind };
+          return { failureType: "unknown", assetKind: assetKind || "unknown" };
+        };
+        const precedence = (failureType) =>
+          failureType === "lazy_import"
+            ? 3
+            : failureType === "vite_preload"
+            ? 2
+            : 1;
+        const evaluateRecord = async (record) => {
+          const sourceBuild = config.currentBuildId;
+          const version = await readFreshBuild();
+          record.versionSkew = version.skew;
+          record.latestBuildId = version.latestBuildId;
+          if (
+            globalObject.__SM_BUNDLE_RECOVERY__ !== bridge ||
+            bridge.currentBuildId !== sourceBuild ||
+            runtimeReady ||
+            gameplayActive ||
+            record.consumerOwned ||
+            record.phase === "runtime" ||
+            navigationCommitted
+          ) {
+            record.action = "none";
+            queueFailure(record);
+            return;
+          }
+          const priorAttempt = loadReloadAttempt();
+          if (
+            version.skew === true &&
+            priorAttempt?.sourceBuildId === sourceBuild
+          ) {
+            record.action = "guard_blocked";
+            queueFailure(record);
+            queueOutcome(
+              record.id,
+              "failed",
+              record.action,
+              sourceBuild,
+              version.latestBuildId
+            );
+            showFallback(record);
+            return;
+          }
+          if (version.skew === true) {
+            record.action = "auto_reload";
+            queueFailure(record);
+            const attempt = {
+              sourceBuildId: sourceBuild,
+              recoveryId: record.id,
+              action: record.action,
+              latestBuildId: version.latestBuildId,
+              expiresAt: now() + ttl,
+            };
+            saveReloadAttempt(attempt);
+            if (
+              globalObject.__SM_BUNDLE_RECOVERY__ !== bridge ||
+              runtimeReady ||
+              gameplayActive ||
+              navigationCommitted
+            ) {
+              return;
+            }
+            try {
+              record.cancelViteDefault?.();
+            } catch {}
+            navigationCommitted = true;
+            navigate(buildReloadUrl());
+            return;
+          }
+          record.action = "unavailable";
+          queueFailure(record);
+          queueOutcome(
+            record.id,
+            "failed",
+            record.action,
+            sourceBuild,
+            version.latestBuildId
+          );
+          showFallback(record);
+        };
+        const observe = (report, sourceObject, cancelViteDefault) => {
+          const assetPath =
+            normalizeAssetUrl(report.assetUrl) ||
+            extractAssetFromError(report.error);
+          const componentName = sanitizeComponentName(report.componentName);
+          const classification = classifyAsset(
+            report.failureType,
+            report.assetKind,
+            assetPath
+          );
+          const aliasKey = makeDedupeKey(
+            classification.failureType,
+            assetPath,
+            componentName
+          );
+          const currentTime = now();
+          dedupeEntries = dedupeEntries.filter(
+            (entry) => entry.expiresAt > currentTime
+          );
+          let record =
+            (sourceObject && objectAliases?.get(sourceObject)) ||
+            (assetPath ? turnAliases.get(assetPath) : undefined);
+          if (!record) {
+            const persisted = dedupeEntries.find(
+              (entry) => entry.key === aliasKey
+            );
+            if (persisted) return records.get(persisted.recoveryId);
+          }
+          if (record) {
+            record.aliasKeys.add(aliasKey);
+            if (
+              precedence(classification.failureType) >
+              precedence(record.failureType)
+            ) {
+              record.failureType = classification.failureType;
+              record.assetKind = classification.assetKind;
+            }
+            record.componentName = record.componentName || componentName;
+            record.httpStatus =
+              record.httpStatus || safeHttpStatus(report.httpStatus);
+            record.metadata =
+              record.metadata || sanitizeMetadata(report.metadata);
+            record.consumerOwned =
+              record.consumerOwned || Boolean(report.consumerOwned);
+            record.cancelViteDefault =
+              record.cancelViteDefault || cancelViteDefault;
+            if (sourceObject) objectAliases?.set(sourceObject, record);
+            return record;
+          }
+          record = {
+            id: createId("smblr"),
+            failureType: classification.failureType,
+            assetKind: classification.assetKind,
+            assetPath,
+            componentName,
+            phase:
+              report.phase === "runtime" || runtimeReady
+                ? "runtime"
+                : "bootstrap",
+            gameplayActive,
+            consumerOwned: Boolean(report.consumerOwned),
+            httpStatus: safeHttpStatus(report.httpStatus),
+            metadata: sanitizeMetadata(report.metadata),
+            versionSkew: "unknown",
+            action: "none",
+            aliasKeys: new Set([aliasKey]),
+            failureQueued: false,
+            cancelViteDefault,
+          };
+          records.set(record.id, record);
+          if (sourceObject) objectAliases?.set(sourceObject, record);
+          if (assetPath) {
+            turnAliases.set(assetPath, record);
+            schedule(() => {
+              if (turnAliases.get(assetPath) === record)
+                turnAliases.delete(assetPath);
+            }, 0);
+          }
+          void evaluateRecord(record);
+          return record;
+        };
+        const bridge = {
+          version: BRIDGE_VERSION,
+          currentBuildId: config.currentBuildId,
+          reportFailure(report) {
+            const sourceObject =
+              report.error && typeof report.error === "object"
+                ? report.error
+                : undefined;
+            const record = observe(report, sourceObject);
+            return {
+              recoveryId: record?.id || createId("ignored"),
+              automaticReloadCommitted: navigationCommitted,
+            };
+          },
+          setGameplayActive(active) {
+            gameplayActive = Boolean(active);
+          },
+          markRuntimeReady() {
+            runtimeReady = true;
+            const attempt = loadReloadAttempt();
+            if (attempt) {
+              queueOutcome(
+                attempt.recoveryId,
+                "success",
+                attempt.action,
+                attempt.sourceBuildId,
+                config.currentBuildId
+              );
+              removeStorage(RELOAD_KEY);
+            }
+            pendingEvents = loadPending();
+            return pendingEvents.map(
+              ({ expiresAt: _expiresAt, ...event }) => event
+            );
+          },
+          recordRecoveryAction(recoveryId, action) {
+            if (
+              !isAction(action) ||
+              action === "none" ||
+              action === "auto_reload"
+            )
+              return false;
+            const record = records.get(recoveryId);
+            if (record?.terminalAction) return false;
+            if (record) record.terminalAction = action;
+            if (action === "player_reload") return true;
+            queueOutcome(recoveryId, "failed", action);
+            return true;
+          },
+          reload(recoveryId) {
+            const id = recoveryId || createId("manual");
+            const record = records.get(id);
+            if (
+              record?.terminalAction &&
+              record.terminalAction !== "player_reload"
+            )
+              return;
+            if (record) record.terminalAction = "player_reload";
+            saveReloadAttempt({
+              sourceBuildId: config.currentBuildId,
+              recoveryId: id,
+              action: "player_reload",
+              expiresAt: now() + ttl,
+            });
+            if (navigationCommitted) return;
+            navigationCommitted = true;
+            navigate(buildReloadUrl());
+          },
+          acknowledgePending(eventId) {
+            pendingEvents = loadPending().filter(
+              (event) => event.eventId !== eventId
+            );
+            savePending(pendingEvents);
+          },
+        };
+        globalObject.__SM_BUNDLE_RECOVERY__ = bridge;
+        const reportElementFailure = (event) => {
+          const target = event.target;
+          if (!target || typeof target.tagName !== "string") return;
+          const tagName = target.tagName.toUpperCase();
+          if (tagName === "SCRIPT") {
+            const assetUrl = target.src;
+            if (!normalizeAssetUrl(assetUrl)) return;
+            observe(
+              {
+                assetKind: "script",
+                assetUrl,
+                phase: runtimeReady ? "runtime" : "bootstrap",
+              },
+              event
+            );
+            return;
+          }
+          if (tagName !== "LINK") return;
+          const link = target;
+          const relation = String(link.rel || "").toLowerCase();
+          if (!normalizeAssetUrl(link.href)) return;
+          if (relation === "modulepreload") {
+            observe({ assetKind: "modulepreload", assetUrl: link.href }, event);
+          } else if (relation === "stylesheet") {
+            observe({ assetKind: "stylesheet", assetUrl: link.href }, event);
+          }
+        };
+        const reportViteFailure = (event) => {
+          const raw = event;
+          const payload = raw.payload || raw.detail;
+          const payloadObject =
+            payload && typeof payload === "object" ? payload : {};
+          const errorObject = payloadObject.error || payload;
+          const assetUrl = normalizeAssetUrl(
+            payloadObject.url || payloadObject.id
+          );
+          if (!assetUrl) return;
+          observe(
+            {
+              failureType: "vite_preload",
+              assetKind: "script",
+              assetUrl,
+              phase: runtimeReady ? "runtime" : "bootstrap",
+            },
+            errorObject && typeof errorObject === "object"
+              ? errorObject
+              : event,
+            () => raw.preventDefault?.()
+          );
+        };
+        const instrumentWorker = (name) => {
+          const Original = globalObject[name];
+          if (
+            typeof Original !== "function" ||
+            typeof globalObject.Proxy !== "function"
+          )
+            return;
+          try {
+            globalObject[name] = new globalObject.Proxy(Original, {
+              construct(target, args, newTarget) {
+                const assetUrl = args[0];
+                const normalizedAssetUrl = normalizeAssetUrl(assetUrl);
+                let worker;
+                try {
+                  worker = Reflect.construct(target, args, newTarget);
+                } catch (error) {
+                  if (normalizedAssetUrl) {
+                    observe(
+                      {
+                        assetKind: "worker",
+                        assetUrl: normalizedAssetUrl,
+                        error,
+                      },
+                      error && typeof error === "object" ? error : undefined
+                    );
+                  }
+                  throw error;
+                }
+                if (!normalizedAssetUrl) return worker;
+                try {
+                  worker.addEventListener?.(
+                    "error",
+                    (event) =>
+                      observe(
+                        {
+                          assetKind: "worker",
+                          assetUrl: normalizedAssetUrl,
+                          error: event.error,
+                        },
+                        event.error && typeof event.error === "object"
+                          ? event.error
+                          : event
+                      ),
+                    { once: true }
+                  );
+                } catch {}
+                return worker;
+              },
+            });
+          } catch {}
+        };
+        if (injected.installObservers !== false) {
+          globalObject.addEventListener?.("error", reportElementFailure, true);
+          globalObject.addEventListener?.(
+            "vite:preloadError",
+            reportViteFailure
+          );
+          instrumentWorker("Worker");
+          instrumentWorker("SharedWorker");
+        }
+        return bridge;
+      })({
+        currentBuildId: "bundle-20056a6e",
+        entryPaths: [
+          "/assets/analytics-C6IQPell.js",
+          "/assets/main-CayQ8FBV.js",
+        ],
+      });
+    </script>
+
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+                        default-src * vkcors: data: blob: ws: wss: gap://ready file://*;
+                        style-src * vkcors: 'unsafe-inline';
+                        script-src * vkcors: 'unsafe-inline' 'unsafe-eval' blob:;
+                        worker-src * blob:;
+                        connect-src * vkcors: ws: wss: blob: data:;"
+    />
+
+    <script type="text/javascript">
+      window.timestampBeforeInit = Date.now();
+      // Мок платформы плейгама
+    </script>
+    <script
+      type="module"
+      crossorigin=""
+      src="./assets/analytics-C6IQPell.js"
+    ></script>
+    <title>Arena</title>
+    <script
+      type="module"
+      crossorigin=""
+      src="./assets/main-CayQ8FBV.js"
+    ></script>
+
+    <link rel="stylesheet" crossorigin="" href="./assets/main-CoCYtyZz.css" />
+    <link
+      rel="canonical"
+      href="https://www.crazygames.com/game/domino-duel-uit"
+    />
+  </head>
+
+  <body oncontextmenu="return false;">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!-- Путь к главному TSX файлу -->
+  </body>
+</html>

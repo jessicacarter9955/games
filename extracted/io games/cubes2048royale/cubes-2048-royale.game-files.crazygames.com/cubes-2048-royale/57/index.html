@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cubes Royale 2048</title>
+
+    <script
+      type="text/javascript"
+      src="https://sdk.crazygames.com/crazygames-sdk-v3.js"
+    ></script>
+    <script
+      type="module"
+      crossorigin=""
+      src="assets/index-DhmxMDwB.js"
+    ></script>
+    <link rel="stylesheet" crossorigin="" href="assets/index-DqnehXgv.css" />
+    <link
+      rel="canonical"
+      href="https://www.crazygames.com/game/cubes-2048-royale"
+    />
+  </head>
+  <body>
+    <div
+      id="inspector-gui-container"
+      style="
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        pointer-events: all;
+        z-index: 99999;
+      "
+    ></div>
+
+    <div id="root">
+      <div id="flow-ui-root"></div>
+
+      <div id="loading-screen">
+        <div class="loading-progress-parent">
+          <h3 id="loading-text"></h3>
+          <div class="loading-progress-inner"></div>
+        </div>
+      </div>
+      <div id="joystick-location" class="joystick-parent"></div>
+    </div>
+  </body>
+</html>

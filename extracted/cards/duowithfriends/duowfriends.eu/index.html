@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Duo With Friends</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      #unityContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #unity-canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+
+        background: {
+            {
+              {
+              BACKGROUND_FILENAME ? 'url(\'Build/'+BACKGROUND_FILENAME.replace(/'/g, ' %27') + ' \') center / cover' : BACKGROUND_COLOR }}};
+
+            }
+
+            .topmenu {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              z-index: 10;
+            }
+    </style>
+
+    <script src="TemplateData/umd.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://robinko2.eu/WebFiles/TopMenu/menudata/menu2.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div id="unityContainer">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+    </div>
+
+    <div
+      id="loader"
+      style="
+        width: 500px;
+        height: 300px;
+        display: block;
+        z-index: 3;
+        position: absolute;
+        top: calc(50% - 150px);
+        left: calc(50% - 250px);
+        line-height: 25px;
+      "
+    >
+      <center>
+        <img
+          src="https://duowfriends.eu/Helpers/Marketing/512.png"
+          widt="256"
+          height="256"
+        />
+        <div
+          style="
+            color: #000 !important;
+            background-color: #f1f1f1 !important;
+            width: 256px;
+            height: 25px;
+            border-radius: 15px;
+          "
+        >
+          <div
+            id="loaderfill"
+            style="
+              color: #fff !important;
+              background-color: #4caf50 !important;
+              width: 25%;
+              float: left;
+              height: 25px;
+              border-radius: 15px;
+              min-width: 50px;
+            "
+          >
+            0%
+          </div>
+        </div>
+        <br />
+      </center>
+    </div>
+
+    <script src="Build/31cbb0a9afe535f7ea4fd610b32f2121.loader.js"></script>
+    <script>
+      const canvas = document.querySelector("#unity-canvas");
+      const loaderFill = document.querySelector("#loaderfill");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement("meta");
+        meta.name = "viewport";
+        meta.content =
+          "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
+        document.getElementsByTagName("head")[0].appendChild(meta);
+
+        canvas.style.position = "fixed";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+      }
+
+      createUnityInstance(
+        canvas,
+        {
+          arguments: [],
+          dataUrl: "Build/538811d3c1d0b2708431f7e67f75dd20.data.br",
+          frameworkUrl:
+            "Build/fe96564f706eb7731bd9445cc80ade12.framework.js.br",
+          codeUrl: "Build/43e60e9d340838aacfa3f2fbf5eb4d5c.wasm.br",
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "Robin",
+          productName: "Duo With Friends",
+          productVersion: "2.6",
+          // matchWebGLToCanvasSize: false,
+          // devicePixelRatio: 1,
+        },
+        (progress) => {
+          console.log("Loading progress:", Math.round(progress * 100) + "%");
+          if (loaderFill) {
+            loaderFill.style.width = Math.round(progress * 100) + "%";
+            loaderFill.textContent = Math.round(progress * 100) + "%";
+          }
+
+          if (progress >= 1) {
+            setTimeout(() => {
+              document.getElementById("loader").style.display = "none";
+            }, 1000);
+          }
+        }
+      )
+        .then((unityInstance) => {
+          console.log("Unity loaded successfully.");
+        })
+        .catch((message) => {
+          console.error("Unity failed to load:", message);
+          alert(message);
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "game": "kingsqueensolitairetripeaks",
+  "category": "cards",
+  "source_zip": "cards/kingsqueensolitairetripeaks.zip",
+  "zip_sha256": "a9723d79bfab33cd58e4353e8db01a3189b8f2df303f7a059d45851337a8df64",
+  "official_slug": "kings-and-queens-solitaire-tripeaks",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "tripeaks.cleverappssg.com"
+  ],
+  "loader_urls": [
+    "https://tripeaks.cleverappssg.com/publish/html5/?source=crazy"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 31179,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

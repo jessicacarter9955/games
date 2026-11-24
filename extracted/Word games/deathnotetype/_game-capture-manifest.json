@@ -1,0 +1,14 @@
+{
+  "game": "deathnotetype",
+  "category": "Word games",
+  "source_zip": "Word games/deathnotetype.zip",
+  "zip_sha256": "ba1a131e4123a3471942aa99605a72be3d90101562dbdcdc284cbbb6743a584a",
+  "official_slug": "death-note-type",
+  "loader_type": "ruffle",
+  "game_hosts": [],
+  "loader_urls": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

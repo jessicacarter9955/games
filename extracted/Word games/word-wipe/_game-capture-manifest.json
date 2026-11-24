@@ -1,0 +1,18 @@
+{
+  "game": "word-wipe",
+  "category": "Word games",
+  "source_zip": "Word games/word-wipe.zip",
+  "zip_sha256": "0cefa6cdb54ec00db3b756ee0ac0dc6a8556304116c91f277ca2e4a0e98dedd1",
+  "official_slug": "word-wipe",
+  "loader_type": "html5",
+  "game_hosts": [
+    "word-wipe.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://word-wipe.game-files.crazygames.com/word-wipe/3/index.html"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 69703,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

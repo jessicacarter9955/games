@@ -1,0 +1,27 @@
+{
+  "game": "logoquizgamewordtrivia",
+  "category": "trivia",
+  "source_zip": "trivia/logoquizgamewordtrivia.zip",
+  "zip_sha256": "762bce5ccf8ee0b1c51b57a1e3d0d45ed6eebfe0a75155a11f979f78bda69c51",
+  "official_slug": "logo-quiz-game-world-trivia",
+  "loader_type": "unity6",
+  "game_hosts": [
+    "files.crazygames.com",
+    "logo-quiz-game-world-trivia.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/4999a38424aa9bfe23435e1c7030da38.loader.js",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/c03fce47071733df6ded926c59f6e594.wasm.br",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/fe0e1cc59b014217bcdc73f4fa6554c9.data.br",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/astc_b9cb3efb8eef6fe050f1dba8be5d25ba.data.br",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/2765cae112b07f001e5554043331e402.framework.js.br",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/max_512mb_93720e874374cead409287fd6a0d40aa.wasm.br",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/Build/max_1024mb_c03fce47071733df6ded926c59f6e594.wasm.br",
+    "https://files.crazygames.com/logo-quiz-game-world-trivia/43/StreamingAssets"
+  ],
+  "game_host_files": 2,
+  "unpacked_game_bytes": 73456,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

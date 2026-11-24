@@ -1,0 +1,18 @@
+{
+  "game": "googlefeud",
+  "category": "trivia",
+  "source_zip": "trivia/googlefeud.zip",
+  "zip_sha256": "459df21b4580fb322f133068b5bc37ba7dc672a1bb348fd1d2437343df28dede",
+  "official_slug": "google-feud",
+  "loader_type": "html5",
+  "game_hosts": [
+    "google-feud.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://google-feud.game-files.crazygames.com/google-feud/3/index.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

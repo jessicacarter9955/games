@@ -1,0 +1,23 @@
+{
+  "game": "spider solitaire",
+  "category": "cards",
+  "source_zip": "cards/spider solitaire.zip",
+  "zip_sha256": "a1fbcab67b9e9bd4e50c91fccb14000258a8d656b6f058f5ae174276514ee668",
+  "official_slug": "spider-solitaire-fuw",
+  "loader_type": "unity6",
+  "game_hosts": [
+    "files.crazygames.com",
+    "spider-solitaire-fuw.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://files.crazygames.com/spider-solitaire-fuw/22/Build/WebBuild.loader.js",
+    "https://files.crazygames.com/spider-solitaire-fuw/22/Build/WebBuild.wasm.br",
+    "https://files.crazygames.com/spider-solitaire-fuw/22/Build/WebBuild.data.br",
+    "https://files.crazygames.com/spider-solitaire-fuw/22/Build/WebBuild.framework.js.br",
+    "https://files.crazygames.com/spider-solitaire-fuw/22/StreamingAssets"
+  ],
+  "game_host_files": 2,
+  "unpacked_game_bytes": 17475,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

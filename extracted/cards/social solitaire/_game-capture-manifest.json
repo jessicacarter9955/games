@@ -1,0 +1,18 @@
+{
+  "game": "social solitaire",
+  "category": "cards",
+  "source_zip": "cards/social solitaire.zip",
+  "zip_sha256": "9f694fd7228d5f04c1e22191ff5f4ca21bedc19df511d5de8274887c7d78a0f5",
+  "official_slug": "social-solitaire",
+  "loader_type": "html5",
+  "game_hosts": [
+    "social-solitaire.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://social-solitaire.game-files.crazygames.com/social-solitaire/8/index.html"
+  ],
+  "game_host_files": 5,
+  "unpacked_game_bytes": 2024826,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

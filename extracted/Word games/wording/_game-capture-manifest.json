@@ -1,0 +1,18 @@
+{
+  "game": "wording",
+  "category": "Word games",
+  "source_zip": "Word games/wording.zip",
+  "zip_sha256": "bb3eaf00a2e8ed2e772f2dbb7d3fda693365ae76f64518b4e6d2d4f315da2082",
+  "official_slug": "wording",
+  "loader_type": "html5",
+  "game_hosts": [
+    "wording.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://wording.game-files.crazygames.com/wording/2/index.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

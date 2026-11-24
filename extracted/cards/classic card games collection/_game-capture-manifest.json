@@ -1,0 +1,22 @@
+{
+  "game": "classic card games collection",
+  "category": "cards",
+  "source_zip": "cards/classic card games collection.zip",
+  "zip_sha256": "daac7b43700620c5edabafaa44b8f7000468fedc87b9864468da516ec29470dd",
+  "official_slug": "classic-card-games-collection",
+  "loader_type": "unity2022",
+  "game_hosts": [
+    "files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://files.crazygames.com/classic-card-games-collection/2/Build/solitaire-webgl.loader.js",
+    "https://files.crazygames.com/classic-card-games-collection/2/Build/solitaire-webgl.wasm.br",
+    "https://files.crazygames.com/classic-card-games-collection/2/Build/solitaire-webgl.data.br",
+    "https://files.crazygames.com/classic-card-games-collection/2/Build/solitaire-webgl.framework.js.br",
+    "https://files.crazygames.com/classic-card-games-collection/2/StreamingAssets"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 3753,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

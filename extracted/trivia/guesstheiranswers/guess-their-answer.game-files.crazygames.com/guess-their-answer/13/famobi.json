@@ -1,0 +1,89 @@
+{
+  "analytics": {
+    "enabled": true
+  },
+  "auth": {
+    "enabled": true
+  },
+  "console": {
+    "enabled": true,
+    "enforce": true
+  },
+  "toolGameId": "cuONqAc05os5qq77ikRo",
+  "gameId": "guess-their-answer",
+  "name": "Guess Their Answer",
+  "gameVersion": "2.0.0",
+  "version": "2.0.0",
+  "exportedAt": "2026-05-08T14:33:48.739Z",
+  "features": {
+    "audio": true,
+    "copyright": true,
+    "credits": true,
+    "pause": true,
+    "progress": true,
+    "score": true,
+    "tutorial": true,
+    "version": true,
+    "visibilitychange": true,
+    "home": true,
+    "privacy": true,
+    "iap": false,
+    "standalone": false,
+    "rewarded": true
+  },
+  "ads": {
+    "initial": {
+      "enabled": false,
+      "preload": 250,
+      "timeout": 250,
+      "retry": 2000
+    },
+    "interstitial": {
+      "timeout": 250,
+      "preload": 250,
+      "cooldown": 60,
+      "retry": 2000,
+      "enabled": true,
+      "eventIds": [
+        "button:mainmenu:start",
+        "button:mainmenu:startTournament",
+        "match:finished",
+        "break:result"
+      ]
+    },
+    "rewarded": {
+      "preload": 500,
+      "retry": 2000,
+      "enabled": true,
+      "timeout": 250,
+      "eventIds": [
+        "button:dailychallenge:restart",
+        "button:dailychallenge:start",
+        "button:dailychallenge:doublereward",
+        "button:dailychallenge:replay",
+        "button:hint:get",
+        "button:puzzles:unlock",
+        "button:chestroom:getfreekeys",
+        "button:victory:multiplyreward",
+        "button:punishments:punish",
+        "button:tournament:doublereward",
+        "button:tournament:revive",
+        "button:shop:getpuzzlepiece",
+        "button:shop:unlockscene",
+        "button:shop:premiumskin",
+        "button:shop:freemoney"
+      ]
+    },
+    "banner": {
+      "preload": 250,
+      "timeout": 250,
+      "retry": 2000,
+      "enabled": false
+    }
+  },
+  "storage": {
+    "shouldCompress": false,
+    "isLegacyMode": false
+  },
+  "crazyGames": {}
+}

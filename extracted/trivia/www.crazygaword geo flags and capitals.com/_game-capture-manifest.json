@@ -1,0 +1,26 @@
+{
+  "game": "www.crazygaword geo flags and capitals.com",
+  "category": "trivia",
+  "source_zip": "trivia/www.crazygaword geo flags and capitals.com.zip",
+  "zip_sha256": "8066bf577dc792ba908ce626e272d35749b9e237a79f629e16d84fbfae916d8f",
+  "official_slug": "world-geography-flags-and-capitals",
+  "loader_type": "unity6",
+  "game_hosts": [
+    "files.crazygames.com",
+    "world-geography-flags-and-capitals.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/ebbab371e036f8e893d0af42b0f5aa07.loader.js",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/7413ded4e44eb0658c88432e3dda1fa2.wasm.br",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/eeb4083ee13baafb8a4d742b92fc45e0.data.br",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/astc_d9f51752f268a33de2e64fde0eccddfa.data.br",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/2765cae112b07f001e5554043331e402.framework.js.br",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/max_512mb_4a82dad5d5053396f02c41bad44aa406.wasm.br",
+    "https://files.crazygames.com/world-geography-flags-and-capitals/39/Build/max_1024mb_7413ded4e44eb0658c88432e3dda1fa2.wasm.br"
+  ],
+  "game_host_files": 2,
+  "unpacked_game_bytes": 73456,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

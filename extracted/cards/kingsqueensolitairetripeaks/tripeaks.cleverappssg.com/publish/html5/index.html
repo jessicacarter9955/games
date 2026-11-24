@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="theme-color" content="#E57704" />
+    <title>Kings and Queens</title>
+    <link rel="icon" type="image/GIF" href="favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <style type="text/css">
+      @keyframes htmlRestartWindowFade {
+        0% {
+          opacity: 0;
+        }
+      }
+      @keyframes htmlRestartWindowPop {
+        0% {
+          opacity: 0;
+          transform: scale(0.92);
+        }
+      }
+      html {
+        -ms-touch-action: none;
+      }
+      body {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 0;
+        cursor: default;
+        color: #888;
+        background-color: #fff;
+        text-align: center;
+        font-family: Helvetica, Verdana, Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      body,
+      canvas,
+      div {
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -khtml-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      #Cocos2dGameContainer,
+      #Cocos3dGameContainer {
+        position: fixed;
+        margin: 0;
+        overflow: hidden;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+      }
+      .rotate-container {
+        transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        transform-origin: 0 0 0;
+        -webkit-transform-origin: 0 0 0;
+      }
+      #Cocos3dGameContainer,
+      #GameCanvas,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      #bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+      canvas {
+        background-color: transparent;
+      }
+      #cocosLoading {
+        display: block;
+        margin: auto;
+        max-height: 100%;
+        max-width: 100%;
+      }
+      #cocosLoadingImg {
+        display: block;
+        margin: auto;
+        width: 50%;
+        height: auto;
+      }
+      @media (max-width: 1000px) {
+        #cocosLoadingImg {
+          width: 40%;
+        }
+      }
+      #htmlRestartWindow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 16px;
+        font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        color: #6b6b76;
+        text-align: center;
+        background: rgba(12, 16, 32, 0.6);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        animation: htmlRestartWindowFade 0.2s ease-out;
+      }
+      #htmlRestartWindow > div {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 380px;
+        padding: 32px 28px 28px;
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+        animation: htmlRestartWindowPop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      }
+      #htmlRestartWindow > div::before {
+        content: "";
+        display: block;
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #fff0e0
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E57704' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8'/%3E%3Cpath d='M21 3v5h-5'/%3E%3C/svg%3E")
+          center/36px no-repeat;
+      }
+      #htmlRestartWindow h1 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        line-height: 1.3;
+        font-weight: 700;
+        color: #26262e;
+        text-wrap: balance;
+      }
+      #htmlRestartWindow p {
+        margin: 0;
+        text-wrap: pretty;
+      }
+      #htmlRestartWindow .retry {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: #b35d03;
+        background: #fff0e0;
+      }
+      #htmlRestartWindow button {
+        display: block;
+        width: 100%;
+        margin-top: 24px;
+        padding: 14px 24px;
+        border: 0;
+        border-radius: 14px;
+        font: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(#f68d22, #e57704);
+        box-shadow: 0 4px 0 #b35d03, 0 10px 20px rgba(229, 119, 4, 0.3);
+        cursor: pointer;
+      }
+      #htmlRestartWindow button:hover {
+        filter: brightness(1.05);
+      }
+      #htmlRestartWindow button:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 #b35d03, 0 4px 10px rgba(229, 119, 4, 0.3);
+      }
+      @media (max-height: 480px) {
+        #htmlRestartWindow > div {
+          padding: 20px 24px;
+        }
+        #htmlRestartWindow > div::before {
+          width: 48px;
+          height: 48px;
+          margin-bottom: 12px;
+          background-size: 24px;
+        }
+        #htmlRestartWindow button {
+          margin-top: 16px;
+          padding: 10px 24px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #htmlRestartWindow,
+        #htmlRestartWindow > div {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cocosLoading">
+      <img
+        id="cocosLoadingImg"
+        src="https://tripeaks.gcdn.co/res/loading-93ca38ec22.gif"
+      />
+    </div>
+    <script>
+      document.ccConfig = {
+        availables: {
+          LEADER_BOARD: { actualLevel: 9, coolmath: { debugMode: !0 } },
+          WEEKLY_GOALS: { actualLevel: 21, youtube: { disabled: !0 } },
+          DAILY_TASKS: { actualLevel: 21, youtube: { disabled: !0 } },
+          STATISTICS_MINIMAL: { actualLevel: 3 },
+          INVITE_FRIENDS_ICON: { actualLevel: 1 },
+          CREATE_SHORTCUT: { actualLevel: 3 },
+          JOIN_GROUP: { actualLevel: 45 },
+          STICKERS_BOOK: { actualLevel: 20 },
+          MINIGAME: { actualLevel: 7 },
+          BOOSTERS_BEFORE: { actualLevel: 6 },
+          RATE_WINDOW: { actualLevel: 18 },
+          SHARED_CHECKBOX: { actualLevel: 7 },
+          SUBSCRIPTION: { actualLevel: 45 },
+          EXIT_CONTROL_BUTTON: { actualLevel: 1 },
+          CHECK_CONNECTION: {
+            actualLevel: 9,
+            crazy: { actualLevel: 2 },
+            yandex: { actualLevel: 2 },
+          },
+          PROLONGATION: { actualLevel: 13 },
+          RESTORE_PROGRESS: { actualLevel: 2 },
+          UNLIMITED_LIVES_THRESHOLD: { actualLevel: 31 },
+          LIGHTNING_RUSH_MISSION: { actualLevel: 31 },
+          STARTER_PACK0: { actualLevel: 20 },
+          STARTER_PACK: { actualLevel: 35 },
+          STARTER_PACK2: { actualLevel: 50 },
+          TREASURE_SEARCH_MISSION: { actualLevel: 39 },
+          BASE_MISSION: { actualLevel: 25 },
+          ROYAL_LEAGUE_MISSION: { actualLevel: 25 },
+          DAILY_CUP: { actualLevel: 75, registered: "7 days" },
+          MENU_BAR_SOFT_FORCE: { actualLevel: 12 },
+          PIGGY_BANK_MISSION: { actualLevel: 27, youtube: { disabled: !0 } },
+          MENU_CONTROL_BUTTON: { actualLevel: 0 },
+          MAGNET_BOOSTER_BEFORE: { actualLevel: 11 },
+          DICE_BOOSTER_BEFORE: { actualLevel: 11 },
+          JOKERS_BOOSTER_BEFORE: { actualLevel: 11 },
+          CHAIN_SALE_OFFER: { actualLevel: 41 },
+          SUPPLIES_SALE_OFFER: { actualLevel: 41 },
+          PROMOTION_SALE_OFFER: { actualLevel: 37, debugMode: !0 },
+          CROSS_PROMO: { actualLevel: 0 },
+          COMBO: { actualLevel: 8 },
+          COMBO_TUTORIAL: { actualLevelEqual: 8 },
+          COMBO_WILD: { actualLevel: 5 },
+          JACKPOT_CARD: { actualLevel: 17 },
+          LEVEL_WITH_COINS: { actualLevel: 8 },
+          WILDCARD_BOOSTER: { actualLevel: 6 },
+          UNDO_BOOSTER: { actualLevel: 4 },
+          EXTRA_HAND: { actualLevel: 12 },
+          FILL_HAND_TUTORIAL: { actualLevelEqual: 13 },
+          INVITE_FRIENDS: { actualLevel: 10 },
+        },
+        adslimits: {
+          adTiers: [
+            "payer",
+            "undecided",
+            "nonpayer20",
+            "nonpayer40",
+            "nonpayer80",
+          ],
+          banner: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: "unlimited", timeout: "0" },
+            nonpayer40: { limit: "unlimited", timeout: "0" },
+            nonpayer80: { limit: "unlimited", timeout: "0" },
+          },
+          preroll: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: 1, timeout: "15 minutes" },
+            nonpayer40: { limit: 1, timeout: "10 minutes" },
+            nonpayer80: { limit: 1, timeout: "5 minutes" },
+          },
+          interstitial: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: 1, timeout: "4 minutes" },
+            nonpayer40: { limit: 1, timeout: "2 minutes" },
+            nonpayer80: { limit: 1, timeout: "1 minutes" },
+            available: { actualLevel: 14 },
+          },
+          product: {
+            payer: { limit: "unlimited", timeout: "0" },
+            undecided: { limit: "unlimited", timeout: "0" },
+            nonpayer20: { limit: "unlimited", timeout: "0" },
+            nonpayer40: { limit: "unlimited", timeout: "0" },
+            nonpayer80: { limit: "unlimited", timeout: "0" },
+          },
+          booster_1: {
+            payer: { disabled: !0 },
+            undecided: { limit: 1, timeout: "5 minutes" },
+            nonpayer20: { limit: 1, timeout: "5 minutes" },
+            nonpayer40: { limit: 1, timeout: "5 minutes" },
+            nonpayer80: { limit: 1, timeout: "5 minutes" },
+          },
+          score_bar: {
+            payer: { limit: 1, timeout: "12 hours" },
+            undecided: { limit: 1, timeout: "5 minutes" },
+            nonpayer20: { limit: 1, timeout: "5 minutes" },
+            nonpayer40: { limit: 1, timeout: "5 minutes" },
+            nonpayer80: { limit: 1, timeout: "5 minutes" },
+          },
+          extend: {
+            payer: { limit: 1, timeout: "12 hours" },
+            undecided: { limit: 1, timeout: "30 minutes" },
+            nonpayer20: { limit: 3, timeout: "15 minutes" },
+            nonpayer40: { limit: 3, timeout: "15 minutes" },
+            nonpayer80: { limit: 3, timeout: "15 minutes" },
+          },
+          booster_2: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: 1, timeout: "15 minutes" },
+            nonpayer40: { limit: 1, timeout: "15 minutes" },
+            nonpayer80: { limit: 1, timeout: "15 minutes" },
+          },
+          booster_3: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: 1, timeout: "1 hour" },
+            nonpayer40: { limit: 1, timeout: "1 hour" },
+            nonpayer80: { limit: 1, timeout: "1 hour" },
+          },
+          toolbar: {
+            payer: { limit: 1, timeout: "22 hours" },
+            undecided: { limit: 10, timeout: "3 hour" },
+            nonpayer20: { limit: 10, timeout: "3 hour" },
+            nonpayer40: { limit: 10, timeout: "3 hour" },
+            nonpayer80: { limit: 10, timeout: "3 hour" },
+            available: { actualLevel: 30 },
+          },
+          lives: {
+            payer: { limit: 1, timeout: "24 hours" },
+            undecided: { limit: 3, timeout: "12 hours" },
+            nonpayer20: { limit: 3, timeout: "12 hours" },
+            nonpayer40: { limit: 3, timeout: "12 hours" },
+            nonpayer80: { limit: 3, timeout: "12 hours" },
+          },
+          hard: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { disabled: !0 },
+            nonpayer40: { disabled: !0 },
+            nonpayer80: { disabled: !0 },
+          },
+          energy_1: {
+            payer: { limit: 1, timeout: "22 hours" },
+            undecided: { limit: 1, timeout: "3 hour" },
+            nonpayer20: { limit: 3, timeout: "1 hour" },
+            nonpayer40: { limit: 3, timeout: "1 hour" },
+            nonpayer80: { limit: 3, timeout: "1 hour" },
+          },
+          energy_2: {
+            payer: { limit: 1, timeout: "22 hours" },
+            undecided: { limit: 1, timeout: "3 hour" },
+            nonpayer20: { limit: 3, timeout: "1 hour" },
+            nonpayer40: { limit: 3, timeout: "1 hour" },
+            nonpayer80: { limit: 3, timeout: "1 hour" },
+          },
+          energy_short_1: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: 9, timeout: "3 hour" },
+            nonpayer40: { limit: 9, timeout: "3 hour" },
+            nonpayer80: { limit: 9, timeout: "3 hour" },
+          },
+          energy_short_2: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { limit: 9, timeout: "3 hour" },
+            nonpayer40: { limit: 9, timeout: "3 hour" },
+            nonpayer80: { limit: 9, timeout: "3 hour" },
+          },
+          flying_cards: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { disabled: !0 },
+            nonpayer40: { limit: 1, timeout: "1 hour" },
+            nonpayer80: { limit: 1, timeout: "1 hour" },
+            available: { actualLevel: 15 },
+          },
+          flying_hint: {
+            payer: { disabled: !0 },
+            undecided: { disabled: !0 },
+            nonpayer20: { disabled: !0 },
+            nonpayer40: { limit: 1, timeout: "15 minutes" },
+            nonpayer80: { limit: 1, timeout: "15 minutes" },
+            available: { actualLevel: 15 },
+          },
+        },
+        version: "1.515.8",
+        name: "tripeaks",
+        type: "solitaire",
+        orientation: "both",
+        ui: "wooden",
+        vibration: !0,
+        libraries: ["cleverapps", "connector", "features"],
+        personsMinimal: { hero: "tripeaks_hero_angela_minimal" },
+        persons: { main: { hero: "tripeaks_elf_emeralda" } },
+        restPort: 3002,
+        features: [
+          "common",
+          "dailytasks",
+          "starter_pack",
+          "loading_scene",
+          "crosspromo",
+          "crosspromo_woodenui",
+          "mini_promo",
+          "synchronizer",
+          "lives",
+          "location_simple",
+          "tilegame",
+          "type_solitaire",
+          "levels",
+          "piggybank",
+          "oldpiggybank",
+          "boosters_before",
+          "lighting_rush",
+          "achievements",
+          "dailylevel",
+          "chainsale",
+          "suppliessale",
+          "stickers_book",
+          "stickers_book_woodenui",
+          "treasure_search",
+          "treasure_search_woodenui",
+          "minigame",
+          "flyingad",
+          "playbutton",
+          "daily_cup",
+          "leagues",
+          "editprofile",
+          "avatar_menubar",
+          "ui_wooden",
+          "dailytasks_woodenui",
+          "weekly_goals",
+          "legacy_coins",
+          "invite_friends",
+          "rewarded_promo_tracker",
+          "uet_consent",
+        ],
+        versionParent: "1.515.2",
+        uiPath: "https://tripeaks.gcdn.co/cleverapps/res/ui/",
+        locationsPath: ["res/locations/"],
+        levelsPath: "features/res/levels/card/",
+        terms: {
+          slimmerbits: {
+            privacy: "https://slimmerbits.com/legal/privacy.html",
+            terms: "https://slimmerbits.com/legal/terms.html",
+            company: {
+              name: "SlimmerBits",
+              legalName: "SlimmerBits LLC-FZ",
+              address: "AL ABBAS BLDG.2, Mankhool, Office AA2, Dubai, UAE",
+              registration: "1043319",
+              jurisdiction: "UAE",
+              privacyEmail: "help.zareefgaming+privacy@gmail.com",
+              supportEmail: "vtbelo+support@gmail.com",
+            },
+          },
+          zareef: {
+            privacy: "https://cleverappssg.com/legal/privacy.html",
+            terms: "https://cleverappssg.com/legal/terms.html",
+            company: {
+              name: "Clever Apps",
+              legalName: "Clever Apps Pte. Ltd.",
+              address:
+                "8 Marina Boulevard #11-00 Marina Bay Financial Centre Singapore 018981",
+              registration: "201706967K",
+              jurisdiction: "Singapore",
+              privacyEmail: "help.cleverapps+privacy@gmail.com",
+              supportEmail: "vtbelo+support@gmail.com",
+            },
+          },
+          cleverapps: {
+            privacy: "https://cleverappssg.com/legal/privacy.html",
+            terms: "https://cleverappssg.com/legal/terms.html",
+            company: {
+              name: "Clever Apps",
+              legalName: "Clever Apps Pte. Ltd.",
+              address:
+                "8 Marina Boulevard #11-00 Marina Bay Financial Centre Singapore 018981",
+              registration: "201706967K",
+              jurisdiction: "Singapore",
+              privacyEmail: "help.cleverapps+privacy@gmail.com",
+              supportEmail: "vtbelo+support@gmail.com",
+            },
+          },
+          vanuplay: {
+            privacy: "https://vanuplay.com/legal/privacy.html",
+            terms: "https://vanuplay.com/legal/terms.html",
+            company: {
+              name: "VanuPlay Innovations",
+              legalName: "VanuPlay Innovations Inc.",
+              address: "Tropicana Area, Korman, Port Vila, Vanuatu",
+              registration: "700739",
+              jurisdiction: "Republic of Vanuatu",
+              privacyEmail: "info@vanuplay.com",
+              supportEmail: "vtbelo+support@gmail.com",
+            },
+          },
+        },
+        products: { noAds: { disabled: ["ios"] } },
+        samsung: { business: "slimmerbits", contentId: "000007833143" },
+        business: "cleverapps",
+        facebookLogin: !0,
+        xsolla: {
+          appId: "191315",
+          loginProjectId: "6036ff99-d356-11ec-8589-42010aa80004",
+        },
+        instant: {
+          appId: "582264172486698",
+          rewarded: "583410035705445",
+          interstitial: "583409625705486",
+          banner: "1301785730534535",
+          business: "vanuplay",
+          groupId: "102297708232957",
+        },
+        android: {
+          package: "com.cleverapps.tripeaks",
+          unityGameId: "",
+          business: "cleverapps",
+          yandexAds: {
+            rewarded: "R-M-2427360-1",
+            interstitial: "R-M-2427360-5",
+            banner: "R-M-2427360-6",
+          },
+          adMob: { rewarded: "ca-app-pub-9277187477340577/6473289950" },
+          appLovin: {
+            rewarded: "b6298d8a99e2e4a3",
+            interstitial: "964de880e61ac6a9",
+            banner: "03fb5b8623f53cac",
+          },
+          rustore: { appId: "2063743333" },
+        },
+        amazon: {
+          package: "com.cleverapps.tripeaks",
+          id: "B08CNK8GSB",
+          adMob: { rewarded: "ca-app-pub-9277187477340577/6764080637" },
+          appLovin: {
+            rewarded: "fdcbba70d21f2ef7",
+            interstitial: "46df1c9e2c66991f",
+            banner: "9753b8ec24e7ec5d",
+          },
+        },
+        ios: {
+          package: "com.cleverapps.tripeaks",
+          id: "1523134029",
+          macos: !0,
+          adMob: { rewarded: "ca-app-pub-9277187477340577/7183736397" },
+          appLovin: {
+            rewarded: "4e93ca71466e3773",
+            interstitial: "4353595655e6b0ef",
+            banner: "a4fe3178e11af9e0",
+          },
+        },
+        ok: {
+          shortname: "tripeaks",
+          appId: "512000516286",
+          appKey: "CPLBOMJGDIHBABABA",
+          groupId: "58210808561834",
+          bridge: !1,
+        },
+        vk: {
+          shortname: "tripeaks",
+          appId: "7522400",
+          groupId: "tripeaks_group",
+        },
+        mm: {
+          appId: "779517",
+          privateKey: "f5117307f5652c346c8a492698ec5520",
+          groupId: "tripeaks",
+        },
+        mbga: { appId: "12026813", groupId: "32863694" },
+        fotostrana: {
+          appId: "tripeaks",
+          privateKey: "b97e8a2478376c1d7261f87ab1b2f8aa",
+          groupId: "352512",
+        },
+        gdcom: { appId: "344fff78cd674f62a549533551505ebb" },
+        yandex: { appId: "173184", counter: 102191676 },
+        rustore: {
+          appId: "87811519",
+          yandexAds: {
+            rewarded: "R-M-8369422-1",
+            interstitial: "R-M-8369422-2",
+            banner: "R-M-8369422-3",
+          },
+        },
+        microsoft: {
+          uetTagId: !1,
+          appId: "9N0Q2287357F",
+          iap: {
+            gold500: "9P3P869D90ZN",
+            unlimitedLives: "9NZMSZSZS1LW",
+            gold1800: "9N98K4ZLL0Q6",
+            gold3800: "9P8SC2QTMQ38",
+            gold6000: "9PDVH7XCR1VS",
+            gold25000: "9PHNKPMNT1Z7",
+            addMoves: "9P2NZ6LS2Z39",
+            addMoves1: "9P89SRSW3LP3",
+            addMoves2: "9PLT2KZN0X69",
+            addMoves3: "9PJD04C78CV2",
+            addMoves5: "9N01HFSMBFN1",
+            starterPack0: "9N43HCJ6MNS5",
+            starterPack: "9NB03GK0NZV0",
+            starterPack2: "9PFKGHXHLRZV",
+            sweetPack: "9N2X362QH5MD",
+            honeyPack: "9PMT7QBV33LJ",
+            jamPack: "9NSF2FLPGBC7",
+            tastyPack: "9PLSDW0LJZBC",
+            epicPack: "9P9Q07PQ3SQT",
+            piggybank500: "9P10WBJKKJLC",
+            piggybank1800: "9NM7CJ9BL4V0",
+            piggybank6000: "9NG74XLRM5KQ",
+            piggybank25000: "9NM7DZD46161",
+            kit1: "9NJH22LRL0KR",
+            kit3: "9NM7ZPLQ3LD4",
+            kit10: "9MTJ8VK2K0J5",
+            kit50: "9NVS1H76CFS3",
+            cheapProduct: "9MWZVDJTM7M5",
+            kit2: "9N5XMX7XLD23",
+            kit4: "9PH46ZFH6XN6",
+            kit5: "9NLNNB8WSX82",
+            kit6: "9PM62ZC8TJRK",
+            kit7: "9PG66KJ87L6V",
+            kit16: "9PKDNCPWD6N3",
+            kit20: "9P7RRFVPKB27",
+            kit30: "9NWTVJ95B201",
+            kit40: "9MZT33XWNTK2",
+            kit100: "9MXPGCZTWST4",
+            kit8: "9P0VL5JC0RQ4",
+          },
+        },
+        gpg: {},
+        kongregate: { appId: "324223", name: "kings-and-queens" },
+        msstart: {
+          name: "Kings and Queens Start Game",
+          appId: "9N9KGVM8DZ8K",
+          packageId: "CleverAppsPteLtd.KingsandQueensStartGame",
+          gameUrl: "https://tripeaks.cleverappssg.com/publish/html5/msstart/",
+          iap: {
+            cheapProduct: "9PLTS24GDQ67",
+            kit1: "9P15ZQ2RQKQR",
+            kit50: "9MV5MW89KXRF",
+            kit10: "9MTHXJBN5V3S",
+            kit3: "9PL4X2X9KRKW",
+            kit2: "9MVPNDSPCMPT",
+            kit4: "9N2BQRZWWLZP",
+            kit5: "9MT7B6RZNTC2",
+            kit6: "9PFFMWHGGV0B",
+            kit7: "9N5N8XF02KNZ",
+            kit16: "9MW3TX3WW2DK",
+            kit20: "9NC1D121RSFZ",
+            kit30: "9NNH0JTM7JN4",
+            kit40: "9N8BLFNFHK55",
+            kit100: "9NRJ1TKK8L76",
+            piggybank500: "9PG5PTV9KLLL",
+            starterPack: "9NJC0GMDMHFD",
+            piggybank1800: "9NT0688S12BK",
+            piggybank25000: "9P1FQ88CZGDR",
+            jamPack: "9N5T0F2XJD3J",
+            gold500: "9PB26Z91V9C8",
+            starterPack2: "9NDR797LNJ24",
+            piggybank6000: "9NV8HPMWHT75",
+            unlimitedLives: "9PJ477MW5J8D",
+            gold3800: "9P71KQFWG80K",
+            gold25000: "9NM1WT2XVD9H",
+            starterPack0: "9NH06KK3XCNZ",
+            sweetPack: "9P6Q3S42FQJ7",
+            honeyPack: "9NRMR3FBV0ZM",
+            gold1800: "9N8RNFH4GKN2",
+            gold6000: "9P6HKR8LMM7B",
+            tastyPack: "9MWQVRFDJ4GQ",
+            epicPack: "9PPBT1W5VL7V",
+            noAds: "9NFBLV58J84W",
+            kit8: "9NXNJRB51W96",
+          },
+        },
+        xiaomi: {
+          sdk: "352b8d51b56c459f",
+          adsense: { client: "ca-pub-5038666584748769", slot: "9823512604" },
+        },
+        crazy: { name: "kings-and-queens", appId: "243560" },
+        yandexWebAds: {
+          banner: "R-A-8667373-1",
+          rewarded: { touch: "R-A-7340069-4", desktop: "R-A-7340069-3" },
+        },
+        spmbga: { appId: "12026813-4" },
+        discord: {
+          appId: "1334835944393805865",
+          groupUrl: "https://discord.gg/tripeaks",
+          iap: {
+            gold500: "1338457445533618248",
+            gold1800: "1338457823046008863",
+            gold3800: "1338458096565223445",
+            gold6000: "1338458307530199048",
+            gold25000: "1338458656458412052",
+            epicpack: "1335855645928329239",
+            honeypack: "1335856670152331285",
+            jampack: "1335857007021920308",
+            kit10: "1335857253726552146",
+            kit3: "1335857565183115285",
+            piggybank1800: "1335861763085697054",
+            piggybank25000: "1335861937694707732",
+            piggybank500: "1335862308215328768",
+            piggybank6000: "1335862514453446756",
+            starterPack: "1335862659605725304",
+            starterPack0: "1335862909221474334",
+            starterPack2: "1335863075932340284",
+            sweetpack: "1335863296334495754",
+            tastypack: "1335863529537929217",
+            unlimitedLives: "1335863673297698856",
+            noAds: "1562081036609921074",
+            kit1: "1562081452659843183",
+            kit2: "1562081822899179631",
+            kit4: "1562082229642068088",
+            kit5: "1562082753665564753",
+            kit6: "1562083412481679361",
+            kit7: "1562084100565639239",
+            kit16: "1562084773009031188",
+            kit20: "1562085274706649158",
+            kit30: "1562085772578922496",
+            kit40: "1562086261379039303",
+            kit50: "1562086778796642335",
+            kit100: "1562087283593580574",
+            kit8: "1566807923844325456",
+          },
+        },
+        gamesnack: { appId: "0ptbttt09g5cg" },
+        youtube: { appId: "Ugkx7e4-_ftnMcfjKtTm1qsl-fjNNa0dwSr7" },
+        draugiem: {
+          appId: "tripeaks",
+          groupId: "tripeakspage",
+          iap: {
+            unlimitedLives: 4524,
+            piggybank500: 4525,
+            piggybank1800: 4526,
+            piggybank6000: 4527,
+            piggybank25000: 4528,
+            cheapProduct: 4529,
+            gold500: 4530,
+            gold1800: 4531,
+            gold3800: 4532,
+            gold6000: 4533,
+            gold25000: 4534,
+            starterPack0: 4535,
+            starterPack: 4536,
+            starterPack2: 4537,
+            subsWeek: 4538,
+            subsMonth: 4539,
+            sweetPack: 4540,
+            jamPack: 4541,
+            tastyPack: 4542,
+            honeyPack: 4543,
+            epicpack: 4544,
+            noads: 4545,
+            kit3: 4546,
+            kit10: 4547,
+            kit2: 4612,
+            kit1: 4674,
+            kit4: 4675,
+            kit5: 4676,
+            kit6: 4677,
+            kit7: 4678,
+            kit16: 4679,
+            kit20: 4680,
+            kit30: 4681,
+            kit40: 4682,
+            kit50: 4683,
+            kit100: 4684,
+            kit8: 4787,
+          },
+        },
+        deployment: "https://tripeaks.cleverappssg.com",
+        staticUrl: "https://tripeaks.gcdn.co/",
+        restApiURL: "https://tripeaks.cleverappssg.com/tripeaks-rest",
+        syncApiURL: "https://tripeaks.cleverappssg.com/tripeaks-rest",
+        payApiURL: "https://pay.cleverappssg.com/tripeaks",
+        ruPayApiURL: "https://pay.labsystech.ru/tripeaks",
+        metricsApiURL: "https://metrics.cleverappssg.com/tripeaks",
+        notificationsJsonURL:
+          "https://tripeaks-staging.cleverappssg.com/pushes.json",
+        crmApiURL: "https://crm.cleverappssg.com/tripeaks",
+        multiApiURL: "https://multi.cleverappssg.com",
+        notificationsApiURL: "https://notifications.cleverappssg.com",
+        remoteConfigURL: "https://remoteconfig.gcdn.co",
+        adminMetricsUrl: "https://metrics.cleverappssg.com",
+        ruMultiApiURL: "https://multi.labsystech.ru",
+        ruNotificationsApiURL: "https://notifications.labsystech.ru",
+        ruRemoteConfigURL:
+          "https://eeb1c40c-8747-432b-afad-d0fa21d91f53.selcdn.net",
+        ruDeployment: "https://tripeaks.labsystech.ru",
+        ruStaticUrl: "https://554b5102-4638-471b-8997-b74e31c26ad6.selcdn.net/",
+        ruRestApiURL: "https://tripeaks.labsystech.ru/tripeaks-rest",
+        ruSyncApiURL: "https://tripeaks.labsystech.ru/tripeaks-rest",
+        ruEnPublishUrl: "https://tripeaks.cleverappssg.com/",
+        ruCrmApiURL: "https://crm.labsystech.ru/tripeaks",
+        ruMetricsApiURL: "https://metrics.labsystech.ru/tripeaks",
+        title: "Kings and Queens",
+        msTags: "tripeaks, card games, tri peaks solitaire, solitaire games",
+        longTitle: "Kings and Queens: Solitaire",
+        debugMode: 0,
+        showFPS: !1,
+        buildTime: "2026-11-20T12:36:04.873Z",
+        launch: !1,
+        languages: [
+          "en",
+          "fr",
+          "ru",
+          "de",
+          "es",
+          "pt",
+          "it",
+          "nl",
+          "ar",
+          "ja",
+          "ko",
+          "tr",
+          "zh",
+          "pl",
+          "lv",
+        ],
+        soft: !1,
+      };
+    </script>
+    <canvas
+      id="GameCanvas"
+      width="48"
+      height="72"
+      style="position: absolute; left: -100000px"
+    ></canvas>
+    <script>
+      var engine = "cocos2d";
+    </script>
+    <script
+      src="https://tripeaks.gcdn.co/cleverapps/res/cocoslib-3_17_2-21e0d1de52.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      cocos
+      src="https://tripeaks.gcdn.co/game-v1.515.8-919e288594.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      connector
+      src="https://tripeaks.gcdn.co/connector-v1.515.8-b1f2948494.js"
+      data-project-id="tripeaks"
+      data-app-version="1.515.8"
+      data-pay-api-url="https://pay.cleverappssg.com/tripeaks"
+      data-metrics-api-url="https://metrics.cleverappssg.com/tripeaks"
+      data-manual-log-payments="true"
+      data-notifications-api-url="https://notifications.cleverappssg.com"
+      data-multi-api-url="https://multi.cleverappssg.com"
+      data-sync-api-url="https://tripeaks.cleverappssg.com/tripeaks-rest"
+      data-remote-config-url="https://remoteconfig.gcdn.co"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

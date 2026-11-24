@@ -1,0 +1,18 @@
+{
+  "game": "spades",
+  "category": "cards",
+  "source_zip": "cards/spades.zip",
+  "zip_sha256": "f536c2b80403d703a20071f888af19fc664cbed5653ae6d980a578f276dae650",
+  "official_slug": "spades",
+  "loader_type": "html5",
+  "game_hosts": [
+    "spades.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://spades.game-files.crazygames.com/spades/1/index.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

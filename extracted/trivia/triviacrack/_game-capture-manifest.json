@@ -1,0 +1,18 @@
+{
+  "game": "triviacrack",
+  "category": "trivia",
+  "source_zip": "trivia/triviacrack.zip",
+  "zip_sha256": "0db42486a879e59e33f1edbd3c5039e98dd67dc0da929f3a9f230f1dbfb41090",
+  "official_slug": "trivia-crack",
+  "loader_type": "html5",
+  "game_hosts": [
+    "trivia-crack.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://trivia-crack.game-files.crazygames.com/trivia-crack/6/index.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

@@ -1,0 +1,18 @@
+{
+  "game": "hearts-classic",
+  "category": "cards",
+  "source_zip": "cards/hearts-classic.zip",
+  "zip_sha256": "c52a8e0953b9c1453fff4c9661a88ef7a3beecbc3880381e313e09bf1904f42a",
+  "official_slug": "hearts-classic",
+  "loader_type": "html5",
+  "game_hosts": [
+    "hearts-classic.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://hearts-classic.game-files.crazygames.com/hearts-classic/2/index.html"
+  ],
+  "game_host_files": 54,
+  "unpacked_game_bytes": 2465415,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

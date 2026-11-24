@@ -1,0 +1,18 @@
+{
+  "game": "crocwords",
+  "category": "Word games",
+  "source_zip": "Word games/crocwords.zip",
+  "zip_sha256": "798335bc962b957950d639eff0820bce8e21f69544b7584a0f2fba299b362ac6",
+  "official_slug": "crocword",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "crocword.cleverappssg.com"
+  ],
+  "loader_urls": [
+    "https://crocword.cleverappssg.com/publish/html5/?source=crazy"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

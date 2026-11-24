@@ -1,0 +1,18 @@
+{
+  "game": "survev",
+  "category": "io games",
+  "source_zip": "io games/survev.zip",
+  "zip_sha256": "2922acc44fd76e39fb284a881c8d72f8545383c95cdbe920a60cc7505ac0d011",
+  "official_slug": "survev",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "survev.io"
+  ],
+  "loader_urls": [
+    "https://survev.io/?crazygames=true"
+  ],
+  "game_host_files": 5,
+  "unpacked_game_bytes": 3998990,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

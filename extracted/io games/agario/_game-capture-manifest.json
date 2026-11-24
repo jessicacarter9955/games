@@ -1,0 +1,18 @@
+{
+  "game": "agario",
+  "category": "io games",
+  "source_zip": "io games/agario.zip",
+  "zip_sha256": "337922513cde6ba84f33780cbdddbde0dc24aeb878f4d3b93916c2a175235c91",
+  "official_slug": "agario",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "agar.io"
+  ],
+  "loader_urls": [
+    "https://agar.io/v0_84d65/#ffa"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

@@ -1,0 +1,18 @@
+{
+  "game": "wordmeister",
+  "category": "Word games",
+  "source_zip": "Word games/wordmeister.zip",
+  "zip_sha256": "13eb50f90013d41e8fc11cbcdd17924cf3852c3aecb54e872a4fb94cb1b0a2d8",
+  "official_slug": "wordmeister",
+  "loader_type": "html5",
+  "game_hosts": [
+    "wordmeister.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://wordmeister.game-files.crazygames.com/wordmeister/6/index.html"
+  ],
+  "game_host_files": 62,
+  "unpacked_game_bytes": 3264541,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

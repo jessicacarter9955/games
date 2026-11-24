@@ -1,0 +1,18 @@
+{
+  "game": "wordguesser",
+  "category": "Word games",
+  "source_zip": "Word games/wordguesser.zip",
+  "zip_sha256": "95d9c642433a6f5e1af2358b37dc4f0ce418869c0f157bfcad4b0a21bf314a52",
+  "official_slug": "worldguessr",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "www.worldguessr.com"
+  ],
+  "loader_urls": [
+    "https://www.worldguessr.com/?crazygames"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

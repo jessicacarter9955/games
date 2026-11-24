@@ -1,0 +1,18 @@
+{
+  "game": "guesstheiranswers",
+  "category": "trivia",
+  "source_zip": "trivia/guesstheiranswers.zip",
+  "zip_sha256": "0af5c6412b9e7a67bc01a8ea9a67cce678d57c0250fcd378ba11928cb60d7c4c",
+  "official_slug": "guess-their-answer",
+  "loader_type": "html5",
+  "game_hosts": [
+    "guess-their-answer.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://guess-their-answer.game-files.crazygames.com/guess-their-answer/13/index.html"
+  ],
+  "game_host_files": 121,
+  "unpacked_game_bytes": 25358493,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

@@ -1,0 +1,18 @@
+{
+  "game": "kittyscramble",
+  "category": "Word games",
+  "source_zip": "Word games/kittyscramble.zip",
+  "zip_sha256": "e01c77d3a16bee16f50550b559d5657d820edeb91f772f377b9433c593dcceb6",
+  "official_slug": "kitty-scramble",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "scramble.cleverappssg.com"
+  ],
+  "loader_urls": [
+    "https://scramble.cleverappssg.com/publish/html5/?source=crazy"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

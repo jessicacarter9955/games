@@ -1,0 +1,18 @@
+{
+  "game": "paperio",
+  "category": "io games",
+  "source_zip": "io games/paperio.zip",
+  "zip_sha256": "8f636e7968118c2c7c924006bcdfe1b37aa2037699feb25f21858ea395e4b6a4",
+  "official_slug": "paper-io-2",
+  "loader_type": "html5",
+  "game_hosts": [
+    "paper-io-2.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://paper-io-2.game-files.crazygames.com/paper-io-2/10/index.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

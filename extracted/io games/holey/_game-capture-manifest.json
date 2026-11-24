@@ -1,0 +1,18 @@
+{
+  "game": "holey",
+  "category": "io games",
+  "source_zip": "io games/holey.zip",
+  "zip_sha256": "b2acc02e35224f5b76975a2d89093b9a3f9caf30782b0f6b641fa3c9d50a3869",
+  "official_slug": "holey-io-battle-royale",
+  "loader_type": "html5",
+  "game_hosts": [
+    "holey-io-battle-royale.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://holey-io-battle-royale.game-files.crazygames.com/holey-io-battle-royale/7/index.html"
+  ],
+  "game_host_files": 4,
+  "unpacked_game_bytes": 9961203,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

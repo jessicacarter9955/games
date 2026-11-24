@@ -1,0 +1,18 @@
+{
+  "game": "snake.io",
+  "category": "io games",
+  "source_zip": "io games/snake.io.zip",
+  "zip_sha256": "bdc309545da610b960f61c2e0496379f93c8d58deb8bcb9513e26301b4637091",
+  "official_slug": "snake-io",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "snake.io"
+  ],
+  "loader_urls": [
+    "https://snake.io/crazygames"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

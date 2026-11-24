@@ -1,0 +1,20 @@
+{
+  "game": "tot or trivia",
+  "category": "trivia",
+  "source_zip": "trivia/tot or trivia.zip",
+  "zip_sha256": "a89e09e55dd84ef37ca802814dfc7e52cfc4467ef632353ca542340e199ce08d",
+  "official_slug": "tot-or-trivia",
+  "loader_type": "5.6.x",
+  "game_hosts": [
+    "files.crazygames.com",
+    "tot-or-trivia.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://tot-or-trivia.game-files.crazygames.com/tot-or-trivia/1/Build/TOT_0_5_2_CG3.json",
+    "https://files.crazygames.com/unityloaders/UnityLoader-v3.js"
+  ],
+  "game_host_files": 2,
+  "unpacked_game_bytes": 73456,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

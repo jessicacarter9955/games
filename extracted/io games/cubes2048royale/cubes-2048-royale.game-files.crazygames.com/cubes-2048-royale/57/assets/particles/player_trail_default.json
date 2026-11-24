@@ -1,0 +1,456 @@
+{
+  "metadata": {
+    "version": 4.6,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "geometries": [
+    {
+      "uuid": "5dc79878-99c0-4527-9667-16d494c4c0b9",
+      "type": "PlaneGeometry",
+      "name": "_geometry",
+      "width": 1,
+      "height": 1,
+      "widthSegments": 1,
+      "heightSegments": 1
+    },
+    {
+      "uuid": "f2a4f1b0-8d94-4bb2-a493-6a90352af838",
+      "type": "BufferGeometry",
+      "name": "Cube_geometry",
+      "data": {
+        "attributes": {
+          "position": {
+            "itemSize": 3,
+            "type": "Float32Array",
+            "array": [
+              0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 1, 0, -1, 1, 0, 1, -1, 0, -1,
+              -1, 0, 1, -1, 0, 1, -1, -0.7963064312934875, -1, -1,
+              -0.7963064312934875, 1, -1, -0.7963064312934875, 1, 1,
+              -0.7963064312934875, -1, 1, -0.7963064312934875, 1,
+              -0.32728517055511475, -1.4167896509170532, -0.32728517055511475,
+              -0.32728517055511475, -1.4167896509170532, -0.32728517055511475,
+              -0.32728517055511475, -1.4167896509170532, 0.32728517055511475,
+              -0.32728517055511475, -1.4167896509170532, 0.32728517055511475,
+              -0.32728517055511475, -1.4167896509170532, 0.32728517055511475,
+              0.32728517055511475, -1.4167896509170532, -0.32728517055511475,
+              0.32728517055511475, -1.4167896509170532, 0.32728517055511475
+            ],
+            "normalized": false
+          },
+          "normal": {
+            "itemSize": 3,
+            "type": "Float32Array",
+            "array": [
+              0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0.7011389136314392,
+              0.12964771687984467, -0.7011389136314392, 0.7011389136314392,
+              0.12964771687984467, 0.7011389136314392, -0.7011389136314392,
+              0.12964771687984467, -0.7011389136314392, -0.7011389136314392,
+              0.12964771687984467, 0.7011389136314392, -0.7011389136314392,
+              0.12964771687984467, 0.7011389136314392, -0.6468662619590759,
+              -0.4038911461830139, -0.6468662619590759, -0.6468662619590759,
+              -0.4038911461830139, 0.6468662619590759, -0.6468662619590759,
+              -0.4038911461830139, 0.6468662619590759, 0.6468662619590759,
+              -0.4038911461830139, -0.6468662619590759, 0.6468662619590759,
+              -0.4038911461830139, 0.6468662619590759, -0.28440049290657043,
+              -0.9155505299568176, -0.28440046310424805, -0.28440049290657043,
+              -0.9155505299568176, -0.28440046310424805, -0.28440049290657043,
+              -0.9155505299568176, 0.28440046310424805, -0.28440049290657043,
+              -0.9155505299568176, 0.28440046310424805, -0.28440049290657043,
+              -0.9155505299568176, 0.28440046310424805, 0.28440049290657043,
+              -0.9155505299568176, -0.28440046310424805, 0.28440049290657043,
+              -0.9155505299568176, 0.28440046310424805
+            ],
+            "normalized": false
+          },
+          "uv": {
+            "itemSize": 2,
+            "type": "Float32Array",
+            "array": [
+              0.625, 0, 0.625, 0.25, 0.625, 0.5, 0.625, 0.75, 0.375, 0.5, 0.375,
+              0.25, 0.375, 0.75, 0.375, 0, 0.375, 1, 0.375, 0.75, 0.375, 0,
+              0.375, 1, 0.375, 0.5, 0.375, 0.25, 0.125, 0.5, 0.375, 0.75, 0.125,
+              0.25, 0.375, 0, 0.375, 1, 0.375, 0.5, 0.375, 0.25
+            ],
+            "normalized": false
+          }
+        },
+        "index": {
+          "type": "Uint16Array",
+          "array": [
+            5, 0, 7, 8, 3, 6, 8, 6, 9, 8, 9, 11, 4, 1, 5, 6, 2, 4, 12, 13, 20,
+            12, 20, 19, 5, 7, 10, 5, 10, 13, 6, 4, 12, 6, 12, 9, 4, 5, 13, 4,
+            13, 12, 14, 19, 20, 14, 20, 16, 9, 12, 19, 9, 19, 15, 13, 10, 17,
+            13, 17, 20, 11, 9, 15, 11, 15, 18
+          ]
+        },
+        "boundingSphere": {
+          "center": [0, 1.7916051745414734, 0],
+          "radius": 3.50625118267774
+        }
+      }
+    }
+  ],
+  "materials": [
+    {
+      "uuid": "6582a1bd-9ea7-4b2e-83b4-bcf1991b7013",
+      "type": "MeshBasicMaterial",
+      "color": 16777215,
+      "map": "53f22aed-fcdf-4953-a676-e3ad366c34e5",
+      "envMapRotation": [0, 0, 0, "XYZ"],
+      "reflectivity": 1,
+      "refractionRatio": 0.98,
+      "blending": 2,
+      "transparent": true,
+      "blendColor": 0
+    },
+    {
+      "uuid": "8b2808bc-8f92-4a16-972d-431d65d22639",
+      "type": "MeshBasicMaterial",
+      "color": 16777215,
+      "map": "0d9b33b0-dcb8-4ae7-a48a-2d056abeffd7",
+      "envMapRotation": [0, 0, 0, "XYZ"],
+      "reflectivity": 1,
+      "refractionRatio": 0.98,
+      "transparent": true,
+      "blendColor": 0
+    }
+  ],
+  "textures": [
+    {
+      "uuid": "53f22aed-fcdf-4953-a676-e3ad366c34e5",
+      "name": "particle_white.png",
+      "image": "3fddf0e8-529e-4c24-ab7b-177afc0748a0",
+      "mapping": 300,
+      "channel": 0,
+      "repeat": [1, 1],
+      "offset": [0, 0],
+      "center": [0, 0],
+      "rotation": 0,
+      "wrap": [1001, 1001],
+      "format": 1023,
+      "internalFormat": null,
+      "type": 1009,
+      "colorSpace": "",
+      "minFilter": 1008,
+      "magFilter": 1006,
+      "anisotropy": 1,
+      "flipY": true,
+      "generateMipmaps": true,
+      "premultiplyAlpha": false,
+      "unpackAlignment": 4
+    },
+    {
+      "uuid": "0d9b33b0-dcb8-4ae7-a48a-2d056abeffd7",
+      "name": "px_white.png",
+      "image": "dd69dec7-2888-4501-ba83-b03bcdf7acdd",
+      "mapping": 300,
+      "channel": 0,
+      "repeat": [1, 1],
+      "offset": [0, 0],
+      "center": [0, 0],
+      "rotation": 0,
+      "wrap": [1001, 1001],
+      "format": 1023,
+      "internalFormat": null,
+      "type": 1009,
+      "colorSpace": "",
+      "minFilter": 1008,
+      "magFilter": 1006,
+      "anisotropy": 1,
+      "flipY": true,
+      "generateMipmaps": true,
+      "premultiplyAlpha": false,
+      "unpackAlignment": 4
+    }
+  ],
+  "images": [
+    {
+      "uuid": "3fddf0e8-529e-4c24-ab7b-177afc0748a0",
+      "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUJSURBVHgB7Vs5jBRHFH2zpy/AxkfmxDizLRtCW5YDR85sJ3aAgAQE4kqQQEAKApYIIQFLAkJcGUREECAIOQUxEmSIQ5BxLMV/U/W3q6vP2enu7VnmSU8z0zN9/Ne/flX//wcYYoghhviA0UGDMMZ0Cs5r9E2n0zFoALULEBid9j7284C1C1GrAM54cgSR0SPe59jPhe8cjfe5ViFqEcAz3DeYHHX0BeCrGjwDa7S+hoJULkSlAnjurgaqsWOOXwh/F/4l/FX4rfv9PeF94TXhWVgB3sIaz1ffOyoVoTIBUtydxqvhS4UbhOuEiwsO9Ug4LTwqfAMrwAziXtFYkCwFGi8cEY4JJ4SfCBcLvxSuEj40vYP7bBEudcf62B17zJ2r0RksE874UeG4cFL4qfBz4TLhJdM/zglXCJe4Y086EUbdufsSYs47m/h41wBHdx8XLheeQDTG+wWHxWrhbcSHRXdI9DMcRjAHpBivhk8INwovozrj4Y51xR17wp1PA2zzwyFwe47NRcaO9ylTPw64cy1y5x7X4YC6oWMuMJ4B6ivhtGkO01WJUHoHk+/2h4X/oVmchx0Sr2Fjgq4beooJY2V+1ELj4Z1zk7eNIvB6S4tQSgCHNhmv0HNv9Lb1JEKhAO7up011ezG/xitCEdRoxorCFWPuNGjiy1sar3d+h3At2gOKwGsKp8jChVKmBwTG+67PE21D+8Br4t3e5z7rnX+X5wmp6qTceRpPdVcKD6Hd2Co8hWB2mIsAofErYFd4bccL4b/Cm4hE6C6b00RIxICUoEe3/w52bT8IWAJ7rctQYskc2+C5vh/tefepZpVr+ybAJMvfwseIHqC62SXfE0IPSLv7nO4GzXjiR+F2RDMDmchFzgoQBD69+8zitGm66xW8dtpAW1Knxtk3stGf7qja98IbGHwwKP4Da8tsUNRhEA4BFYE5vAtYGGBQPAlrk5+e76IrgOf+um1Qx30WaMse5MUAeGWp4P1CQsKuMAZo5P9GeBULxwseCv9ANCUyBnTT66EHaAHiuXCV8CUWBhgEnyGoMhFhEFQBGCnvCqcw+NgtfAAvY+R/mScAp4wjwuMYXLDCRBu6bu8YWwlmLYX99cDXwovCHzBYYC2BD3CvUHYp7L5QL5hxOz6BjQePMDjgtfI5ICyimPCJsCgfoGvoSeEvsIujouJmG/An4o/D3QpzqcdhwvMELVPzQHdgA0rbsUV4C/G7b7ISIpk5QbeDDgUV4YzwINoLXttpBK6flxgtkxZXT9Bhsd9tb1tekMYzHxjLAhXtVFgZypgZ2lAT8MHpbies8ZkRPw2lSmM5maI2iOCXyHoynihVGeKBmFqGdSsfWpaaLxHC+mDmdJeF0qWxFoqQVhzNjfiVwET9QPNZHj9mkuXx5holckRookFial6NzxDhIxN1iew29WGXsV1jn7lz9m18X6qZ5BSp0+TPsHm4Kpuk1iC5wqt/zBfBxHsE/Ta55ca2uPULttqx5S5sk2tdryAviH06YaPkZjP3RsnVJtkoWUl/oKLqXmHNuvqFVeV62FbZomHBNNwx2FbZp6i5VbZyFzLJvgIVQl//F/4m/AlRkoVj/LrwEmzDNPN3/sKm5wVOWdTZLk+EXePaLq8Cze6CeEe4b7hur6VBuok/TBD+0PCrM/pfASApQq2GKxqJoib5t5lYeUp/hob/LqMX1Cjyoner/gMwxBBDDPEh4D31ZzXDaKD9JQAAAABJRU5ErkJggg=="
+    },
+    {
+      "uuid": "dd69dec7-2888-4501-ba83-b03bcdf7acdd",
+      "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAdSURBVHgB3cqxAQAADAEw7f8/4wJ2mXM0BI9iIwgbbgQMhWWb4wAAAABJRU5ErkJggg=="
+    }
+  ],
+  "object": {
+    "uuid": "179f21c4-a493-4ef3-8176-2d76556620ae",
+    "type": "Scene",
+    "layers": 1,
+    "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    "up": [0, 1, 0],
+    "background": 2236962,
+    "children": [
+      {
+        "uuid": "5857958f-3120-40e3-9cc8-8ad94272596b",
+        "type": "Group",
+        "layers": 1,
+        "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        "up": [0, 1, 0],
+        "children": [
+          {
+            "uuid": "4eadbb45-af14-4d01-8b27-dea2b6711f78",
+            "type": "ParticleEmitter",
+            "name": "sprint_default",
+            "layers": 1,
+            "matrix": [
+              0.35, 0, 0, 0, 0, 0.35, 0, 0, 0, 0, 0.35, 0, 0, 0.5, -1, 1
+            ],
+            "up": [0, 1, 0],
+            "ps": {
+              "version": "3.0",
+              "autoDestroy": false,
+              "looping": true,
+              "prewarm": false,
+              "duration": 1,
+              "shape": {
+                "type": "grid",
+                "width": 4,
+                "height": 4,
+                "column": 10,
+                "row": 10
+              },
+              "startLife": { "type": "IntervalValue", "a": 0.15, "b": 0.2 },
+              "startSpeed": { "type": "ConstantValue", "value": 20 },
+              "startRotation": { "type": "ConstantValue", "value": 0 },
+              "startSize": { "type": "ConstantValue", "value": 0.5 },
+              "startColor": {
+                "type": "ConstantColor",
+                "color": { "r": 1, "g": 1, "b": 1, "a": 1 }
+              },
+              "emissionOverTime": { "type": "ConstantValue", "value": 10 },
+              "emissionOverDistance": { "type": "ConstantValue", "value": 0 },
+              "emissionBursts": [],
+              "onlyUsedByOther": false,
+              "instancingGeometry": "5dc79878-99c0-4527-9667-16d494c4c0b9",
+              "renderOrder": 1,
+              "renderMode": 3,
+              "rendererEmitterSettings": {
+                "startLength": { "type": "ConstantValue", "value": 10 },
+                "followLocalOrigin": false
+              },
+              "material": "6582a1bd-9ea7-4b2e-83b4-bcf1991b7013",
+              "layers": 1,
+              "startTileIndex": { "type": "ConstantValue", "value": 0 },
+              "uTileCount": 1,
+              "vTileCount": 1,
+              "blendTiles": false,
+              "softParticles": false,
+              "softFarFade": 0,
+              "softNearFade": 0,
+              "behaviors": [
+                {
+                  "type": "ColorOverLife",
+                  "color": {
+                    "type": "Gradient",
+                    "color": {
+                      "type": "CLinearFunction",
+                      "subType": "Color",
+                      "keys": [
+                        { "value": { "r": 1, "g": 1, "b": 1 }, "pos": 0 },
+                        { "value": { "r": 1, "g": 1, "b": 1 }, "pos": 1 }
+                      ]
+                    },
+                    "alpha": {
+                      "type": "CLinearFunction",
+                      "subType": "Number",
+                      "keys": [
+                        { "value": 1, "pos": 0 },
+                        { "value": 0, "pos": 1 }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "SizeOverLife",
+                  "size": {
+                    "type": "PiecewiseBezier",
+                    "functions": [
+                      {
+                        "function": { "p0": 1, "p1": 1, "p2": 0, "p3": 0 },
+                        "start": 0
+                      }
+                    ]
+                  }
+                }
+              ],
+              "worldSpace": true
+            }
+          },
+          {
+            "uuid": "4f876f26-3204-43d4-8eab-0675fb3a1adf",
+            "type": "ParticleEmitter",
+            "name": "speed_lines_right",
+            "layers": 1,
+            "matrix": [
+              0.24714820057134418, -0.24688457546998052, -0.021581782812225676,
+              0, 0.24714820057134404, 0.24778864611860352,
+              -0.004307413267390496, 0, 0.01831758468503033,
+              -0.012198083854315556, 0.3493074188184239, 0, 0.35, 0, -0.5, 1
+            ],
+            "up": [0, 1, 0],
+            "ps": {
+              "version": "3.0",
+              "autoDestroy": false,
+              "looping": true,
+              "prewarm": false,
+              "duration": 1,
+              "shape": {
+                "type": "grid",
+                "width": 0.1,
+                "height": 0.1,
+                "column": 10,
+                "row": 10
+              },
+              "startLife": { "type": "ConstantValue", "value": 1 },
+              "startSpeed": { "type": "ConstantValue", "value": 10 },
+              "startRotation": {
+                "type": "AxisAngle",
+                "axis": { "x": 1, "y": 0, "z": 0 },
+                "angle": { "type": "ConstantValue", "value": 0.5 }
+              },
+              "startSize": { "type": "ConstantValue", "value": 0.5 },
+              "startColor": {
+                "type": "ConstantColor",
+                "color": { "r": 1, "g": 1, "b": 1, "a": 1 }
+              },
+              "emissionOverTime": { "type": "ConstantValue", "value": 10 },
+              "emissionOverDistance": { "type": "ConstantValue", "value": 0 },
+              "emissionBursts": [],
+              "onlyUsedByOther": false,
+              "instancingGeometry": "f2a4f1b0-8d94-4bb2-a493-6a90352af838",
+              "renderOrder": 1,
+              "renderMode": 2,
+              "rendererEmitterSettings": {},
+              "material": "8b2808bc-8f92-4a16-972d-431d65d22639",
+              "layers": 1,
+              "startTileIndex": { "type": "ConstantValue", "value": 0 },
+              "uTileCount": 1,
+              "vTileCount": 1,
+              "blendTiles": false,
+              "softParticles": false,
+              "softFarFade": 0,
+              "softNearFade": 0,
+              "behaviors": [
+                {
+                  "type": "SizeOverLife",
+                  "size": {
+                    "type": "PiecewiseBezier",
+                    "functions": [
+                      {
+                        "function": {
+                          "p0": 1,
+                          "p1": 1,
+                          "p2": 0.19666666666666666,
+                          "p3": 0.19666666666666666
+                        },
+                        "start": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "Rotation3DOverLife",
+                  "angularVelocity": {
+                    "type": "AxisAngle",
+                    "axis": { "x": 0.25, "y": 0, "z": 0 },
+                    "angle": { "type": "ConstantValue", "value": 10 }
+                  }
+                }
+              ],
+              "worldSpace": false
+            }
+          },
+          {
+            "uuid": "8ebd15a1-b439-458b-94cd-6fc08ff2110c",
+            "type": "ParticleEmitter",
+            "name": "speed_lines_left",
+            "layers": 1,
+            "matrix": [
+              0.24714820057134423, 0.24688457546998058, 0.021581782812225683, 0,
+              -0.24714820057134404, 0.24778864611860352, -0.004307413267390496,
+              0, -0.018317584685030332, -0.012198083854315558,
+              0.349307418818424, 0, -0.35000000000000003, 0,
+              -0.5000000000000001, 1
+            ],
+            "up": [0, 1, 0],
+            "ps": {
+              "version": "3.0",
+              "autoDestroy": false,
+              "looping": true,
+              "prewarm": false,
+              "duration": 1,
+              "shape": {
+                "type": "grid",
+                "width": 0.1,
+                "height": 0.1,
+                "column": 10,
+                "row": 10
+              },
+              "startLife": { "type": "ConstantValue", "value": 1 },
+              "startSpeed": { "type": "ConstantValue", "value": 10 },
+              "startRotation": {
+                "type": "AxisAngle",
+                "axis": { "x": 1, "y": 0, "z": 0 },
+                "angle": { "type": "ConstantValue", "value": 0.5 }
+              },
+              "startSize": { "type": "ConstantValue", "value": 0.5 },
+              "startColor": {
+                "type": "ConstantColor",
+                "color": { "r": 1, "g": 1, "b": 1, "a": 1 }
+              },
+              "emissionOverTime": { "type": "ConstantValue", "value": 10 },
+              "emissionOverDistance": { "type": "ConstantValue", "value": 0 },
+              "emissionBursts": [],
+              "onlyUsedByOther": false,
+              "instancingGeometry": "f2a4f1b0-8d94-4bb2-a493-6a90352af838",
+              "renderOrder": 1,
+              "renderMode": 2,
+              "rendererEmitterSettings": {},
+              "material": "8b2808bc-8f92-4a16-972d-431d65d22639",
+              "layers": 1,
+              "startTileIndex": { "type": "ConstantValue", "value": 0 },
+              "uTileCount": 1,
+              "vTileCount": 1,
+              "blendTiles": false,
+              "softParticles": false,
+              "softFarFade": 0,
+              "softNearFade": 0,
+              "behaviors": [
+                {
+                  "type": "SizeOverLife",
+                  "size": {
+                    "type": "PiecewiseBezier",
+                    "functions": [
+                      {
+                        "function": {
+                          "p0": 1,
+                          "p1": 1,
+                          "p2": 0.19666666666666666,
+                          "p3": 0.19666666666666666
+                        },
+                        "start": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "Rotation3DOverLife",
+                  "angularVelocity": {
+                    "type": "AxisAngle",
+                    "axis": { "x": 0.25, "y": 0, "z": 0 },
+                    "angle": { "type": "ConstantValue", "value": 10 }
+                  }
+                }
+              ],
+              "worldSpace": false
+            }
+          }
+        ]
+      }
+    ],
+    "backgroundRotation": [0, 0, 0, "XYZ"],
+    "environmentRotation": [0, 0, 0, "XYZ"]
+  }
+}

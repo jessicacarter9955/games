@@ -1,0 +1,18 @@
+{
+  "game": "duowithfriends",
+  "category": "cards",
+  "source_zip": "cards/duowithfriends.zip",
+  "zip_sha256": "b173b648a39453968ebd1adf1236244f02dcc762bfe982929e0f213f7e5c23ed",
+  "official_slug": "duo-with-friends",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "duowfriends.eu"
+  ],
+  "loader_urls": [
+    "https://duowfriends.eu/?nomenu=1"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 4573,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

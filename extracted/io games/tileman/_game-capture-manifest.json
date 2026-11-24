@@ -1,0 +1,18 @@
+{
+  "game": "tileman",
+  "category": "io games",
+  "source_zip": "io games/tileman.zip",
+  "zip_sha256": "918721b25e4a076fca8a5e863a92be6f99e1fdacd6053133f0999dc183deec4f",
+  "official_slug": "tileman-io",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "crazygames.tileman.io"
+  ],
+  "loader_urls": [
+    "https://crazygames.tileman.io/?crazygames"
+  ],
+  "game_host_files": 15,
+  "unpacked_game_bytes": 844175,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

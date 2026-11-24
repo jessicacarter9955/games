@@ -1,0 +1,18 @@
+{
+  "game": "hangman",
+  "category": "Word games",
+  "source_zip": "Word games/hangman.zip",
+  "zip_sha256": "55267c89f783245021f8199481117a1583943a2e2792d42bfbf8b34de581d25f",
+  "official_slug": "hangman-cfc",
+  "loader_type": "html5",
+  "game_hosts": [
+    "hangman-cfc.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://hangman-cfc.game-files.crazygames.com/hangman-cfc/2/index.html"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 69703,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

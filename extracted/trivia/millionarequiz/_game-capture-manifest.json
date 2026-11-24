@@ -1,0 +1,18 @@
+{
+  "game": "millionarequiz",
+  "category": "trivia",
+  "source_zip": "trivia/millionarequiz.zip",
+  "zip_sha256": "cbfb5954803fd37c77755365bd8727a60d9739f35fb5f4502ffaf165f1f96ae6",
+  "official_slug": "millionaire-quiz",
+  "loader_type": "html5",
+  "game_hosts": [
+    "millionaire-quiz.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://millionaire-quiz.game-files.crazygames.com/millionaire-quiz/1/index.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

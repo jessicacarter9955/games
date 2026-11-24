@@ -1,0 +1,18 @@
+{
+  "game": "dominoduel",
+  "category": "cards",
+  "source_zip": "cards/dominoduel.zip",
+  "zip_sha256": "6fc8191dc64695b512c0a262f18e481f3c55c95a6b476ae9ffaa2f59ac530ec6",
+  "official_slug": "domino-duel-uit",
+  "loader_type": "html5",
+  "game_hosts": [
+    "domino-duel-uit.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://domino-duel-uit.game-files.crazygames.com/domino-duel-uit/239/index.html"
+  ],
+  "game_host_files": 8,
+  "unpacked_game_bytes": 10381116,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

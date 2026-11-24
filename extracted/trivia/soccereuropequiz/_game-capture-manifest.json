@@ -1,0 +1,26 @@
+{
+  "game": "soccereuropequiz",
+  "category": "trivia",
+  "source_zip": "trivia/soccereuropequiz.zip",
+  "zip_sha256": "798809d8e9cd147af0b7ff4ca90d44a200323e78852e55e7b6c406bc223d53f4",
+  "official_slug": "soccer-europe-quiz",
+  "loader_type": "unity6",
+  "game_hosts": [
+    "files.crazygames.com",
+    "soccer-europe-quiz.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/fd94fa07e893fda188007b729287886e.loader.js",
+    "https://files.crazygames.com/soccer-europe-quiz/22",
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/d60d7876ca748ef3429eff071c3aac94.wasm.br",
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/f942568b1c80a161cd81edc42e3570be.data.br",
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/astc_62a7cff8b0b57f79812efc0cd856fcfa.data.br",
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/a7d8af3609bcea8f033d9cda877f4ca7.framework.js.br",
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/max_512mb_b22bf2d4a16b26bb1a23dfa92b07ab82.wasm.br",
+    "https://files.crazygames.com/soccer-europe-quiz/22/Build/max_1024mb_d60d7876ca748ef3429eff071c3aac94.wasm.br"
+  ],
+  "game_host_files": 5,
+  "unpacked_game_bytes": 555876,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

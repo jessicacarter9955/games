@@ -1,0 +1,18 @@
+{
+  "game": "wordofwonders",
+  "category": "Word games",
+  "source_zip": "Word games/wordofwonders.zip",
+  "zip_sha256": "826c16c7e6b606461abdc4f0615cd1b50c15840f766077611aa5efc0027e8f98",
+  "official_slug": "words-of-wonders",
+  "loader_type": "html5",
+  "game_hosts": [
+    "words-of-wonders.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://words-of-wonders.game-files.crazygames.com/words-of-wonders/119/index.html"
+  ],
+  "game_host_files": 12,
+  "unpacked_game_bytes": 3504890,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

@@ -1,0 +1,18 @@
+{
+  "game": "las vegas poker",
+  "category": "cards",
+  "source_zip": "cards/las vegas poker.zip",
+  "zip_sha256": "9eb522882c206da25047d31017a56c6ee62c9beef6922be1ddfe1859991df679",
+  "official_slug": "las-vegas-poker",
+  "loader_type": "html5",
+  "game_hosts": [
+    "las-vegas-poker.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://las-vegas-poker.game-files.crazygames.com/las-vegas-poker/9/index.html"
+  ],
+  "game_host_files": 60,
+  "unpacked_game_bytes": 13662676,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

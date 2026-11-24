@@ -1,0 +1,18 @@
+{
+  "game": "hexanaut.io",
+  "category": "io games",
+  "source_zip": "io games/hexanaut.io.zip",
+  "zip_sha256": "5e39abbc0d1b1f2202791700f8995b04c80f812a6f62a9512e4777b60cdc36b3",
+  "official_slug": "hexanaut-io",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "hexanaut.io"
+  ],
+  "loader_urls": [
+    "https://hexanaut.io/indexCrazy.html"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

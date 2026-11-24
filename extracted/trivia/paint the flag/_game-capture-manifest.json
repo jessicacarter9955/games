@@ -1,0 +1,22 @@
+{
+  "game": "paint the flag",
+  "category": "trivia",
+  "source_zip": "trivia/paint the flag.zip",
+  "zip_sha256": "449fbe5c36d1f1b4b70f22ab0185494dfead8a58a5cfc6ce78bedd4b875d592f",
+  "official_slug": "paint-the-flag",
+  "loader_type": "unity2021",
+  "game_hosts": [
+    "paint-the-flag.game-files.crazygames.com"
+  ],
+  "loader_urls": [
+    "https://paint-the-flag.game-files.crazygames.com/paint-the-flag/4/Build/WebGLBuild.loader.js",
+    "https://paint-the-flag.game-files.crazygames.com/paint-the-flag/4/Build/03a3550eb90081aa887769233d5278f8.wasm.br",
+    "https://paint-the-flag.game-files.crazygames.com/paint-the-flag/4/Build/b320e3dedb4eacc912f05ba2169a93ba.data.br",
+    "https://paint-the-flag.game-files.crazygames.com/paint-the-flag/4/Build/59e4611034e0a83c8c9b26d515ad5f6a.js.br",
+    "https://paint-the-flag.game-files.crazygames.com/paint-the-flag/4/StreamingAssets"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 69703,
+  "capture_status": "partial_or_unverified",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}

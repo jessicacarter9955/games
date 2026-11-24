@@ -1,0 +1,96 @@
+.progress-container.svelte-18ryhmt {
+  border-radius: var(--box-margin);
+  background-color: var(--box-color);
+  width: 100%;
+  height: 120px;
+  box-shadow: var(--box-shadow);
+  padding-inline: 25px;
+  position: relative;
+}
+.progress-bar-wrapper.svelte-18ryhmt {
+  width: calc(100% - 60px);
+  height: 100%;
+  margin: 0 30px;
+  position: relative;
+}
+.progress-bar.svelte-18ryhmt {
+  width: 100%;
+  height: var(--panel-margin);
+  border-radius: 6px;
+  position: absolute;
+  top: 50%;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+.progress-bar-fill.svelte-18ryhmt {
+  background: var(--brand-color);
+  height: 100%;
+  box-shadow: var(--bulb-shadow);
+  border-radius: 6px;
+  transition: width 0.3s;
+}
+.division-marker.svelte-18ryhmt {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.division-circle.svelte-18ryhmt {
+  z-index: 10;
+  width: 45px;
+  height: 45px;
+  box-shadow: var(--bulb-shadow);
+  --content-shadow-color: #5b5c5f;
+  background-color: #727377;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+.division-text.svelte-18ryhmt {
+  color: #fff;
+  z-index: 1;
+  font-size: 22px;
+  position: relative;
+}
+.elo-indicator.svelte-18ryhmt {
+  z-index: -1;
+  flex-direction: column;
+  align-items: center;
+  height: 50%;
+  transition: left 0.3s;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+}
+.elo-line.svelte-18ryhmt {
+  background: var(--brand-color);
+  width: 2px;
+  height: 14px;
+  margin-top: var(--layout-margin);
+  border-radius: var(--content-margin);
+}
+.elo-value.svelte-18ryhmt {
+  color: var(--brand-color);
+  box-shadow: var(--box-shadow);
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  border-radius: var(--content-margin);
+  background-color: #0000004d;
+  margin-top: 4px;
+  padding-inline: 2px;
+  font-size: 18px;
+  overflow: hidden;
+}
+.active-division.svelte-18ryhmt {
+  --content-shadow-color: #7e8186;
+  background-color: #a0a2a6;
+}
+@media (width<=800px) {
+  .division-circle.svelte-18ryhmt {
+    width: 40px;
+    height: 40px;
+  }
+}

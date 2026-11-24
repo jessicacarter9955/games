@@ -1,0 +1,18 @@
+{
+  "game": "gulper.io",
+  "category": "io games",
+  "source_zip": "io games/gulper.io.zip",
+  "zip_sha256": "2503d287708c0393d2ce69d87837c32a545c61ad075f1aa542409dc2a6bf02ee",
+  "official_slug": "gulper-io",
+  "loader_type": "iframe",
+  "game_hosts": [
+    "gulper.io"
+  ],
+  "loader_urls": [
+    "https://gulper.io/"
+  ],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "Captured assets only; a valid ZIP does not prove the full game runs offline."
+}
