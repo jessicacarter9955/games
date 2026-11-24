@@ -20,3 +20,11 @@ Puoi anche avviare il workflow dalla scheda **Actions** > **Unpack game archives
 - Non caricare credenziali, token, chiavi o contenuti che non hai il diritto di condividere.
 
 Questo repository è pubblico: controlla i diritti di ridistribuzione dei giochi prima di caricarli.
+
+## Categorie aggiunte (24 novembre 2026)
+
+I nuovi ZIP sono organizzati nelle cartelle io games/, trivia/, Word games/ e cards/.
+Il workflow elabora gli ZIP di queste categorie e i vecchi ZIP nella radice.
+Gli output sono salvati sotto extracted/<categoria>/<nome ZIP>/, mentre le estrazioni precedenti restano sotto extracted/<nome ZIP>/.
+
+Per le nuove categorie, gli host del gioco vengono identificati tramite il loader della pagina CrazyGames archiviata nello ZIP. File del portale, annunci e tracker non vengono estratti. Ogni ZIP genera un manifest _game-capture-manifest.json, anche se non conteneva ancora asset del gioco. Un manifest non garantisce un mirror completo ne un gioco avviabile offline. Gli ZIP originali sono conservati.
