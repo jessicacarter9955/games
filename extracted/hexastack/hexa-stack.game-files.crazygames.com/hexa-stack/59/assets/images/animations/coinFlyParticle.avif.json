@@ -1,0 +1,81 @@
+{
+  "frames": {
+    "Coin_Fly_Part_8": {
+      "frame": { "x": 2, "y": 2, "w": 119, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 119, "h": 132 },
+      "sourceSize": { "w": 119, "h": 132 }
+    },
+    "Coin_Fly_Part_7": {
+      "frame": { "x": 123, "y": 2, "w": 89, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 89, "h": 132 },
+      "sourceSize": { "w": 89, "h": 132 }
+    },
+    "Coin_Fly_Part_6": {
+      "frame": { "x": 2, "y": 136, "w": 61, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 61, "h": 132 },
+      "sourceSize": { "w": 61, "h": 132 }
+    },
+    "Coin_Fly_Part_5": {
+      "frame": { "x": 65, "y": 136, "w": 28, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 28, "h": 132 },
+      "sourceSize": { "w": 28, "h": 132 }
+    },
+    "Coin_Fly_Part_4": {
+      "frame": { "x": 95, "y": 136, "w": 61, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 61, "h": 132 },
+      "sourceSize": { "w": 61, "h": 132 }
+    },
+    "Coin_Fly_Part_3": {
+      "frame": { "x": 158, "y": 136, "w": 89, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 89, "h": 132 },
+      "sourceSize": { "w": 89, "h": 132 }
+    },
+    "Coin_Fly_Part_2": {
+      "frame": { "x": 2, "y": 270, "w": 119, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 119, "h": 132 },
+      "sourceSize": { "w": 119, "h": 132 }
+    },
+    "Coin_Fly_Part_1": {
+      "frame": { "x": 123, "y": 270, "w": 133, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 133, "h": 132 },
+      "sourceSize": { "w": 133, "h": 132 }
+    }
+  },
+  "animations": {
+    "Coin_Fly_Part": [
+      "Coin_Fly_Part_1",
+      "Coin_Fly_Part_2",
+      "Coin_Fly_Part_3",
+      "Coin_Fly_Part_4",
+      "Coin_Fly_Part_5",
+      "Coin_Fly_Part_6",
+      "Coin_Fly_Part_7",
+      "Coin_Fly_Part_8"
+    ]
+  },
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "coinFlyParticle.avif",
+    "format": "RGBA8888",
+    "size": { "w": 258, "h": 404 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

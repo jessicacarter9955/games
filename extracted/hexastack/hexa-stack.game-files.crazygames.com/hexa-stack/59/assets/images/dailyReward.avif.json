@@ -1,0 +1,98 @@
+{
+  "frames": {
+    "Yellow_Rays": {
+      "frame": { "x": 2, "y": 2, "w": 162, "h": 132 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 132 },
+      "sourceSize": { "w": 162, "h": 132 }
+    },
+    "Position_Dot": {
+      "frame": { "x": 2, "y": 136, "w": 62, "h": 68 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 62, "h": 68 },
+      "sourceSize": { "w": 62, "h": 68 }
+    },
+    "Green_Link": {
+      "frame": { "x": 166, "y": 2, "w": 7, "h": 86 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 7, "h": 86 },
+      "sourceSize": { "w": 7, "h": 86 }
+    },
+    "Daily_Reward_Title": {
+      "frame": { "x": 175, "y": 2, "w": 457, "h": 208 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 457, "h": 208 },
+      "sourceSize": { "w": 457, "h": 208 }
+    },
+    "Daily_Reward_Pop_Up_Blue_Top": {
+      "frame": { "x": 2, "y": 212, "w": 569, "h": 188 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 569, "h": 188 },
+      "sourceSize": { "w": 569, "h": 188 }
+    },
+    "Daily_Reward_Icon_Coins": {
+      "frame": { "x": 2, "y": 402, "w": 101, "h": 92 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 101, "h": 92 },
+      "sourceSize": { "w": 101, "h": 92 }
+    },
+    "Daily_Reward_Icon_Button": {
+      "frame": { "x": 2, "y": 496, "w": 129, "h": 129 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 129, "h": 129 },
+      "sourceSize": { "w": 129, "h": 129 }
+    },
+    "Daily_Reward_Background": {
+      "frame": { "x": 133, "y": 402, "w": 417, "h": 121 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 417, "h": 121 },
+      "sourceSize": { "w": 417, "h": 121 }
+    },
+    "Daily_Nod_Middle": {
+      "frame": { "x": 552, "y": 402, "w": 78, "h": 64 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 78, "h": 64 },
+      "sourceSize": { "w": 78, "h": 64 }
+    },
+    "Daily_Nod_LIne_Between": {
+      "frame": { "x": 66, "y": 136, "w": 48, "h": 69 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 69 },
+      "sourceSize": { "w": 48, "h": 69 }
+    },
+    "Daily_Nod_Extremity": {
+      "frame": { "x": 552, "y": 468, "w": 78, "h": 71 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 78, "h": 71 },
+      "sourceSize": { "w": 78, "h": 71 }
+    },
+    "Checked_Position_Dot": {
+      "frame": { "x": 133, "y": 541, "w": 62, "h": 68 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 62, "h": 68 },
+      "sourceSize": { "w": 62, "h": 68 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "dailyReward.avif",
+    "format": "RGBA8888",
+    "size": { "w": 634, "h": 627 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

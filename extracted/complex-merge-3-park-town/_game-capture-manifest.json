@@ -1,0 +1,10 @@
+{
+  "game": "complex-merge-3-park-town",
+  "source_zip": "complex-merge-3-park-town.zip",
+  "zip_sha256": "8fd45931e0a7e4ef46f00f4ea77fd35bc1faf2ad045f339ea240b8ffff192d82",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

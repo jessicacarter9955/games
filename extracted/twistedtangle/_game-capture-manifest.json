@@ -1,0 +1,12 @@
+{
+  "game": "twistedtangle",
+  "source_zip": "twistedtangle.zip",
+  "zip_sha256": "9ed54b7bf4a1476e4a06d3293dfbae38ec3dcb6d491d52d2e04c3fd26b49764a",
+  "selected_hosts": [
+    "twisted-tangle-nmt.game-files.crazygames.com"
+  ],
+  "game_host_files": 2,
+  "unpacked_game_bytes": 83425,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

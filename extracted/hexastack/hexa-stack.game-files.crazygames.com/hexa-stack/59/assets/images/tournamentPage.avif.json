@@ -1,0 +1,147 @@
+{
+  "frames": {
+    "Tournament_Unknown_Medal": {
+      "frame": { "x": 2, "y": 2, "w": 49, "h": 55 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 55 },
+      "sourceSize": { "w": 49, "h": 55 }
+    },
+    "Tournament_Trophies_Illustration_Background": {
+      "frame": { "x": 53, "y": 2, "w": 486, "h": 486 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 486, "h": 486 },
+      "sourceSize": { "w": 486, "h": 486 }
+    },
+    "Tournament_Trophies_Illustration": {
+      "frame": { "x": 2, "y": 490, "w": 467, "h": 411 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 467, "h": 411 },
+      "sourceSize": { "w": 467, "h": 411 }
+    },
+    "Tournament_Top_Dark_Part": {
+      "frame": { "x": 541, "y": 2, "w": 780, "h": 152 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 780, "h": 152 },
+      "sourceSize": { "w": 780, "h": 152 }
+    },
+    "Tournament_Top_Bar_Fragment": {
+      "frame": { "x": 2, "y": 59, "w": 33, "h": 58 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 33, "h": 58 },
+      "sourceSize": { "w": 33, "h": 58 }
+    },
+    "Tournament_Small_White_Trophy_Icon": {
+      "frame": { "x": 2, "y": 119, "w": 20, "h": 22 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 22 },
+      "sourceSize": { "w": 20, "h": 22 }
+    },
+    "Tournament_Silver_Medal": {
+      "frame": { "x": 471, "y": 490, "w": 87, "h": 91 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 87, "h": 91 },
+      "sourceSize": { "w": 87, "h": 91 }
+    },
+    "Tournament_Player_Frame": {
+      "frame": { "x": 471, "y": 583, "w": 81, "h": 82 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 81, "h": 82 },
+      "sourceSize": { "w": 81, "h": 82 }
+    },
+    "Tournament_Leaderboard_Panel": {
+      "frame": { "x": 560, "y": 156, "w": 648, "h": 729 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 648, "h": 729 },
+      "sourceSize": { "w": 648, "h": 729 }
+    },
+    "Tournament_Inactive_You_Icon": {
+      "frame": { "x": 471, "y": 667, "w": 51, "h": 56 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 51, "h": 56 },
+      "sourceSize": { "w": 51, "h": 56 }
+    },
+    "Tournament_Inactive_Menu_Tab_Tournament_Icon": {
+      "frame": { "x": 2, "y": 903, "w": 250, "h": 68 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 250, "h": 68 },
+      "sourceSize": { "w": 250, "h": 68 }
+    },
+    "Tournament_Inactive_Global_Icon": {
+      "frame": { "x": 2, "y": 143, "w": 49, "h": 54 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 54 },
+      "sourceSize": { "w": 49, "h": 54 }
+    },
+    "Tournament_Inactive_Friends_Icon": {
+      "frame": { "x": 254, "y": 903, "w": 58, "h": 52 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 58, "h": 52 },
+      "sourceSize": { "w": 58, "h": 52 }
+    },
+    "Tournament_Gold_Medal": {
+      "frame": { "x": 471, "y": 725, "w": 87, "h": 91 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 87, "h": 91 },
+      "sourceSize": { "w": 87, "h": 91 }
+    },
+    "Tournament_Bronze_Medal": {
+      "frame": { "x": 471, "y": 818, "w": 87, "h": 91 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 87, "h": 91 },
+      "sourceSize": { "w": 87, "h": 91 }
+    },
+    "Tournament_Active_You_Icon": {
+      "frame": { "x": 314, "y": 911, "w": 51, "h": 56 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 51, "h": 56 },
+      "sourceSize": { "w": 51, "h": 56 }
+    },
+    "Tournament_Active_Top_Tab": {
+      "frame": { "x": 2, "y": 973, "w": 248, "h": 108 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 248, "h": 108 },
+      "sourceSize": { "w": 248, "h": 108 }
+    },
+    "Tournament_Active_Global_Icon": {
+      "frame": { "x": 2, "y": 199, "w": 49, "h": 54 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 54 },
+      "sourceSize": { "w": 49, "h": 54 }
+    },
+    "Tournament_Active_Friends_Icon": {
+      "frame": { "x": 254, "y": 957, "w": 58, "h": 52 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 58, "h": 52 },
+      "sourceSize": { "w": 58, "h": 52 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "tournamentPage.avif",
+    "format": "RGBA8888",
+    "size": { "w": 1323, "h": 1083 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

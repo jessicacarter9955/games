@@ -1,0 +1,10 @@
+{
+  "game": "jewel academy",
+  "source_zip": "jewel academy.zip",
+  "zip_sha256": "a20dbf7065daa5de497835ecbfb64a195593edb896cc23eeafedecc821808ea5",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

@@ -1,0 +1,10 @@
+{
+  "game": "what-s-the-difference-online",
+  "source_zip": "what-s-the-difference-online.zip",
+  "zip_sha256": "b2bd68ed28e8c14de6f73219d8dbc36f6e0b942edde0df2a8bf2f59b001470ea",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

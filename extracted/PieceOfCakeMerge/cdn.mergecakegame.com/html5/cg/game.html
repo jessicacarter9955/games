@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui, shrink-to-fit=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Piece of Cake</title>
+    <style type="text/css">
+      html {
+        position: relative;
+        display: flex;
+        height: 100%;
+      }
+
+      body {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #202226;
+      }
+
+      * {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .canvas-app-container {
+        position: relative;
+        width: 0px;
+        height: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        overflow: hidden;
+        background: rgb(61, 211, 249);
+        background: radial-gradient(
+          circle,
+          rgba(61, 211, 249, 1) 8%,
+          rgba(35, 161, 230, 1) 89%
+        );
+      }
+
+      .canvas-app-canvas-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .canvas-app-canvas {
+        display: block;
+        outline: none;
+        border: 0;
+        width: 100%;
+      }
+
+      canvas {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      canvas:focus,
+      canvas:active {
+        outline: none;
+        border: 0;
+      }
+
+      .canvas-app-progress {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background-color: #1168a2;
+        height: 6px;
+        width: 100%;
+      }
+
+      .canvas-app-progress-bar {
+        height: 6px;
+        background-color: #ffffff;
+      }
+
+      .canvas-app-canvas {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url("studio_logo.png");
+        background-size: 30%;
+      }
+
+      .orientation-warning {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: #202226d0;
+        text-align: center;
+      }
+
+      .rotate-image {
+        opacity: 0;
+        width: 35%;
+        animation: fadeInOut 3s infinite;
+      }
+
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: rotate(-45deg);
+        }
+        20% {
+          opacity: 1;
+        }
+        50% {
+          transform: rotate(45deg);
+        }
+        80% {
+          opacity: 1;
+          transform: rotate(45deg);
+        }
+        100% {
+          opacity: 0;
+          transform: rotate(45deg);
+        }
+      }
+
+      .orientation-warning-is-visible {
+        display: flex;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .close-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.7);
+        transform: scale(1.1);
+      }
+
+      .close-button:active {
+        transform: scale(0.95);
+      }
+
+      @media screen and (min-aspect-ratio: 3/4) {
+        body {
+          background-image: url("background.png");
+          background-repeat: repeat;
+          background-position-x: center;
+        }
+
+        .canvas-app-container {
+          box-shadow: 0 0 15px 3px black;
+        }
+      }
+
+      .cg-banner-container {
+        visibility: hidden;
+        z-index: -1;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        right: 50%;
+        transform: translate(50%, 0);
+      }
+
+      .msstore-header-container {
+        background-color: rgb(245, 58, 183);
+        width: 100%;
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: row;
+      }
+
+      .msstore-header-logo {
+        cursor: pointer;
+        content: url("msstore-header-logo.png");
+      }
+
+      .msstore-header-text {
+        font-family: sans-serif;
+        margin: 0;
+        font-size: x-large;
+        color: white;
+        font-weight: 600;
+      }
+
+      .msstore-header-button {
+        content: url("msstore-header-button.png");
+      }
+
+      .msstore-header-separator-line {
+        width: 100%;
+        height: 2px;
+        background-color: #ffffff;
+      }
+
+      .msstore-header-button-container {
+        cursor: pointer;
+        position: relative;
+      }
+
+      .msstore-header-button-text {
+        position: absolute;
+        font-family: sans-serif;
+        font-size: large;
+        color: #fff;
+        font-weight: 600;
+        left: 48px;
+        top: 16px;
+        text-align: center;
+        width: 90px;
+      }
+
+      .copy-ui-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .copy-ui-container {
+        width: 90%;
+        max-width: 400px;
+        background: #fff7dd;
+        border-radius: 25px;
+        border: 5px solid #a98b5d;
+        position: relative;
+        padding: 25px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        box-shadow: inset 0 6px 0 rgba(255, 255, 255, 0.7),
+          inset 0 -6px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .copy-ui-close {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        width: 48px;
+        height: 48px;
+        background: #e76f51;
+        color: white;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        font-size: 32px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        user-select: none;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      .copy-ui-close:hover {
+        transform: scale(1.05);
+      }
+
+      .copy-ui-close:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .copy-ui-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .copy-ui-textarea {
+        width: 100%;
+        height: 120px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 3px solid #eadcb9;
+        border-radius: 15px;
+        background: #fff;
+        font-family: "Nunito", sans-serif;
+        font-size: 1em;
+        resize: none;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .copy-ui-textarea:focus {
+        outline: none;
+        border-color: #f7a64a;
+      }
+
+      .copy-ui-button {
+        background: #f7a64a;
+        color: white;
+        font-size: 1.4em;
+        font-weight: 700;
+        padding: 15px;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 7px 0 #c7853b;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+      }
+
+      .copy-ui-button:active {
+        box-shadow: 0 2px 0 #c7853b;
+        transform: translateY(5px);
+      }
+      .timer_text {
+        position: fixed;
+        bottom: 3vmin;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(250px, 50vw, 800px);
+        height: clamp(10px, 22vmin, 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2vmin;
+        border-radius: 2.5vmin;
+        z-index: 1000;
+        text-align: center;
+        font: 16px sans-serif;
+        font-size: clamp(2px, 1.5vw, 48px);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-container" class="canvas-app-container">
+      <div id="canvas-container" class="canvas-app-canvas-container">
+        <canvas
+          id="canvas"
+          class="canvas-app-canvas"
+          tabindex="1"
+          width="1136"
+          height="640"
+        ></canvas>
+      </div>
+      <div id="orientation-warning" class="orientation-warning">
+        <button
+          id="close-orientation-warning"
+          class="close-button"
+          onclick="closeOrientationWarning()"
+        >
+          ×
+        </button>
+        <img
+          src="rotate_screen.png"
+          alt="Please rotate your device to landscape mode."
+          class="rotate-image"
+        />
+      </div>
+    </div>
+    <div
+      id="responsive-banner-container"
+      class="cg-banner-container"
+      style="width: 500px; height: 60px"
+    ></div>
+    <script>
+      window.BANNER_CONTAINER_ID = "responsive-banner-container";
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/9.0.1/adapter.min.js"
+      integrity="sha512-NVplxpmGbQ9r63C108KdM/bKT1mV1K+oUFkhCKwTBuD9LhcABwPoGFoiujBs0lPJQSp6SLNkUBYg9zTliIwdVQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="video_rec.js?1794906512" defer></script>
+    <script src="utils.js?1794906512" defer></script>
+    <script
+      src="https://sdk.crazygames.com/crazygames-sdk-v3.js"
+      defer
+    ></script>
+    <script src="crazy_games_platform.js?1794906512" defer></script>
+    <script
+      src="https://cdn.xsolla.net/payments-bucket-prod/embed/1.5.4/widget.min.js"
+      defer
+    ></script>
+    <script src="1794906512/dmloader.js?1794906512" defer></script>
+    <script>
+      function checkNotExists(param) {
+        return typeof param === "undefined" || param === null;
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        if (
+          checkNotExists(window.adapter) ||
+          checkNotExists(window.negotiateConnectionWithClientOffer) ||
+          checkNotExists(window.platform_utils) ||
+          checkNotExists(window.socialPlatform) ||
+          checkNotExists(window.FileLoader) ||
+          checkNotExists(window.CrazyGames) ||
+          checkNotExists(window.XPayStationWidget)
+        ) {
+          console.error("Some of required is not defined or is null");
+          if (retryConnection()) {
+            return;
+          }
+        }
+        resizeGameCanvas();
+        checkOrientation();
+
+        socialPlatform.onCanvasResize = resizeGameCanvas;
+        socialPlatform.setBannerContainerVisible = function (visible) {
+          if (window.BANNER_CONTAINER_ID) {
+            document.getElementById(
+              window.BANNER_CONTAINER_ID
+            ).style.visibility = (visible && "visible") || "hidden";
+            document.getElementById(window.BANNER_CONTAINER_ID).style.zIndex =
+              (visible && "") || "-1";
+          }
+        };
+        window.addEventListener("resize", resizeGameCanvas);
+        window.addEventListener("orientationchange", checkOrientation);
+        window.addEventListener("focus", resizeGameCanvas);
+
+        gameCanvas.addEventListener("wheel", function (event) {
+          event.preventDefault();
+        });
+        CUSTOM_PARAMETERS.can_not_download_file_callback =
+          handleFileDownloadError;
+        CUSTOM_PARAMETERS.resize_window_callback = resizeGameCanvas;
+        (CUSTOM_PARAMETERS.archive_location_filter = function (path) {
+          return "1794906512" + path + "?1794906512";
+        }),
+          (Module["onRuntimeInitialized"] = function () {
+            socialPlatform.preInitialize(function () {
+              Module.runApp("canvas");
+            });
+          });
+        EngineLoader.load("canvas", "PieceofCake_1794906512");
+      });
+
+      const maxAttempts = 5;
+      const retryInterval = 500;
+
+      var MIN_AR = 4 / 3;
+      var MAX_AR = 18.5 / 9;
+      var TARGET_WIDTH = 1136;
+      var TARGET_HEIGHT = 640;
+      var BANNER_HEIGHT = document.getElementById(
+        window.BANNER_CONTAINER_ID
+      ).clientHeight;
+      var BANNER_WIDTH = document.getElementById(
+        window.BANNER_CONTAINER_ID
+      ).clientWidth;
+
+      var appContainer = document.getElementById("app-container");
+      var gameCanvas = document.getElementById("canvas");
+
+      var prevInnerWidth = -1;
+      var prevInnerHeight = -1;
+      var targetRatio = TARGET_WIDTH / TARGET_HEIGHT;
+
+      function oddSize(size) {
+        return size % 2 == 1 ? size - 1 : size;
+      }
+
+      function resizeGameCanvas() {
+        var bannerSize =
+          (socialPlatform && socialPlatform.isBannerShown()) || false
+            ? BANNER_HEIGHT
+            : 0;
+        var innerWidth = Math.max(1, document.documentElement.clientWidth);
+        var innerHeight = Math.max(
+          1,
+          document.documentElement.clientHeight - bannerSize
+        );
+
+        if (prevInnerWidth == innerWidth && prevInnerHeight == innerHeight) {
+          return;
+        }
+
+        prevInnerWidth = innerWidth;
+        prevInnerHeight = innerHeight;
+
+        var width = TARGET_WIDTH;
+        var height = TARGET_HEIGHT;
+        var actualRatio = innerWidth / innerHeight;
+
+        if (actualRatio > targetRatio) {
+          actualRatio = Math.min(actualRatio, MAX_AR);
+          width = Math.max(1, Math.floor(innerHeight * actualRatio));
+          height = innerHeight;
+        } else {
+          actualRatio = Math.max(actualRatio, MIN_AR);
+          width = innerWidth;
+          height = Math.max(1, Math.floor(innerWidth / actualRatio));
+        }
+
+        width = oddSize(width);
+        height = oddSize(height);
+        appContainer.style.marginTop =
+          Math.floor((innerHeight - height) / 2 - bannerSize) + "px";
+        appContainer.style.width = width + "px";
+        appContainer.style.height = height + "px";
+        var dpi = 1;
+
+        dpi = window.devicePixelRatio || 1;
+
+        gameCanvas.width = oddSize(Math.floor(width * dpi));
+        gameCanvas.height = oddSize(Math.floor(height * dpi));
+      }
+
+      function handleFileDownloadError(fileName) {
+        console.error("Failed to download file: " + fileName);
+        retryConnection();
+      }
+
+      function retryConnection() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let attempt = parseInt(urlParams.get("attempt")) || 1;
+
+        if (attempt >= maxAttempts) {
+          console.error("Max retry attempts reached");
+          return false;
+        }
+
+        console.log(
+          `Attempt ${attempt} failed. Retrying in ${retryInterval} ms...`
+        );
+
+        attempt++;
+        const url = new URL(window.location.href);
+        url.searchParams.set("attempt", attempt);
+        setTimeout(() => {
+          window.location.href = url.toString();
+        }, retryInterval);
+        return true;
+      }
+
+      function hideWarning() {
+        const warning = document.querySelector("#orientation-warning");
+        warning.classList.remove("orientation-warning-is-visible");
+      }
+
+      function showWarning() {
+        if (window.warning_closed_manually) {
+          return;
+        }
+        const warning = document.querySelector("#orientation-warning");
+        warning.classList.add("orientation-warning-is-visible");
+      }
+
+      function closeOrientationWarning() {
+        window.warning_closed_manually = true;
+        hideWarning();
+      }
+
+      function unpauseGame() {}
+
+      function pauseGame() {}
+
+      function checkOrientation() {
+        if (
+          window.orientation == undefined ||
+          window.orientation == -90 ||
+          window.orientation == 90
+        ) {
+          hideWarning();
+          unpauseGame();
+        } else {
+          showWarning();
+          pauseGame();
+        }
+        resizeGameCanvas();
+      }
+    </script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      window.API_TYPE = 32;
+      window.YM_TITLE = "&quot;cg&quot;";
+
+      window.YM_IDS = [98230569];
+    </script>
+    <script src="ym.js?1794906512" defer></script>
+    <noscript>
+      <div>
+        <img
+          src="https://mc.yandex.ru/watch/98230569"
+          style="position: absolute; left: -9999px"
+          alt=""
+        />
+      </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+  </body>
+</html>

@@ -1,0 +1,294 @@
+{
+  "frames": {
+    "avatar_placeholder": {
+      "frame": { "x": 2, "y": 2, "w": 50, "h": 50 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
+    },
+    "Wood_Background": {
+      "frame": { "x": 54, "y": 2, "w": 780, "h": 1280 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 780, "h": 1280 },
+      "sourceSize": { "w": 780, "h": 1280 }
+    },
+    "Win_Streak_Icon_Race_Flag": {
+      "frame": { "x": 836, "y": 2, "w": 98, "h": 55 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 98, "h": 55 },
+      "sourceSize": { "w": 98, "h": 56 }
+    },
+    "Win_Streak_Icon_Node": {
+      "frame": { "x": 836, "y": 59, "w": 79, "h": 66 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 79, "h": 66 },
+      "sourceSize": { "w": 79, "h": 66 }
+    },
+    "Selected_Tab_Main_Menu": {
+      "frame": { "x": 936, "y": 2, "w": 230, "h": 234 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 230, "h": 234 },
+      "sourceSize": { "w": 230, "h": 234 }
+    },
+    "Season_Pass_Icon_Top": {
+      "frame": { "x": 836, "y": 238, "w": 129, "h": 129 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 129, "h": 129 },
+      "sourceSize": { "w": 129, "h": 129 }
+    },
+    "Profile_Picture_Frame": {
+      "frame": { "x": 967, "y": 238, "w": 122, "h": 130 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 122, "h": 130 },
+      "sourceSize": { "w": 122, "h": 130 }
+    },
+    "Plus_Button": {
+      "frame": { "x": 2, "y": 54, "w": 49, "h": 50 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 50 },
+      "sourceSize": { "w": 49, "h": 50 }
+    },
+    "Player_Leaderboard_Frame": {
+      "frame": { "x": 836, "y": 370, "w": 164, "h": 239 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 164, "h": 239 },
+      "sourceSize": { "w": 164, "h": 239 }
+    },
+    "Notification_Dot": {
+      "frame": { "x": 2, "y": 106, "w": 40, "h": 41 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 41 },
+      "sourceSize": { "w": 40, "h": 41 }
+    },
+    "Menu_Icon_Join_Button": {
+      "frame": { "x": 1002, "y": 370, "w": 99, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 99, "h": 38 },
+      "sourceSize": { "w": 99, "h": 38 }
+    },
+    "Menu_Icon_Gold_Ring": {
+      "frame": { "x": 1002, "y": 410, "w": 134, "h": 134 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 134, "h": 134 },
+      "sourceSize": { "w": 134, "h": 134 }
+    },
+    "Main_Menu_Navigation_Round_Corner": {
+      "frame": { "x": 1002, "y": 546, "w": 91, "h": 149 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 91, "h": 149 },
+      "sourceSize": { "w": 91, "h": 149 }
+    },
+    "Main_Menu_Counter_Blue": {
+      "frame": { "x": 836, "y": 611, "w": 99, "h": 39 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 99, "h": 39 },
+      "sourceSize": { "w": 99, "h": 39 }
+    },
+    "Lucky_Wheel_Main_Menu_Icon_Sections": {
+      "frame": { "x": 836, "y": 127, "w": 95, "h": 94 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 95, "h": 94 },
+      "sourceSize": { "w": 95, "h": 94 }
+    },
+    "Lucky_Wheel_Main_Menu_Icon_Pointer": {
+      "frame": { "x": 2, "y": 149, "w": 31, "h": 40 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 31, "h": 40 },
+      "sourceSize": { "w": 31, "h": 40 }
+    },
+    "Lucky_Wheel_Main_Menu_Icon_Frame": {
+      "frame": { "x": 836, "y": 652, "w": 124, "h": 120 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 124, "h": 120 },
+      "sourceSize": { "w": 124, "h": 120 }
+    },
+    "Lucky_Wheel_Main_Menu_Icon_Background": {
+      "frame": { "x": 962, "y": 697, "w": 129, "h": 129 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 129, "h": 129 },
+      "sourceSize": { "w": 129, "h": 129 }
+    },
+    "Lucky_Wheel_Light": {
+      "frame": { "x": 836, "y": 774, "w": 84, "h": 84 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 84 },
+      "sourceSize": { "w": 84, "h": 84 }
+    },
+    "Locked_Island": {
+      "frame": { "x": 1168, "y": 2, "w": 594, "h": 539 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 594, "h": 539 },
+      "sourceSize": { "w": 594, "h": 539 }
+    },
+    "Light_Behind_Island": {
+      "frame": { "x": 1138, "y": 543, "w": 393, "h": 181 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 16, "w": 393, "h": 181 },
+      "sourceSize": { "w": 393, "h": 197 }
+    },
+    "Key_White": {
+      "frame": { "x": 1091, "y": 238, "w": 66, "h": 104 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 104 },
+      "sourceSize": { "w": 66, "h": 104 }
+    },
+    "Key": {
+      "frame": { "x": 1533, "y": 543, "w": 70, "h": 108 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 70, "h": 108 },
+      "sourceSize": { "w": 70, "h": 108 }
+    },
+    "Infinity_Icon": {
+      "frame": { "x": 1095, "y": 546, "w": 39, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 20 },
+      "sourceSize": { "w": 39, "h": 20 }
+    },
+    "Icon_Timer_Background": {
+      "frame": { "x": 1605, "y": 543, "w": 99, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 99, "h": 38 },
+      "sourceSize": { "w": 99, "h": 38 }
+    },
+    "Heart_Icon_Grey": {
+      "frame": { "x": 1605, "y": 583, "w": 76, "h": 74 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 76, "h": 74 },
+      "sourceSize": { "w": 76, "h": 74 }
+    },
+    "Heart_Icon": {
+      "frame": { "x": 1683, "y": 583, "w": 76, "h": 74 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 76, "h": 74 },
+      "sourceSize": { "w": 76, "h": 74 }
+    },
+    "Gold_Lock": {
+      "frame": { "x": 1103, "y": 344, "w": 55, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 61 },
+      "sourceSize": { "w": 55, "h": 61 }
+    },
+    "Friends_Leaderboard_Frame": {
+      "frame": { "x": 1533, "y": 659, "w": 132, "h": 193 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 132, "h": 193 },
+      "sourceSize": { "w": 132, "h": 193 }
+    },
+    "Divider_Selected_Tab_Main_Menu": {
+      "frame": { "x": 933, "y": 59, "w": 1, "h": 119 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 119 },
+      "sourceSize": { "w": 1, "h": 119 }
+    },
+    "Divider_Main_Menu": {
+      "frame": { "x": 1160, "y": 238, "w": 5, "h": 155 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 5, "h": 155 },
+      "sourceSize": { "w": 5, "h": 155 }
+    },
+    "Coin_Icon": {
+      "frame": { "x": 1667, "y": 659, "w": 72, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 72, "h": 79 },
+      "sourceSize": { "w": 72, "h": 79 }
+    },
+    "Check": {
+      "frame": { "x": 1667, "y": 740, "w": 61, "h": 63 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 61, "h": 63 },
+      "sourceSize": { "w": 61, "h": 63 }
+    },
+    "Bottom_ Fragment_Main_Menu": {
+      "frame": { "x": 836, "y": 860, "w": 209, "h": 234 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 209, "h": 234 },
+      "sourceSize": { "w": 209, "h": 234 }
+    },
+    "Big_Lock": {
+      "frame": { "x": 1047, "y": 854, "w": 226, "h": 226 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 226, "h": 226 },
+      "sourceSize": { "w": 226, "h": 226 }
+    },
+    "Active_Store_Tab": {
+      "frame": { "x": 836, "y": 1096, "w": 156, "h": 141 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 156, "h": 141 },
+      "sourceSize": { "w": 156, "h": 141 }
+    },
+    "Active_Leaderboard_Tab": {
+      "frame": { "x": 994, "y": 1096, "w": 142, "h": 148 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 142, "h": 148 },
+      "sourceSize": { "w": 142, "h": 148 }
+    },
+    "Active_Home_Tab": {
+      "frame": { "x": 1138, "y": 1082, "w": 160, "h": 143 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 143 },
+      "sourceSize": { "w": 160, "h": 143 }
+    },
+    "Active_Collectable_Tab": {
+      "frame": { "x": 1300, "y": 726, "w": 145, "h": 140 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 145, "h": 140 },
+      "sourceSize": { "w": 145, "h": 140 }
+    },
+    "Active_Clipboard_Tab": {
+      "frame": { "x": 1275, "y": 868, "w": 121, "h": 151 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 121, "h": 151 },
+      "sourceSize": { "w": 121, "h": 151 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "menu.avif",
+    "format": "RGBA8888",
+    "size": { "w": 1764, "h": 1284 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "frames": {
+    "Piggy_Bank_Small_Coin_Animation": {
+      "frame": { "x": 2, "y": 2, "w": 42, "h": 59 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 42, "h": 59 },
+      "sourceSize": { "w": 42, "h": 59 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Sorry_Silver": {
+      "frame": { "x": 46, "y": 2, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Sorry_Opal": {
+      "frame": { "x": 2, "y": 159, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Sorry_Gold": {
+      "frame": { "x": 166, "y": 159, "w": 161, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 1, "y": 0, "w": 161, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Sorry_Diamond": {
+      "frame": { "x": 2, "y": 316, "w": 163, "h": 154 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 163, "h": 154 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Sorry": {
+      "frame": { "x": 210, "y": 2, "w": 163, "h": 155 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 163, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Normal_Silver": {
+      "frame": { "x": 329, "y": 159, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Normal_Opal": {
+      "frame": { "x": 2, "y": 472, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Normal_Gold": {
+      "frame": { "x": 375, "y": 2, "w": 160, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 1, "y": 0, "w": 160, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Normal_Diamond": {
+      "frame": { "x": 166, "y": 472, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Normal": {
+      "frame": { "x": 330, "y": 316, "w": 161, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 1, "y": 0, "w": 161, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Happy_Silver": {
+      "frame": { "x": 537, "y": 2, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Happy_Opal": {
+      "frame": { "x": 493, "y": 159, "w": 162, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 162, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Happy_Gold": {
+      "frame": { "x": 493, "y": 316, "w": 161, "h": 155 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 1, "y": 0, "w": 161, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Happy_Diamond": {
+      "frame": { "x": 330, "y": 473, "w": 163, "h": 154 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 163, "h": 154 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Happy": {
+      "frame": { "x": 2, "y": 629, "w": 163, "h": 155 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 163, "h": 155 },
+      "sourceSize": { "w": 163, "h": 155 }
+    },
+    "Piggy_Bank_Main_Menu_Icon_Full_Background": {
+      "frame": { "x": 167, "y": 316, "w": 77, "h": 30 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 30 },
+      "sourceSize": { "w": 77, "h": 30 }
+    },
+    "Piggy_Bank_Impact_Effect": {
+      "frame": { "x": 167, "y": 348, "w": 84, "h": 33 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 33 },
+      "sourceSize": { "w": 84, "h": 33 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "piggybank.avif",
+    "format": "RGBA8888",
+    "size": { "w": 701, "h": 786 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

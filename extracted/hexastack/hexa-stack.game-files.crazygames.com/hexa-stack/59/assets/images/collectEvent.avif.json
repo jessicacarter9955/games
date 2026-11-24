@@ -1,0 +1,140 @@
+{
+  "frames": {
+    "Glow_Half": {
+      "frame": { "x": 2, "y": 2, "w": 175, "h": 95 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 175, "h": 95 },
+      "sourceSize": { "w": 175, "h": 95 }
+    },
+    "Collecting_Event_Progress_Bar_Background_Landscape_Mode_9Slice_51x51x51x51": {
+      "frame": { "x": 2, "y": 99, "w": 104, "h": 104 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 104, "h": 104 },
+      "sourceSize": { "w": 104, "h": 104 }
+    },
+    "Collecting_Event_Play_Button_Background_Half": {
+      "frame": { "x": 179, "y": 2, "w": 419, "h": 205 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 419, "h": 205 },
+      "sourceSize": { "w": 419, "h": 205 }
+    },
+    "Collect_Rewards_Background_9Slice_31x30x31x34": {
+      "frame": { "x": 108, "y": 99, "w": 64, "h": 66 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 66 },
+      "sourceSize": { "w": 64, "h": 66 }
+    },
+    "Collect_Event_Title_Background_9Slice_55x0x55x0": {
+      "frame": { "x": 2, "y": 209, "w": 115, "h": 136 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 115, "h": 136 },
+      "sourceSize": { "w": 115, "h": 136 }
+    },
+    "Collect_Event_Square_White": {
+      "frame": { "x": 119, "y": 209, "w": 128, "h": 128 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
+      "sourceSize": { "w": 128, "h": 128 }
+    },
+    "Collect_Event_Progress_Bar_Timer_9Slice_32x0x32x0": {
+      "frame": { "x": 249, "y": 209, "w": 66, "h": 59 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 59 },
+      "sourceSize": { "w": 66, "h": 59 }
+    },
+    "Collect_Event_Progress_Bar_Full_3Slice_19x19": {
+      "frame": { "x": 108, "y": 167, "w": 40, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 38 },
+      "sourceSize": { "w": 40, "h": 38 }
+    },
+    "Collect_Event_Progress_Bar_Empty_3Slice_19x19": {
+      "frame": { "x": 249, "y": 270, "w": 40, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 38 },
+      "sourceSize": { "w": 40, "h": 38 }
+    },
+    "Collect_Event_Progress_Bar_Background_9Slice_39x32x39x47": {
+      "frame": { "x": 317, "y": 209, "w": 80, "h": 81 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 81 },
+      "sourceSize": { "w": 80, "h": 81 }
+    },
+    "Collect_Event_Pattern_Star": {
+      "frame": { "x": 2, "y": 347, "w": 131, "h": 179 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 131, "h": 179 },
+      "sourceSize": { "w": 131, "h": 179 }
+    },
+    "Collect_Event_Node_Like_3Slice_Vertical_20x2": {
+      "frame": { "x": 399, "y": 209, "w": 40, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+      "sourceSize": { "w": 40, "h": 24 }
+    },
+    "Collect_Event_Node_Crystal_Green": {
+      "frame": { "x": 441, "y": 209, "w": 70, "h": 65 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 70, "h": 65 },
+      "sourceSize": { "w": 70, "h": 65 }
+    },
+    "Collect_Event_Node_Crystal_Blue": {
+      "frame": { "x": 513, "y": 209, "w": 70, "h": 65 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 70, "h": 65 },
+      "sourceSize": { "w": 70, "h": 65 }
+    },
+    "Collect_Event_Node": {
+      "frame": { "x": 135, "y": 339, "w": 85, "h": 80 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 85, "h": 80 },
+      "sourceSize": { "w": 85, "h": 80 }
+    },
+    "Collect_Event_Item_Gold_Background_Pointer": {
+      "frame": { "x": 399, "y": 235, "w": 26, "h": 41 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 26, "h": 41 },
+      "sourceSize": { "w": 26, "h": 41 }
+    },
+    "Collect_Event_Band_Yellow": {
+      "frame": { "x": 427, "y": 235, "w": 4, "h": 77 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 4, "h": 77 },
+      "sourceSize": { "w": 4, "h": 77 }
+    },
+    "Collect_Event_Band_Brown": {
+      "frame": { "x": 433, "y": 235, "w": 4, "h": 209 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 4, "h": 209 },
+      "sourceSize": { "w": 4, "h": 209 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "collectEvent.avif",
+    "format": "RGBA8888",
+    "size": { "w": 600, "h": 528 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

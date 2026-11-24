@@ -1,0 +1,12 @@
+{
+  "game": "color-water-sort-3d",
+  "source_zip": "color-water-sort-3d.zip",
+  "zip_sha256": "20e483d0a01bdd19d2eb6a7331acf3a22f18ea20b4309633e06eff7bb719a9a2",
+  "selected_hosts": [
+    "color-water-sort-3d.game-files.crazygames.com"
+  ],
+  "game_host_files": 46,
+  "unpacked_game_bytes": 7388306,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

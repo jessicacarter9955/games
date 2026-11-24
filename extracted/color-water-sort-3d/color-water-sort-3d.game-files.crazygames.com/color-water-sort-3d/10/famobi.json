@@ -1,0 +1,25 @@
+{
+  "version": "35e5da03",
+  "interstitial": {
+    "eventIds": [
+      "break:fail",
+      "break:win",
+      "button:gameplay:pause",
+      "button:main:start"
+    ],
+    "blocklist": [],
+    "allowlist": ["break:win"]
+  },
+  "rewarded": {
+    "allowEmpty": true,
+    "eventIds": [
+      "button:game:hint",
+      "button:game:undo",
+      "button:game:extratube",
+      "button:game:skiplevel",
+      "button.winscreen.getscaled"
+    ],
+    "blocklist": [],
+    "allowlist": ["*"]
+  }
+}

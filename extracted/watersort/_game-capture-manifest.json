@@ -1,0 +1,12 @@
+{
+  "game": "watersort",
+  "source_zip": "watersort.zip",
+  "zip_sha256": "991f4275341aaeaca54de03266c8ab8fa394e491cc3ff6b80ea41ac0e972fcf3",
+  "selected_hosts": [
+    "cups---water-sort-puzzle.game-files.crazygames.com"
+  ],
+  "game_host_files": 2,
+  "unpacked_game_bytes": 83425,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

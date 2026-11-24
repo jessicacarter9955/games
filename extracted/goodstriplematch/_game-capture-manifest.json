@@ -1,0 +1,12 @@
+{
+  "game": "goodstriplematch",
+  "source_zip": "goodstriplematch.zip",
+  "zip_sha256": "004b21ab05c792e36db1edc0176154a2ce47091208a365a55fc4437a83622bac",
+  "selected_hosts": [
+    "goods-triple-match-3d.game-files.crazygames.com"
+  ],
+  "game_host_files": 14,
+  "unpacked_game_bytes": 4491272,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

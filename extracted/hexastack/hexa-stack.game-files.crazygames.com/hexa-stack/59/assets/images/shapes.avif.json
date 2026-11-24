@@ -1,0 +1,49 @@
+{
+  "frames": {
+    "square_64": {
+      "frame": { "x": 2, "y": 2, "w": 64, "h": 64 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+      "sourceSize": { "w": 64, "h": 64 }
+    },
+    "rounded_square_128": {
+      "frame": { "x": 68, "y": 2, "w": 128, "h": 128 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
+      "sourceSize": { "w": 128, "h": 128 }
+    },
+    "pill_192x128": {
+      "frame": { "x": 2, "y": 132, "w": 196, "h": 128 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 196, "h": 128 },
+      "sourceSize": { "w": 196, "h": 128 }
+    },
+    "circle_256": {
+      "frame": { "x": 200, "y": 2, "w": 256, "h": 256 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 256 },
+      "sourceSize": { "w": 256, "h": 256 }
+    },
+    "circle_128_blur": {
+      "frame": { "x": 2, "y": 262, "w": 232, "h": 232 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 232, "h": 232 },
+      "sourceSize": { "w": 232, "h": 232 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "shapes.avif",
+    "format": "RGBA8888",
+    "size": { "w": 458, "h": 496 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

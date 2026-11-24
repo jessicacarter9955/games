@@ -1,0 +1,164 @@
+{
+  "frames": {
+    "Hammer_Impact_Particle": {
+      "frame": { "x": 2, "y": 2, "w": 37, "h": 108 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 37, "h": 108 },
+      "sourceSize": { "w": 37, "h": 108 }
+    },
+    "Hammer_Impact": {
+      "frame": { "x": 41, "y": 2, "w": 288, "h": 293 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 288, "h": 293 },
+      "sourceSize": { "w": 288, "h": 293 }
+    },
+    "Hammer_Animation_Frame_9": {
+      "frame": { "x": 2, "y": 297, "w": 154, "h": 210 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 114, "y": 84, "w": 154, "h": 210 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_8": {
+      "frame": { "x": 158, "y": 297, "w": 168, "h": 182 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 113, "y": 104, "w": 168, "h": 182 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_7": {
+      "frame": { "x": 331, "y": 2, "w": 174, "h": 166 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 108, "y": 106, "w": 174, "h": 166 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_4_5": {
+      "frame": { "x": 507, "y": 2, "w": 178, "h": 172 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 106, "y": 104, "w": 178, "h": 172 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_3": {
+      "frame": { "x": 331, "y": 170, "w": 171, "h": 179 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 83, "y": 119, "w": 171, "h": 179 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_22_23": {
+      "frame": { "x": 504, "y": 176, "w": 167, "h": 166 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 18, "y": 0, "w": 167, "h": 166 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_21": {
+      "frame": { "x": 328, "y": 351, "w": 145, "h": 146 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 4, "y": 22, "w": 145, "h": 146 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_20": {
+      "frame": { "x": 475, "y": 351, "w": 124, "h": 126 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 44, "w": 124, "h": 126 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_2": {
+      "frame": { "x": 2, "y": 509, "w": 172, "h": 177 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 35, "y": 143, "w": 172, "h": 177 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_19": {
+      "frame": { "x": 176, "y": 481, "w": 104, "h": 109 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 3, "y": 64, "w": 104, "h": 109 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_18": {
+      "frame": { "x": 282, "y": 499, "w": 86, "h": 95 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 10, "y": 80, "w": 86, "h": 95 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_14_15_16_17": {
+      "frame": { "x": 176, "y": 592, "w": 81, "h": 93 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 10, "y": 84, "w": 81, "h": 93 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_13": {
+      "frame": { "x": 370, "y": 499, "w": 97, "h": 116 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 23, "y": 75, "w": 97, "h": 116 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_12": {
+      "frame": { "x": 687, "y": 2, "w": 178, "h": 218 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 23, "y": 16, "w": 178, "h": 218 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_11": {
+      "frame": { "x": 673, "y": 222, "w": 170, "h": 227 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 72, "y": 28, "w": 170, "h": 227 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_10": {
+      "frame": { "x": 601, "y": 451, "w": 165, "h": 229 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 115, "y": 59, "w": 165, "h": 229 },
+      "sourceSize": { "w": 284, "h": 331 }
+    },
+    "Hammer_Animation_Frame_1": {
+      "frame": { "x": 2, "y": 688, "w": 174, "h": 171 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 9, "y": 160, "w": 174, "h": 171 },
+      "sourceSize": { "w": 284, "h": 331 }
+    }
+  },
+  "animations": {
+    "Hammer_Animation_Frame": [
+      "Hammer_Animation_Frame_1",
+      "Hammer_Animation_Frame_2",
+      "Hammer_Animation_Frame_3",
+      "Hammer_Animation_Frame_7",
+      "Hammer_Animation_Frame_8",
+      "Hammer_Animation_Frame_9",
+      "Hammer_Animation_Frame_10",
+      "Hammer_Animation_Frame_11",
+      "Hammer_Animation_Frame_12",
+      "Hammer_Animation_Frame_13",
+      "Hammer_Animation_Frame_18",
+      "Hammer_Animation_Frame_19",
+      "Hammer_Animation_Frame_20",
+      "Hammer_Animation_Frame_21"
+    ]
+  },
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "hammerHit.avif",
+    "format": "RGBA8888",
+    "size": { "w": 867, "h": 861 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

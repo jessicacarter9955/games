@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Blocks and that's it</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true,viewport-fit=cover"
+    />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="format-detection" content="telephone=no" />
+
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta name="x5-page-mode" content="app" />
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta name="blocks-web-build" content="classic-adaptive-20261117-r4" />
+    <script
+      src="https://sdk.crazygames.com/crazygames-sdk-v3.js"
+      data-crazygames-sdk="true"
+    ></script>
+    <script data-crazygames-path-rewrite="true">
+      (function () {
+        var unsafeSuffix = "@f9941.json";
+        var safeSuffix = "_f9941.json";
+        var rewriteAssetUrl = function (url) {
+          return typeof url === "string"
+            ? url.replace(unsafeSuffix, safeSuffix)
+            : url;
+        };
+
+        var originalXhrOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+          var args = Array.prototype.slice.call(arguments);
+          args[1] = rewriteAssetUrl(url);
+          return originalXhrOpen.apply(this, args);
+        };
+
+        if (typeof window.fetch === "function") {
+          var originalFetch = window.fetch;
+          window.fetch = function (input, init) {
+            if (typeof input === "string") {
+              input = rewriteAssetUrl(input);
+            } else if (
+              typeof Request !== "undefined" &&
+              input instanceof Request
+            ) {
+              input = new Request(rewriteAssetUrl(input.url), input);
+            }
+            return originalFetch.call(this, input, init);
+          };
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <script>
+      window.BLOCKS_WEB_BUILD_VARIANT = "crazygames";
+    </script>
+
+    <div id="blocks-loading-screen" aria-hidden="true">
+      <img src="load.gif" alt="" />
+    </div>
+
+    <script>
+      window.hideBlocksLoadingScreen = function () {
+        var loadingScreen = document.getElementById("blocks-loading-screen");
+        if (!loadingScreen || loadingScreen.dataset.hiding === "true") {
+          return;
+        }
+        loadingScreen.dataset.hiding = "true";
+
+        var removeLoadingScreen = function () {
+          loadingScreen.remove();
+          delete window.hideBlocksLoadingScreen;
+        };
+
+        if (typeof requestAnimationFrame === "function") {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(removeLoadingScreen);
+          });
+        } else {
+          setTimeout(removeLoadingScreen, 0);
+        }
+      };
+    </script>
+
+    <div id="GameDiv" cc_exact_fit_screen="true">
+      <div id="Cocos3dGameContainer">
+        <canvas
+          id="GameCanvas"
+          oncontextmenu="event.preventDefault()"
+          tabindex="99"
+        ></canvas>
+      </div>
+    </div>
+
+    <!-- Polyfills bundle. -->
+
+    <script src="src/polyfills.bundle.js" charset="utf-8"></script>
+
+    <!-- SystemJS support. -->
+    <script src="src/system.bundle.js" charset="utf-8"></script>
+
+    <!-- Import map -->
+    <script
+      src="src/import-map.json"
+      type="systemjs-importmap"
+      charset="utf-8"
+    ></script>
+
+    <script>
+      System.import("./index.js").catch(function (err) {
+        console.error(err);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "game": "hexasort",
+  "source_zip": "hexasort.zip",
+  "zip_sha256": "51d96f23490cea7e5754874cacec7c32d83430f1f1dde66c82ca61a4e6028879",
+  "selected_hosts": [
+    "hexa-sort.game-files.crazygames.com"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 13722,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

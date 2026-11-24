@@ -1,0 +1,92 @@
+{
+  "analytics": {
+    "enabled": true
+  },
+  "auth": {
+    "enabled": true
+  },
+  "console": {
+    "enabled": true,
+    "enforce": true
+  },
+  "famobiTracking": {
+    "enabled": false
+  },
+  "toolGameId": "pcyZwBKxTFWzsn7tO9tX",
+  "gameId": "cut-the-rope",
+  "name": "Cut the Rope",
+  "versionInfo": {
+    "version": "1.1.0",
+    "semanticVersion": "1.1.0",
+    "sequentialVersion": 14,
+    "exportedAt": "2026-11-17T09:18:47.788Z",
+    "label": "1.8.3"
+  },
+  "gameVersion": "1.1.0",
+  "version": "1.1.0",
+  "exportedAt": "2026-11-17T09:18:47.788Z",
+  "maxLevels": 425,
+  "features": {
+    "audio": true,
+    "copyright": true,
+    "credits": true,
+    "pause": true,
+    "progress": true,
+    "score": true,
+    "tutorial": true,
+    "version": true,
+    "visibilitychange": true,
+    "home": true,
+    "privacy": true,
+    "iap": true,
+    "no-ads": true,
+    "login": false,
+    "standalone": false,
+    "rewarded": true
+  },
+  "ads": {
+    "initial": {
+      "enabled": false,
+      "preload": 250,
+      "timeout": 250,
+      "retry": 2000
+    },
+    "interstitial": {
+      "timeout": 250,
+      "preload": 250,
+      "cooldown": 60,
+      "retry": 2000,
+      "enabled": true,
+      "eventIds": [
+        "break:result",
+        "button:home:start",
+        "button:levelselection:level",
+        "button:pause:quit",
+        "button:pause:resume",
+        "button:game:restart",
+        "button:pass:next",
+        "button:pass:restart",
+        "button:fail:restart",
+        "button:fail:quit"
+      ]
+    },
+    "rewarded": {
+      "preload": 500,
+      "retry": 2000,
+      "enabled": true,
+      "timeout": 250,
+      "eventIds": ["button:powerup:magnet", "button:powerup:telekinesis"]
+    },
+    "banner": {
+      "preload": 250,
+      "timeout": 250,
+      "retry": 2000,
+      "enabled": false
+    }
+  },
+  "storage": {
+    "shouldCompress": false,
+    "isLegacyMode": false
+  },
+  "crazyGames": {}
+}

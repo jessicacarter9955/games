@@ -1,0 +1,13 @@
+{
+  "game": "PieceOfCakeMerge",
+  "source_zip": "PieceOfCakeMerge.zip",
+  "zip_sha256": "0391a5f4e8166c2a96c4fc5204e12bca4a057630895e1f4c3f0a9c30f12fe85d",
+  "selected_hosts": [
+    "cdn.mergecakegame.com",
+    "storage.googleapis.com"
+  ],
+  "game_host_files": 104,
+  "unpacked_game_bytes": 27266786,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

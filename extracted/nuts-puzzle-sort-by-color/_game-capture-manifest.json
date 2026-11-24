@@ -1,0 +1,12 @@
+{
+  "game": "nuts-puzzle-sort-by-color",
+  "source_zip": "nuts-puzzle-sort-by-color.zip",
+  "zip_sha256": "99464379c4d934463758097d504ba4cedfe6fc5a92141750768e4b9d6ec3748a",
+  "selected_hosts": [
+    "nuts-puzzle-sort-by-color.game-files.crazygames.com"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 69703,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

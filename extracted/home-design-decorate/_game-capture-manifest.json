@@ -1,0 +1,10 @@
+{
+  "game": "home-design-decorate",
+  "source_zip": "home-design-decorate.zip",
+  "zip_sha256": "69635f9b9d519a3be4f298fadb16f72b8449040a030c280bd6cbd51fbe7f1003",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

@@ -1,0 +1,70 @@
+{
+  "frames": {
+    "Special_Offer_Pink_Ribbon": {
+      "frame": { "x": 2, "y": 2, "w": 201, "h": 166 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 201, "h": 166 },
+      "sourceSize": { "w": 201, "h": 166 }
+    },
+    "Small_Coins_Stack": {
+      "frame": { "x": 2, "y": 170, "w": 143, "h": 93 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 143, "h": 93 },
+      "sourceSize": { "w": 143, "h": 93 }
+    },
+    "Right_Offer_Small_Counter": {
+      "frame": { "x": 205, "y": 2, "w": 160, "h": 82 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 82 },
+      "sourceSize": { "w": 160, "h": 82 }
+    },
+    "Right_Offer_Counter": {
+      "frame": { "x": 2, "y": 265, "w": 290, "h": 136 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 290, "h": 136 },
+      "sourceSize": { "w": 290, "h": 136 }
+    },
+    "Right_Offer_Background": {
+      "frame": { "x": 367, "y": 2, "w": 389, "h": 838 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 389, "h": 838 },
+      "sourceSize": { "w": 389, "h": 838 }
+    },
+    "Left_Offer_Counter": {
+      "frame": { "x": 2, "y": 403, "w": 204, "h": 99 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 204, "h": 99 },
+      "sourceSize": { "w": 204, "h": 99 }
+    },
+    "Left_Offer_Background": {
+      "frame": { "x": 758, "y": 2, "w": 369, "h": 819 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 369, "h": 819 },
+      "sourceSize": { "w": 369, "h": 819 }
+    },
+    "Big_Coins_Stack": {
+      "frame": { "x": 2, "y": 504, "w": 263, "h": 160 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 263, "h": 160 },
+      "sourceSize": { "w": 263, "h": 160 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "upsell.avif",
+    "format": "RGBA8888",
+    "size": { "w": 1129, "h": 842 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

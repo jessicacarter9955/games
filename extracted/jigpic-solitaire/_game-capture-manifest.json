@@ -1,0 +1,10 @@
+{
+  "game": "jigpic-solitaire",
+  "source_zip": "jigpic-solitaire.zip",
+  "zip_sha256": "ee39184eecf8bd8b5f50cc336520384149ad6eab23c34425a7023b9b19c4c940",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

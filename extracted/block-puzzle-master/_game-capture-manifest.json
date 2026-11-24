@@ -1,0 +1,12 @@
+{
+  "game": "block-puzzle-master",
+  "source_zip": "block-puzzle-master.zip",
+  "zip_sha256": "80a4b89d2bcf98bb160f6396fef9d15db6a10933b45ed851d39ef402b4641dcb",
+  "selected_hosts": [
+    "block-puzzle-master.game-files.crazygames.com"
+  ],
+  "game_host_files": 1,
+  "unpacked_game_bytes": 13722,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

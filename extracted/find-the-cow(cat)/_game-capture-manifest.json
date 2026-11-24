@@ -1,0 +1,10 @@
+{
+  "game": "find-the-cow(cat)",
+  "source_zip": "find-the-cow(cat).zip",
+  "zip_sha256": "133ea6b99f0df7ebeee943c065363127384e5b6cf2a121af77128974149c5b57",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

@@ -1,0 +1,84 @@
+{
+  "frames": {
+    "Booster_Undo_Vortex_Part": {
+      "frame": { "x": 2, "y": 2, "w": 140, "h": 244 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 2, "w": 140, "h": 244 },
+      "sourceSize": { "w": 140, "h": 246 }
+    },
+    "Booster_Undo_Shine_Triangle": {
+      "frame": { "x": 144, "y": 2, "w": 142, "h": 440 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 142, "h": 440 },
+      "sourceSize": { "w": 142, "h": 440 }
+    },
+    "Booster_Undo_Shine_Diamond": {
+      "frame": { "x": 288, "y": 2, "w": 468, "h": 138 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 468, "h": 138 },
+      "sourceSize": { "w": 468, "h": 138 }
+    },
+    "Booster_Undo_Shine_Circle": {
+      "frame": { "x": 288, "y": 142, "w": 191, "h": 191 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 191, "h": 191 },
+      "sourceSize": { "w": 191, "h": 191 }
+    },
+    "Booster_Undo_Gradient": {
+      "frame": { "x": 2, "y": 444, "w": 34, "h": 650 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 34, "h": 650 },
+      "sourceSize": { "w": 34, "h": 650 }
+    },
+    "Booster_Undo_Clock_Small_Needle": {
+      "frame": { "x": 38, "y": 248, "w": 52, "h": 53 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 52, "h": 53 },
+      "sourceSize": { "w": 52, "h": 53 }
+    },
+    "Booster_Undo_Clock_Middle": {
+      "frame": { "x": 38, "y": 303, "w": 70, "h": 70 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 70, "h": 70 },
+      "sourceSize": { "w": 70, "h": 70 }
+    },
+    "Booster_Undo_Clock_Big_Needle": {
+      "frame": { "x": 38, "y": 375, "w": 70, "h": 68 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 70, "h": 68 },
+      "sourceSize": { "w": 70, "h": 68 }
+    },
+    "Booster_Undo_Clock": {
+      "frame": { "x": 481, "y": 142, "w": 266, "h": 281 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 266, "h": 281 },
+      "sourceSize": { "w": 266, "h": 281 }
+    },
+    "Booster_Undo_Arrow": {
+      "frame": { "x": 288, "y": 425, "w": 361, "h": 381 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 361, "h": 381 },
+      "sourceSize": { "w": 361, "h": 381 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "undoBooster.avif",
+    "format": "RGBA8888",
+    "size": { "w": 758, "h": 1096 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

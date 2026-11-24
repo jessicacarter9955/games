@@ -1,0 +1,10 @@
+{
+  "game": "mahjongg",
+  "source_zip": "mahjongg.zip",
+  "zip_sha256": "8856f8f1028acbafedbd5be2bf18fd921985bb173b28d8372f9dfcf2ab5ba65b",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

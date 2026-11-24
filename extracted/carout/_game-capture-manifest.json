@@ -1,0 +1,10 @@
+{
+  "game": "carout",
+  "source_zip": "carout.zip",
+  "zip_sha256": "314df09d7131627cef28f5808e1eeec92d4d394023223ab2c92ed9adf17711aa",
+  "selected_hosts": [],
+  "game_host_files": 0,
+  "unpacked_game_bytes": 0,
+  "capture_status": "no_game_assets_captured",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

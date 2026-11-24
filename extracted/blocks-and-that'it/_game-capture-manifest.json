@@ -1,0 +1,12 @@
+{
+  "game": "blocks-and-that'it",
+  "source_zip": "blocks-and-that'it.zip",
+  "zip_sha256": "9be3a85265ac90691af376c38027ebd8de8db051664a185440ee9a415a31e56b",
+  "selected_hosts": [
+    "block-tour-kfz.game-files.crazygames.com"
+  ],
+  "game_host_files": 20,
+  "unpacked_game_bytes": 4101991,
+  "capture_status": "partial_or_unverified",
+  "warning": "This is a partial browser capture, not a verified standalone build."
+}

@@ -1,0 +1,405 @@
+{
+  "frames": {
+    "Weekly_Tasks_Tutorial_Arrow": {
+      "frame": { "x": 2, "y": 2, "w": 118, "h": 108 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 118, "h": 108 },
+      "sourceSize": { "w": 118, "h": 108 }
+    },
+    "Weekly_Quests_Wooden_Table": {
+      "frame": { "x": 2, "y": 112, "w": 699, "h": 172 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 699, "h": 172 },
+      "sourceSize": { "w": 699, "h": 172 }
+    },
+    "Weekly_Quests_Window_Light_Ray": {
+      "frame": { "x": 2, "y": 286, "w": 214, "h": 215 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 214, "h": 215 },
+      "sourceSize": { "w": 214, "h": 215 }
+    },
+    "Weekly_Quests_Use_Swap_Icon": {
+      "frame": { "x": 122, "y": 2, "w": 74, "h": 85 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 74, "h": 85 },
+      "sourceSize": { "w": 74, "h": 85 }
+    },
+    "Weekly_Quests_Use_Shuffle_Icon": {
+      "frame": { "x": 198, "y": 2, "w": 90, "h": 78 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 78 },
+      "sourceSize": { "w": 90, "h": 78 }
+    },
+    "Weekly_Quests_Use_Refill_Icon": {
+      "frame": { "x": 290, "y": 2, "w": 91, "h": 83 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 91, "h": 83 },
+      "sourceSize": { "w": 91, "h": 83 }
+    },
+    "Weekly_Quests_Use_Rainbow_Booster_Icon": {
+      "frame": { "x": 383, "y": 2, "w": 70, "h": 81 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 70, "h": 81 },
+      "sourceSize": { "w": 70, "h": 81 }
+    },
+    "Weekly_Quests_Use_Hammer_Icon": {
+      "frame": { "x": 455, "y": 2, "w": 74, "h": 81 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 74, "h": 81 },
+      "sourceSize": { "w": 74, "h": 81 }
+    },
+    "Weekly_Quests_Use_Doubler_Icon": {
+      "frame": { "x": 531, "y": 2, "w": 83, "h": 84 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 83, "h": 84 },
+      "sourceSize": { "w": 83, "h": 84 }
+    },
+    "Weekly_Quests_Tuto_Star_Token": {
+      "frame": { "x": 218, "y": 286, "w": 104, "h": 124 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 104, "h": 124 },
+      "sourceSize": { "w": 104, "h": 124 }
+    },
+    "Weekly_Quests_Tuto_Image_3": {
+      "frame": { "x": 2, "y": 503, "w": 374, "h": 326 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 374, "h": 326 },
+      "sourceSize": { "w": 374, "h": 326 }
+    },
+    "Weekly_Quests_Tuto_Image_2": {
+      "frame": { "x": 703, "y": 2, "w": 374, "h": 326 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 374, "h": 326 },
+      "sourceSize": { "w": 374, "h": 326 }
+    },
+    "Weekly_Quests_Tuto_Image_1": {
+      "frame": { "x": 378, "y": 330, "w": 389, "h": 326 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 389, "h": 326 },
+      "sourceSize": { "w": 389, "h": 326 }
+    },
+    "Weekly_Quests_Tuto_Clipboard": {
+      "frame": { "x": 378, "y": 658, "w": 108, "h": 144 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 108, "h": 144 },
+      "sourceSize": { "w": 108, "h": 144 }
+    },
+    "Weekly_Quests_Task_Yellow_Background_9Slice_41x41x41x41": {
+      "frame": { "x": 616, "y": 2, "w": 83, "h": 83 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 83, "h": 83 },
+      "sourceSize": { "w": 83, "h": 83 }
+    },
+    "Weekly_Quests_Task_Reminder_Background_9Slice_43x43x43x47": {
+      "frame": { "x": 488, "y": 658, "w": 88, "h": 92 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 88, "h": 92 },
+      "sourceSize": { "w": 88, "h": 92 }
+    },
+    "Weekly_Quests_Task_Icon_Background": {
+      "frame": { "x": 218, "y": 412, "w": 89, "h": 89 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 89, "h": 89 },
+      "sourceSize": { "w": 89, "h": 89 }
+    },
+    "Weekly_Quests_Task_Green_Background_9Slice_44x42x44x55": {
+      "frame": { "x": 578, "y": 658, "w": 90, "h": 99 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 90, "h": 99 },
+      "sourceSize": { "w": 90, "h": 99 }
+    },
+    "Weekly_Quests_Task_Beige_Background_9Slice_41x41x41x41": {
+      "frame": { "x": 670, "y": 658, "w": 83, "h": 83 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 83, "h": 83 },
+      "sourceSize": { "w": 83, "h": 83 }
+    },
+    "Weekly_Quests_Star_Icon": {
+      "frame": { "x": 755, "y": 658, "w": 109, "h": 103 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 109, "h": 103 },
+      "sourceSize": { "w": 109, "h": 103 }
+    },
+    "Weekly_Quests_Remove_Tape_Icon": {
+      "frame": { "x": 488, "y": 752, "w": 79, "h": 75 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 79, "h": 75 },
+      "sourceSize": { "w": 79, "h": 75 }
+    },
+    "Weekly_Quests_Remove_Plank_Icon": {
+      "frame": { "x": 670, "y": 743, "w": 81, "h": 62 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 81, "h": 62 },
+      "sourceSize": { "w": 81, "h": 62 }
+    },
+    "Weekly_Quests_Remove_Lock_Icon": {
+      "frame": { "x": 569, "y": 759, "w": 64, "h": 68 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 68 },
+      "sourceSize": { "w": 64, "h": 68 }
+    },
+    "Weekly_Quests_Remove_Knots_Icon": {
+      "frame": { "x": 866, "y": 330, "w": 80, "h": 76 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 76 },
+      "sourceSize": { "w": 80, "h": 76 }
+    },
+    "Weekly_Quests_Progress_Marker": {
+      "frame": { "x": 753, "y": 763, "w": 108, "h": 56 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 108, "h": 56 },
+      "sourceSize": { "w": 108, "h": 56 }
+    },
+    "Weekly_Quests_Progress_Bar_Top_Empty_9Slice_22x0x22x0": {
+      "frame": { "x": 324, "y": 286, "w": 46, "h": 43 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 46, "h": 43 },
+      "sourceSize": { "w": 46, "h": 43 }
+    },
+    "Weekly_Quests_Progress_Bar_Full_9Slice_19x0x19x0": {
+      "frame": { "x": 372, "y": 286, "w": 39, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 39, "h": 37 },
+      "sourceSize": { "w": 39, "h": 37 }
+    },
+    "Weekly_Quests_Progress_Bar_Empty_9Slice_22x0x22x0": {
+      "frame": { "x": 324, "y": 331, "w": 46, "h": 43 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 46, "h": 43 },
+      "sourceSize": { "w": 46, "h": 43 }
+    },
+    "Weekly_Quests_Progress_Bar_Complete_9Slice_21x0x21x0": {
+      "frame": { "x": 324, "y": 376, "w": 44, "h": 43 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 44, "h": 43 },
+      "sourceSize": { "w": 44, "h": 43 }
+    },
+    "Weekly_Quests_Pop_Up_Brown_Part_9Slice_60x23x60x60": {
+      "frame": { "x": 948, "y": 330, "w": 122, "h": 84 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 122, "h": 84 },
+      "sourceSize": { "w": 122, "h": 84 }
+    },
+    "Weekly_Quests_Pop_Up_Beige_Part_9Slice_73x68x74x79": {
+      "frame": { "x": 769, "y": 408, "w": 149, "h": 147 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 149, "h": 147 },
+      "sourceSize": { "w": 149, "h": 147 }
+    },
+    "Weekly_Quests_Merge_3_Stacks_Icon": {
+      "frame": { "x": 769, "y": 330, "w": 79, "h": 74 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 79, "h": 74 },
+      "sourceSize": { "w": 79, "h": 74 }
+    },
+    "Weekly_Quests_Consecutive_Days_Icon": {
+      "frame": { "x": 769, "y": 557, "w": 66, "h": 94 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 94 },
+      "sourceSize": { "w": 66, "h": 94 }
+    },
+    "Weekly_Quests_Collect_Stars_Icon": {
+      "frame": { "x": 863, "y": 763, "w": 79, "h": 66 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 79, "h": 66 },
+      "sourceSize": { "w": 79, "h": 66 }
+    },
+    "Weekly_Quests_Collect_Measuring_Tape_Icon": {
+      "frame": { "x": 837, "y": 557, "w": 53, "h": 99 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 53, "h": 99 },
+      "sourceSize": { "w": 53, "h": 99 }
+    },
+    "Weekly_Quests_Collect_Birds_Icon": {
+      "frame": { "x": 866, "y": 658, "w": 77, "h": 68 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 68 },
+      "sourceSize": { "w": 77, "h": 68 }
+    },
+    "Weekly_Quests_Clear_X_Yellow_Tiles_Icon": {
+      "frame": { "x": 892, "y": 557, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_White_Tiles_Icon": {
+      "frame": { "x": 971, "y": 416, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_Red_Tiles_Icon": {
+      "frame": { "x": 920, "y": 479, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_Purple_Tiles_Icon": {
+      "frame": { "x": 999, "y": 479, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_Pink_Tiles_Icon": {
+      "frame": { "x": 971, "y": 542, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_Navy_Tiles_Icon": {
+      "frame": { "x": 971, "y": 605, "w": 78, "h": 62 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 78, "h": 62 },
+      "sourceSize": { "w": 78, "h": 62 }
+    },
+    "Weekly_Quests_Clear_X_Grey_Tiles_Icon": {
+      "frame": { "x": 944, "y": 728, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_Green_Tiles_Icon": {
+      "frame": { "x": 2, "y": 831, "w": 77, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 77, "h": 61 },
+      "sourceSize": { "w": 77, "h": 61 }
+    },
+    "Weekly_Quests_Clear_X_Blue_Tiles_Icon": {
+      "frame": { "x": 378, "y": 829, "w": 78, "h": 62 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 78, "h": 62 },
+      "sourceSize": { "w": 78, "h": 62 }
+    },
+    "Weekly_Quests_Clear_Plank_Red_Icon": {
+      "frame": { "x": 81, "y": 831, "w": 78, "h": 60 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 78, "h": 60 },
+      "sourceSize": { "w": 78, "h": 60 }
+    },
+    "Weekly_Quests_Clear_Plank_Green_Icon": {
+      "frame": { "x": 458, "y": 829, "w": 80, "h": 62 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 62 },
+      "sourceSize": { "w": 80, "h": 62 }
+    },
+    "Weekly_Quests_Clear_Plank_Blue_Icon": {
+      "frame": { "x": 540, "y": 829, "w": 80, "h": 62 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 62 },
+      "sourceSize": { "w": 80, "h": 62 }
+    },
+    "Weekly_Quests_Clear_Any_Tiles_Icon": {
+      "frame": { "x": 309, "y": 421, "w": 59, "h": 73 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 59, "h": 73 },
+      "sourceSize": { "w": 59, "h": 73 }
+    },
+    "Weekly_Quests_Chest_Shadow_Silver": {
+      "frame": { "x": 122, "y": 89, "w": 147, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 147, "h": 18 },
+      "sourceSize": { "w": 147, "h": 18 }
+    },
+    "Weekly_Quests_Chest_Shadow_Gold": {
+      "frame": { "x": 271, "y": 88, "w": 160, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 18 },
+      "sourceSize": { "w": 160, "h": 18 }
+    },
+    "Weekly_Quests_Chest_Shadow_Bronze": {
+      "frame": { "x": 433, "y": 88, "w": 120, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 18 },
+      "sourceSize": { "w": 120, "h": 18 }
+    },
+    "Weekly_Quests_Beat_X_Levels_Icon": {
+      "frame": { "x": 161, "y": 831, "w": 69, "h": 61 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 69, "h": 61 },
+      "sourceSize": { "w": 69, "h": 61 }
+    },
+    "Weekly_Quests_Background_Image": {
+      "frame": { "x": 2, "y": 894, "w": 822, "h": 667 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 12, "y": 0, "w": 822, "h": 667 },
+      "sourceSize": { "w": 846, "h": 737 }
+    },
+    "Pop_Up_Frame_9Slice_83x84x83x82": {
+      "frame": { "x": 826, "y": 831, "w": 168, "h": 168 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 168, "h": 168 },
+      "sourceSize": { "w": 168, "h": 168 }
+    }
+  },
+  "animations": {
+    "Weekly_Quests_Tuto_Image": [
+      "Weekly_Quests_Tuto_Image_1",
+      "Weekly_Quests_Tuto_Image_2",
+      "Weekly_Quests_Tuto_Image_3"
+    ]
+  },
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "weeklyTasks.avif",
+    "format": "RGBA8888",
+    "size": { "w": 1079, "h": 1563 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

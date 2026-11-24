@@ -1,0 +1,57 @@
+{
+  "frames": {
+    "Animation_Star_5": {
+      "frame": { "x": 2, "y": 2, "w": 17, "h": 70 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 17, "h": 70 },
+      "sourceSize": { "w": 17, "h": 70 }
+    },
+    "Animation_Star_4": {
+      "frame": { "x": 21, "y": 2, "w": 26, "h": 70 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 26, "h": 70 },
+      "sourceSize": { "w": 26, "h": 70 }
+    },
+    "Animation_Star_3": {
+      "frame": { "x": 49, "y": 2, "w": 54, "h": 70 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 54, "h": 70 },
+      "sourceSize": { "w": 54, "h": 70 }
+    },
+    "Animation_Star_2": {
+      "frame": { "x": 2, "y": 74, "w": 62, "h": 70 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 62, "h": 70 },
+      "sourceSize": { "w": 62, "h": 70 }
+    },
+    "Animation_Star_1": {
+      "frame": { "x": 66, "y": 74, "w": 72, "h": 70 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 72, "h": 70 },
+      "sourceSize": { "w": 72, "h": 70 }
+    }
+  },
+  "animations": {
+    "Animation_Star": [
+      "Animation_Star_1",
+      "Animation_Star_2",
+      "Animation_Star_3",
+      "Animation_Star_4",
+      "Animation_Star_5"
+    ]
+  },
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "starBlocker.avif",
+    "format": "RGBA8888",
+    "size": { "w": 140, "h": 146 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}

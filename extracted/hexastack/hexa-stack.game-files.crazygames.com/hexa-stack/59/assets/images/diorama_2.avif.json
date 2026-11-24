@@ -1,0 +1,91 @@
+{
+  "frames": {
+    "Diorama_2_Treehouse_Shadow": {
+      "frame": { "x": 2, "y": 2, "w": 160, "h": 199 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 199 },
+      "sourceSize": { "w": 160, "h": 199 }
+    },
+    "Diorama_2_Treehouse": {
+      "frame": { "x": 164, "y": 2, "w": 134, "h": 206 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 134, "h": 206 },
+      "sourceSize": { "w": 134, "h": 206 }
+    },
+    "Diorama_2_Tent_Shadow": {
+      "frame": { "x": 2, "y": 210, "w": 136, "h": 55 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 136, "h": 55 },
+      "sourceSize": { "w": 136, "h": 55 }
+    },
+    "Diorama_2_Tent": {
+      "frame": { "x": 2, "y": 267, "w": 123, "h": 93 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 123, "h": 93 },
+      "sourceSize": { "w": 123, "h": 93 }
+    },
+    "Diorama_2_Island": {
+      "frame": { "x": 300, "y": 2, "w": 604, "h": 537 },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 604, "h": 537 },
+      "sourceSize": { "w": 606, "h": 537 }
+    },
+    "Diorama_2_Cave_Shadow": {
+      "frame": { "x": 140, "y": 210, "w": 103, "h": 52 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 103, "h": 52 },
+      "sourceSize": { "w": 103, "h": 52 }
+    },
+    "Diorama_2_Cave": {
+      "frame": { "x": 2, "y": 362, "w": 160, "h": 174 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 174 },
+      "sourceSize": { "w": 160, "h": 174 }
+    },
+    "Diorama_2_Camping_Car_Shadow": {
+      "frame": { "x": 140, "y": 264, "w": 146, "h": 80 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 146, "h": 80 },
+      "sourceSize": { "w": 146, "h": 80 }
+    },
+    "Diorama_2_Camping_Car": {
+      "frame": { "x": 2, "y": 541, "w": 146, "h": 151 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 146, "h": 151 },
+      "sourceSize": { "w": 146, "h": 151 }
+    },
+    "Diorama_2_Campfire_Shadow": {
+      "frame": { "x": 164, "y": 346, "w": 133, "h": 108 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 133, "h": 108 },
+      "sourceSize": { "w": 133, "h": 108 }
+    },
+    "Diorama_2_Campfire": {
+      "frame": { "x": 164, "y": 456, "w": 122, "h": 133 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 122, "h": 133 },
+      "sourceSize": { "w": 122, "h": 133 }
+    }
+  },
+  "animations": {},
+  "meta": {
+    "app": "http://github.com/pixijs/assetpack",
+    "version": "1.0",
+    "image": "diorama_2.avif",
+    "format": "RGBA8888",
+    "size": { "w": 906, "h": 694 },
+    "scale": 1,
+    "related_multi_packs": []
+  }
+}
