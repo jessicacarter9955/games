@@ -1,5 +1,7 @@
 # Reskin audit v2 — post recupero CDN (24 archivi)
 
+> **Aggiornamento successivo (24 novembre 2026):** una cattura tramite il browser ufficiale CrazyGames ha recuperato ulteriori file, fra cui quelli di Car OUT!, Nut Sort: Build the City, Home Design, Jewel Academy, Jigpic e Lava and Aqua. **Questa classifica v2 è ora provvisoria e i punteggi non comprendono la seconda passata.** Lo ZIP `find-the-cow(cat).zip` corrisponde a **Nut Sort: Build the City** (Defold), quindi la riga con punteggio 0 non è più valida. Vedere [il resoconto della cattura browser](MIRROR_RECOVERY_BROWSER_2026-11-24.md). Nessun gioco è ancora certificato come build completa verificata offline.
+
 **Data:** 24 novembre 2026. **Fonte:** i 24 ZIP originali in `C:\Users\jessi\Downloads\Puzzles Crazygames mirror`, i loader `__NEXT_DATA__` salvati, i mirror CDN nel workspace Windows e il file `_reskin_structural_audit.json`. Nessuna build è stata validata avviandola in un browser offline.
 
 **Risultato verificato:** analizzati **24/24 archivi**, identificati i loader di tutti e 24, recuperati **1.470 file** pertinenti ai game host, per **587.359.151 byte (~587,4 MB)**. **17/24 cartelle** contengono almeno un file, ma alcune non hanno ancora un vero runtime utilizzabile. Degli **48 URL core** dichiarati dai loader (quattro per Unity, uno per gli altri) **40** hanno un file locale corrispondente. Tutti gli **8 giochi Unity** hanno i 4 componenti core dichiarati; questo non significa scene/editabilità garantite.
