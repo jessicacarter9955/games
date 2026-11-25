@@ -158,7 +158,17 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                     "/gameframe/", "crazygames.com/game/", "/sdk/",
                     "/portal/", "/cdn-cgi/"))
                 return (int(is_portal), -len(p.parts), len(p.as_posix()))
-            entry = min(entries or fallback_entries, key=entry_rank)
+            # Prefer an actual generated WebGL bootstrap over a portal
+            # wrapper or unrelated captured index.html for Unity titles.
+            local_bootstraps = [
+                p for p in entries if "_reskin_local_bootstrap" in p.parts
+            ]
+            entry_candidates = (
+                local_bootstraps if (game["engine"].lower() == "unity"
+                                     and local_bootstraps)
+                else (entries or fallback_entries)
+            )
+            entry = min(entry_candidates, key=entry_rank)
             is_unity_wrapper = entry in fallback_entries
             is_local_bootstrap = "_reskin_local_bootstrap" in entry.parts
             game["entryKind"] = (
@@ -169,7 +179,14 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 (Path("local-mirror") / game_id / entry).as_posix(),
                 safe="/-._~")
             game["entryCount"] = len(entries) + len(fallback_entries)
-            if game["status"] == "missing":
+            if is_local_bootstrap:
+                # This is a runnable WebGL *candidate*, not proof of gameplay.
+                # Do not keep the misleading "engine unsupported" label.
+                game.update(
+                    status="limited",
+                    label="Unity WebGL · bootstrap locale (QA necessaria)",
+                )
+            elif game["status"] == "missing":
                 engine = game["engine"].lower()
                 if "3d" in game["graphics"].lower() or engine == "playcanvas":
                     game.update(status="limited",label="3D · adapter richiesto")
