@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamessurvev",
+  "title": "Survev",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:04:09.738442+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "70960886e2a6829b7c42f45079d658b78c2267283f944ed1526b405ef4fdaed5",
+        "metrics": {
+          "entropy": 2.992,
+          "dominantFraction": 0.546,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "13749dc48c190e7466e80d398faecfdb4ec1fae5534fabe74d0e5817bd7b463b",
+        "metrics": {
+          "entropy": 3.01,
+          "dominantFraction": 0.539,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "13749dc48c190e7466e80d398faecfdb4ec1fae5534fabe74d0e5817bd7b463b",
+        "metrics": {
+          "entropy": 3.01,
+          "dominantFraction": 0.539,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.72,
+      "fractionChanged": 0.017
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Failed to fetch",
+      "Event",
+      "Event",
+      "Event",
+      "Event",
+      "Event",
+      "Unable to decode audio data",
+      "Unable to decode audio data"
+    ],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/img/main_splash.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/img/survev-kofi.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/assets/loadout-0-50-d0595bd6.webp"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/assets/shared-0-50-f0352760.webp"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/assets/shared-1-50-9284517d.webp"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/assets/shared-2-50-4636177a.webp"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/assets/main-0-50-c3e27083.webp"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamessurvev/survev.io/img/loot/loot-medical-bandage.svg"
+      }
+    ],
+    "externalRequestFailures": 6,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
