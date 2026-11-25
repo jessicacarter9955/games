@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "homedesigndecorate",
+  "title": "Home Design Decorate",
+  "engine": "unity",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:09:28.890663+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "e83c333fb4e6ffbc86e45c05f7081887f4ee4b838667393763cc15a9e6be3392",
+        "metrics": {
+          "entropy": 0.367,
+          "dominantFraction": 0.967,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "e83c333fb4e6ffbc86e45c05f7081887f4ee4b838667393763cc15a9e6be3392",
+        "metrics": {
+          "entropy": 0.367,
+          "dominantFraction": 0.967,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "e83c333fb4e6ffbc86e45c05f7081887f4ee4b838667393763cc15a9e6be3392",
+        "metrics": {
+          "entropy": 0.367,
+          "dominantFraction": 0.967,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/homedesigndecorate/home-design---decorate-house.game-files.crazygames.com/home-design---decorate-house/48/Build/f41"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/homedesigndecorate/home-design---decorate-house.game-files.crazygames.com/home-design---decorate-house/48/Build/f41"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/homedesigndecorate/home-design---decorate-house.game-files.crazygames.com/home-design---decorate-house/48/Build/73d"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/homedesigndecorate/home-design---decorate-house.game-files.crazygames.com/home-design---decorate-house/48/Build/73d"
+      }
+    ],
+    "externalRequestFailures": 0,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
