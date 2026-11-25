@@ -75,5 +75,24 @@
     "httpErrors": [],
     "externalRequestsBlocked": 3
   },
-  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML."
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML.",
+  "reskinUiRetest": {
+    "source": "Windows Chromium, real Reskinner UI",
+    "assetSelection": false,
+    "isolatedPreview": true,
+    "replacementSaved": false,
+    "replacementServed": false,
+    "persistedAfterReload": false,
+    "liveGameTextureVerified": false,
+    "runtime": "canvas; 4 tracked draws",
+    "assetName": "main_title.png",
+    "catalogMatches": 2,
+    "selectedArchiveImageDimensions": [
+      0,
+      0
+    ],
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "Inspector isolated the real menu texture; first gallery entry points to an archived path that fails to decode. Baseline for gallery repair."
+  }
 }
