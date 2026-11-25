@@ -105,6 +105,19 @@
         <div class="workspace-foot">
           <span id="runtimeState">Runtime non collegato</span>
           <span id="viewportState">Viewport —</span>
+          <div class="quick-diagnostics" id="quickDiagnostics"
+               aria-label="Diagnostica rapida senza DevTools">
+            <span class="quick-diagnostics-count"
+                  title="Errori rilevati in questa sessione">🐞 <span id="diagErrorCount">0</span></span>
+            <button id="copyDiagnostics" type="button"
+                    class="button ghost quick-diagnostics-button"
+                    title="Copia errori, URL falliti e stato del gioco senza premere F12">⧉ Copia log</button>
+            <button id="captureScreenshot" type="button"
+                    class="button ghost quick-diagnostics-button"
+                    title="Cattura la scheda Chrome e scarica uno screenshot PNG">▣ Screenshot</button>
+            <span id="diagFeedback" class="quick-diagnostics-feedback"
+                  role="status" aria-live="polite"></span>
+          </div>
         </div>
 
         <div class="library-header">
