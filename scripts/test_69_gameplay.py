@@ -207,7 +207,7 @@ def check(browser,base,game,seconds,allow_remote=False):
         dom_play=any(a["type"]=="DOM-Play" for a in result["playActions"])
         result["playActionVerified"]=dom_play
         state=result["playDocument"]
-        if not action and not after:
+        if not (before and after and action):
             result["status"]="screenshot-unavailable"
         elif visual.get("nearUniform"):
             result["status"]="blank-or-uniform"
