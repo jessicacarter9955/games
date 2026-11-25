@@ -65,5 +65,30 @@
     "httpErrors": [],
     "externalRequestsBlocked": 2
   },
-  "notes": "Screenshot originali solo sul PC Windows; screenshot/menu/canvas/HTML non equivalgono a gameplay."
+  "notes": "Screenshot originali solo sul PC Windows; screenshot/menu/canvas/HTML non equivalgono a gameplay.",
+  "binaryRepairRetest": {
+    "source": "Windows Chromium Playwright remote-enabled; direct original CDN binary verification",
+    "baseline": {
+      "error": "WebAssembly.compile(): expected magic word 00 61 73 6d, found 28 6d 6f 64",
+      "bytes": 4497619,
+      "sha256": "a4b2b38209d7674de3d9e25817eb62cc9d4a610fe6c82e6edf32d2dafaffd2dd",
+      "format": "WebAssembly text (WAT)"
+    },
+    "repair": {
+      "path": "files/assets/193571225/1/draco.wasm.wasm",
+      "bytes": 285747,
+      "sha256": "c55a594e8ffd18426d36b27fea9618af3df5e173640a3e56d46f09d76f0574f2",
+      "format": "WebAssembly binary",
+      "stored": "private Windows mirror; original saved in private backup"
+    },
+    "retest": {
+      "wasmMagicErrorObserved": false,
+      "remainingErrors": [
+        "assetName is not defined",
+        "required assets HTTP 404"
+      ],
+      "gameplayVerified": false
+    },
+    "notes": "Binary repaired and initial compilation failure no longer observed; other errors prevent gameplay."
+  }
 }
