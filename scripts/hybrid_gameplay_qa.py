@@ -454,7 +454,11 @@ def game_test(cdp: CDP, base: str, game: str, output: Path,
     result={"id":game,"title":GAME_LABELS.get(game,game),
             "gameplayVerified":False,"status":"unverified",
             "inputs":[],"images":[]}
-    address=base.rstrip("/")+"/reskinner/#game="+quote(game)
+    # The Reskinner reads #game only during boot. A hash-only navigation
+    # would leave the previous title selected; vary the query to force a
+    # complete document load for each distinct game.
+    address=(base.rstrip("/")+"/reskinner/?night_qa="+quote(game)+
+             "#game="+quote(game))
     try:
         cdp.call("Page.navigate",{"url":address},timeout=16)
         time.sleep(initial_wait)
