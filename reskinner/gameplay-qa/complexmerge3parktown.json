@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "complexmerge3parktown",
+  "title": "Complex Merge 3 Park Town",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:09:35.925957+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "missing-entry",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": null,
+  "evidence": {
+    "screenshots": [],
+    "playDiff": null,
+    "inputDiff": null,
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 0,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
