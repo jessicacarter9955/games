@@ -11,6 +11,7 @@ import hashlib
 import io
 import json
 import math
+import os
 import re
 import urllib.request
 from collections import Counter
@@ -29,7 +30,7 @@ PLAY = re.compile(
     r"begin|jugar|jouer|spielen|let.s play|next level)\s*[!›»>]*\s*$",
     re.I)
 CONTROLS = "button,[role=button],input[type=button],input[type=submit],a,.play,.start"
-OUT = Path.home() / "Downloads" / "_reskin_69_gameplay_qa_20261125"
+OUT = Path(os.environ.get("RESKIN_QA_REPORT_DIR", str(Path.home() / "Downloads" / "_reskin_69_gameplay_qa_20261125")))
 
 def now():
     return datetime.now(timezone.utc).isoformat()
@@ -180,15 +181,18 @@ def check(browser,base,game,seconds,allow_remote=False):
         res=page.goto(base.rstrip("/") + game["entry"],
                       wait_until="domcontentloaded",timeout=19000)
         result["httpEntryStatus"]=res.status if res else None
+        result["navigatedUrlOnEntry"]=page.url
         page.wait_for_timeout(1400)
         before,p0=capture(page,folder,"00-boot")
         result["screenshots"].append(p0)
         result["bootDocument"]=document_state(page)
+        result["navigatedUrlAfterBoot"]=page.url
         press_play(page,result["playActions"])
         page.wait_for_timeout(int(max(900,seconds*1000)))
         after,p1=capture(page,folder,"01-after-play")
         result["screenshots"].append(p1)
         result["playDocument"]=document_state(page)
+        result["navigatedUrlAfterPlay"]=page.url
         result["playDiff"]=visual_delta(before,after) if before and after else {}
         page.keyboard.press("ArrowLeft")
         page.keyboard.press("ArrowRight")
@@ -197,6 +201,7 @@ def check(browser,base,game,seconds,allow_remote=False):
         action,p2=capture(page,folder,"02-after-input")
         result["screenshots"].append(p2)
         result["inputDocument"]=document_state(page)
+        result["navigatedUrlAfterInput"]=page.url
         result["inputDiff"]=visual_delta(after,action) if after and action else {}
         visual=p2["metrics"]
         dom_play=any(a["type"]=="DOM-Play" for a in result["playActions"])
