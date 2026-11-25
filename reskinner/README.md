@@ -8,6 +8,33 @@ It catalogs all games represented by \`extracted/**/_game-capture-manifest.json\
 loads the actual local HTML (when available), and provides a conservative
 browser inspector and non-destructive image reskin drafts.
 
+
+## Diagnostica rapida senza F12
+
+La piccola barra **🐞 0 | ⧉ Copia log | ▣ Screenshot** si trova sotto il
+previewer del gioco, senza coprire Canvas o controlli di gameplay.
+
+- **Copia log** costruisce un report JSON copiabile negli appunti: gioco,
+  entrypoint, errori JS e `console.error`/warning catturati nel gioco
+  (quando iframe accessibile), richieste HTTP fallite visibili a Resource
+  Timing, dimensioni Canvas, stato runtime e ultimi eventi del Reskinner.
+  Vengono omessi query string, header, cookie e request body. Non serve F12.
+- **Screenshot** chiede di selezionare **questa scheda Chrome** con il
+  normale selettore di condivisione, poi salva un PNG in Download e cerca
+  di copiarlo anche negli appunti. Se il browser non offre la cattura
+  dello schermo, tenta la copia diretta del Canvas HTML5 accessibile.
+  Per Unity e WebGL usare la cattura della scheda; un Canvas può esportare
+  un fotogramma vuoto. Nessuno screenshot viene caricato automaticamente.
+- Il report parte dalla selezione del gioco: gli errori precedenti
+  all'installazione del listener, o generati da iframe cross-origin,
+  potrebbero non comparire. Se un problema rimane inspiegato, allegare
+  anche lo screenshot e il primo errore Network disponibile.
+
+Il test automatico `scripts/test_quick_diagnostics_ui.py` verifica il
+pulsante di copia e lo scaricamento di un PNG in Chrome. La selezione
+reale della scheda richiede un gesto umano: nel test si usa uno stream
+video sintetico, **non** si dichiara certificato il selettore desktop.
+
 ## Run locally
 
 From the **root of the games repository** (not inside \`reskinner/\`):
