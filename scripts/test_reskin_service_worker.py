@@ -22,7 +22,7 @@ def png(rgb: tuple[int, int, int]) -> bytes:
     def part(name: bytes, data: bytes) -> bytes:
         return (struct.pack(">I", len(data)) + name + data +
                 struct.pack(">I", zlib.crc32(name + data) & 0xFFFFFFFF))
-    pixel = bytes([0, *rgb, 255])
+    pixel = bytes([*rgb, 255])
     rows = b"".join(b"\0" + pixel * 4 for _ in range(4))
     return (b"\x89PNG\r\n\x1a\n" +
             part(b"IHDR", struct.pack(">IIBBBBB", 4, 4, 8, 6, 0, 0, 0)) +
