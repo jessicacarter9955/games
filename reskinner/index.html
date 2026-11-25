@@ -142,12 +142,14 @@
           <div class="section-kicker">RESKIN ASSET</div>
           <div id="assetDetail" class="empty-detail">Seleziona una texture nella libreria per sostituirla.</div>
           <div id="reskinControls" hidden>
+            <p id="reskinLayerState" class="hint">Livello risorse: inizializzazione…</p>
             <label class="field" for="replacementFile">PNG di sostituzione (dimensioni 1:1)</label>
             <input type="file" id="replacementFile" accept="image/png" hidden/>
             <button id="chooseReplacement" type="button" class="button primary block">↑ Carica PNG sostitutivo</button>
             <div class="reskin-buttons">
               <button id="restoreAsset" type="button" class="button ghost" disabled>↶ Ripristina</button>
               <button id="exportAsset" type="button" class="button ghost" disabled>↓ Esporta PNG</button>
+              <button id="applyReskinGame" type="button" class="button primary" disabled>↻ Ricarica con reskin</button>
             </div>
             <div id="reskinStatus" class="hint"></div>
           </div>
@@ -156,7 +158,7 @@
           <div class="section-kicker">BOZZE LOCALI</div>
           <div id="draftCount" class="muted-text">Nessuna modifica salvata.</div>
           <button id="exportManifest" type="button" class="button ghost block">↓ Esporta manifest delle modifiche</button>
-          <p class="footnote">Le modifiche restano nel browser (IndexedDB): non sovrascrivono gli ZIP o il repository GitHub. I modelli 3D e gli sprite in motori compilati richiedono un adapter dedicato.</p>
+          <p class="footnote">Le bozze restano in IndexedDB e vengono fornite ai giochi con lo stesso URL delle texture originali durante il caricamento. Per visualizzare una texture già in memoria usa «Ricarica con reskin». Non modifica ZIP o GitHub. Texture incorporate in asset binari, mesh, UV e shader richiedono adapter specifici.</p>
         </div>
       </aside>
     </div>
