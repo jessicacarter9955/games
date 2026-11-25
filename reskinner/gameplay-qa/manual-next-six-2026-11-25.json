@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-25T19:06:00Z",
+  "source": "User's six 2Night Reskinner diagnostic reports, including two pasted-text file uploads",
+  "scope": "Newly reported six games, in addition to manual-triage-2026-11-25.json (previous six)",
+  "result": "none yet certified",
+  "strictCriterion": "Only real local menu -> start -> gameplay -> interaction with visual and network evidence can yield gameplayVerified true; neither page load, animation, nor screenshot change alone qualifies",
+  "issues": [
+    {
+      "id": "cardsdominoduel",
+      "title": "Domino Duel",
+      "status": "blocked",
+      "engine": "html5",
+      "observed": "Domino home/menu; live gameplay not evidenced",
+      "exactErrors": [
+        "GamePush origin_not_allowed",
+        "Dynamic import opponent-avatars.config-BbOmVTFK.js 404",
+        "RewardAcceptModal-COdSUv6M.js 404",
+        "SchedulersModal-D2m5nxHd.js 404",
+        "gem-9-P7gP-q.mp3 404"
+      ],
+      "next": [
+        "Find and recover matching original modules under exact version /domino-duel-uit/239/assets",
+        "Separate optional telemetry and platform-origin checks from required Play with computer logic",
+        "Retest Play with computer to real domino table and interaction"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false
+    },
+    {
+      "id": "iogamestileman",
+      "title": "TileMan.io",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "Full menu but failed game runtime; canvas 300x150 invisible",
+      "exactErrors": [
+        "hra.min.js:1:201955 Cannot read properties of null (reading lock)",
+        "hra.min.js:1:67243 ReferenceError pw is not defined (8 occurrences)",
+        "/discord.png /re.png /loading.gif 404"
+      ],
+      "next": [
+        "Inspect exact obfuscated call sites",
+        "Recover root assets from original eu1.tileman.io host",
+        "Try official Local mode and real input without inventing server state"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false
+    },
+    {
+      "id": "wordgameswordwipe",
+      "title": "Word Wipe",
+      "status": "blocked",
+      "engine": "html5",
+      "observed": "Empty body and canvas size 0x0",
+      "exactErrors": [
+        "main.js unhandled promise NotFoundError insertBefore: reference node is not a child of this node",
+        "@Inject param undefined on _0x5e08ad"
+      ],
+      "next": [
+        "Locate original function and DOM parent/anchor mismatch",
+        "Check side effects of iframe instrumentation vs standalone",
+        "Retest and verify interactive word grid"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false
+    },
+    {
+      "id": "iogamesagario",
+      "title": "Agar.io",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "iframe sameOrigin false, no accessible content",
+      "exactErrors": [
+        "Iframe non accessibile (origine diversa)",
+        "Third-party Facebook pixel failed (likely nonessential)"
+      ],
+      "next": [
+        "Trace actual frame URL and redirect chain in browser",
+        "Check original static asset capture / subresource origin without bypassing browser protections",
+        "Determine legitimate local/offline mode and separate inspector cross-origin limit"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false
+    },
+    {
+      "id": "cardsfouruno",
+      "title": "Foono Online Multiplayer",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "FOON-O menu but Play Bots not confirmed",
+      "exactErrors": [
+        "Missing lazy modules from absolute /assets and /m paths including realtime-AohzANgl.js, HowlFactoryModule-Hole5-GE.js, idle-k65mPGKF.js",
+        "GET_REALTIME_TOKEN and GET_IP_REPUTATION external APIs fail",
+        "/assets/late-DM0uVa_S.css and index CSS, font and flag 404"
+      ],
+      "next": [
+        "Map original foony.com absolute root assets to correct local host",
+        "Recover missing lazy modules from canonical originals where publicly available",
+        "Retest Play Bots and actual interaction; no backend simulation"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false
+    },
+    {
+      "id": "iogamesevowarsio",
+      "title": "EvoWars.io",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "Age/start screen and canvas rendering, many image load failures; gameplay not proven",
+      "exactErrors": [
+        "Dozens of image errors under /images/*.png including ghost, HUD, maps, minimap, flags, UI sprites",
+        "Adinplay/CPMStar ad scripts failed (separate optional errors)"
+      ],
+      "next": [
+        "Recover exact game images from original evowars.io path in bounded batches",
+        "Verify PNG signatures and content hashes",
+        "Retest age/start then game scene and movement/interaction"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false
+    }
+  ]
+}
