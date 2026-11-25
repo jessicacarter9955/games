@@ -90,5 +90,35 @@
       "gameplayVerified": false
     },
     "notes": "Binary repaired and initial compilation failure no longer observed; other errors prevent gameplay."
+  },
+  "assetRecoveryRetest": {
+    "source": "Windows Chromium Playwright, matched original CDN, local files only",
+    "baseline": {
+      "networkMode": "remote-enabled",
+      "missingUniqueAssets": 20,
+      "pageErrors": {
+        "assetName is not defined": 6
+      }
+    },
+    "repair": {
+      "recoveredOriginalAssets": 20,
+      "failed": 0,
+      "stored": "private Windows mirror only"
+    },
+    "after": {
+      "networkMode": "remote-enabled",
+      "missingUniqueAssets": 0,
+      "pageErrors": {}
+    },
+    "offlineRetest": {
+      "networkMode": "strict-offline",
+      "missingUniqueAssets": 0,
+      "pageErrors": {
+        "Failed to fetch": 1
+      }
+    },
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "All observed missing assets recovered and JS error eliminated in remote-enabled mode; offline dependency remains. No gameplay certification."
   }
 }
