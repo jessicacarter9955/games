@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "id": "triviaopenguesser",
+  "title": "OpenGuessr",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:04:53.124477+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "21bc3699e3bd27a015d97858920d0806bc320bdb3158b16825326d9ef4daead9",
+        "metrics": {
+          "entropy": 2.519,
+          "dominantFraction": 0.609,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "21bc3699e3bd27a015d97858920d0806bc320bdb3158b16825326d9ef4daead9",
+        "metrics": {
+          "entropy": 2.519,
+          "dominantFraction": 0.609,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "21bc3699e3bd27a015d97858920d0806bc320bdb3158b16825326d9ef4daead9",
+        "metrics": {
+          "entropy": 2.519,
+          "dominantFraction": 0.609,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_app/immutable/assets/barlow-condensed-medium.DmkPGkbM.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/cdn-cgi/challenge-platform/scripts/jsd/main.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/img/pins/player_pin0.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/img/icon_3d.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/img/red_smoke.png"
+      }
+    ],
+    "externalRequestFailures": 12,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
