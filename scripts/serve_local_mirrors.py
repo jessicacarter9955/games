@@ -232,6 +232,8 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
 
 class MirrorHandler(SimpleHTTPRequestHandler):
     _hashed_alias_cache: dict[str, str | None] = {}
+    _hashed_alias_index: dict[str, set[Path]] = {}
+    _hashed_alias_index_roots: tuple[str, ...] = ()
     _hashed_alias_lock = threading.Lock()
 
     def guess_type(self, path: str) -> str:
@@ -388,20 +390,35 @@ class MirrorHandler(SimpleHTTPRequestHandler):
 
         name = parts[-1]
         with self._hashed_alias_lock:
-            if name in self._hashed_alias_cache:
-                return self._hashed_alias_cache[name]
-            matches: set[Path] = set()
-            for root in self.roots.values():
-                try:
-                    for asset in root.rglob(name):
-                        if (asset.parent.name != "assets" or
-                                asset.is_symlink() or not asset.is_file()):
-                            continue
-                        resolved = asset.resolve()
-                        resolved.relative_to(root.resolve())
-                        matches.add(resolved)
-                except (OSError, ValueError):
-                    continue
+            # Dynamic imports omit Referer. Index filenames once rather than
+            # recursively walking every game mirror for each JS request; a
+            # single page may import hundreds of different hashed modules.
+            cls = type(self)
+            roots_key = tuple(sorted(str(root.resolve())
+                                     for root in self.roots.values()))
+            if roots_key != cls._hashed_alias_index_roots:
+                index: dict[str, set[Path]] = {}
+                for root in self.roots.values():
+                    try:
+                        root_path = root.resolve()
+                        for asset in root.rglob("*"):
+                            if (asset.parent.name != "assets" or
+                                    asset.is_symlink() or not asset.is_file() or
+                                    not re.fullmatch(
+                                        r"[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\\.(?:js|mjs|css)",
+                                        asset.name)):
+                                continue
+                            resolved = asset.resolve()
+                            resolved.relative_to(root_path)
+                            index.setdefault(asset.name, set()).add(resolved)
+                    except (OSError, ValueError):
+                        continue
+                cls._hashed_alias_index = index
+                cls._hashed_alias_index_roots = roots_key
+                cls._hashed_alias_cache.clear()
+            if name in cls._hashed_alias_cache:
+                return cls._hashed_alias_cache[name]
+            matches = cls._hashed_alias_index.get(name, set())
             chosen = None
             if len(matches) == 1:
                 chosen = str(next(iter(matches)))
