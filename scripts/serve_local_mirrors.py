@@ -357,6 +357,30 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         except (ValueError, OSError):
             return None
 
+    def resolve_unique_hashed_asset(self, parts: tuple[str, ...]) -> str | None:
+        """Recover referrerless hashed imports, never guess an ambiguous file."""
+        if (self.headers.get("Referer") or
+                self.headers.get("Sec-Fetch-Site") != "same-origin" or
+                not parts or parts[0] != "assets" or
+                not re.fullmatch(r"[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\.(?:js|mjs|css)",
+                                 parts[-1])):
+            return None
+        matches = set()
+        for root in self.roots.values():
+            try:
+                for host in root.iterdir():
+                    if not host.is_dir() or host.is_symlink():
+                        continue
+                    candidate = host.joinpath(*parts).resolve()
+                    candidate.relative_to(root)
+                    if candidate.is_file():
+                        matches.add(candidate)
+                        if len(matches) > 1:
+                            return None
+            except (ValueError, OSError):
+                continue
+        return str(next(iter(matches))) if len(matches) == 1 else None
+
     def translate_path(self, path: str) -> str:
         raw = urlsplit(path).path
         try:
@@ -378,7 +402,8 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             return str(candidate)
         # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
         if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
-            alias = self.resolve_game_absolute_resource(parts)
+            alias = (self.resolve_game_absolute_resource(parts) or
+                     self.resolve_unique_hashed_asset(parts))
             return alias or str(self.repo / "__invalid__")
         return str(self.repo.joinpath(*parts).resolve())
 
