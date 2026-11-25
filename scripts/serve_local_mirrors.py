@@ -14,6 +14,7 @@ Only serves localhost. Games remain unaudited; 200 HTML is not offline proof.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import mimetypes
 import re
@@ -230,6 +231,9 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
 
 
 class MirrorHandler(SimpleHTTPRequestHandler):
+    _hashed_alias_cache: dict[str, str | None] = {}
+    _hashed_alias_lock = threading.Lock()
+
     def guess_type(self, path: str) -> str:
         lower = urlsplit(path).path.lower()
         if lower.endswith((".js.br", ".js.gz")):
@@ -358,28 +362,61 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             return None
 
     def resolve_unique_hashed_asset(self, parts: tuple[str, ...]) -> str | None:
-        """Recover referrerless hashed imports, never guess an ambiguous file."""
-        if (self.headers.get("Referer") or
-                self.headers.get("Sec-Fetch-Site") != "same-origin" or
-                not parts or parts[0] != "assets" or
-                not re.fullmatch(r"[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\.(?:js|mjs|css)",
-                                 parts[-1])):
+        """Alias nested hashed JS/CSS imports only if unambiguous.
+
+        Bundlers sometimes import /assets/<hash>.js without a Referer,
+        while captures store them under /games/<slug>/assets.
+        """
+        if (len(parts) != 2 or parts[0] != "assets" or
+                not re.fullmatch(
+                    r"[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\.(?:js|mjs|css)",
+                    parts[-1]) or
+                self.headers.get("Sec-Fetch-Site") != "same-origin"):
             return None
-        matches = set()
-        for root in self.roots.values():
+        referer = self.headers.get("Referer", "")
+        if referer:
             try:
-                for host in root.iterdir():
-                    if not host.is_dir() or host.is_symlink():
-                        continue
-                    candidate = host.joinpath(*parts).resolve()
-                    candidate.relative_to(root)
-                    if candidate.is_file():
-                        matches.add(candidate)
-                        if len(matches) > 1:
-                            return None
-            except (ValueError, OSError):
-                continue
-        return str(next(iter(matches))) if len(matches) == 1 else None
+                ref = urlsplit(referer)
+                if (ref.scheme not in {"http", "https"} or
+                        ref.hostname not in {"127.0.0.1", "localhost"} or
+                        ref.port != self.server.server_port or
+                        not ref.path.startswith((
+                            "/local-mirror/", "/reskinner/"))):
+                    return None
+            except ValueError:
+                return None
+
+        name = parts[-1]
+        with self._hashed_alias_lock:
+            if name in self._hashed_alias_cache:
+                return self._hashed_alias_cache[name]
+            matches: set[Path] = set()
+            for root in self.roots.values():
+                try:
+                    for asset in root.rglob(name):
+                        if (asset.parent.name != "assets" or
+                                asset.is_symlink() or not asset.is_file()):
+                            continue
+                        resolved = asset.resolve()
+                        resolved.relative_to(root.resolve())
+                        matches.add(resolved)
+                except (OSError, ValueError):
+                    continue
+            chosen = None
+            if len(matches) == 1:
+                chosen = str(next(iter(matches)))
+            elif len(matches) > 1:
+                try:
+                    first, *others = sorted(matches)
+                    sample = hashlib.sha256(first.read_bytes()).digest()
+                    if all(p.stat().st_size == first.stat().st_size and
+                           hashlib.sha256(p.read_bytes()).digest() == sample
+                           for p in others):
+                        chosen = str(first)
+                except OSError:
+                    pass
+            self._hashed_alias_cache[name] = chosen
+            return chosen
 
     def translate_path(self, path: str) -> str:
         raw = urlsplit(path).path
