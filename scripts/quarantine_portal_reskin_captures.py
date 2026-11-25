@@ -44,6 +44,7 @@ def main() -> None:
         approved = trusted_hosts(row, by_id[row["id"]], audits)
         retained = []
         suspect = []
+        moved = 0
         for entry in manifest.get("resources", []):
             host = (urlsplit(entry.get("url", "")).hostname or "").lower()
             if host in approved:
@@ -69,13 +70,12 @@ def main() -> None:
                 continue
             bytes_moved = candidate.stat().st_size
             shutil.move(str(candidate), str(destination))
+            moved += 1
             report["quarantined_files"] += 1
             report["quarantined_bytes"] += bytes_moved
         if len(retained) != len(manifest.get("resources", [])):
             manifest["resources"] = retained + suspect
-            manifest["out_of_scope_quarantined"] = (
-                len(manifest.get("resources", [])) - len(retained) - len(suspect)
-            )
+            manifest["out_of_scope_quarantined"] = moved
             manifest_path.write_text(json.dumps(manifest, indent=2,
                                      ensure_ascii=False), encoding="utf-8")
             report["touched_games"].append({
