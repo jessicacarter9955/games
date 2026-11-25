@@ -54,6 +54,11 @@ def main() -> int:
         )
 
         class Handler(http.server.SimpleHTTPRequestHandler):
+            extensions_map = {
+                **http.server.SimpleHTTPRequestHandler.extensions_map,
+                ".js": "text/javascript; charset=utf-8",
+            }
+
             def log_message(self, *_args):
                 pass
 
