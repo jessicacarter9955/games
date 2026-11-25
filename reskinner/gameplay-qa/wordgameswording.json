@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "wordgameswording",
+  "title": "Wording",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:51.674226+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "41411553270d98056edeac233908aec1741c1d849f634035db7baa97310b5318",
+        "metrics": {
+          "entropy": 1.365,
+          "dominantFraction": 0.845,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "59f72f4e3d44821a0a15cef18fedc5a0da7f26b48190d7830f79dd255b68d662",
+        "metrics": {
+          "entropy": 1.41,
+          "dominantFraction": 0.839,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "97bc8285c01a69b4f7c2c53d80d290f1f41a0ed4ec8c0e17f57d44453f8755e6",
+        "metrics": {
+          "entropy": 1.39,
+          "dominantFraction": 0.842,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.68,
+      "fractionChanged": 0.016
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.1,
+      "fractionChanged": 0.001
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 2
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
