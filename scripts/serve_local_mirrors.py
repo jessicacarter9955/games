@@ -30,6 +30,8 @@ IMAGE = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif"}
 ATLAS = {".xml", ".atlas", ".plist"}
 MODEL = {".glb", ".gltf", ".fbx", ".obj", ".dds", ".ktx", ".ktx2", ".basis"}
 ENTRIES = {"index.html", "game.html"}
+HTML_FALLBACK = {".html", ".htm"}
+UNITY_WRAPPER_MARKER = "/unity/unity"
 
 
 def slug(value: str) -> str:
@@ -98,6 +100,7 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
         original_assets = {a["path"]: a for a in game["assets"]}
         new_assets = dict(original_assets)
         entries = []
+        fallback_entries = []
         total = 0
         for file in root.rglob("*"):
             if not file.is_file() or file.is_symlink():
@@ -108,6 +111,12 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
             total += 1
             if relative.name.lower() in ENTRIES:
                 entries.append(relative)
+            elif (file.suffix.lower() in HTML_FALLBACK and
+                  UNITY_WRAPPER_MARKER in
+                  ("/" + relative.as_posix().lower())):
+                # A CrazyGames Unity launcher is often named <slug>.html.
+                # It needs initialization messages from the platform parent.
+                fallback_entries.append(relative)
             ext = file.suffix.lower()
             kind = ("image" if ext in IMAGE else "atlas" if ext in ATLAS
                     else "model" if ext in MODEL else None)
@@ -125,18 +134,24 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 "localMirror": True,
             }
 
-        if entries:
+        if entries or fallback_entries:
             def entry_rank(p: Path) -> tuple[int, int, int]:
                 name_lower = p.as_posix().lower()
                 is_portal = any(x in name_lower for x in (
                     "/gameframe/", "crazygames.com/game/", "/sdk/",
                     "/portal/", "/cdn-cgi/"))
                 return (int(is_portal), -len(p.parts), len(p.as_posix()))
-            entry = min(entries, key=entry_rank)
+            entry = min(entries or fallback_entries, key=entry_rank)
+            is_unity_wrapper = entry in fallback_entries
+            is_local_bootstrap = "_reskin_local_bootstrap" in entry.parts
+            game["entryKind"] = (
+                "local-unity-bootstrap" if is_local_bootstrap else
+                "unity-portal-wrapper" if is_unity_wrapper else "html"
+            )
             game["entry"] = "/" + quote(
                 (Path("local-mirror") / game_id / entry).as_posix(),
                 safe="/-._~")
-            game["entryCount"] = len(entries)
+            game["entryCount"] = len(entries) + len(fallback_entries)
             if game["status"] == "missing":
                 engine = game["engine"].lower()
                 if "3d" in game["graphics"].lower() or engine == "playcanvas":
@@ -146,10 +161,24 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 else:
                     game.update(status="experimental",
                                 label="2D · mirror locale disponibile")
-            game["reason"] = (
-                "Entrypoint individuato nel mirror Windows, non verificato " +
-                "come gameplay completo. " + game.get("reason", "")
-            )
+            if is_unity_wrapper:
+                game["reason"] = (
+                    "Launcher Unity del portale recuperato, ma NON standalone: "
+                    "attende unity2020config/loadGame dal contenitore CrazyGames. "
+                    "Servono bootstrap locale e build completa. "
+                    + game.get("reason", "")
+                )
+            elif is_local_bootstrap:
+                game["reason"] = (
+                    "Bootstrap Unity locale generato dai file presenti: "
+                    "gameplay NON certificato; sprite nei binari non isolabili "
+                    "senza adapter. " + game.get("reason", "")
+                )
+            else:
+                game["reason"] = (
+                    "Entrypoint individuato nel mirror Windows, non verificato "
+                    "come gameplay completo. " + game.get("reason", "")
+                )
         game["fileCount"] = max(game["fileCount"], total)
         game["assets"] = list(new_assets.values())
         game["assetCount"] = len(game["assets"])
@@ -178,6 +207,26 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
 
 
 class MirrorHandler(SimpleHTTPRequestHandler):
+    def guess_type(self, path: str) -> str:
+        lower = urlsplit(path).path.lower()
+        if lower.endswith((".js.br", ".js.gz")):
+            return "text/javascript; charset=utf-8"
+        if lower.endswith((".wasm.br", ".wasm.gz")):
+            return "application/wasm"
+        if lower.endswith((".data.br", ".data.gz")):
+            return "application/octet-stream"
+        return super().guess_type(path)
+
+    def end_headers(self) -> None:
+        # Unity WebGL compressed files need Content-Encoding when served.
+        lower = urlsplit(self.path).path.lower()
+        if lower.endswith(".br"):
+            self.send_header("Content-Encoding", "br")
+        elif lower.endswith(".gz"):
+            self.send_header("Content-Encoding", "gzip")
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     extensions_map = {
         **SimpleHTTPRequestHandler.extensions_map,
         ".js": "text/javascript; charset=utf-8",
