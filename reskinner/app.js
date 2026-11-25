@@ -141,7 +141,7 @@ async function loadDraftList(){
   try{
     saved=await listDrafts(game.id);
     UI.draftCount.textContent=saved.length?
-      saved.length+' asset modificati e salvati in questo browser':
+      saved.length+' '+(saved.length===1?'asset modificato e salvato':'asset modificati e salvati')+' in questo browser':
       'Nessuna modifica locale per questo gioco.';
   }catch(error){
     saved=[];
@@ -264,10 +264,13 @@ async function replaceAsset(file){
   try{
     const source=localURL(asset.url);
     if(!source)throw new Error('Asset fuori dal mirror locale');
-    const [orig,repl]=await Promise.all([
-      readDimensions(source),
-      readDimensions(URL.createObjectURL(file)).catch(e=>{throw e;}),
-    ]);
+    const temporary=URL.createObjectURL(file);
+    let orig,repl;
+    try{
+      [orig,repl]=await Promise.all([readDimensions(source),readDimensions(temporary)]);
+    }finally{
+      URL.revokeObjectURL(temporary);
+    }
     if(orig.width!==repl.width||orig.height!==repl.height){
       throw new Error('Dimensioni differenti: originale '+orig.width+'×'+orig.height+
         ', PNG '+repl.width+'×'+repl.height+
