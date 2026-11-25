@@ -273,7 +273,7 @@
       }
     }
   ],
-  "updatedAt": "2026-11-25T19:33:00Z",
+  "updatedAt": "2026-11-25T19:33:20Z",
   "recoverySummary": {
     "requested": 91,
     "recovered": 88,
@@ -299,12 +299,19 @@
     "catalogRefresh": {
       "status": "performed_and_verified",
       "url": "http://127.0.0.1:8001/reskinner/catalog.json",
+      "serverJobId": "qa_new6_final_server8001_20261125",
       "games": 69,
       "imageCounts": {
-        "wordgameswordwipe": 36,
-        "iogamesevowarsio": 387
+        "wordgameswordwipe": 40,
+        "iogamesevowarsio": 387,
+        "cardsfouruno": 90
       },
-      "note": "Counts before 4 additional post-Play assets; another refresh is needed."
+      "fileCounts": {
+        "wordgameswordwipe": 59,
+        "iogamesevowarsio": 409,
+        "cardsdominoduel": 57
+      },
+      "note": "Numbers verified from refreshed server after all original asset recoveries. Image count is not gameplay proof."
     }
   }
 }
