@@ -300,6 +300,35 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         if not head:
             self.wfile.write(self.catalog_bytes)
 
+    def resolve_game_absolute_resource(self, parts: tuple[str, ...]) -> str | None:
+        """Resolve original game-root URLs using a verified local Referer.
+
+        Some archived games request /style.css or /socket.io.min.js
+        instead of paths relative to their index.html. Never permit
+        traversal outside the referring game's mirrored host folder.
+        """
+        referer = self.headers.get("Referer", "")
+        try:
+            source = urlsplit(referer)
+            if source.scheme not in {"http", "https"}:
+                return None
+            if source.hostname not in {"127.0.0.1", "localhost"}:
+                return None
+            if source.port != self.server.server_port:
+                return None
+            refparts = Path(unquote(source.path).lstrip("/")).parts
+            if len(refparts) < 4 or refparts[0] != "local-mirror":
+                return None
+            root = self.roots.get(refparts[1])
+            if root is None:
+                return None
+            base = root.joinpath(*refparts[2:-1]).resolve()
+            candidate = base.joinpath(*parts).resolve()
+            candidate.relative_to(root)
+            return str(candidate) if candidate.is_file() else None
+        except (ValueError, OSError):
+            return None
+
     def translate_path(self, path: str) -> str:
         raw = urlsplit(path).path
         try:
@@ -321,7 +350,8 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             return str(candidate)
         # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
         if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
-            return str(self.repo / "__invalid__")
+            alias = self.resolve_game_absolute_resource(parts)
+            return alias or str(self.repo / "__invalid__")
         return str(self.repo.joinpath(*parts).resolve())
 
     def list_directory(self, _path: str):
