@@ -77,5 +77,20 @@
     "qaError": null,
     "urlAfterPlay": ""
   },
-  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "reverseLaunchRetest": {
+    "source": "Windows Playwright, isolated Reskinner previewer, qa_reverse1730_launch_job",
+    "gameplayVerified": false,
+    "localizedStaticCdnReferences": 6,
+    "offline": {
+      "engine": "cocos",
+      "remoteConfigFailed": true,
+      "bodyProbeTimeout": true
+    },
+    "remote": {
+      "engine": "cocos",
+      "trackedDraws": 2,
+      "screenshotHash": "d23968996b83f81117b016da55fdf40acac1222a978bf5fabcf4f1f265be2a0b"
+    }
+  }
 }
