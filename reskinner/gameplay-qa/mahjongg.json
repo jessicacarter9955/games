@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "mahjongg",
+  "title": "Mahjongg",
+  "engine": "html5, canvas 2d",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:52:54.367924+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "1506f0458ac5674aa7f74056cf903dab8452b38d30053adc84f2baa4ac4117f2",
+        "metrics": {
+          "entropy": 4.546,
+          "dominantFraction": 0.078,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "66b146a988ffb554286fe93afaaa537bdc122ed02a615afdc15d9ed327bbb5b9",
+        "metrics": {
+          "entropy": 4.565,
+          "dominantFraction": 0.077,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "422191ad0717d83c17be3cfbf1aa39fc771f887b8ad2c61b422672272e36db78",
+        "metrics": {
+          "entropy": 4.564,
+          "dominantFraction": 0.076,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.46,
+      "fractionChanged": 0.005
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.79,
+      "fractionChanged": 0.01
+    },
+    "canvasBefore": [
+      {
+        "w": 1080,
+        "h": 680,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 1080,
+        "h": 680,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestsBlocked": 8
+  },
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML."
+}
