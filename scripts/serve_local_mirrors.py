@@ -405,7 +405,7 @@ class MirrorHandler(SimpleHTTPRequestHandler):
                             if (asset.parent.name != "assets" or
                                     asset.is_symlink() or not asset.is_file() or
                                     not re.fullmatch(
-                                        r"[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\\.(?:js|mjs|css)",
+                                        r"[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\.(?:js|mjs|css)",
                                         asset.name)):
                                 continue
                             resolved = asset.resolve()
