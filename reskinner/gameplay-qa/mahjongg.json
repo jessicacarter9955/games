@@ -75,5 +75,23 @@
     "httpErrors": [],
     "externalRequestsBlocked": 8
   },
-  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML."
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML.",
+  "reskinUiRetest": {
+    "source": "Windows Chromium, real Reskinner UI",
+    "assetSelection": true,
+    "isolatedPreview": false,
+    "replacementSaved": true,
+    "replacementServed": true,
+    "persistedAfterReload": true,
+    "liveGameTextureVerified": false,
+    "assetName": "preloader.gif",
+    "dimensions": [
+      125,
+      110
+    ],
+    "runtime": "pixi; no Canvas2D draw calls observed",
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "A private synthetic replacement was served at the original asset URL after reload. This tests resource transport and persistence, not actual gameplay or the replacement of a live tile."
+  }
 }
