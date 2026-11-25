@@ -94,5 +94,35 @@
     "gameplayVerified": false,
     "inspectorValidated": false,
     "notes": "Inspector isolated the real menu texture; first gallery entry points to an archived path that fails to decode. Baseline for gallery repair."
+  },
+  "galleryRegression": {
+    "source": "Windows Playwright, real Reskinner UI, isolated baseline and candidate servers",
+    "fixCommit": "85d14b423613de58b2891e8137df0acd47252152",
+    "baseline": {
+      "matchingAssets": 2,
+      "decoded": false,
+      "dimensions": [
+        0,
+        0
+      ]
+    },
+    "candidate": {
+      "matchingAssets": 1,
+      "excludedMissingArchiveAssets": 48,
+      "decoded": true,
+      "dimensions": [
+        960,
+        330
+      ],
+      "replacementSaved": true,
+      "replacementServed": true,
+      "markerBeforeFraction": 0,
+      "markerAfterFraction": 0.5425204918032787,
+      "visibleInMenu": true,
+      "persistedAfterReload": true
+    },
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "Verified menu texture replacement and persistence only; no gameplay-scene certification."
   }
 }
