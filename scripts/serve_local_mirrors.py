@@ -97,7 +97,23 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
         matches.add(game_id)
         host_paths[game_id] = root.resolve()
 
-        original_assets = {a["path"]: a for a in game["assets"]}
+        # The static catalog describes archived files, not necessarily the
+        # files available in this Windows checkout. Do not advertise broken
+        # gallery entries beside the real CDN-mirror image.
+        original_assets = {}
+        missing_tracked = 0
+        for asset in game["assets"]:
+            try:
+                candidate = (repo / asset["path"]).resolve()
+                candidate.relative_to(repo.resolve())
+                if not candidate.is_file() or not candidate.stat().st_size:
+                    missing_tracked += 1
+                    continue
+            except (OSError, ValueError):
+                missing_tracked += 1
+                continue
+            original_assets[asset["path"]] = asset
+        game["missingTrackedAssets"] = missing_tracked
         new_assets = dict(original_assets)
         entries = []
         fallback_entries = []
