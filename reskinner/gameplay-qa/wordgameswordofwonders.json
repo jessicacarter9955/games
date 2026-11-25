@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "wordgameswordofwonders",
+  "title": "Words of Wonders",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:58:10.898763+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "24763a7df750e7e3cc688ff9781226ee98e5605d430833d6de0181b2be1d92b8",
+        "metrics": {
+          "entropy": 0.456,
+          "dominantFraction": 0.956,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "24763a7df750e7e3cc688ff9781226ee98e5605d430833d6de0181b2be1d92b8",
+        "metrics": {
+          "entropy": 0.456,
+          "dominantFraction": 0.956,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "24763a7df750e7e3cc688ff9781226ee98e5605d430833d6de0181b2be1d92b8",
+        "metrics": {
+          "entropy": 0.456,
+          "dominantFraction": 0.956,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "window.famobi.error is not a function"
+    ],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 1
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
