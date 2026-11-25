@@ -2,6 +2,7 @@ import { createRuntimeInspector } from './runtime.js';
 import { saveDraft, readDraft, listDrafts, clearDraft, downloadBlob, downloadJSON } from './storage.js';
 import { initializeAssetReskin, invalidateReskinCache, assetReskinAvailable } from './sw-client.js';
 import { findAtlasMetadata, loadAtlasFrames, previewAtlasFrame, patchAtlasFrame } from './atlas.js';
+import { initializeDiagnostics } from './diagnostics.js';
 
 const byId = id => document.getElementById(id);
 const UI = Object.fromEntries([
@@ -27,6 +28,7 @@ let loaded = false;
 let resourceLayer = {available:false,reason:'Layer non inizializzato'};
 let atlasFrames=[], atlasMeta=null, atlasWanted='', atlasAssetPath='';
 let atlasRequest=0;
+let quickDiagnostics=null;
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
@@ -494,6 +496,7 @@ async function launchGame(force=false){
   UI.fullscreenGame.disabled=false;
   UI.gameFrame.onload=async()=>{
     if(!game||game.id!==id||epoch!==launchId)return;
+    quickDiagnostics?.attachFrame();
     try{
       const doc=UI.gameFrame.contentDocument;
       if(doc?.title?.toLowerCase().includes('error response')){
@@ -529,6 +532,7 @@ async function selectGame(id){
   const next=catalog?.games.find(g=>g.id===id);
   if(!next)return;
   game=next;selectedAsset=null;saved=[];
+  quickDiagnostics?.setGame(game.id);
   ++launchId;
   clearRuntime();
   updateMode('play');
@@ -557,6 +561,12 @@ function closeMobileList(){
   UI.mobileBackdrop.hidden=true;
 }
 function bind(){
+  quickDiagnostics=initializeDiagnostics({
+    getGame:()=>game,
+    getFrame:()=>UI.gameFrame,
+    getRuntimeReport:()=>runtime?.getReport?.()||null,
+    getMessages:()=>requestLog,
+  });
   UI.gameList.addEventListener('keydown',e=>{
     if(e.key==='Escape')closeMobileList();
   });
