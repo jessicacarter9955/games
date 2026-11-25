@@ -91,6 +91,8 @@ export function createRuntimeInspector(frame, options = {}) {
         ? replacement : source;
       // Actual drawImage args: (image, dx, dy), (image, dx, dy, dw, dh),
       // or (image, sx, sy, sw, sh, dx, dy, dw, dh).
+      const crop = args.length === 8 && args.slice(0,4).every(Number.isFinite)
+        ? { sx:args[0], sy:args[1], sw:args[2], sh:args[3] } : null;
       const dx = args.length === 8 ? args[4] : args[0];
       const dy = args.length === 8 ? args[5] : args[1];
       const dw = args.length === 8 ? args[6] : args.length === 4 ?
@@ -102,13 +104,15 @@ export function createRuntimeInspector(frame, options = {}) {
           const bounds = matrixBox(dx,dy,dw,dh,this.getTransform?.());
           if (bounds.w>0 && bounds.h>0 && bounds.w*bounds.h<30e6) {
             const signature = src + ':' +
-              [bounds.x,bounds.y,bounds.w,bounds.h].map(n=>Math.round(n)).join(':');
+              [bounds.x,bounds.y,bounds.w,bounds.h,
+               ...(crop?[crop.sx,crop.sy,crop.sw,crop.sh]:[])]
+                .map(n=>Math.round(n)).join(':');
             // Keep the last observed sprite while animation is paused, but
             // prefer the most recent position when the frame keeps rendering.
             const oldIndex = inspectorState.draws.findIndex(e=>e.signature===signature);
             if (oldIndex>=0) inspectorState.draws.splice(oldIndex,1);
             inspectorState.draws.push({ type:'image', name:labelPath(src),
-              source:src, bounds, canvas:this.canvas, signature,
+              source:src, crop, bounds, canvas:this.canvas, signature,
               renderAt:performance.now(), replaced:!!replacement });
             if (inspectorState.draws.length>MAX_DRAWS) inspectorState.draws.shift();
             inspectorState.lastDraw = performance.now();
