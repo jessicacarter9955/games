@@ -82,6 +82,9 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .empty-detail{border-radius:9px;border:1px dashed #39485d;padding:12px;background:#141c2a;color:#8596ae;font-size:11px;line-height:1.6}
 .kv{display:grid;grid-template-columns:1fr auto;gap:7px 8px;font-size:11px;color:#b0bfd0}.kv dt{color:#7a8b9e}.kv dd{margin:0;color:#d1e1f3;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap;max-width:170px;text-overflow:ellipsis;overflow:hidden}
 .object-name{font-weight:700;font-size:13px;overflow-wrap:anywhere;margin-bottom:4px}.object-source{font-size:10px;color:#8595a8;overflow-wrap:anywhere}
+.sprite-preview{margin-top:10px;margin-bottom:9px;padding:10px;border:1px solid #334358;border-radius:9px;background:#101925;min-height:86px}
+.sprite-preview .hint{margin:0 0 8px}
+.sprite-preview canvas{display:block;margin:0 auto;max-width:100%;max-height:220px;image-rendering:pixelated}
 .box-model{border:1px dashed #6486a8;background:#172c3e;margin:12px 0;padding:8px;border-radius:6px}
 .box-model .box-inner{background:#164b70;border:1px solid #469ce0;padding:14px 7px;text-align:center;font-family:ui-monospace,monospace;color:#daf4ff;font-size:14px;font-weight:700}
 .box-model small{display:block;color:#8dbbe2;margin-bottom:4px;font-size:9px;letter-spacing:1px}
