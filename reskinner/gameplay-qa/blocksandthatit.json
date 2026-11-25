@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "blocksandthatit",
+  "title": "Blocks And That'it",
+  "engine": "cocos",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:01:26.560206+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "9d141fd414baba5ce0f6bd048b2ab5216642d94a80645e82a2770d20882658da",
+        "metrics": {
+          "entropy": 4.225,
+          "dominantFraction": 0.269,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "2ce98d7e3dc5a5d68062f3af29e8a8601aca07bb18ef5a9fcd307d6163078f38",
+        "metrics": {
+          "entropy": 3.84,
+          "dominantFraction": 0.356,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "2ce98d7e3dc5a5d68062f3af29e8a8601aca07bb18ef5a9fcd307d6163078f38",
+        "metrics": {
+          "entropy": 3.84,
+          "dominantFraction": 0.356,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 13.11,
+      "fractionChanged": 0.123
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 2,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
