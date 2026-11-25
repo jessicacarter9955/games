@@ -9,7 +9,8 @@
 const DATABASE = '2night-multigame-drafts-v1';
 const STORE = 'patches';
 const IMAGE = /\.(?:png|jpe?g|webp|gif|avif|svg)$/i;
-const safePath = path => path.startsWith('/extracted/') &&
+const safePath = path => (path.startsWith('/extracted/') ||
+  path.startsWith('/local-mirror/')) &&
   !path.includes('\\') && !path.includes('..');
 
 let cache = null;
