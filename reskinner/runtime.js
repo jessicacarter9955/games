@@ -264,6 +264,18 @@ export function createRuntimeInspector(frame, options = {}) {
     // This is an honest canvas fallback: no sprite name inferred.
     const c=observeCanvas(), cr=c?.getBoundingClientRect();
     if(cr&&within(box(cr.x,cr.y,cr.width,cr.height),p)) {
+      // Hexastack's Pixi display tree is bundled privately. An inspectable
+      // pixel region is still useful, but must NOT be mislabeled as a sprite,
+      // and must never guess a texture URL from its colour or position.
+      if(gameId==='hexastack'){
+        const size=Math.min(72,cr.width,cr.height);
+        const x=Math.max(cr.left,Math.min(p.x-size/2,cr.right-size));
+        const y=Math.max(cr.top,Math.min(p.y-size/2,cr.bottom-size));
+        return {type:'canvas-region',
+          name:'Area Canvas '+Math.round(size)+'×'+Math.round(size)+' (non sprite)',
+          source:'',x,y,w:size,h:size,engine:state.engine,
+          note:'Solo area pixel: questo motore non espone la gerarchia Pixi. La risorsa texture originale va selezionata dalla galleria.'};
+      }
       return{type:'canvas',name:state.engine==='canvas'?'Canvas (sprite non identificato)':
         'Renderer '+state.engine,source:'',...cssBox(cr,{left:0,top:0}),
         note:'Per riconoscere questo oggetto servirebbe un adapter di rendering per il motore.'};
