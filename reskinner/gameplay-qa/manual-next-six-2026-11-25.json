@@ -25,7 +25,20 @@
         "Retest Play with computer to real domino table and interaction"
       ],
       "gameplayVerified": false,
-      "inspectorValidated": false
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "cdn-asset-recovery",
+          "status": "recovered",
+          "count": 4,
+          "files": [
+            "opponent-avatars.config-BbOmVTFK.js",
+            "RewardAcceptModal-COdSUv6M.js",
+            "SchedulersModal-D2m5nxHd.js",
+            "gem-9-P7gP-q.mp3"
+          ]
+        }
+      ]
     },
     {
       "id": "iogamestileman",
@@ -44,7 +57,20 @@
         "Try official Local mode and real input without inventing server state"
       ],
       "gameplayVerified": false,
-      "inspectorValidated": false
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "root-assets",
+          "status": "already-present-http-verified",
+          "count": 3,
+          "paths": [
+            "/discord.png",
+            "/re.png",
+            "/loading.gif"
+          ],
+          "httpStatus": 200
+        }
+      ]
     },
     {
       "id": "wordgameswordwipe",
@@ -99,7 +125,25 @@
         "Retest Play Bots and actual interaction; no backend simulation"
       ],
       "gameplayVerified": false,
-      "inspectorValidated": false
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "server-absolute-root-alias",
+          "status": "http-verified",
+          "urlSamples": [
+            "/assets/realtime-AohzANgl.js",
+            "/assets/late-DM0uVa_S.css",
+            "/assets/HowlFactoryModule-Hole5-GE.js",
+            "/m/Ja.js"
+          ],
+          "httpStatus": 200
+        },
+        {
+          "type": "cdn-asset-recovery",
+          "status": "recovered",
+          "file": "m/Ja.js"
+        }
+      ]
     },
     {
       "id": "iogamesevowarsio",
@@ -117,7 +161,33 @@
         "Retest age/start then game scene and movement/interaction"
       ],
       "gameplayVerified": false,
-      "inspectorValidated": false
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "cdn-asset-recovery",
+          "status": "recovered",
+          "count": 83,
+          "folder": "images",
+          "format": "png",
+          "validation": "PNG signature, SHA256 and original host"
+        }
+      ]
     }
-  ]
+  ],
+  "updatedAt": "2026-11-25T19:15:00Z",
+  "recoverySummary": {
+    "requested": 91,
+    "recovered": 88,
+    "alreadyPresent": 3,
+    "failed": 0,
+    "platform": "Windows",
+    "script": "scripts/recover_reported_game_assets.py",
+    "commit": "27189ddb8f3cf385d6e69264d825094b3bae107b",
+    "note": "Original CDN bytes verified. Zero gameplay certifications awarded."
+  },
+  "serverRepair": {
+    "commit": "2bcb6f2d63fd3d708eb85a20ba3020e494d947c5",
+    "service": "127.0.0.1:8001",
+    "verified": "7 original asset URLs returned 200 with correct game Referer"
+  }
 }
