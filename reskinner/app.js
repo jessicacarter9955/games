@@ -224,8 +224,10 @@ function showHover(item){
     '<dt>width</dt><dd>'+w.toFixed(1)+'</dd>'+
     '<dt>height</dt><dd>'+h.toFixed(1)+'</dd>'+
     '<dt>Sorgente</dt><dd>'+esc(item.type||'unknown')+'</dd></dl>'+
-    (item.type==='canvas'?'<p class="hint">Il motore rende su canvas senza '+ 
-      'esporre questo sprite: non possiamo identificarlo per nome senza un adapter dedicato.</p>':'');
+    (item.type==='canvas'?'<p class="hint">Il motore rende su canvas senza '+
+      'esporre questo sprite: non possiamo identificarlo per nome senza un adapter dedicato.</p>':
+      item.type==='canvas-region'?'<p class="hint">'+esc(item.note)+
+      ' Questa selezione evidenzia una regione reale, non una texture isolata.</p>':'');
   drawSelectedSprite(item);
 }
 function applyHover(item){
