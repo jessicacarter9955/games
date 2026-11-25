@@ -20,7 +20,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "extracted"
-CATEGORIES = ("io games", "trivia", "Word games", "cards")
+CATEGORIES = ("io games", "trivia", "Word games", "cards", "action", "Arcade", "idle", "BOARDGAMES", "Puzzles Crazygames mirror")
 MAX_FILES = 20000
 MAX_BYTES = 3 * 1024**3
 MAX_MEMBER_BYTES = 95 * 1024**2
@@ -131,6 +131,7 @@ def loader_metadata(archive: zipfile.ZipFile) -> dict:
     hosts = {host for host in hosts if host and "/" not in host and ":" not in host}
     return {
         "slug": game.get("slug"),
+        "title": game.get("name") or game.get("title"),
         "loader_type": game.get("loaderType"),
         "allowed_hosts": sorted(hosts),
         "loader_urls": urls[:25],
@@ -211,6 +212,7 @@ def unpack(source: Path) -> dict:
                 "source_zip": relative.as_posix(),
                 "zip_sha256": digest,
                 "official_slug": metadata["slug"],
+                "official_title": metadata.get("title"),
                 "loader_type": metadata["loader_type"],
                 "game_hosts": allowed,
                 "loader_urls": metadata["loader_urls"],
