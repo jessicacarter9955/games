@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamesevowarsio",
+  "title": "EvoWars.io",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:01:11.057185+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "9d3ba40d9db7a9b8e1f8fe3012bd7d69f44ec0ea1b11d31e661d0b463d9557f9",
+        "metrics": {
+          "entropy": 3.755,
+          "dominantFraction": 0.261,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "9d3ba40d9db7a9b8e1f8fe3012bd7d69f44ec0ea1b11d31e661d0b463d9557f9",
+        "metrics": {
+          "entropy": 3.755,
+          "dominantFraction": 0.261,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "1c6d7096b315755754b401d2370ab27715b78f39a1656559e76331f26c641721",
+        "metrics": {
+          "entropy": 3.756,
+          "dominantFraction": 0.261,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/cutsceneghost-sheet0.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/coophudeventbarfiller.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/shards-sheet0.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/coophudicon-sheet1.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/coophudbosshpbar-sheet0.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/coophudbosshpbarfiller.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/coophudbosshpbaricon-sheet0.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesevowarsio/evowars.io/images/mapghostground.png"
+      }
+    ],
+    "externalRequestFailures": 15,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
