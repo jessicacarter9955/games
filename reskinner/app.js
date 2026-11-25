@@ -1,5 +1,6 @@
 import { createRuntimeInspector } from './runtime.js';
 import { saveDraft, readDraft, listDrafts, clearDraft, downloadBlob, downloadJSON } from './storage.js';
+import { initializeAssetReskin, invalidateReskinCache, assetReskinAvailable } from './sw-client.js';
 
 const byId = id => document.getElementById(id);
 const UI = Object.fromEntries([
@@ -10,7 +11,7 @@ const UI = Object.fromEntries([
   'hoverName','stageNotice','stageDiagnostic','runtimeState','viewportState',
   'librarySubtitle','searchAssets','assetKind','assetGrid','runtimeInfo',
   'hoverInfo','assetDetail','reskinControls','replacementFile','chooseReplacement',
-  'restoreAsset','exportAsset','reskinStatus','draftCount','exportManifest',
+  'restoreAsset','exportAsset','applyReskinGame','reskinLayerState','reskinStatus','draftCount','exportManifest',
 ].map(id => [id, byId(id)]));
 
 const knownStatuses = ['experimental','limited','blocked','missing'];
@@ -19,6 +20,7 @@ let catalog = null, game = null, runtime = null, mode = 'play';
 let selectedAsset = null, selectedObject = null, saved = [];
 let launchId = 0, activePromise = null, lastPointer = null, inspectorTick = null;
 let loaded = false;
+let resourceLayer = {available:false,reason:'Layer non inizializzato'};
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
@@ -123,7 +125,12 @@ function updateRuntime(){
     '<dt>Canvas</dt><dd>'+(safeReport.canvas?'rilevato':'non rilevato')+'</dd>'+
     '<dt>Draw image 2D</dt><dd>'+fmt(safeReport.drawCalls)+'</dd>'+
     '<dt>Elementi runtime</dt><dd>'+fmt(safeReport.engineObjects)+'</dd>'+
-    '<dt>Stato</dt><dd>'+esc(game.status)+'</dd></dl>'+
+    '<dt>Stato</dt><dd>'+esc(game.status)+'</dd>'+
+    '<dt>PNG intercettabili</dt><dd>'+fmt(game.assets.filter(a=>
+      a.kind==='image' && /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(a.name)).length)+'</dd>'+
+    '<dt>Reskin in ingresso</dt><dd>'+
+      (assetReskinAvailable()?'Service Worker attivo':'Solo Canvas2D/DOM')+
+    '</dd></dl>'+
     '<p class="footnote">'+esc(game.reason)+'</p>'+
     (game.entry?'<p class="footnote">HTML caricato ≠ gameplay verificato. '+
     'Il rilevamento DOM/Canvas2D funziona solo per oggetti esposti dal motore.'+
@@ -233,8 +240,12 @@ function renderAssetDetails(){
     '<dt>Dimensione file</dt><dd>'+fmt(Math.round(a.bytes/1024))+' KB</dd>'+
     '<dt>Accessibilità</dt><dd>'+(image?'PNG reskin': 'Adapter richiesto')+'</dd></dl>';
   UI.reskinControls.hidden=!image;
+  UI.reskinLayerState.textContent = resourceLayer.reason;
+  UI.applyReskinGame.disabled = !(image && saved.some(row=>row.assetPath===a.path) && game.entry);
   UI.reskinStatus.textContent=image?
-    'La preview è garantita solo per elementi DOM o chiamate Canvas2D che usano questa immagine.':
+    (resourceLayer.available ?
+      'Reskin 1:1: anche Canvas/WebGL che caricano questa immagine riceveranno il PNG sostitutivo al prossimo avvio. I giochi con texture già caricate richiedono «Ricarica con reskin».' :
+      'Bozza esportabile. Preview Canvas2D/DOM disponibile quando rilevata; per i motori WebGL serve localhost o HTTPS e il layer risorse attivo.'):
     'I modelli 3D e i metadata non sono reskinnabili con un semplice PNG.';
   UI.reskinStatus.className='hint';
   const has=saved.some(x=>x.assetPath===a.path);
@@ -277,12 +288,18 @@ async function replaceAsset(file){
         '. Il reskin 1:1 deve preservare la geometria.');
     }
     await saveDraft(active.id,asset.path,file,orig);
+    const invalidated = await invalidateReskinCache();
     let result={message:'Bozza salvata'};
     if(runtime&&loaded)result=await runtime.swap(asset.url,file);
     await loadDraftList();
     renderAssetDetails();
     UI.reskinStatus.textContent='PNG salvato: '+result.message+
-      '. Gli originali non sono stati modificati.';
+      (resourceLayer.available ?
+        '. Texture sostitutiva pronta sullo stesso URL dell’originale. Premi «Ricarica con reskin» per aggiornare ogni cache del motore.' :
+        '. Layer risorse non attivo: è disponibile il file esportato.')+
+      (invalidated?'':' (Cache del layer in aggiornamento.)')+
+      ' Gli ZIP originali non sono stati modificati.';
+    UI.applyReskinGame.disabled = !active.entry;
     UI.reskinStatus.className='hint success';
     log('Reskin: '+asset.name+' · '+result.message);
   }catch(error){
@@ -295,9 +312,11 @@ async function restoreAsset(){
   if(!game||!selectedAsset)return;
   try{
     await clearDraft(game.id,selectedAsset.path);
+    await invalidateReskinCache();
     runtime?.restore(selectedAsset.url);
     await loadDraftList();renderAssetDetails();
-    UI.reskinStatus.textContent='Asset ripristinato e bozza locale eliminata.';
+    UI.reskinStatus.textContent='Bozza rimossa. Premi «Ricarica» per ripristinare l’originale anche nelle texture già in memoria.';
+    UI.applyReskinGame.disabled=true;
     UI.reskinStatus.className='hint success';
   }catch(error){UI.reskinStatus.textContent=String(error);}
 }
@@ -467,6 +486,7 @@ function bind(){
   });
   UI.restoreAsset.addEventListener('click',()=>void restoreAsset());
   UI.exportAsset.addEventListener('click',()=>void exportAsset());
+  UI.applyReskinGame.addEventListener('click',()=>void launchGame(true));
   UI.exportManifest.addEventListener('click',()=>void exportManifest());
   UI.downloadCatalog.addEventListener('click',()=>{
     if(catalog)downloadJSON(catalog,'2night-69-games-compatibility.json');
@@ -486,6 +506,8 @@ function bind(){
 }
 async function boot(){
   bind();
+  resourceLayer=await initializeAssetReskin();
+  log('Reskin layer: '+resourceLayer.reason);
   try{
     const response=await fetch('./catalog.json',{cache:'no-store'});
     if(!response.ok)throw new Error('catalog.json HTTP '+response.status);
