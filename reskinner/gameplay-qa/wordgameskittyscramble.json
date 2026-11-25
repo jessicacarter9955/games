@@ -77,5 +77,24 @@
     "qaError": null,
     "urlAfterPlay": ""
   },
-  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "reverseLaunchRetest": {
+    "source": "Windows Playwright, isolated Reskinner previewer, qa_reverse1730_launch_job",
+    "gameplayVerified": false,
+    "localizedStaticCdnReferences": 6,
+    "offline": {
+      "pageErrors": [
+        "Invalid or unexpected token",
+        "global is not defined"
+      ],
+      "screenshotHash": "f942932292f586e0e9160b69991eed78e614debb265e3b81b17e7e1cd646ee22"
+    },
+    "remote": {
+      "pageErrors": [
+        "Invalid or unexpected token",
+        "global is not defined"
+      ],
+      "screenshotHash": "3992dc212b5fa00117c23b1943218c817b28c58d39444c986e5f362ffdd99abe"
+    }
+  }
 }
