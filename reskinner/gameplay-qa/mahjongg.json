@@ -7,9 +7,9 @@
   "testedAt": "2026-11-25T13:52:54.367924+00:00",
   "entryKind": "html",
   "stage": "post-Play gameplay evidence check",
-  "result": "play-not-confirmed",
-  "playActionVerified": false,
-  "gameplayVerified": false,
+  "result": "gameplay-verified-tile-selection",
+  "playActionVerified": true,
+  "gameplayVerified": true,
   "inspectorValidated": false,
   "evidence": {
     "screenshots": [
@@ -93,5 +93,55 @@
     "gameplayVerified": false,
     "inspectorValidated": false,
     "notes": "A private synthetic replacement was served at the original asset URL after reload. This tests resource transport and persistence, not actual gameplay or the replacement of a live tile."
+  },
+  "initialResult": "play-not-confirmed",
+  "initialPlayActionVerified": false,
+  "latestGameplayRetest": {
+    "source": "Windows Chromium Playwright strict-offline at localhost:8001, visual review of private screenshots",
+    "testedOn": "2026-11-25",
+    "baseline": {
+      "afterPlay": "empty green board",
+      "missingRequiredResource": "assets/puzzles/standard.json",
+      "httpStatus": 404
+    },
+    "repair": {
+      "source": "original game CDN",
+      "relativePath": "assets/puzzles/standard.json",
+      "bytes": 4424,
+      "sha256": "29b13a29d500797aeb32a7a48c14f5a01023b65860fd99324d5c8fee3b46b3bb",
+      "stored": "private Windows mirror only"
+    },
+    "after": {
+      "httpErrors": [],
+      "pageErrors": [],
+      "boardVisible": true,
+      "visibleTileCounter": 144,
+      "playAction": {
+        "x": 540,
+        "y": 598
+      },
+      "secondAction": {
+        "kind": "select exposed Mahjongg tile",
+        "x": 479,
+        "y": 334,
+        "observed": "tile outlined yellow at center of real board",
+        "changedRegion": [
+          452,
+          285,
+          524,
+          381
+        ]
+      },
+      "screenshots": {
+        "boot": "e860c12a796ad6a17dd2ecf39aab89385cd028d02113b1ce6e7c5bfdc32f801f",
+        "board": "65f97f9b9994f2939d459f2dce0735d33ea7a7ef1831134d0eb010d12cbb741a",
+        "selected": "a4ff7c4ec9af633fc4cf48fca8f4cbc63ab048deec1ceb6813b8c328784a0b02"
+      }
+    },
+    "gameplayVerified": true,
+    "fullPlaythroughVerified": false,
+    "matchedPairVerified": false,
+    "inspectorValidated": false,
+    "notes": "Actual playable board and coherent tile selection confirmed visually. No completed matching pair, full playthrough, or live tile replacement certified. Initial evidence fields remain from first run."
   }
 }
