@@ -4,7 +4,8 @@
  * pixels at the exact coordinates the compiled runtime already references.
  */
 const int = (value, fallback=0) =>
-  Number.isFinite(Number(value)) ? Math.trunc(Number(value)) : fallback;
+  value === null || value === undefined || value === '' ? fallback :
+    Number.isFinite(Number(value)) ? Math.trunc(Number(value)) : fallback;
 const tuple = value => (String(value||'').match(/-?\d+/g)||[]).map(Number);
 const clean = name => name.replace(/\\/g,'/').split('/').at(-1);
 const stem = name => clean(name).replace(/\.[^.]+$/,'').toLowerCase();
