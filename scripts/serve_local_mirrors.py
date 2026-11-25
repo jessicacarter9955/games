@@ -435,6 +435,42 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             self._hashed_alias_cache[name] = chosen
             return chosen
 
+    def resolve_unique_game_navigation(self, parts: tuple[str, ...]) -> str | None:
+        """Serve original same-origin /games/<slug>/... navigations locally.
+
+        Some hosted games, including Foono, navigate from their mirrored
+        entrypoint to an absolute /games/<slug>/index.html after Play. This
+        path loses the /local-mirror/<id>/<host> prefix. Resolve only
+        physically present, unambiguous originals from approved host roots.
+        """
+        if len(parts) < 3 or parts[0] != "games":
+            return None
+        matches: set[Path] = set()
+        for root in self.roots.values():
+            try:
+                for host in root.iterdir():
+                    if not host.is_dir() or host.is_symlink():
+                        continue
+                    candidate = host.joinpath(*parts).resolve()
+                    candidate.relative_to(host.resolve())
+                    if candidate.is_file() and not candidate.is_symlink():
+                        matches.add(candidate)
+            except (OSError, ValueError):
+                continue
+        if len(matches) == 1:
+            return str(next(iter(matches)))
+        if len(matches) > 1:
+            try:
+                first, *others = sorted(matches)
+                digest = hashlib.sha256(first.read_bytes()).digest()
+                if all(p.stat().st_size == first.stat().st_size and
+                       hashlib.sha256(p.read_bytes()).digest() == digest
+                       for p in others):
+                    return str(first)
+            except OSError:
+                pass
+        return None
+
     def resolve_extracted_local_asset(self, parts: tuple[str, ...]) -> str | None:
         """Resolve missing tracked /extracted assets from the original host mirror.
 
@@ -497,7 +533,8 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
         if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
             alias = (self.resolve_game_absolute_resource(parts) or
-                     self.resolve_unique_hashed_asset(parts))
+                     self.resolve_unique_hashed_asset(parts) or
+                     self.resolve_unique_game_navigation(parts))
             return alias or str(self.repo / "__invalid__")
         tracked_path = self.repo.joinpath(*parts).resolve()
         if parts[0] == "extracted" and not tracked_path.is_file():
