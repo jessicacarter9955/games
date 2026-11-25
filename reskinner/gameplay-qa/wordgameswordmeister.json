@@ -7,9 +7,9 @@
   "testedAt": "2026-11-25T13:53:37.035971+00:00",
   "entryKind": "html",
   "stage": "post-Play gameplay evidence check",
-  "result": "play-not-confirmed",
-  "playActionVerified": false,
-  "gameplayVerified": false,
+  "result": "gameplay-verified-letter-placement",
+  "playActionVerified": true,
+  "gameplayVerified": true,
   "inspectorValidated": false,
   "evidence": {
     "screenshots": [
@@ -124,5 +124,56 @@
     "gameplayVerified": false,
     "inspectorValidated": false,
     "notes": "Verified menu texture replacement and persistence only; no gameplay-scene certification."
+  },
+  "initialResult": "play-not-confirmed",
+  "initialPlayActionVerified": false,
+  "latestGameplayRetest": {
+    "source": "Windows Chromium Playwright strict-offline at localhost:8001; private screenshots visually reviewed",
+    "testedOn": "2026-11-25",
+    "actions": [
+      {
+        "kind": "Play",
+        "x": 540,
+        "y": 466
+      },
+      {
+        "kind": "Select character",
+        "x": 540,
+        "y": 420
+      },
+      {
+        "kind": "Start board",
+        "x": 540,
+        "y": 380
+      },
+      {
+        "kind": "Dismiss first-turn dialog",
+        "x": 724,
+        "y": 241
+      },
+      {
+        "kind": "Drag letter from rack onto board",
+        "from": [
+          224,
+          590
+        ],
+        "to": [
+          397,
+          300
+        ]
+      }
+    ],
+    "observed": "Real board visible; after drag the first rack slot is empty and a letter is visible at the central board square.",
+    "pageErrors": [],
+    "httpErrors": [],
+    "screenshots": {
+      "boot": "12cf866ecfdc91068240ab1d19db9efd6f9c3afa825653bfdc25cc5161314bd4",
+      "board": "f2c5cb33e4813bcd384b37e45401d82ce48fd1f8482b4a238152c6c6f758af82",
+      "afterMove": "56f9c5711e0dc1a4bdc321630c0d42b079510278f5c64aacaddac5aaf3cd6261"
+    },
+    "gameplayVerified": true,
+    "fullPlaythroughVerified": false,
+    "inspectorValidated": false,
+    "notes": "A real letter placement was verified, not a complete word submission or game completion. Earlier evidence preserved."
   }
 }
