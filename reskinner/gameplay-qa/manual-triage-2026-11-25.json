@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "source": "Manual screenshots + Copy log reports from 2026-11-25 local Reskinner testing",
   "createdAt": "2026-11-25T17:25:04.815Z",
-  "updatedAt": "2026-11-25T17:39:30Z",
+  "updatedAt": "2026-11-25T17:44:15Z",
   "goal": "Original 1:1 playable/reskinnable mirrors. Do not certify menu/loading screen as gameplay.",
   "scope": "Six newly reported manual failures; gameplay count baseline 3/69; prior three green remain excluded from new testing.",
   "certifiedGreen": 0,
@@ -69,15 +69,20 @@
           "Cannot read properties of undefined (reading 'territory')",
           "Later JSON parser received HTML instead of JSON",
           "Missing fonts/AvenirNextRoundedBold/Data.json, glb/Crown.glb, Patterns/*.png, etc."
-        ]
+        ],
+        "lastMissingRuntimeAssetCheck": {
+          "observed404": 0,
+          "scanDurationSeconds": 10,
+          "verifiedWindows": true
+        }
       },
       "hypotheses": [
         "Missing or uninitialized profile/skins payload supplied by game service",
         "Secondary WebGL material warning not necessarily fatal"
       ],
       "nextActions": [
-        "Batch-recover observed missing original game assets from pinned CDN (scripts/recover_browser_404_assets.py)",
-        "Recheck JSON/territory errors and actual gameplay with second interaction"
+        "Verify visual gameplay and multiple meaningful interactions on updated 8001 server",
+        "If runtime exceptions remain, locate exact state initialization; do not certify from static asset success"
       ],
       "fixes": [
         {
@@ -95,6 +100,18 @@
             "packs/Scene.pack"
           ],
           "script": "scripts/recover_verified_original_assets.py"
+        },
+        {
+          "type": "original-cdn-browser404-recovery",
+          "status": "recovered_windows",
+          "totalRecovered": 34,
+          "passes": [
+            22,
+            12,
+            0
+          ],
+          "script": "scripts/recover_browser_404_assets.py",
+          "originalHost": "paper-io-2.game-files.crazygames.com"
         }
       ]
     },
@@ -176,6 +193,14 @@
         "Verify which assets are optional shop decorations vs load blockers",
         "Check SDK initialization under authorized local integration",
         "Create robust Pixi inspector where actual stage is exposed; fallback labeled Canvas otherwise"
+      ],
+      "fixes": [
+        {
+          "type": "inspector-improvement",
+          "status": "committed_needs_browser_retest",
+          "detail": "72 CSS px canvas pixel region selection with honest non-sprite labeling",
+          "commit": "16f4fbbde4f463e2d11c6cc2276aee3e0f9bf1de"
+        }
       ]
     },
     {
