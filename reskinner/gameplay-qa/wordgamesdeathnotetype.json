@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "wordgamesdeathnotetype",
+  "title": "Death Note Type",
+  "engine": "flash",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:59.172833+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "missing-entry",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": []
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 0
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
