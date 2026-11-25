@@ -1,6 +1,7 @@
 import { createRuntimeInspector } from './runtime.js';
 import { saveDraft, readDraft, listDrafts, clearDraft, downloadBlob, downloadJSON } from './storage.js';
 import { initializeAssetReskin, invalidateReskinCache, assetReskinAvailable } from './sw-client.js';
+import { findAtlasMetadata, loadAtlasFrames, previewAtlasFrame, patchAtlasFrame } from './atlas.js';
 
 const byId = id => document.getElementById(id);
 const UI = Object.fromEntries([
@@ -11,7 +12,10 @@ const UI = Object.fromEntries([
   'hoverName','stageNotice','stageDiagnostic','runtimeState','viewportState',
   'librarySubtitle','searchAssets','assetKind','assetGrid','runtimeInfo',
   'hoverInfo','assetDetail','reskinControls','replacementFile','chooseReplacement',
-  'restoreAsset','exportAsset','applyReskinGame','reskinLayerState','reskinStatus','draftCount','exportManifest',
+  'restoreAsset','exportAsset','applyReskinGame','reskinLayerState',
+  'atlasPanel','atlasInfo','atlasFrameSelect','atlasPreview',
+  'atlasDimensions','atlasWarning','atlasPatchFile','atlasPatchButton',
+  'reskinStatus','draftCount','exportManifest',
 ].map(id => [id, byId(id)]));
 
 const knownStatuses = ['experimental','limited','blocked','missing'];
@@ -21,6 +25,8 @@ let selectedAsset = null, selectedObject = null, saved = [];
 let launchId = 0, activePromise = null, lastPointer = null, inspectorTick = null;
 let loaded = false;
 let resourceLayer = {available:false,reason:'Layer non inizializzato'};
+let atlasFrames=[], atlasMeta=null, atlasWanted='', atlasAssetPath='';
+let atlasRequest=0;
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
@@ -220,12 +226,69 @@ function renderAssets(){
 }
 function selectAsset(path){
   if(!game)return;
+  if(atlasAssetPath!==path)atlasWanted='';
   selectedAsset=game.assets.find(a=>a.path===path)||null;
   renderAssets();renderAssetDetails();
+}
+async function updateAtlasPreview(){
+  if(!selectedAsset || !atlasFrames.length)return;
+  const frame=atlasFrames.find(f=>f.name===UI.atlasFrameSelect.value);
+  if(!frame)return;
+  atlasWanted=frame.name;
+  UI.atlasDimensions.textContent=
+    'Rettangolo '+frame.w+'×'+frame.h+' px · x '+frame.x+', y '+frame.y+
+    ' · offset '+frame.frameX+', '+frame.frameY+
+    ' · dimensione logica '+frame.logicalW+'×'+frame.logicalH;
+  UI.atlasWarning.textContent=frame.rotated?
+    'Frame ruotato: sostituzione diretta disabilitata.':
+    frame.shared.length?
+      'Attenzione: stesso rettangolo usato da '+frame.shared.length+
+      ' altri frame ('+frame.shared.slice(0,4).join(', ')+').':
+      'Frame con rettangolo indipendente.';
+  UI.atlasPatchButton.disabled=!!frame.rotated;
+  const asset=selectedAsset,activeGame=game?.id;
+  try{
+    const draft=activeGame?await readDraft(activeGame,asset.path):null;
+    if(selectedAsset!==asset)return;
+    await previewAtlasFrame(UI.atlasPreview,asset.url,frame,draft?.blob||null);
+  }catch(error){UI.atlasWarning.textContent='Anteprima: '+String(error.message||error);}
+}
+async function showAtlasForAsset(asset){
+  const request=++atlasRequest;
+  atlasMeta=findAtlasMetadata(game,asset);
+  atlasFrames=[];atlasAssetPath=asset?.path||'';
+  UI.atlasPanel.hidden=true;
+  if(!atlasMeta)return;
+  UI.atlasInfo.textContent='Leggo '+atlasMeta.name+'…';
+  try{
+    const frames=await loadAtlasFrames(asset,atlasMeta);
+    if(request!==atlasRequest||selectedAsset!==asset)return;
+    atlasFrames=frames;
+    UI.atlasFrameSelect.replaceChildren(...frames.slice(0,1200).map(f=>{
+      const label=f.name+' · '+f.w+'×'+f.h;
+      const option=new Option(label,f.name);
+      option.disabled=!!f.rotated;
+      return option;
+    }));
+    UI.atlasFrameSelect.value=frames.some(f=>f.name===atlasWanted)?
+      atlasWanted:frames[0].name;
+    UI.atlasPanel.hidden=false;
+    UI.atlasInfo.textContent=frames.length+' frame logici · '+
+      new Set(frames.map(f=>f.rectKey)).size+' rettangoli distinti · '+
+      atlasMeta.name;
+    await updateAtlasPreview();
+  }catch(error){
+    if(request!==atlasRequest||selectedAsset!==asset)return;
+    UI.atlasPanel.hidden=false;
+    UI.atlasPatchButton.disabled=true;
+    UI.atlasInfo.textContent='Atlas non leggibile: '+String(error.message||error);
+  }
 }
 function renderAssetDetails(){
   if(!selectedAsset){
     UI.reskinControls.hidden=true;
+    UI.atlasPanel.hidden=true;
+    ++atlasRequest;atlasFrames=[];atlasMeta=null;atlasAssetPath='';
     UI.assetDetail.innerHTML='<div class="empty-detail">Seleziona una texture. '+ 
       'Potrai importare un PNG con la stessa risoluzione e provarlo nel gioco dove possibile.</div>';
     return;
@@ -252,6 +315,9 @@ function renderAssetDetails(){
   const has=saved.some(x=>x.assetPath===a.path);
   UI.restoreAsset.disabled=!has;
   UI.exportAsset.disabled=!has;
+  UI.atlasPanel.hidden=true;
+  if(image)void showAtlasForAsset(a);
+  else {++atlasRequest;atlasFrames=[];atlasMeta=null;}
 }
 async function readDimensions(source){
   const img=new Image();
@@ -488,6 +554,29 @@ function bind(){
   UI.restoreAsset.addEventListener('click',()=>void restoreAsset());
   UI.exportAsset.addEventListener('click',()=>void exportAsset());
   UI.applyReskinGame.addEventListener('click',()=>void launchGame(true));
+  UI.atlasFrameSelect.addEventListener('change',()=>void updateAtlasPreview());
+  UI.atlasPatchButton.addEventListener('click',()=>UI.atlasPatchFile.click());
+  UI.atlasPatchFile.addEventListener('change',event=>{
+    const file=event.target.files?.[0];
+    event.target.value='';
+    void (async()=>{
+      const asset=selectedAsset,currentGame=game;
+      const frame=atlasFrames.find(f=>f.name===UI.atlasFrameSelect.value);
+      if(!file||!asset||!frame||!currentGame)return;
+      UI.reskinStatus.className='hint';
+      UI.reskinStatus.textContent='Composizione del frame nell’atlante…';
+      try {
+        const previous=await readDraft(currentGame.id,asset.path);
+        const composed=await patchAtlasFrame(asset,frame,file,previous?.blob||null);
+        if(selectedAsset!==asset||game!==currentGame)return;
+        atlasWanted=frame.name;
+        await replaceAsset(composed);
+      } catch(error){
+        UI.reskinStatus.className='hint error';
+        UI.reskinStatus.textContent=String(error.message||error);
+      }
+    })();
+  });
   UI.exportManifest.addEventListener('click',()=>void exportManifest());
   UI.downloadCatalog.addEventListener('click',()=>{
     if(catalog)downloadJSON(catalog,'2night-69-games-compatibility.json');
