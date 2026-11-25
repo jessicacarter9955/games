@@ -171,7 +171,7 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
             1 for g in games if g.get("localMirror") and g.get("entry") and
             g["entry"].startswith("/local-mirror/")),
         localMirrorImages=sum(
-            sum(a["kind"] == "image" and a.get("localMirror")
+            sum(a["kind"] == "image" and bool(a.get("localMirror"))
                 for a in g["assets"]) for g in games),
     )
     return original, host_paths
