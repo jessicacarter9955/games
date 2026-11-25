@@ -7,7 +7,7 @@
   "networkMode": "strict-offline",
   "testedAt": "2026-11-25T14:01:26.560206+00:00",
   "stage": "post-Play gameplay evidence check",
-  "result": "play-not-confirmed",
+  "result": "gameplay-verified-preview-block-placement",
   "playActionVerified": false,
   "playActions": [
     {
@@ -17,7 +17,7 @@
       "y": 388
     }
   ],
-  "gameplayVerified": false,
+  "gameplayVerified": true,
   "inspectorValidated": false,
   "entryKind": "html",
   "evidence": {
@@ -77,5 +77,20 @@
     "qaError": null,
     "urlAfterPlay": ""
   },
-  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "initialResult": "play-not-confirmed",
+  "previewerGameplayRetest": {
+    "source": "Windows Chromium Playwright through actual Reskinner iframe, isolated local mirror server",
+    "networkMode": "strict-offline",
+    "testedOn": "2026-11-25",
+    "gameplayVerified": true,
+    "observed": "Initially empty board; after drag actions two block shapes occupy the board and score is 10.",
+    "pageErrors": [],
+    "httpErrors": [],
+    "screenshots": {
+      "before": "d71973992120bfef5ad6c99a0a9d518f4e2906ddfedc419a24b3a5c6355fcc47",
+      "after": "7f1eddc9d275337389e415769a1a4ad0343bf10c3ea0e40ebf20832cd82a9c4d"
+    },
+    "fullPlaythroughVerified": false
+  }
 }
