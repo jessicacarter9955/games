@@ -161,23 +161,30 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 else:
                     game.update(status="experimental",
                                 label="2D · mirror locale disponibile")
+            # The tracked catalog predates the reconstructed entrypoint.
+            # Do not leave contradictory "missing HTML" diagnostics.
+            old_reason = game.get("reason", "").replace(
+                "Manca anche l'entrypoint HTML locale.", ""
+            ).replace(
+                "Gli ZIP/manifest non includono un entrypoint locale avviabile.", ""
+            ).strip()
             if is_unity_wrapper:
                 game["reason"] = (
                     "Launcher Unity del portale recuperato, ma NON standalone: "
                     "attende unity2020config/loadGame dal contenitore CrazyGames. "
                     "Servono bootstrap locale e build completa. "
-                    + game.get("reason", "")
+                    + old_reason
                 )
             elif is_local_bootstrap:
                 game["reason"] = (
                     "Bootstrap Unity locale generato dai file presenti: "
                     "gameplay NON certificato; sprite nei binari non isolabili "
-                    "senza adapter. " + game.get("reason", "")
+                    "senza adapter. " + old_reason
                 )
             else:
                 game["reason"] = (
                     "Entrypoint individuato nel mirror Windows, non verificato "
-                    "come gameplay completo. " + game.get("reason", "")
+                    "come gameplay completo. " + old_reason
                 )
         game["fileCount"] = max(game["fileCount"], total)
         game["assets"] = list(new_assets.values())
@@ -217,13 +224,43 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             return "application/octet-stream"
         return super().guess_type(path)
 
+    def _already_decoded(self, path: str) -> bool:
+        """Playwright saves decoded response.body() with its original .br name.
+
+        Never apply Content-Encoding a second time to those files.
+        """
+        lower = urlsplit(path).path.lower()
+        if not lower.endswith((".br", ".gz")):
+            return False
+        try:
+            file = Path(self.translate_path(path))
+            with file.open("rb") as stream:
+                prefix = stream.read(96)
+        except (OSError, ValueError):
+            return False
+        if ".wasm." in lower:
+            return prefix.startswith(b"\x00asm")
+        if ".data." in lower:
+            return prefix.startswith((
+                b"UnityWebData", b"UnityFS", b"UnityRaw"))
+        if ".js." in lower:
+            first = prefix.lstrip(b" \t\r\n;")
+            return first.startswith((
+                b"var ", b"let ", b"const ", b"function ",
+                b"(()=>", b"(function", b"!function",
+                b"window.", b"/*", b"//", b"'use strict'",
+                b'"use strict"'))
+        return False
+
     def end_headers(self) -> None:
-        # Unity WebGL compressed files need Content-Encoding when served.
+        # Compressed Unity files may have been transparently decompressed
+        # before being written to disk. Check file content, not just suffix.
         lower = urlsplit(self.path).path.lower()
-        if lower.endswith(".br"):
-            self.send_header("Content-Encoding", "br")
-        elif lower.endswith(".gz"):
-            self.send_header("Content-Encoding", "gzip")
+        if not self._already_decoded(self.path):
+            if lower.endswith(".br"):
+                self.send_header("Content-Encoding", "br")
+            elif lower.endswith(".gz"):
+                self.send_header("Content-Encoding", "gzip")
         self.send_header("Cache-Control", "no-store")
         super().end_headers()
 
