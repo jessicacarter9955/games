@@ -363,6 +363,38 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         except (ValueError, OSError):
             return None
 
+    def resolve_foony_root_resource(self, parts: tuple[str, ...]) -> str | None:
+        """Original Foony modules import /assets, /fonts, /img and /m.
+
+        After navigating to /games/foono-online-card-game/index.html, the
+        Referer no longer contains /local-mirror. Resolve only that game's
+        original physically present host files, not another game's files.
+        """
+        if not parts or parts[0] not in {"assets", "fonts", "img", "m"}:
+            return None
+        try:
+            referer = urlsplit(self.headers.get("Referer", ""))
+            if (referer.scheme not in {"http", "https"} or
+                    referer.hostname not in {"127.0.0.1", "localhost"} or
+                    referer.port != self.server.server_port):
+                return None
+            if not referer.path.startswith((
+                    "/games/foono-online-card-game/",
+                    "/local-mirror/cardsfouruno/foony.com/")):
+                return None
+            root = self.roots.get("cardsfouruno")
+            if root is None:
+                return None
+            host = (root / "foony.com").resolve()
+            host.relative_to(root.resolve())
+            candidate = host.joinpath(*parts).resolve()
+            candidate.relative_to(host)
+            if candidate.is_file() and not candidate.is_symlink():
+                return str(candidate)
+        except (ValueError, OSError):
+            pass
+        return None
+
     def resolve_unique_hashed_asset(self, parts: tuple[str, ...]) -> str | None:
         """Alias nested hashed JS/CSS imports only if unambiguous.
 
@@ -383,7 +415,8 @@ class MirrorHandler(SimpleHTTPRequestHandler):
                         ref.hostname not in {"127.0.0.1", "localhost"} or
                         ref.port != self.server.server_port or
                         not ref.path.startswith((
-                            "/local-mirror/", "/reskinner/"))):
+                            "/local-mirror/", "/reskinner/",
+                            "/games/foono-online-card-game/"))):
                     return None
             except ValueError:
                 return None
@@ -533,6 +566,7 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
         if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
             alias = (self.resolve_game_absolute_resource(parts) or
+                     self.resolve_foony_root_resource(parts) or
                      self.resolve_unique_hashed_asset(parts) or
                      self.resolve_unique_game_navigation(parts))
             return alias or str(self.repo / "__invalid__")
