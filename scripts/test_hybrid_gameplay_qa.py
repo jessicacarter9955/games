@@ -11,6 +11,7 @@ from hybrid_gameplay_qa import (
     LocalWebSocket,
     find_action,
     image_metrics,
+    game_url,
     native_click_if_safe,
 )
 
@@ -26,6 +27,13 @@ class HybridGameplayTests(unittest.TestCase):
         self.assertEqual(action["kind"], "click")
         self.assertEqual(action["target"], "Play Bots")
         self.assertEqual((action["x"], action["y"]), (160, 220))
+
+    def test_game_switch_forces_full_navigation_not_hash_only(self):
+        first=game_url("http://127.0.0.1:8004","cardsfouruno")
+        second=game_url("http://127.0.0.1:8004","carout")
+        self.assertNotEqual(first.split("#")[0],second.split("#")[0])
+        self.assertTrue(first.endswith("#game=cardsfouruno"))
+        self.assertTrue(second.endswith("#game=carout"))
 
     def test_tileman_play_button(self):
         state = {
