@@ -21,7 +21,7 @@ def main():
     args = parser.parse_args()
     url=args.base.rstrip("/")+"/reskinner/#game="+args.game
     with sync_playwright() as pw, tempfile.TemporaryDirectory(prefix="2night-ui-diag-") as tmp:
-        browser=pw.chromium.launch(headless=True,accept_downloads=True,
+        browser=pw.chromium.launch(headless=True,
             args=["--enable-webgl","--use-gl=angle","--use-angle=swiftshader"])
         context=browser.new_context(accept_downloads=True)
         context.grant_permissions(["clipboard-read", "clipboard-write"],origin=args.base)
