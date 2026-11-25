@@ -27,5 +27,27 @@
     "qaError": null,
     "urlAfterPlay": ""
   },
-  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "reverseLaunchRetest": {
+    "source": "Windows Playwright, isolated Reskinner previewer, qa_reverse1730_launch_job",
+    "gameplayVerified": false,
+    "entryRestored": true,
+    "entry": "snake.io/crazygames__assets/index.html",
+    "offline": {
+      "engine": "unity",
+      "pageErrors": [
+        "firebase is not defined",
+        "message is not defined"
+      ],
+      "http404": [
+        "TemplateData/progressLogo.Light.png",
+        "TemplateData/progressEmpty.Light.png",
+        "TemplateData/progressFull.Light.png"
+      ]
+    },
+    "remote": {
+      "additionalMissing": "StreamingAssets/aa/settings.json",
+      "bodyProbeTimeout": true
+    }
+  }
 }
