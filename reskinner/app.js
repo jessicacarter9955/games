@@ -163,6 +163,40 @@ async function loadDraftList(){
       String(error.message||error);
   }
 }
+// Isolated texture preview: never substitute the full game canvas for a sprite.
+const isolatedPreviewImages = new Map();
+function drawSelectedSprite(item){
+  const canvas=byId('spritePreviewCanvas');
+  const path=localURL(item?.source);
+  if(!canvas||!path)return;
+  const c=item.crop;
+  const crop=c&&[c.sx,c.sy,c.sw,c.sh].every(Number.isFinite)&&c.sw>0&&c.sh>0?c:null;
+  const key=path+':'+JSON.stringify(crop);
+  function paint(img){
+    if(!byId('spritePreviewCanvas')||!selectedObject||
+        localURL(selectedObject.source)!==path||
+        JSON.stringify(selectedObject.crop||null)!==JSON.stringify(crop))return;
+    const target=byId('spritePreviewCanvas');
+    const sx=crop?.sx||0,sy=crop?.sy||0;
+    const sw=crop?.sw||img.naturalWidth,sh=crop?.sh||img.naturalHeight;
+    if(sw<=0||sh<=0||sx<0||sy<0||sx+sw>img.naturalWidth||sy+sh>img.naturalHeight)return;
+    const scale=Math.min(1,320/sw,220/sh);
+    target.width=Math.max(1,Math.round(sw*scale));
+    target.height=Math.max(1,Math.round(sh*scale));
+    const ctx=target.getContext('2d');
+    ctx.imageSmoothingEnabled=false;
+    ctx.drawImage(img,sx,sy,sw,sh,0,0,target.width,target.height);
+  }
+  let image=isolatedPreviewImages.get(path);
+  if(image?.complete&&image.naturalWidth){paint(image);return;}
+  if(image)return;
+  if(isolatedPreviewImages.size>80)isolatedPreviewImages.clear();
+  image=new Image();
+  isolatedPreviewImages.set(path,image);
+  image.onload=()=>paint(image);
+  image.onerror=()=>isolatedPreviewImages.delete(path);
+  image.src=path;
+}
 function showHover(item){
   if(!item){
     UI.hoverInfo.innerHTML='<div class="empty-detail">'+
@@ -175,6 +209,11 @@ function showHover(item){
   UI.hoverInfo.innerHTML=
     '<div class="object-name">'+esc(item.name)+'</div>'+
     '<div class="object-source">'+esc(item.source||item.tag||'Nessuna sorgente esposta')+'</div>'+
+    (localURL(item.source)&&['image','dom','engine'].includes(item.type)
+      ?'<div class="sprite-preview"><div class="hint">RISORSA ISOLATA'+
+       (item.crop?' · frame atlas':'')+'</div><canvas id="spritePreviewCanvas" '+
+       'aria-label="Anteprima isolata della risorsa"></canvas></div>'
+      :'<p class="hint">Nessuna texture isolabile identificata per questo box.</p>')+
     '<div class="box-model"><div class="box-inner"><small>RENDER BOX · CSS PX</small>'+
       Math.round(w)+' × '+Math.round(h)+'</div></div>'+
     '<dl class="kv">'+
@@ -185,6 +224,7 @@ function showHover(item){
     '<dt>Sorgente</dt><dd>'+esc(item.type||'unknown')+'</dd></dl>'+
     (item.type==='canvas'?'<p class="hint">Il motore rende su canvas senza '+ 
       'esporre questo sprite: non possiamo identificarlo per nome senza un adapter dedicato.</p>':'');
+  drawSelectedSprite(item);
 }
 function applyHover(item){
   selectedObject=item;
