@@ -7,6 +7,8 @@ on:
     paths:
       - 'reskinner/**'
       - 'scripts/generate_reskin_catalog.py'
+      - 'scripts/recover_unity_webgl_assets.py'
+      - 'scripts/test_unity_webgl_assets.py'
       - 'scripts/test_reskin_catalog.py'
       - 'RESKIN_AUDIT*.md'
       - 'extracted/**'
@@ -15,6 +17,8 @@ on:
     paths:
       - 'reskinner/**'
       - 'scripts/generate_reskin_catalog.py'
+      - 'scripts/recover_unity_webgl_assets.py'
+      - 'scripts/test_unity_webgl_assets.py'
       - 'scripts/test_reskin_catalog.py'
       - 'RESKIN_AUDIT*.md'
       - 'extracted/**'
@@ -37,6 +41,8 @@ jobs:
           python-version: '3.12'
       - name: Structural catalog checks (committed)
         run: python3 scripts/test_reskin_catalog.py
+      - name: Unity original-CDN recovery safety (offline)
+        run: python3 scripts/test_unity_webgl_assets.py
       - name: Regenerate catalog from extracted files
         run: python3 scripts/generate_reskin_catalog.py
       - name: Structural catalog checks (regenerated)
