@@ -58,6 +58,7 @@ def main():
           const frame=document.querySelector('#gameFrame');
           try {
             frame.contentWindow.console.error('DIAG_SENTINEL_COPY_BUTTON_1234');
+            frame.contentWindow.console.error('DIAG_SENTINEL_COPY_BUTTON_1234');
             const img=frame.contentDocument.createElement('img');
             img.src='/missing_qa_diagnostic_image_1234.png';
             frame.contentDocument.body.appendChild(img);
@@ -75,6 +76,14 @@ def main():
                    for e in data["capturedErrors"]),data["capturedErrors"]
         assert any("missing_qa_diagnostic_image_1234" in e.get("message","")
                    for e in data["capturedErrors"]),data["capturedErrors"]
+        sentinel=[e for e in data["capturedErrors"]
+                  if "DIAG_SENTINEL_COPY_BUTTON_1234" in e.get("message","")]
+        assert len(sentinel)==1 and sentinel[0].get("occurrences",0)>=2,sentinel
+        # Compact diagnostic controls must live below gameplay, never
+        # over an interactive WebGL/Canvas scene.
+        stage=page.locator("#gameStage").bounding_box()
+        panel=page.locator("#quickDiagnostics").bounding_box()
+        assert stage and panel and panel["y"] >= stage["y"]+stage["height"]-3,(stage,panel)
         print("DIAGNOSTIC_REPORT_OK",json.dumps({
             "game":data["game"],"errorCount":len(data["capturedErrors"]),
             "iframe":emitted,"copy":True},ensure_ascii=True),flush=True)
@@ -91,6 +100,10 @@ def main():
         print("SCREENSHOT_BUTTON_OK",json.dumps({
             "file":download.suggested_filename,"bytes":len(raw),
             "status":status}),flush=True)
+        page.set_viewport_size({"width":390,"height":780})
+        panel=page.locator("#quickDiagnostics").bounding_box()
+        assert panel and panel["x"]>=-1 and panel["x"]+panel["width"]<=391,panel
+        print("DIAGNOSTIC_LAYOUT_MOBILE_OK",json.dumps(panel),flush=True)
         browser.close()
     print("QUICK_DIAGNOSTICS_PASS",flush=True)
     return 0
