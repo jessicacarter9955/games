@@ -114,3 +114,60 @@ Serving only the \`reskinner/\` directory breaks URLs like
 
 Avoid equating the audit's *reskin difficulty score* with an actual technical
 verification. A game can score high while having no usable local build.
+
+
+## 2026-11-25 · Windows bridge, 69 games and 1:1 reskin transport
+
+Everything remains in the feature branch of jessicacarter9955/games.
+The production Next.js application jessicacarter9955/2night is unchanged.
+
+### Run against the complete local mirrors on the Windows PC
+
+From the Windows checkout of this repository:
+
+    git fetch origin
+    git switch feat/multigame-reskinner
+    py scripts/serve_local_mirrors.py --port 8000
+
+Open http://127.0.0.1:8000/reskinner/ on that PC. The server is bound to
+127.0.0.1 and overlays the existing game mirrors from the user's Downloads.
+Nothing is copied or uploaded from the approximately 1.8 GB mirrored tree.
+The generic Github catalog is retained as the fallback elsewhere.
+
+Windows mirror index verification: 69/69 roots mapped, 52 local HTML entrypoints,
+2,123 additional image assets, 44 games with both images and a local HTML entry.
+These are actual file counts, not 52 successful full-game boot tests.
+24 currently classify as 2D experimental, 6 as 3D limited, 38 blocked and
+1 still missing an HTML entry. No games have a certified full offline playthrough.
+
+### Reskin workflow
+
+1. Choose a game, inspect its source images, and select an asset.
+2. Upload an identically sized replacement PNG. Save it in IndexedDB.
+3. The root Service Worker returns that replacement to same-origin image GETs
+   at the original path, before the engine decodes textures and uploads to GPU.
+4. Click Reload with reskin to restart any engine with preloaded graphics.
+5. If metadata are present, the atlas panel can parse Sparrow XML, Cocos
+   plist or libGDX .atlas files: choose a frame and replace its exact cropped
+   rectangle without changing UV coordinates. Shared rectangles affect all
+   logical frames pointing to those pixels; rotated rectangles are disabled.
+6. Export the PNG and draft manifest. The feature branch does not yet commit
+   the user's individual reskin to a permanent GitHub backend.
+
+The transport works for individually downloaded local textures in generic
+HTML5 / Canvas2D / Pixi / Phaser / Cocos / WebGL. It cannot edit Unity packed
+archives, Defold binary data, remote cross-origin images, 3D mesh UVs, or
+procedural shaders without dedicated game/engine adapters. Red/grey states
+remain visible even if the game's HTML can load.
+
+### Browser verification via Windows bridge
+
+- Service Worker test: original red PNG changed to blue using the same URL;
+  no game source modification required.
+- Wordmeister: 69-game UI, local HTML path, 166x61 source PNG intercepted
+  and served with X-2Night-Reskin=local-draft, zero browser page errors.
+- The Sparrow atlas automated browser check lives at
+  scripts/test_reskin_atlas.py and checks pixel-perfect frame composition.
+
+Browser opening or image interception alone is not evidence of complete
+gameplay, correct animation sequences or full-engine reskinnability.
