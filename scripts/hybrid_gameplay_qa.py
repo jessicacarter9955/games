@@ -444,6 +444,12 @@ def snapshot(cdp: CDP, out: Path, stage: str) -> tuple[dict, Path]:
             "bytes":len(screenshot)},path
 
 
+def game_url(base: str, game: str) -> str:
+    """Each title must load a fresh document, not only change a #game hash."""
+    return (base.rstrip("/")+"/reskinner/?night_qa="+quote(game)+
+            "#game="+quote(game))
+
+
 def game_test(cdp: CDP, base: str, game: str, output: Path,
               native: bool, initial_wait: float) -> dict:
     out=output/game
@@ -457,8 +463,7 @@ def game_test(cdp: CDP, base: str, game: str, output: Path,
     # The Reskinner reads #game only during boot. A hash-only navigation
     # would leave the previous title selected; vary the query to force a
     # complete document load for each distinct game.
-    address=(base.rstrip("/")+"/reskinner/?night_qa="+quote(game)+
-             "#game="+quote(game))
+    address=game_url(base,game)
     try:
         cdp.call("Page.navigate",{"url":address},timeout=16)
         time.sleep(initial_wait)
