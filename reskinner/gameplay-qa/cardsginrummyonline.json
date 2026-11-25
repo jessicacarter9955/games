@@ -75,5 +75,33 @@
     ],
     "blockedExternalRequestCount": 1
   },
-  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded.",
+  "latestRetest": {
+    "testedAt": "2026-11-25T14:34:33.128963+00:00",
+    "serverCommit": "b721214",
+    "mode": "Windows Chromium strict-offline",
+    "result": "blank-or-uniform",
+    "gameplayVerified": false,
+    "playActionVerified": false,
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "19dc5d79143839c978e2c4445dd7a8a801a3d8145b46fba4a5ae65b86b9b9186"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "19dc5d79143839c978e2c4445dd7a8a801a3d8145b46fba4a5ae65b86b9b9186"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "19dc5d79143839c978e2c4445dd7a8a801a3d8145b46fba4a5ae65b86b9b9186"
+      }
+    ],
+    "pageErrors": [],
+    "httpErrors": [],
+    "blockedHosts": [
+      "fonts.googleapis.com",
+      "games.cdn.famobi.com"
+    ]
+  }
 }
