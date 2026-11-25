@@ -82,10 +82,23 @@ def collect_missing(game: str, port: int, seconds: float, click: str = '') -> tu
             page.wait_for_timeout(int(seconds*1000))
             if click:
                 try:
-                    item=page.frame_locator("#gameFrame").get_by_text(click,exact=True)
-                    if item.count() and item.first.is_visible():
-                        item.first.click(timeout=4500)
-                        page.wait_for_timeout(5000)
+                    if click == "WORDWIPE_CANVAS_PLAY":
+                        # The original Word Wipe Play button is drawn on
+                        # canvas, not represented by a DOM button.
+                        if game != "wordgameswordwipe":
+                            raise ValueError("Canvas click profile is game-specific")
+                        target=page.frame_locator("#gameFrame").locator("canvas").first
+                        bounds=target.bounding_box()
+                        if not bounds or bounds["width"]<100:
+                            raise ValueError("Canvas unavailable")
+                        page.mouse.click(bounds["x"]+bounds["width"]*.50,
+                                         bounds["y"]+bounds["height"]*.79)
+                        page.wait_for_timeout(5500)
+                    else:
+                        item=page.frame_locator("#gameFrame").get_by_text(click,exact=True)
+                        if item.count() and item.first.is_visible():
+                            item.first.click(timeout=4500)
+                            page.wait_for_timeout(5000)
                 except Exception as e:
                     print("BROWSER_CLICK_NOT_CONFIRMED",game,repr(e)[:200],flush=True)
         finally:
