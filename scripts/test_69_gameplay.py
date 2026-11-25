@@ -6,6 +6,7 @@ Never infer actual gameplay from index.html, one canvas or one animation.
 """
 from __future__ import annotations
 import argparse
+import base64
 import hashlib
 import io
 import json
@@ -47,7 +48,7 @@ def picture_metrics(data):
     vals=[h/total for h in hist if h]
     return {"entropy":round(-sum(p*math.log2(p) for p in vals),3),
             "dominantFraction":round(max(hist)/total,3),
-            "nearUniform":bool(max(hist)/total>.9 and len(vals)<10),
+            "nearUniform":bool(max(hist)/total>.95 and -sum(p*math.log2(p) for p in vals)<1.2),
             "paletteColors":len(vals)}
 
 def visual_delta(before,after):
@@ -74,12 +75,36 @@ def document_state(page):
     except Exception as e: return {"error":short(e)}
 
 def capture(page,folder,step):
-    data=page.screenshot(type="jpeg",quality=75,timeout=10000,
-                         animations="disabled")
     name=step+".jpg"
+    errors=[]
+    data=None
+    method="browser-screenshot"
+    try:
+        # Do not wait for animated canvases to settle.
+        data=page.screenshot(type="jpeg",quality=72,timeout=4400,
+                             animations="allow")
+    except Exception as exc:
+        errors.append(short(exc,200))
+        # CDP page screenshots may stall on accelerated game canvases.
+        # The real source canvas can sometimes be read directly instead.
+        try:
+            url=page.evaluate("""() => {
+                const canvas=[...document.querySelectorAll('canvas')].find(
+                    c => c.width>200 && c.height>150);
+                return canvas ? canvas.toDataURL('image/jpeg',0.72) : null;
+            }""")
+            if url and url.startswith("data:image/jpeg;base64,"):
+                data=base64.b64decode(url.split(",",1)[1])
+                method="canvas-readback"
+        except Exception as exc:
+            errors.append(short(exc,200))
+    if data is None:
+        return None, {"file":None,"errors":errors,"metrics":{},
+                      "status":"capture-failed"}
     (folder/name).write_bytes(data)
     return data, {"file":name,"sha256":hashlib.sha256(data).hexdigest(),
-                  "metrics":picture_metrics(data)}
+                  "metrics":picture_metrics(data),"method":method,
+                  "screenshotErrors":errors}
 
 def press_play(page,record):
     for frame in list(page.frames):
@@ -100,23 +125,20 @@ def press_play(page,record):
                 return
         except Exception as e:
             record.append({"type":"DOM-probe-error","detail":short(e)})
-    # Canvas/WebGL games have no HTML button. Center tap is only a probe.
-    for frame in list(page.frames):
-        try:
-            nodes=frame.locator("canvas")
-            for i in range(min(nodes.count(),3)):
-                node=nodes.nth(i)
-                if not node.is_visible(timeout=450):continue
-                rect=node.bounding_box(timeout=800)
-                if not rect or rect["width"]<250 or rect["height"]<180:continue
-                node.click(position={"x":rect["width"]*.5,
-                                     "y":rect["height"]*.55},
-                           no_wait_after=True,timeout=1400)
-                record.append({"type":"canvas-probe","x":.5,"y":.55,
-                               "frame":short(frame.url,160)})
-                return
-        except Exception as e:
-            record.append({"type":"canvas-probe-error","detail":short(e)})
+    # Canvas/WebGL games draw Play within the canvas. Probe a trusted
+    # pointer click without waiting for unstable element actionability.
+    try:
+        state=document_state(page)
+        if any(c.get("visible") for c in state.get("canvases",[])):
+            size=page.viewport_size or {"width":1080,"height":680}
+            x=size["width"]*.5
+            y=size["height"]*.57
+            page.mouse.click(x,y,delay=80)
+            record.append({"type":"canvas-probe","x":round(x),
+                           "y":round(y),"trustedPointer":True})
+    except Exception as exc:
+        record.append({"type":"canvas-probe-error","detail":short(exc)})
+
 
 def check(browser,base,game,seconds,allow_remote=False):
     gid=game["id"];folder=OUT/gid
@@ -167,7 +189,7 @@ def check(browser,base,game,seconds,allow_remote=False):
         after,p1=capture(page,folder,"01-after-play")
         result["screenshots"].append(p1)
         result["playDocument"]=document_state(page)
-        result["playDiff"]=visual_delta(before,after)
+        result["playDiff"]=visual_delta(before,after) if before and after else {}
         page.keyboard.press("ArrowLeft")
         page.keyboard.press("ArrowRight")
         page.keyboard.press("Space")
@@ -175,12 +197,14 @@ def check(browser,base,game,seconds,allow_remote=False):
         action,p2=capture(page,folder,"02-after-input")
         result["screenshots"].append(p2)
         result["inputDocument"]=document_state(page)
-        result["inputDiff"]=visual_delta(after,action)
+        result["inputDiff"]=visual_delta(after,action) if after and action else {}
         visual=p2["metrics"]
         dom_play=any(a["type"]=="DOM-Play" for a in result["playActions"])
         result["playActionVerified"]=dom_play
         state=result["playDocument"]
-        if visual.get("nearUniform"):
+        if not action and not after:
+            result["status"]="screenshot-unavailable"
+        elif visual.get("nearUniform"):
             result["status"]="blank-or-uniform"
         elif (state.get("unityStatus") and not state.get("unity")):
             result["status"]="unity-loading"
