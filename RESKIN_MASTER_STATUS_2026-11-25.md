@@ -52,30 +52,30 @@ La tabella sopra rappresenta **osservazioni manuali e interventi da fare**, non 
 
 | # | Categoria | Gioco | Motore | Grafica | Schermate stimate | File mirror | Teoria | Inspect | Voto storico | 🚦 | Motivazione storica |
 |---:|---|---|---|---|---|---:|---:|---:|---:|:---:|---|
-| 1 | Puzzles | `mahjongg` | HTML5, canvas 2D | 2D | Poche | 35 | 86 | 94 | **91** | 🟢 | 12 file visuali, 13 codice/config e 10 audio; 35 richieste locali riuscite, canvas 1080×740 e screenshot non vuoto offline. Mancano test di livelli e controlli |
-| 2 | Puzzles | `hexastack` | PixiJS | 2D/2.5D | Molte | 1134 | 75 | 86 | **82** | 🟢 | 766 file visuali, 277 codice/config e 88 audio: ottimo mapping sprite/texture. Il test offline apre HTML ma non crea un canvas; dipendenza di sessione esterna |
-| 3 | Puzzles | `color-water-sort-3d` | PlayCanvas | 3D | Medie | 122 | 50 | 82 | **71** | 🟡 | 49 modelli, 35 immagini, 20 audio; manifest e modelli ben identificabili. Nel test offline l'entrypoint apre senza canvas per dipendenza SDK: animazioni e fluidi 3D impegnativi |
-| 4 | Puzzles | `cuttherope` | JS + atlas DDS | 2D | Medie | 16 | 65 | 62 | **63** | 🟡 | 5 immagini/atlas DDS e 8 file codice/config. Stato animato e fisica delle corde complicano la sostituzione; smoke offline senza canvas e con errore fetch |
-| 5 | Puzzles | `blocks-and-that'it` | Cocos 3.8.8 | 2D | Poche | 21 | 90 | 43 | **59** | 🟡 | Griglia e pochi oggetti semplici da ritexturizzare. Mirror con config/runtime Cocos e una sola immagine: mancano molti texture asset nativi |
-| 6 | Puzzles | `nut-sort-build-the-city` | Defold | 2D/2.5D | Medie–molte | 16 | 43 | 67 | **59** | 🟡 | 16 file / ~18 MB; browser ha caricato WASM, ARCD, ARCI e projectc. Reskin gravato da dati compilati, ordinamento pezzi e progressione città; sostituisce il vecchio ZIP find-the-cow(cat) |
-| 7 | Puzzles | `drop-merge-numbers` | Unity 2021 | 2D | Poche | 13 | 69 | 53 | **59** | 🟡 | ~55,5 MB e componenti Unity scaricati: meccaniche numeriche semplici, ma sprite/scene sono impacchettati e non ispezionati |
-| 8 | Puzzles | `block-puzzle-master` | Unity 6 | 2D | Poche | 5 | 67 | 53 | **58** | 🟡 | ~57 MB di Unity; gameplay a griglia teoricamente semplice. Texture ancora all'interno di pacchetti binari e senza prova di avvio offline |
-| 9 | Puzzles | `find-differences` | Unity 2022 | 2D | Poche–medie | 5 | 62 | 54 | **57** | 🟡 | ~53 MB del build Unity disponibili. Cambiare immagini richiede preservare regioni cliccabili e risolvere l'estrazione dai binari |
-| 10 | Puzzles | `carout` | Unity/Playgama | 2.5D/3D | Medie | 10 | 50 | 57 | **55** | 🟡 | 10 file / 20,9 MB ottenuti con il browser ufficiale, inclusi dati Unity. Auto e percorsi animati; non collaudati livelli o menu offline |
-| 11 | Puzzles | `nuts-puzzle-sort-by-color` | Unity 2020 | 2.5D/3D | Poche–medie | 55 | 49 | 54 | **52** | 🔴 | 55 file, molti config/codice aggiuntivi e core Unity; modelli, movimenti delle viti e texture ancora soprattutto nei binari |
-| 12 | Puzzles | `hexasort` | Unity 2022 | 2.5D/3D | Medie | 5 | 47 | 52 | **50** | 🔴 | ~88,6 MB di core Unity. Pile esagonali, profondità e selezione: più stati rispetto a un puzzle 2D semplice |
-| 13 | Puzzles | `watersort` | Unity 2022 | 3D | Medie | 5 | 42 | 52 | **49** | 🔴 | ~77,4 MB di core Unity; liquidi, shader e movimenti dei bicchieri da mappare negli archivi |
-| 14 | Puzzles | `PieceOfCakeMerge` | Defold / iframe | 2D | Molte | 104 | 28 | 58 | **48** | 🔴 | 104 file, 19 binari e 81 file codice/config; archivi Defold, molte schermate e progressione. Numerose dipendenze non recuperate |
-| 15 | Puzzles | `jigpic-solitaire` | HTML5 | 2D | Poche–medie | 6 | 86 | 27 | **48** | 🔴 | 6 file / 3,3 MB, prevalentemente codice: gioco semplice da tematizzare per immagini, ma il set visivo dei livelli non è verificato |
-| 16 | Puzzles | `pixelblast` | Unity 6 | Da verificare | Medie | 5 | 37 | 52 | **47** | 🔴 | ~63,1 MB e file core Unity; struttura delle risorse grafiche interna ancora da estrarre/identificare |
-| 17 | Puzzles | `twistedtangle` | Unity 6 | 3D | Medie | 5 | 26 | 52 | **43** | 🔴 | ~78 MB di Unity; intrecci delle corde, deformazioni continue e fisica complicano il mapping dei materiali |
-| 18 | Puzzles | `what-s-the-difference-online` | HTML/iframe | 2D | Poche–medie | 8 | 72 | 22 | **40** | 🔴 | 8 file codice e circa 0,2 MB. Semplice sostituire coppie di immagini, ma i dati dei livelli e le immagini non sono disponibili nel mirror |
+| 1 | Puzzles | [Mahjongg Solitaire](https://www.crazygames.com/game/mahjongg-solitaire) (`mahjongg`) | HTML5, canvas 2D | 2D | Poche | 35 | 86 | 94 | **91** | 🟢 | 12 file visuali, 13 codice/config e 10 audio; 35 richieste locali riuscite, canvas 1080×740 e screenshot non vuoto offline. Mancano test di livelli e controlli |
+| 2 | Puzzles | [Hexa Stack](https://www.crazygames.com/game/hexa-stack) (`hexastack`) | PixiJS | 2D/2.5D | Molte | 1134 | 75 | 86 | **82** | 🟢 | 766 file visuali, 277 codice/config e 88 audio: ottimo mapping sprite/texture. Il test offline apre HTML ma non crea un canvas; dipendenza di sessione esterna |
+| 3 | Puzzles | [Color Water Sort 3D](https://www.crazygames.com/game/color-water-sort-3d) (`color-water-sort-3d`) | PlayCanvas | 3D | Medie | 122 | 50 | 82 | **71** | 🟡 | 49 modelli, 35 immagini, 20 audio; manifest e modelli ben identificabili. Nel test offline l'entrypoint apre senza canvas per dipendenza SDK: animazioni e fluidi 3D impegnativi |
+| 4 | Puzzles | [Cut the Rope](https://www.crazygames.com/game/cut-the-rope-ebx) (`cuttherope`) | JS + atlas DDS | 2D | Medie | 16 | 65 | 62 | **63** | 🟡 | 5 immagini/atlas DDS e 8 file codice/config. Stato animato e fisica delle corde complicano la sostituzione; smoke offline senza canvas e con errore fetch |
+| 5 | Puzzles | [Blocks and that’s it](https://www.crazygames.com/game/block-tour-kfz) (`blocks-and-that'it`) | Cocos 3.8.8 | 2D | Poche | 21 | 90 | 43 | **59** | 🟡 | Griglia e pochi oggetti semplici da ritexturizzare. Mirror con config/runtime Cocos e una sola immagine: mancano molti texture asset nativi |
+| 6 | Puzzles | [Nut Sort: Build the City](https://www.crazygames.com/game/nut-sort-build-the-city) (`nut-sort-build-the-city`) | Defold | 2D/2.5D | Medie–molte | 16 | 43 | 67 | **59** | 🟡 | 16 file / ~18 MB; browser ha caricato WASM, ARCD, ARCI e projectc. Reskin gravato da dati compilati, ordinamento pezzi e progressione città; sostituisce il vecchio ZIP find-the-cow(cat) |
+| 7 | Puzzles | [Drop & Merge the Numbers](https://www.crazygames.com/game/drop-merge-the-numbers) (`drop-merge-numbers`) | Unity 2021 | 2D | Poche | 13 | 69 | 53 | **59** | 🟡 | ~55,5 MB e componenti Unity scaricati: meccaniche numeriche semplici, ma sprite/scene sono impacchettati e non ispezionati |
+| 8 | Puzzles | [Block Blaster](https://www.crazygames.com/game/block-puzzle-master) (`block-puzzle-master`) | Unity 6 | 2D | Poche | 5 | 67 | 53 | **58** | 🟡 | ~57 MB di Unity; gameplay a griglia teoricamente semplice. Texture ancora all'interno di pacchetti binari e senza prova di avvio offline |
+| 9 | Puzzles | [Find It - Find The Differences](https://www.crazygames.com/game/find-it---find-the-differences) (`find-differences`) | Unity 2022 | 2D | Poche–medie | 5 | 62 | 54 | **57** | 🟡 | ~53 MB del build Unity disponibili. Cambiare immagini richiede preservare regioni cliccabili e risolvere l'estrazione dai binari |
+| 10 | Puzzles | [Car OUT! Jam Parking Puzzle](https://www.crazygames.com/game/car-out-jam-parking-puzzle) (`carout`) | Unity/Playgama | 2.5D/3D | Medie | 10 | 50 | 57 | **55** | 🟡 | 10 file / 20,9 MB ottenuti con il browser ufficiale, inclusi dati Unity. Auto e percorsi animati; non collaudati livelli o menu offline |
+| 11 | Puzzles | [Nuts Puzzle: Sort By Color](https://www.crazygames.com/game/nuts-puzzle-sort-by-color) (`nuts-puzzle-sort-by-color`) | Unity 2020 | 2.5D/3D | Poche–medie | 55 | 49 | 54 | **52** | 🔴 | 55 file, molti config/codice aggiuntivi e core Unity; modelli, movimenti delle viti e texture ancora soprattutto nei binari |
+| 12 | Puzzles | [Hexa Sort](https://www.crazygames.com/game/hexa-sort) (`hexasort`) | Unity 2022 | 2.5D/3D | Medie | 5 | 47 | 52 | **50** | 🔴 | ~88,6 MB di core Unity. Pile esagonali, profondità e selezione: più stati rispetto a un puzzle 2D semplice |
+| 13 | Puzzles | [Cups - Water Sort Puzzle](https://www.crazygames.com/game/cups---water-sort-puzzle) (`watersort`) | Unity 2022 | 3D | Medie | 5 | 42 | 52 | **49** | 🔴 | ~77,4 MB di core Unity; liquidi, shader e movimenti dei bicchieri da mappare negli archivi |
+| 14 | Puzzles | [Piece of Cake: Merge and Bake](https://www.crazygames.com/game/piece-of-cake-merge-and-bake) (`PieceOfCakeMerge`) | Defold / iframe | 2D | Molte | 104 | 28 | 58 | **48** | 🔴 | 104 file, 19 binari e 81 file codice/config; archivi Defold, molte schermate e progressione. Numerose dipendenze non recuperate |
+| 15 | Puzzles | [Jigpic Solitaire](https://www.crazygames.com/game/jigpic-solitaire) (`jigpic-solitaire`) | HTML5 | 2D | Poche–medie | 6 | 86 | 27 | **48** | 🔴 | 6 file / 3,3 MB, prevalentemente codice: gioco semplice da tematizzare per immagini, ma il set visivo dei livelli non è verificato |
+| 16 | Puzzles | [Pixel Blast](https://www.crazygames.com/game/pixel-blast) (`pixelblast`) | Unity 6 | Da verificare | Medie | 5 | 37 | 52 | **47** | 🔴 | ~63,1 MB e file core Unity; struttura delle risorse grafiche interna ancora da estrarre/identificare |
+| 17 | Puzzles | [Twisted Tangle](https://www.crazygames.com/game/twisted-tangle-nmt) (`twistedtangle`) | Unity 6 | 3D | Medie | 5 | 26 | 52 | **43** | 🔴 | ~78 MB di Unity; intrecci delle corde, deformazioni continue e fisica complicano il mapping dei materiali |
+| 18 | Puzzles | [What's The Difference?](https://www.crazygames.com/game/what-s-the-difference-online) (`what-s-the-difference-online`) | HTML/iframe | 2D | Poche–medie | 8 | 72 | 22 | **40** | 🔴 | 8 file codice e circa 0,2 MB. Semplice sostituire coppie di immagini, ma i dati dei livelli e le immagini non sono disponibili nel mirror |
 | 19 | Puzzles | [Goods Triple Match 3D](https://www.crazygames.com/game/goods-triple-match-3d) (`goodstriplematch`) | Cocos | 3D | Medie | 25 | 43 | 35 | **38** | 🔴 | 25 file, 4 immagini, 6 binari e 14 codice/config. Recupero migliorato rispetto ai 15 file precedenti, ma modelli 3D e materiali incompleti |
-| 20 | Puzzles | `jewel academy` | HTML5 | 2D | Medie | 8 | 70 | 20 | **38** | 🔴 | 8 file codice (~4,2 MB) catturati dal player, senza immagini di gemme separatamente visibili; match-3 con animazioni ed effetti |
-| 21 | Puzzles | `lavaoraqua` | HTML5 | 2D | Poche–medie | 1 | 69 | 7 | **29** | 🔴 | Solo un file visuale (~0,4 MB) nella struttura verificata; manca ancora l'entrypoint e il gameplay completo |
-| 22 | Puzzles | `sandtrix` | HTML5 | 2D | Poche | 1 | 64 | 7 | **27** | 🔴 | Solo uno script bootstrap (~70 KB); codice e simulazione della sabbia non recuperati in forma utilizzabile |
-| 23 | Puzzles | `home-design-decorate` | HTML5/Unity launcher | 2D/2.5D | Molte | 5 | 34 | 17 | **23** | 🔴 | 5 file / ~0,8 MB: solo loader/script; numerosi ambienti, decorazioni, stato e progressione non disponibili |
-| 24 | Puzzles | `complex-merge-3-park-town` | Iframe | 2D/2.5D | Molte | 1 | 26 | 5 | **12** | 🔴 | Un file wrapper da 1,8 KB: praticamente nessun asset di gioco. Molte scene, oggetti decorativi e progressione |
+| 20 | Puzzles | [Jewel Academy](https://www.crazygames.com/game/jewel-academy) (`jewel academy`) | HTML5 | 2D | Medie | 8 | 70 | 20 | **38** | 🔴 | 8 file codice (~4,2 MB) catturati dal player, senza immagini di gemme separatamente visibili; match-3 con animazioni ed effetti |
+| 21 | Puzzles | [Lava and Aqua](https://www.crazygames.com/game/lava-and-aqua) (`lavaoraqua`) | HTML5 | 2D | Poche–medie | 1 | 69 | 7 | **29** | 🔴 | Solo un file visuale (~0,4 MB) nella struttura verificata; manca ancora l'entrypoint e il gameplay completo |
+| 22 | Puzzles | [Sandtrix](https://www.crazygames.com/game/sandtrix) (`sandtrix`) | HTML5 | 2D | Poche | 1 | 64 | 7 | **27** | 🔴 | Solo uno script bootstrap (~70 KB); codice e simulazione della sabbia non recuperati in forma utilizzabile |
+| 23 | Puzzles | [Home Design: Decorate House](https://www.crazygames.com/game/home-design---decorate-house) (`home-design-decorate`) | HTML5/Unity launcher | 2D/2.5D | Molte | 5 | 34 | 17 | **23** | 🔴 | 5 file / ~0,8 MB: solo loader/script; numerosi ambienti, decorazioni, stato e progressione non disponibili |
+| 24 | Puzzles | [Park Town](https://www.crazygames.com/game/park-town) (`complex-merge-3-park-town`) | Iframe | 2D/2.5D | Molte | 1 | 26 | 5 | **12** | 🔴 | Un file wrapper da 1,8 KB: praticamente nessun asset di gioco. Molte scene, oggetti decorativi e progressione |
 | 25 | Word games | [Hangman](https://www.crazygames.com/game/hangman-cfc) | html5 | 2D | Poche | 67 | 96 | 87 | **90** | 🟢 | Lettere, disegno e sfondo quasi statici; ottimo per un primo reskin 2D e test di viewport. Mirror: 61 visuali, 0 modelli, 4 codice/config, 0 binari. Molti sprite e file codice; gameplay offline non verificato; smoke test offline non conclusivo. |
 | 26 | Word games | [Wordmeister](https://www.crazygames.com/game/wordmeister) | html5 | 2D | Poche–medie | 65 | 88 | 90 | **89** | 🟢 | Tabellone stile Scrabble, lettere, font e pulsanti facilmente mappabili se codice/asset sono esposti. Mirror: 50 visuali, 0 modelli, 3 codice/config, 0 binari. Molti sprite e file codice; gameplay offline non verificato; primo rendering canvas locale verificato senza rete esterna. |
 | 27 | cards | [Hearts: Classic](https://www.crazygames.com/game/hearts-classic) | html5 | 2D | Poche | 57 | 88 | 82 | **84** | 🟢 | Carte e tavolo 2D con pochi stati visivi; logica dei turni relativamente isolabile dalla grafica. Mirror: 38 visuali, 0 modelli, 3 codice/config, 0 binari. Molti sprite e file codice; gameplay offline non verificato; smoke test offline non conclusivo. |
@@ -139,97 +139,97 @@ La tabella sopra rappresenta **osservazioni manuali e interventi da fare**, non 
 - Reskinner, percorso Windows, copertura e limiti: [`reskinner/README.md`](reskinner/README.md), [`reskinner/catalog.json`](reskinner/catalog.json), [`reskinner/adapters.js`](reskinner/adapters.js).
 - Mirror browser vecchi: [`MIRROR_RECOVERY_BROWSER_2026-11-24.md`](MIRROR_RECOVERY_BROWSER_2026-11-24.md); recapture nuovi: [`MIRROR_RECAPTURE_RUNBOOK.md`](MIRROR_RECAPTURE_RUNBOOK.md).
 - Repository privato del bridge Windows discusso nelle sessioni precedenti: **`chat-local-bridge`**, da verificare nuovamente prima di inviare comandi. Non presumere che sia online.
-- **Link originali CrazyGames (riconciliazione lista utente, 25/11):** 46 URL pertinenti: 45 già presenti nella classifica e uno aggiunto per `goodstriplematch`. Per 23 puzzle la lista non fornisce un URL originale corrispondente. Vedi §6.1; non aggiungere link di altri titoli non presenti nei 69 giochi.
+- **Link originali CrazyGames:** **69/69 URL associati**, con 45 già nell'audit, 1 aggiunto dalla prima lista, 2 forniti dall'utente e 21 trovati con ricerca sul portale. I **103 URL estranei** restano esclusi. Vedi §6.1. Verifica del runtime `carout` ancora necessaria per divergenza fra descrizione del portale e audit.
 - I mirror proprietari sono stati conservati **localmente sul PC**; il fatto che un asset sia scaricabile non autorizza a ripubblicarlo su un repository pubblico.
 
-### 6.1 URL CrazyGames filtrati dalla lista fornita il 25/11/2026
+### 6.1 Repertorio completo URL CrazyGames — 25 novembre 2026
 
-**Confronto con il catalogo reale dei 69 giochi:** 199 occorrenze di URL nel testo utente, **149 URL distinti** dopo deduplicazione; **46 pertinenti** (45 già documentati nell'audit dei nuovi giochi, **1 nuovo**); **103 esclusi** perché non fanno parte del catalogo; **23 giochi del progetto senza URL nella lista**. Gli eventuali parametri `utm_source` sono stati omessi. Queste sono **associazioni archiviate** sulla base dei dati del progetto e della lista fornita, non un test HTTP o gameplay degli URL.
+**69/69 URL originali associati ai giochi del catalogo:** 45 già presenti dalla lista originale, 1 ulteriore (`goodstriplematch`) dalla stessa lista, 2 forniti direttamente dall'utente il 25/11 e 21 ricercati su CrazyGames. I **103 URL estranei** della lista originale rimangono esclusi. Il collegamento è all'**originale sul portale**, non al CDN, e **non prova** che il gioco locale si avvii o che tutti i suoi asset siano stati recuperati. Nessuna partita end-to-end è stata verificata da questa operazione.
 
-Il mapping non letterale **`goodstriplematch` → `goods-triple-match-3d`** è confermato dal file `reskinner/catalog.json`: l'entrypoint locale risiede in `extracted/goodstriplematch/goods-triple-match-3d.game-files.crazygames.com/goods-triple-match-3d/15/index.html`.
+**Omonimie risolte con host e motori:** `blocks-and-that'it` è **Blocks and that’s it** ma lo slug è `block-tour-kfz` (host del mirror e Cocos). `block-puzzle-master` è oggi **Block Blaster** ma lo slug resta `block-puzzle-master` (host e Unity 6). `find-differences` è **Find It - Find The Differences** (host `find-it---find-the-differences.game-files.crazygames.com` e Unity 2022), **non** *Find Differences: Spot 'Em All* o *Find The Difference*. `watersort` è **Cups - Water Sort Puzzle** (`cups---water-sort-puzzle` nel mirror e Unity 2022). `complex-merge-3-park-town` è **Park Town**.
 
-#### 46 URL pertinenti (una sola voce per gioco)
+**Corrispondenza da verificare più a fondo:** `carout` ha un URL CrazyGames pertinente per nome e gameplay, ma il portale attuale indica HTML5 mentre l'audit locale parla di Unity/Playgama. Questo è un **disallineamento tecnico segnalato**, non motivo per inventare un altro link; verificare il gioco effettivo nel mirror/cattura originale prima di considerare l'engine certificato.
 
-| # classifica | Categoria | Gioco | URL originale CrazyGames |
+#### 24 puzzle
+
+| # classifica | ID/cartella progetto | Nome e link CrazyGames | Provenienza della corrispondenza |
 |---:|---|---|---|
-| 19 | Puzzles | Goods Triple Match 3D (`goodstriplematch`) | https://www.crazygames.com/game/goods-triple-match-3d |
-| 25 | Word games | Hangman | https://www.crazygames.com/game/hangman-cfc |
-| 26 | Word games | Wordmeister | https://www.crazygames.com/game/wordmeister |
-| 27 | cards | Hearts: Classic | https://www.crazygames.com/game/hearts-classic |
-| 28 | io games | Paper.io 2 | https://www.crazygames.com/game/paper-io-2 |
-| 29 | trivia | Guess Their Answer | https://www.crazygames.com/game/guess-their-answer |
-| 30 | io games | Cubes 2048 Royale | https://www.crazygames.com/game/cubes-2048-royale |
-| 31 | cards | Spades | https://www.crazygames.com/game/spades |
-| 32 | Word games | Words of Wonders | https://www.crazygames.com/game/words-of-wonders |
-| 33 | trivia | Trivia Crack | https://www.crazygames.com/game/trivia-crack |
-| 34 | cards | Las Vegas Poker | https://www.crazygames.com/game/las-vegas-poker |
-| 35 | io games | Uno Online | https://www.crazygames.com/game/uno-online |
-| 36 | Word games | Word Search | https://www.crazygames.com/game/word-search-lyg |
-| 37 | cards | Gin Rummy Online | https://www.crazygames.com/game/gin-rummy-online |
-| 38 | cards | Domino Duel | https://www.crazygames.com/game/domino-duel-uit |
-| 39 | cards | Foono Online Multiplayer | https://www.crazygames.com/game/foono-online-multiplayer-card-game |
-| 40 | trivia | Millionaire Quiz | https://www.crazygames.com/game/millionaire-quiz |
-| 41 | Word games | Wording | https://www.crazygames.com/game/wording |
-| 42 | cards | Spider Solitaire | https://www.crazygames.com/game/spider-solitaire-fuw |
-| 43 | trivia | Google Feud | https://www.crazygames.com/game/google-feud |
-| 44 | cards | Social Solitaire | https://www.crazygames.com/game/social-solitaire |
-| 45 | Word games | Death Note Type | https://www.crazygames.com/game/death-note-type |
-| 46 | io games | TileMan.io | https://www.crazygames.com/game/tileman-io |
-| 47 | Word games | Word Wipe | https://www.crazygames.com/game/word-wipe |
-| 48 | trivia | World Geography: Flags and Capitals | https://www.crazygames.com/game/world-geography-flags-and-capitals |
-| 49 | io games | EvoWars.io | https://www.crazygames.com/game/evowarsio |
-| 50 | io games | Agar.io | https://www.crazygames.com/game/agario |
-| 51 | trivia | Logo Quiz: Game World Trivia | https://www.crazygames.com/game/logo-quiz-game-world-trivia |
-| 52 | cards | Classic Card Games Collection | https://www.crazygames.com/game/classic-card-games-collection |
-| 53 | trivia | MemeBattle: What's That Meme? | https://www.crazygames.com/game/memebattle-what-s-that-meme |
-| 54 | io games | Diep.io | https://www.crazygames.com/game/diepio |
-| 55 | io games | Hexanaut.io | https://www.crazygames.com/game/hexanaut-io |
-| 56 | trivia | Soccer Europe Quiz | https://www.crazygames.com/game/soccer-europe-quiz |
-| 57 | trivia | ToT or Trivia | https://www.crazygames.com/game/tot-or-trivia |
-| 58 | trivia | Paint the Flag | https://www.crazygames.com/game/paint-the-flag |
-| 59 | io games | Survev | https://www.crazygames.com/game/survev |
-| 60 | cards | DUO With Friends | https://www.crazygames.com/game/duo-with-friends |
-| 61 | trivia | OpenGuessr | https://www.crazygames.com/game/openguessr |
-| 62 | Word games | Crocword | https://www.crazygames.com/game/crocword |
-| 63 | io games | Gulper.io | https://www.crazygames.com/game/gulper-io |
-| 64 | io games | Holey.io Battle Royale | https://www.crazygames.com/game/holey-io-battle-royale |
-| 65 | io games | Cubes 2048.io | https://www.crazygames.com/game/cubes-2048-io |
-| 66 | Word games | Kitty Scramble | https://www.crazygames.com/game/kitty-scramble |
-| 67 | cards | Kings and Queens Solitaire TriPeaks | https://www.crazygames.com/game/kings-and-queens-solitaire-tripeaks |
-| 68 | Word games | WorldGuessr | https://www.crazygames.com/game/worldguessr |
-| 69 | io games | Snake.io | https://www.crazygames.com/game/snake-io |
+| 1 | `mahjongg` | [Mahjongg Solitaire](https://www.crazygames.com/game/mahjongg-solitaire) | Utente |
+| 2 | `hexastack` | [Hexa Stack](https://www.crazygames.com/game/hexa-stack) | Utente |
+| 3 | `color-water-sort-3d` | [Color Water Sort 3D](https://www.crazygames.com/game/color-water-sort-3d) | Web |
+| 4 | `cuttherope` | [Cut the Rope](https://www.crazygames.com/game/cut-the-rope-ebx) | Web + mirror |
+| 5 | `blocks-and-that'it` | [Blocks and that’s it](https://www.crazygames.com/game/block-tour-kfz) | Web + mirror |
+| 6 | `nut-sort-build-the-city` | [Nut Sort: Build the City](https://www.crazygames.com/game/nut-sort-build-the-city) | Web + audit |
+| 7 | `drop-merge-numbers` | [Drop & Merge the Numbers](https://www.crazygames.com/game/drop-merge-the-numbers) | Web + Unity 2021 |
+| 8 | `block-puzzle-master` | [Block Blaster](https://www.crazygames.com/game/block-puzzle-master) | Web + mirror, Unity 6 |
+| 9 | `find-differences` | [Find It - Find The Differences](https://www.crazygames.com/game/find-it---find-the-differences) | Web + mirror, Unity 2022 |
+| 10 | `carout` | [Car OUT! Jam Parking Puzzle](https://www.crazygames.com/game/car-out-jam-parking-puzzle) | Web; runtime da riconfermare |
+| 11 | `nuts-puzzle-sort-by-color` | [Nuts Puzzle: Sort By Color](https://www.crazygames.com/game/nuts-puzzle-sort-by-color) | Web + Unity 2020 |
+| 12 | `hexasort` | [Hexa Sort](https://www.crazygames.com/game/hexa-sort) | Web + Unity 2022 |
+| 13 | `watersort` | [Cups - Water Sort Puzzle](https://www.crazygames.com/game/cups---water-sort-puzzle) | Web + mirror, Unity 2022 |
+| 14 | `PieceOfCakeMerge` | [Piece of Cake: Merge and Bake](https://www.crazygames.com/game/piece-of-cake-merge-and-bake) | Web + iframe |
+| 15 | `jigpic-solitaire` | [Jigpic Solitaire](https://www.crazygames.com/game/jigpic-solitaire) | Web |
+| 16 | `pixelblast` | [Pixel Blast](https://www.crazygames.com/game/pixel-blast) | Web + Unity 6 |
+| 17 | `twistedtangle` | [Twisted Tangle](https://www.crazygames.com/game/twisted-tangle-nmt) | Web + Unity 6 |
+| 18 | `what-s-the-difference-online` | [What's The Difference?](https://www.crazygames.com/game/what-s-the-difference-online) | Web + iframe |
+| 19 | `goodstriplematch` | [Goods Triple Match 3D](https://www.crazygames.com/game/goods-triple-match-3d) | Lista precedente + mirror |
+| 20 | `jewel academy` | [Jewel Academy](https://www.crazygames.com/game/jewel-academy) | Web |
+| 21 | `lavaoraqua` | [Lava and Aqua](https://www.crazygames.com/game/lava-and-aqua) | Web |
+| 22 | `sandtrix` | [Sandtrix](https://www.crazygames.com/game/sandtrix) | Web |
+| 23 | `home-design-decorate` | [Home Design: Decorate House](https://www.crazygames.com/game/home-design---decorate-house) | Web |
+| 24 | `complex-merge-3-park-town` | [Park Town](https://www.crazygames.com/game/park-town) | Web + audit |
 
-#### 23 giochi per cui chiedere l'URL originale
+#### 45 giochi delle altre categorie
 
-Questi titoli **esistono nel progetto**, ma non è stato trovato un URL corrispondente nel testo utente. Evitare di inventare slug o associare giochi diversi solo per somiglianza del nome.
-
-| # classifica | Nome cartella/gioco | Categoria | Stato |
+| # classifica | Categoria | Nome e link CrazyGames | Provenienza |
 |---:|---|---|---|
-| 1 | mahjongg | Puzzles | URL originale richiesto |
-| 2 | hexastack | Puzzles | URL originale richiesto |
-| 3 | color-water-sort-3d | Puzzles | URL originale richiesto |
-| 4 | cuttherope | Puzzles | URL originale richiesto |
-| 5 | blocks-and-that'it | Puzzles | URL originale richiesto |
-| 6 | nut-sort-build-the-city | Puzzles | URL originale richiesto |
-| 7 | drop-merge-numbers | Puzzles | URL originale richiesto |
-| 8 | block-puzzle-master | Puzzles | URL originale richiesto |
-| 9 | find-differences | Puzzles | URL originale richiesto |
-| 10 | carout | Puzzles | URL originale richiesto |
-| 11 | nuts-puzzle-sort-by-color | Puzzles | URL originale richiesto |
-| 12 | hexasort | Puzzles | URL originale richiesto |
-| 13 | watersort | Puzzles | URL originale richiesto |
-| 14 | PieceOfCakeMerge | Puzzles | URL originale richiesto |
-| 15 | jigpic-solitaire | Puzzles | URL originale richiesto |
-| 16 | pixelblast | Puzzles | URL originale richiesto |
-| 17 | twistedtangle | Puzzles | URL originale richiesto |
-| 18 | what-s-the-difference-online | Puzzles | URL originale richiesto |
-| 20 | jewel academy | Puzzles | URL originale richiesto |
-| 21 | lavaoraqua | Puzzles | URL originale richiesto |
-| 22 | sandtrix | Puzzles | URL originale richiesto |
-| 23 | home-design-decorate | Puzzles | URL originale richiesto |
-| 24 | complex-merge-3-park-town | Puzzles | URL originale richiesto |
+| 25 | Word games | [Hangman](https://www.crazygames.com/game/hangman-cfc) | Lista utente precedente |
+| 26 | Word games | [Wordmeister](https://www.crazygames.com/game/wordmeister) | Lista utente precedente |
+| 27 | cards | [Hearts: Classic](https://www.crazygames.com/game/hearts-classic) | Lista utente precedente |
+| 28 | io games | [Paper.io 2](https://www.crazygames.com/game/paper-io-2) | Lista utente precedente |
+| 29 | trivia | [Guess Their Answer](https://www.crazygames.com/game/guess-their-answer) | Lista utente precedente |
+| 30 | io games | [Cubes 2048 Royale](https://www.crazygames.com/game/cubes-2048-royale) | Lista utente precedente |
+| 31 | cards | [Spades](https://www.crazygames.com/game/spades) | Lista utente precedente |
+| 32 | Word games | [Words of Wonders](https://www.crazygames.com/game/words-of-wonders) | Lista utente precedente |
+| 33 | trivia | [Trivia Crack](https://www.crazygames.com/game/trivia-crack) | Lista utente precedente |
+| 34 | cards | [Las Vegas Poker](https://www.crazygames.com/game/las-vegas-poker) | Lista utente precedente |
+| 35 | io games | [Uno Online](https://www.crazygames.com/game/uno-online) | Lista utente precedente |
+| 36 | Word games | [Word Search](https://www.crazygames.com/game/word-search-lyg) | Lista utente precedente |
+| 37 | cards | [Gin Rummy Online](https://www.crazygames.com/game/gin-rummy-online) | Lista utente precedente |
+| 38 | cards | [Domino Duel](https://www.crazygames.com/game/domino-duel-uit) | Lista utente precedente |
+| 39 | cards | [Foono Online Multiplayer](https://www.crazygames.com/game/foono-online-multiplayer-card-game) | Lista utente precedente |
+| 40 | trivia | [Millionaire Quiz](https://www.crazygames.com/game/millionaire-quiz) | Lista utente precedente |
+| 41 | Word games | [Wording](https://www.crazygames.com/game/wording) | Lista utente precedente |
+| 42 | cards | [Spider Solitaire](https://www.crazygames.com/game/spider-solitaire-fuw) | Lista utente precedente |
+| 43 | trivia | [Google Feud](https://www.crazygames.com/game/google-feud) | Lista utente precedente |
+| 44 | cards | [Social Solitaire](https://www.crazygames.com/game/social-solitaire) | Lista utente precedente |
+| 45 | Word games | [Death Note Type](https://www.crazygames.com/game/death-note-type) | Lista utente precedente |
+| 46 | io games | [TileMan.io](https://www.crazygames.com/game/tileman-io) | Lista utente precedente |
+| 47 | Word games | [Word Wipe](https://www.crazygames.com/game/word-wipe) | Lista utente precedente |
+| 48 | trivia | [World Geography: Flags and Capitals](https://www.crazygames.com/game/world-geography-flags-and-capitals) | Lista utente precedente |
+| 49 | io games | [EvoWars.io](https://www.crazygames.com/game/evowarsio) | Lista utente precedente |
+| 50 | io games | [Agar.io](https://www.crazygames.com/game/agario) | Lista utente precedente |
+| 51 | trivia | [Logo Quiz: Game World Trivia](https://www.crazygames.com/game/logo-quiz-game-world-trivia) | Lista utente precedente |
+| 52 | cards | [Classic Card Games Collection](https://www.crazygames.com/game/classic-card-games-collection) | Lista utente precedente |
+| 53 | trivia | [MemeBattle: What's That Meme?](https://www.crazygames.com/game/memebattle-what-s-that-meme) | Lista utente precedente |
+| 54 | io games | [Diep.io](https://www.crazygames.com/game/diepio) | Lista utente precedente |
+| 55 | io games | [Hexanaut.io](https://www.crazygames.com/game/hexanaut-io) | Lista utente precedente |
+| 56 | trivia | [Soccer Europe Quiz](https://www.crazygames.com/game/soccer-europe-quiz) | Lista utente precedente |
+| 57 | trivia | [ToT or Trivia](https://www.crazygames.com/game/tot-or-trivia) | Lista utente precedente |
+| 58 | trivia | [Paint the Flag](https://www.crazygames.com/game/paint-the-flag) | Lista utente precedente |
+| 59 | io games | [Survev](https://www.crazygames.com/game/survev) | Lista utente precedente |
+| 60 | cards | [DUO With Friends](https://www.crazygames.com/game/duo-with-friends) | Lista utente precedente |
+| 61 | trivia | [OpenGuessr](https://www.crazygames.com/game/openguessr) | Lista utente precedente |
+| 62 | Word games | [Crocword](https://www.crazygames.com/game/crocword) | Lista utente precedente |
+| 63 | io games | [Gulper.io](https://www.crazygames.com/game/gulper-io) | Lista utente precedente |
+| 64 | io games | [Holey.io Battle Royale](https://www.crazygames.com/game/holey-io-battle-royale) | Lista utente precedente |
+| 65 | io games | [Cubes 2048.io](https://www.crazygames.com/game/cubes-2048-io) | Lista utente precedente |
+| 66 | Word games | [Kitty Scramble](https://www.crazygames.com/game/kitty-scramble) | Lista utente precedente |
+| 67 | cards | [Kings and Queens Solitaire TriPeaks](https://www.crazygames.com/game/kings-and-queens-solitaire-tripeaks) | Lista utente precedente |
+| 68 | Word games | [WorldGuessr](https://www.crazygames.com/game/worldguessr) | Lista utente precedente |
+| 69 | io games | [Snake.io](https://www.crazygames.com/game/snake-io) | Lista utente precedente |
 
-I 103 URL esclusi non sono salvati tra le origini dei giochi attuali. Eventuali giochi aggiunti al catalogo in futuro richiedono una nuova riconciliazione.
+**URL ancora da chiedere:** nessuno, per l'inventario corrente dei 69 giochi. Eventuali titoli aggiunti in futuro richiedono una nuova riconciliazione. Per il recupero CDN e i test reali dell'inspector usare questi URL come origini, non confonderli con i file locali già scaricati.
 
 ## 7. Criteri per dichiarare un gioco "completo"
 
