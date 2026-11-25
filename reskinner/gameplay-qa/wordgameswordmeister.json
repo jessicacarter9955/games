@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "wordgameswordmeister",
+  "title": "Wordmeister",
+  "engine": "html5",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:53:37.035971+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "c7fb591da49a57debcd4a354a5c9f021b03be844a23c04da84e2b54133764fd8",
+        "metrics": {
+          "entropy": 4.767,
+          "dominantFraction": 0.09,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "c7fb591da49a57debcd4a354a5c9f021b03be844a23c04da84e2b54133764fd8",
+        "metrics": {
+          "entropy": 4.767,
+          "dominantFraction": 0.09,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "c7fb591da49a57debcd4a354a5c9f021b03be844a23c04da84e2b54133764fd8",
+        "metrics": {
+          "entropy": 4.767,
+          "dominantFraction": 0.09,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [
+      {
+        "w": 960,
+        "h": 540,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 960,
+        "h": 540,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestsBlocked": 3
+  },
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML."
+}
