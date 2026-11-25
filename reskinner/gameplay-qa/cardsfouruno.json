@@ -107,5 +107,113 @@
     ],
     "blockedExternalRequestCount": 25
   },
-  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded.",
+  "latestRetest": {
+    "testedAt": "2026-11-25T14:34:40.534833+00:00",
+    "serverCommit": "b721214",
+    "mode": "Windows Chromium strict-offline",
+    "result": "play-not-confirmed",
+    "gameplayVerified": false,
+    "playActionVerified": false,
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "eca3fd59cda59d7aa8d50ea500dee9de404f381c8373b3c062a6ba69299550d4"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "eca3fd59cda59d7aa8d50ea500dee9de404f381c8373b3c062a6ba69299550d4"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "21a52d1998e4a072df9574e38aac280a48e6fa31f5de9efbc53a2fa959ef2d99"
+      }
+    ],
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "path": "/assets/rolldown-runtime-XhbT90kL.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/solid-vendor-vMdafsZ3.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/createGlobalStore-31p-ne8-.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/NumberUtils-g4Ou7l33.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/battleships-6FROMMY9.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/breakout-GfcOJ_g7.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/bubbleshooter-tqK4DXgF.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/BubbleShooterMatchType-ybMqsVoo.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/foonyflippers-NeLoJv98.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/checkers-z4jT4GU6.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/dinomight-kf7ld7cM.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/chess-dCfsbbiM.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/fourinarow-pEwhrQla.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/go-pe8tdx13.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/reversi-O-W5t66Y.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/mancala-ORGNUJT2.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/oneinarow-b4n95IpE.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/paintjob-s9T1YKEo.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/thieving-PZjcuPQW.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/tictactoe-3dnmuadu.js",
+        "status": 404
+      }
+    ],
+    "blockedHosts": [
+      "foony.com"
+    ]
+  }
 }
