@@ -151,6 +151,26 @@
               <button id="exportAsset" type="button" class="button ghost" disabled>↓ Esporta PNG</button>
               <button id="applyReskinGame" type="button" class="button primary" disabled>↻ Ricarica con reskin</button>
             </div>
+            <div id="atlasPanel" class="atlas-panel" hidden>
+              <div class="section-kicker">FRAME ATLAS · COMPATIBILITÀ 1:1</div>
+              <p id="atlasInfo" class="hint">Analisi dei frame…</p>
+              <label class="field" for="atlasFrameSelect">Frame da modificare</label>
+              <select id="atlasFrameSelect" aria-label="Frame texture atlas"></select>
+              <div class="atlas-preview-box">
+                <canvas id="atlasPreview" width="96" height="96"
+                  aria-label="Anteprima del frame selezionato"></canvas>
+                <div>
+                  <p id="atlasDimensions" class="hint"></p>
+                  <p id="atlasWarning" class="hint"></p>
+                </div>
+              </div>
+              <input id="atlasPatchFile" type="file" accept="image/png" hidden/>
+              <button id="atlasPatchButton" type="button"
+                class="button primary block">↑ Sostituisci questo frame</button>
+              <p class="footnote">La posizione nell’atlante resta identica.
+                Un rettangolo condiviso cambierà in tutti i frame che lo utilizzano.
+                Per applicare il PNG durante il gioco premi «Ricarica con reskin».</p>
+            </div>
             <div id="reskinStatus" class="hint"></div>
           </div>
         </div>
