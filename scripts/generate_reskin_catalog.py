@@ -219,7 +219,7 @@ def main() -> None:
         status = availability(entry, engine, graphics, images)
         games.append({
             "id": slug(base[len(EXTRACTED):]),
-            "title": record.get("title") or display_from_slug(game_name),
+            "title": record.get("title") or meta.get("official_title") or display_from_slug(game_name),
             "category": category,
             "engine": engine,
             "reportedEngine": record.get("engine") or meta.get("loader_type") or "unknown",
