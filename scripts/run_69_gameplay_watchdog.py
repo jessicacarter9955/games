@@ -7,6 +7,7 @@ screenshots remain local Windows; separate JSON summaries may be committed.
 from __future__ import annotations
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -35,11 +36,18 @@ def main():
     p.add_argument("--max-game-seconds",type=int,default=75)
     p.add_argument("--game",action="append",default=[])
     p.add_argument("--skip-existing",action="store_true")
+    p.add_argument("--allow-remote",action="store_true")
+    p.add_argument("--output-dir",type=Path,default=None)
     a=p.parse_args()
     with urllib.request.urlopen(a.base+"/reskinner/catalog.json",timeout=40) as r:
         catalog=json.load(r)
     targets=[g for g in catalog["games"] if not a.game or g["id"] in a.game]
     if len(targets)==0:raise SystemExit("No games selected")
+    global RESULTS
+    if a.output_dir:
+        RESULTS=a.output_dir
+    elif a.allow_remote:
+        RESULTS=Path.home()/"Downloads"/"_reskin_69_gameplay_qa_online_20261125"
     RESULTS.mkdir(parents=True,exist_ok=True)
     counts=Counter()
     print("START",len(targets),"of",catalog["total"],flush=True)
@@ -56,9 +64,13 @@ def main():
             if not prev.exists():shutil.copy2(path,prev)
         cmd=[sys.executable,"-u","-B",str(RUNNER),
              "--base",a.base,"--game",gid,"--seconds",str(a.seconds)]
+        if a.allow_remote:
+            cmd.append("--allow-remote")
         status="unknown"
         try:
-            proc=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True,
+            proc=subprocess.run(cmd,cwd=ROOT,
+                                env={**os.environ,"RESKIN_QA_REPORT_DIR":str(RESULTS)},
+                                capture_output=True,text=True,
                                 timeout=a.max_game_seconds,
                                 errors="replace")
             if proc.returncode!=0:
@@ -90,6 +102,7 @@ def main():
         store(RESULTS/"watchdog-summary.json",{
               "timestamp":stamp(),"total":catalog["total"],
               "tested":sum(counts.values()),"counts":dict(counts),
+              "networkMode":"remote-enabled" if a.allow_remote else "strict-offline",
               "lastGame":gid,"resultsDirectory":str(RESULTS),
               "certifiedGameplay":0,
               "note":"No automatic visual heuristic may certify gameplay"})
