@@ -70,7 +70,7 @@ La tabella sopra rappresenta **osservazioni manuali e interventi da fare**, non 
 | 16 | Puzzles | `pixelblast` | Unity 6 | Da verificare | Medie | 5 | 37 | 52 | **47** | 🔴 | ~63,1 MB e file core Unity; struttura delle risorse grafiche interna ancora da estrarre/identificare |
 | 17 | Puzzles | `twistedtangle` | Unity 6 | 3D | Medie | 5 | 26 | 52 | **43** | 🔴 | ~78 MB di Unity; intrecci delle corde, deformazioni continue e fisica complicano il mapping dei materiali |
 | 18 | Puzzles | `what-s-the-difference-online` | HTML/iframe | 2D | Poche–medie | 8 | 72 | 22 | **40** | 🔴 | 8 file codice e circa 0,2 MB. Semplice sostituire coppie di immagini, ma i dati dei livelli e le immagini non sono disponibili nel mirror |
-| 19 | Puzzles | `goodstriplematch` | Cocos | 3D | Medie | 25 | 43 | 35 | **38** | 🔴 | 25 file, 4 immagini, 6 binari e 14 codice/config. Recupero migliorato rispetto ai 15 file precedenti, ma modelli 3D e materiali incompleti |
+| 19 | Puzzles | [Goods Triple Match 3D](https://www.crazygames.com/game/goods-triple-match-3d) (`goodstriplematch`) | Cocos | 3D | Medie | 25 | 43 | 35 | **38** | 🔴 | 25 file, 4 immagini, 6 binari e 14 codice/config. Recupero migliorato rispetto ai 15 file precedenti, ma modelli 3D e materiali incompleti |
 | 20 | Puzzles | `jewel academy` | HTML5 | 2D | Medie | 8 | 70 | 20 | **38** | 🔴 | 8 file codice (~4,2 MB) catturati dal player, senza immagini di gemme separatamente visibili; match-3 con animazioni ed effetti |
 | 21 | Puzzles | `lavaoraqua` | HTML5 | 2D | Poche–medie | 1 | 69 | 7 | **29** | 🔴 | Solo un file visuale (~0,4 MB) nella struttura verificata; manca ancora l'entrypoint e il gameplay completo |
 | 22 | Puzzles | `sandtrix` | HTML5 | 2D | Poche | 1 | 64 | 7 | **27** | 🔴 | Solo uno script bootstrap (~70 KB); codice e simulazione della sabbia non recuperati in forma utilizzabile |
@@ -139,8 +139,97 @@ La tabella sopra rappresenta **osservazioni manuali e interventi da fare**, non 
 - Reskinner, percorso Windows, copertura e limiti: [`reskinner/README.md`](reskinner/README.md), [`reskinner/catalog.json`](reskinner/catalog.json), [`reskinner/adapters.js`](reskinner/adapters.js).
 - Mirror browser vecchi: [`MIRROR_RECOVERY_BROWSER_2026-11-24.md`](MIRROR_RECOVERY_BROWSER_2026-11-24.md); recapture nuovi: [`MIRROR_RECAPTURE_RUNBOOK.md`](MIRROR_RECAPTURE_RUNBOOK.md).
 - Repository privato del bridge Windows discusso nelle sessioni precedenti: **`chat-local-bridge`**, da verificare nuovamente prima di inviare comandi. Non presumere che sia online.
-- **Link originali CrazyGames:** per 45 titoli sono già nell'audit. Quelli per i 24 puzzle e URL canonici/iframe reindirizzati sono molto utili per associare loader, host, versioni e stati; chiedere in particolare i link dei titoli ambigui o che si bloccano. Non dare per certo che tutti i giochi su CrazyGames siano avviabili senza una sessione/browser specifico.
+- **Link originali CrazyGames (riconciliazione lista utente, 25/11):** 46 URL pertinenti: 45 già presenti nella classifica e uno aggiunto per `goodstriplematch`. Per 23 puzzle la lista non fornisce un URL originale corrispondente. Vedi §6.1; non aggiungere link di altri titoli non presenti nei 69 giochi.
 - I mirror proprietari sono stati conservati **localmente sul PC**; il fatto che un asset sia scaricabile non autorizza a ripubblicarlo su un repository pubblico.
+
+### 6.1 URL CrazyGames filtrati dalla lista fornita il 25/11/2026
+
+**Confronto con il catalogo reale dei 69 giochi:** 199 occorrenze di URL nel testo utente, **149 URL distinti** dopo deduplicazione; **46 pertinenti** (45 già documentati nell'audit dei nuovi giochi, **1 nuovo**); **103 esclusi** perché non fanno parte del catalogo; **23 giochi del progetto senza URL nella lista**. Gli eventuali parametri `utm_source` sono stati omessi. Queste sono **associazioni archiviate** sulla base dei dati del progetto e della lista fornita, non un test HTTP o gameplay degli URL.
+
+Il mapping non letterale **`goodstriplematch` → `goods-triple-match-3d`** è confermato dal file `reskinner/catalog.json`: l'entrypoint locale risiede in `extracted/goodstriplematch/goods-triple-match-3d.game-files.crazygames.com/goods-triple-match-3d/15/index.html`.
+
+#### 46 URL pertinenti (una sola voce per gioco)
+
+| # classifica | Categoria | Gioco | URL originale CrazyGames |
+|---:|---|---|---|
+| 19 | Puzzles | Goods Triple Match 3D (`goodstriplematch`) | https://www.crazygames.com/game/goods-triple-match-3d |
+| 25 | Word games | Hangman | https://www.crazygames.com/game/hangman-cfc |
+| 26 | Word games | Wordmeister | https://www.crazygames.com/game/wordmeister |
+| 27 | cards | Hearts: Classic | https://www.crazygames.com/game/hearts-classic |
+| 28 | io games | Paper.io 2 | https://www.crazygames.com/game/paper-io-2 |
+| 29 | trivia | Guess Their Answer | https://www.crazygames.com/game/guess-their-answer |
+| 30 | io games | Cubes 2048 Royale | https://www.crazygames.com/game/cubes-2048-royale |
+| 31 | cards | Spades | https://www.crazygames.com/game/spades |
+| 32 | Word games | Words of Wonders | https://www.crazygames.com/game/words-of-wonders |
+| 33 | trivia | Trivia Crack | https://www.crazygames.com/game/trivia-crack |
+| 34 | cards | Las Vegas Poker | https://www.crazygames.com/game/las-vegas-poker |
+| 35 | io games | Uno Online | https://www.crazygames.com/game/uno-online |
+| 36 | Word games | Word Search | https://www.crazygames.com/game/word-search-lyg |
+| 37 | cards | Gin Rummy Online | https://www.crazygames.com/game/gin-rummy-online |
+| 38 | cards | Domino Duel | https://www.crazygames.com/game/domino-duel-uit |
+| 39 | cards | Foono Online Multiplayer | https://www.crazygames.com/game/foono-online-multiplayer-card-game |
+| 40 | trivia | Millionaire Quiz | https://www.crazygames.com/game/millionaire-quiz |
+| 41 | Word games | Wording | https://www.crazygames.com/game/wording |
+| 42 | cards | Spider Solitaire | https://www.crazygames.com/game/spider-solitaire-fuw |
+| 43 | trivia | Google Feud | https://www.crazygames.com/game/google-feud |
+| 44 | cards | Social Solitaire | https://www.crazygames.com/game/social-solitaire |
+| 45 | Word games | Death Note Type | https://www.crazygames.com/game/death-note-type |
+| 46 | io games | TileMan.io | https://www.crazygames.com/game/tileman-io |
+| 47 | Word games | Word Wipe | https://www.crazygames.com/game/word-wipe |
+| 48 | trivia | World Geography: Flags and Capitals | https://www.crazygames.com/game/world-geography-flags-and-capitals |
+| 49 | io games | EvoWars.io | https://www.crazygames.com/game/evowarsio |
+| 50 | io games | Agar.io | https://www.crazygames.com/game/agario |
+| 51 | trivia | Logo Quiz: Game World Trivia | https://www.crazygames.com/game/logo-quiz-game-world-trivia |
+| 52 | cards | Classic Card Games Collection | https://www.crazygames.com/game/classic-card-games-collection |
+| 53 | trivia | MemeBattle: What's That Meme? | https://www.crazygames.com/game/memebattle-what-s-that-meme |
+| 54 | io games | Diep.io | https://www.crazygames.com/game/diepio |
+| 55 | io games | Hexanaut.io | https://www.crazygames.com/game/hexanaut-io |
+| 56 | trivia | Soccer Europe Quiz | https://www.crazygames.com/game/soccer-europe-quiz |
+| 57 | trivia | ToT or Trivia | https://www.crazygames.com/game/tot-or-trivia |
+| 58 | trivia | Paint the Flag | https://www.crazygames.com/game/paint-the-flag |
+| 59 | io games | Survev | https://www.crazygames.com/game/survev |
+| 60 | cards | DUO With Friends | https://www.crazygames.com/game/duo-with-friends |
+| 61 | trivia | OpenGuessr | https://www.crazygames.com/game/openguessr |
+| 62 | Word games | Crocword | https://www.crazygames.com/game/crocword |
+| 63 | io games | Gulper.io | https://www.crazygames.com/game/gulper-io |
+| 64 | io games | Holey.io Battle Royale | https://www.crazygames.com/game/holey-io-battle-royale |
+| 65 | io games | Cubes 2048.io | https://www.crazygames.com/game/cubes-2048-io |
+| 66 | Word games | Kitty Scramble | https://www.crazygames.com/game/kitty-scramble |
+| 67 | cards | Kings and Queens Solitaire TriPeaks | https://www.crazygames.com/game/kings-and-queens-solitaire-tripeaks |
+| 68 | Word games | WorldGuessr | https://www.crazygames.com/game/worldguessr |
+| 69 | io games | Snake.io | https://www.crazygames.com/game/snake-io |
+
+#### 23 giochi per cui chiedere l'URL originale
+
+Questi titoli **esistono nel progetto**, ma non è stato trovato un URL corrispondente nel testo utente. Evitare di inventare slug o associare giochi diversi solo per somiglianza del nome.
+
+| # classifica | Nome cartella/gioco | Categoria | Stato |
+|---:|---|---|---|
+| 1 | mahjongg | Puzzles | URL originale richiesto |
+| 2 | hexastack | Puzzles | URL originale richiesto |
+| 3 | color-water-sort-3d | Puzzles | URL originale richiesto |
+| 4 | cuttherope | Puzzles | URL originale richiesto |
+| 5 | blocks-and-that'it | Puzzles | URL originale richiesto |
+| 6 | nut-sort-build-the-city | Puzzles | URL originale richiesto |
+| 7 | drop-merge-numbers | Puzzles | URL originale richiesto |
+| 8 | block-puzzle-master | Puzzles | URL originale richiesto |
+| 9 | find-differences | Puzzles | URL originale richiesto |
+| 10 | carout | Puzzles | URL originale richiesto |
+| 11 | nuts-puzzle-sort-by-color | Puzzles | URL originale richiesto |
+| 12 | hexasort | Puzzles | URL originale richiesto |
+| 13 | watersort | Puzzles | URL originale richiesto |
+| 14 | PieceOfCakeMerge | Puzzles | URL originale richiesto |
+| 15 | jigpic-solitaire | Puzzles | URL originale richiesto |
+| 16 | pixelblast | Puzzles | URL originale richiesto |
+| 17 | twistedtangle | Puzzles | URL originale richiesto |
+| 18 | what-s-the-difference-online | Puzzles | URL originale richiesto |
+| 20 | jewel academy | Puzzles | URL originale richiesto |
+| 21 | lavaoraqua | Puzzles | URL originale richiesto |
+| 22 | sandtrix | Puzzles | URL originale richiesto |
+| 23 | home-design-decorate | Puzzles | URL originale richiesto |
+| 24 | complex-merge-3-park-town | Puzzles | URL originale richiesto |
+
+I 103 URL esclusi non sono salvati tra le origini dei giochi attuali. Eventuali giochi aggiunti al catalogo in futuro richiedono una nuova riconciliazione.
 
 ## 7. Criteri per dichiarare un gioco "completo"
 
