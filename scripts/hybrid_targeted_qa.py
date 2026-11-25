@@ -136,18 +136,10 @@ def main()->int:
             print("TARGETED_SERVER",json.dumps(catalog),flush=True)
             with tempfile.TemporaryDirectory(prefix="2night-targeted-cdp-",
                                              ignore_cleanup_errors=True) as profile:
-                chrome=launch_debugger(chrome_path(),free_port(),Path(profile),False)
-                # launch_debugger needs the chosen port to look up CDP.
-                # For a deterministic port, read from DevToolsActivePort instead.
+                debug_port=free_port()
+                chrome=launch_debugger(chrome_path(),debug_port,Path(profile),False)
                 try:
-                    path=Path(profile)/"DevToolsActivePort"
-                    deadline=time.monotonic()+15
-                    while time.monotonic()<deadline and not path.is_file():
-                        time.sleep(.2)
-                    if not path.is_file():
-                        raise RuntimeError("Chrome did not write DevToolsActivePort")
-                    port=int(path.read_text(encoding="utf-8").splitlines()[0])
-                    cdp=CDP(debugger_target(port))
+                    cdp=CDP(debugger_target(debug_port))
                     try:
                         for method in ("Page.enable","Runtime.enable","Network.enable"):
                             cdp.call(method)
