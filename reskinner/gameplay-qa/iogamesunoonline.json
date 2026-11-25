@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamesunoonline",
+  "title": "Uno Online",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:58:40.900117+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "9a7e8a1c96a878aa8830c0501a3129c0e2c5ad3840909abd91dbd7f0ebda61a6",
+        "metrics": {
+          "entropy": 0.329,
+          "dominantFraction": 0.971,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "9a7e8a1c96a878aa8830c0501a3129c0e2c5ad3840909abd91dbd7f0ebda61a6",
+        "metrics": {
+          "entropy": 0.329,
+          "dominantFraction": 0.971,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "9a7e8a1c96a878aa8830c0501a3129c0e2c5ad3840909abd91dbd7f0ebda61a6",
+        "metrics": {
+          "entropy": 0.329,
+          "dominantFraction": 0.971,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [
+      {
+        "w": 1920,
+        "h": 1080,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 1920,
+        "h": 1080,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Cannot read properties of undefined (reading 'SDK')"
+    ],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/msg_box.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/credits_panel.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/select_color_panel.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/ctl_logo.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/but_info.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/cg_logo.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/but_yes_big.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/iogamesunoonline/uno-online.game-files.crazygames.com/uno-online/29/sprites/but_exit_big.png"
+      }
+    ],
+    "blockedExternalRequestCount": 1
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
