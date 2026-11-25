@@ -418,6 +418,46 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             self._hashed_alias_cache[name] = chosen
             return chosen
 
+    def resolve_extracted_local_asset(self, parts: tuple[str, ...]) -> str | None:
+        """Resolve missing tracked /extracted assets from the original host mirror.
+
+        The path must explicitly include the real host directory. Never
+        substitute an asset merely because its basename matches.
+        """
+        if len(parts) < 4 or parts[0] != "extracted":
+            return None
+        matches: set[Path] = set()
+        for root in self.roots.values():
+            for index in range(1, len(parts) - 1):
+                host_name = parts[index]
+                if "." not in host_name:
+                    continue
+                try:
+                    host = root / host_name
+                    if not host.is_dir() or host.is_symlink():
+                        continue
+                    candidate = root.joinpath(*parts[index:]).resolve()
+                    candidate.relative_to(root.resolve())
+                    if candidate.is_file() and not candidate.is_symlink():
+                        matches.add(candidate)
+                except (OSError, ValueError):
+                    continue
+        if len(matches) == 1:
+            return str(next(iter(matches)))
+        if len(matches) > 1:
+            try:
+                first, *others = sorted(matches)
+                signature = hashlib.sha256(first.read_bytes()).digest()
+                if all(
+                    p.stat().st_size == first.stat().st_size and
+                    hashlib.sha256(p.read_bytes()).digest() == signature
+                    for p in others
+                ):
+                    return str(first)
+            except OSError:
+                pass
+        return None
+
     def translate_path(self, path: str) -> str:
         raw = urlsplit(path).path
         try:
@@ -442,7 +482,12 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             alias = (self.resolve_game_absolute_resource(parts) or
                      self.resolve_unique_hashed_asset(parts))
             return alias or str(self.repo / "__invalid__")
-        return str(self.repo.joinpath(*parts).resolve())
+        tracked_path = self.repo.joinpath(*parts).resolve()
+        if parts[0] == "extracted" and not tracked_path.is_file():
+            overlay = self.resolve_extracted_local_asset(parts)
+            if overlay:
+                return overlay
+        return str(tracked_path)
 
     def list_directory(self, _path: str):
         self.send_error(403, "Directory listing disabled")
