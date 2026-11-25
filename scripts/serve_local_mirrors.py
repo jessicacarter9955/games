@@ -1,0 +1,262 @@
+#!/usr/bin/env python3
+"""Serve 2Night + existing Windows CDN mirrors without uploading 1.8 GB.
+
+Run from the games repository checkout on the Windows machine with mirrors:
+    py scripts/serve_local_mirrors.py --port 8000
+
+Routes:
+    /reskinner/catalog.json  Dynamic overlay of the 69 saved mirror inventories
+    /local-mirror/<id>/<host>/<path>  Local files from approved mirror roots
+    /extracted/... and /reskinner/...  Existing GitHub repository files
+
+Only serves localhost. Games remain unaudited; 200 HTML is not offline proof.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import mimetypes
+import re
+import threading
+from collections import Counter
+from datetime import datetime, timezone
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import quote, unquote, urlsplit
+
+REPO = Path(__file__).resolve().parents[1]
+IMAGE = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif"}
+ATLAS = {".xml", ".atlas", ".plist"}
+MODEL = {".glb", ".gltf", ".fbx", ".obj", ".dds", ".ktx", ".ktx2", ".basis"}
+ENTRIES = {"index.html", "game.html"}
+
+
+def slug(value: str) -> str:
+    return re.sub("[^a-z0-9]", "", value.lower())
+
+
+def local_roots(downloads: Path) -> list[tuple[str, str, Path]]:
+    result = []
+    new = downloads / "_chatgpt_new45_cdn_mirrors"
+    try:
+        records = json.loads((new / "_loader_manifest_45.json").read_text(
+            encoding="utf-8"))
+        for row in records:
+            base = new / str(row["category"]) / str(row["game"]) / "hosts"
+            if base.is_dir():
+                result.append((str(row["category"]), str(row["game"]), base))
+    except (ValueError, OSError, KeyError, TypeError):
+        pass
+
+    old = downloads / "_chatgpt_games_full_mirrors"
+    try:
+        records = json.loads((old / "_official_page_comparison.json").read_text(
+            encoding="utf-8"))
+        for row in records:
+            name = Path(str(row["file"])).stem
+            name = ("nut-sort-build-the-city" if name == "find-the-cow(cat)"
+                    else name)
+            base = old / name / "hosts"
+            if base.is_dir():
+                result.append(("Puzzles", name, base))
+    except (ValueError, OSError, KeyError, TypeError):
+        pass
+    return result
+
+
+def game_root_candidates(category: str, name: str) -> set[str]:
+    variants = {
+        slug(category + name), slug(name),
+        slug(category + name.replace("_", "-")),
+    }
+    if name == "nut-sort-build-the-city":
+        variants.add("findthecowcat")
+    return variants
+
+
+def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Path]]:
+    original = json.loads((repo / "reskinner/catalog.json").read_text(
+        encoding="utf-8"))
+    games = original["games"]
+    known = {g["id"]: g for g in games}
+    host_paths: dict[str, Path] = {}
+    matches = set()
+    for category, name, root in local_roots(downloads):
+        candidates = game_root_candidates(category, name)
+        found = [g for g in games if g["id"] in candidates]
+        if len(found) != 1:
+            # Avoid merging an unrelated mirror or guessing overlapping names.
+            continue
+        game = found[0]
+        game_id = game["id"]
+        if game_id in matches:
+            continue
+        matches.add(game_id)
+        host_paths[game_id] = root.resolve()
+
+        original_assets = {a["path"]: a for a in game["assets"]}
+        new_assets = dict(original_assets)
+        entries = []
+        total = 0
+        for file in root.rglob("*"):
+            if not file.is_file() or file.is_symlink():
+                continue
+            relative = file.relative_to(root)
+            if not relative.parts or len(relative.parts) < 2:
+                continue
+            total += 1
+            if relative.name.lower() in ENTRIES:
+                entries.append(relative)
+            ext = file.suffix.lower()
+            kind = ("image" if ext in IMAGE else "atlas" if ext in ATLAS
+                    else "model" if ext in MODEL else None)
+            if kind is None:
+                continue
+            full = Path("local-mirror") / game_id / relative
+            asset_path = full.as_posix()
+            new_assets[asset_path] = {
+                "path": asset_path,
+                "url": "/" + quote(asset_path, safe="/-._~"),
+                "kind": kind,
+                "extension": ext,
+                "name": file.name,
+                "bytes": file.stat().st_size,
+                "localMirror": True,
+            }
+
+        if entries:
+            def entry_rank(p: Path) -> tuple[int, int, int]:
+                name_lower = p.as_posix().lower()
+                is_portal = any(x in name_lower for x in (
+                    "/gameframe/", "crazygames.com/game/", "/sdk/",
+                    "/portal/", "/cdn-cgi/"))
+                return (int(is_portal), -len(p.parts), len(p.as_posix()))
+            entry = min(entries, key=entry_rank)
+            game["entry"] = "/" + quote(
+                (Path("local-mirror") / game_id / entry).as_posix(),
+                safe="/-._~")
+            game["entryCount"] = len(entries)
+            if game["status"] == "missing":
+                engine = game["engine"].lower()
+                if "3d" in game["graphics"].lower() or engine == "playcanvas":
+                    game.update(status="limited",label="3D · adapter richiesto")
+                elif engine in {"unity", "defold", "flash", "iframe"}:
+                    game.update(status="blocked",label="Motore non supportato")
+                else:
+                    game.update(status="experimental",
+                                label="2D · mirror locale disponibile")
+            game["reason"] = (
+                "Entrypoint individuato nel mirror Windows, non verificato " +
+                "come gameplay completo. " + game.get("reason", "")
+            )
+        game["fileCount"] = max(game["fileCount"], total)
+        game["assets"] = list(new_assets.values())
+        game["assetCount"] = len(game["assets"])
+        game["imageCount"] = sum(
+            a["kind"] == "image" for a in game["assets"])
+        game["modelCount"] = sum(
+            a["kind"] == "model" for a in game["assets"])
+        game["localMirror"] = True
+        game["localMirrorFiles"] = total
+        game["reskinTransport"] = (
+            "same-origin-image-get" if game["imageCount"] else "none")
+
+    original.update(
+        generated=datetime.now(timezone.utc).isoformat(),
+        source="tracked GitHub files + Windows CDN mirrors (local only)",
+        counts=dict(Counter(g["status"] for g in games)),
+        localMirrorGames=len(matches),
+        localMirrorEntrypoints=sum(
+            1 for g in games if g.get("localMirror") and g.get("entry") and
+            g["entry"].startswith("/local-mirror/")),
+        localMirrorImages=sum(
+            sum(a["kind"] == "image" and a.get("localMirror")
+                for a in g["assets"]) for g in games),
+    )
+    return original, host_paths
+
+
+class MirrorHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, repo: Path, catalog_bytes: bytes,
+                 roots: dict[str, Path], **kwargs):
+        self.repo = repo
+        self.catalog_bytes = catalog_bytes
+        self.roots = roots
+        super().__init__(*args, directory=str(repo), **kwargs)
+
+    def do_GET(self):
+        if urlsplit(self.path).path == "/reskinner/catalog.json":
+            return self.send_catalog(head=False)
+        super().do_GET()
+
+    def do_HEAD(self):
+        if urlsplit(self.path).path == "/reskinner/catalog.json":
+            return self.send_catalog(head=True)
+        super().do_HEAD()
+
+    def send_catalog(self, head: bool) -> None:
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(self.catalog_bytes)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        if not head:
+            self.wfile.write(self.catalog_bytes)
+
+    def translate_path(self, path: str) -> str:
+        raw = urlsplit(path).path
+        try:
+            decoded = unquote(raw)
+        except ValueError:
+            return str(self.repo / "__invalid__")
+        parts = Path(decoded.lstrip("/")).parts
+        if not parts or ".." in parts or any(p.startswith(".") for p in parts):
+            return str(self.repo / "__invalid__")
+        if len(parts) >= 4 and parts[0] == "local-mirror":
+            root = self.roots.get(parts[1])
+            if not root:
+                return str(self.repo / "__invalid__")
+            candidate = root.joinpath(*parts[2:]).resolve()
+            try:
+                candidate.relative_to(root)
+            except ValueError:
+                return str(self.repo / "__invalid__")
+            return str(candidate)
+        # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
+        if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
+            return str(self.repo / "__invalid__")
+        return str(self.repo.joinpath(*parts).resolve())
+
+    def list_directory(self, _path: str):
+        self.send_error(403, "Directory listing disabled")
+        return None
+
+    def log_message(self, format, *args):
+        if self.path.startswith("/extracted") or self.path.startswith("/local-mirror"):
+            return
+        super().log_message(format, *args)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--downloads", type=Path,
+                        default=Path.home() / "Downloads")
+    parser.add_argument("--port", type=int, default=8000)
+    args = parser.parse_args()
+    catalog, roots = build_index(args.downloads)
+    payload = json.dumps(catalog,ensure_ascii=False).encode("utf-8")
+    handler = partial(MirrorHandler, repo=REPO,
+                      catalog_bytes=payload, roots=roots)
+    with ThreadingHTTPServer(("127.0.0.1", args.port), handler) as httpd:
+        print("2Night games mirror server:", httpd.server_address, flush=True)
+        print("Catalog:", catalog["total"], "titles,",
+              catalog["localMirrorGames"], "local mirrors,",
+              catalog["localMirrorEntrypoints"], "local HTML entrypoints,",
+              catalog["localMirrorImages"], "additional images", flush=True)
+        print(f"Open http://127.0.0.1:{args.port}/reskinner/", flush=True)
+        httpd.serve_forever(poll_interval=0.5)
+
+
+if __name__ == "__main__":
+    main()
