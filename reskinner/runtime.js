@@ -66,10 +66,35 @@ export function createRuntimeInspector(frame, options = {}) {
     return observeCanvas() ? 'canvas' : 'dom';
   };
   function refreshRuntime() {
-    // Engines often create their renderer *after* the iframe load event.
-    // A one-shot DOM detection left working Pixi/Canvas scenes uninspectable.
-    if (!win || !doc) return;
-    const next = gameAdapter?.engine || engineType();
+    // A mirrored game may navigate to a remote host after iframe load.
+    // Recheck same-origin access on EVERY report; the saved WindowProxy can
+    // become cross-origin even though attach() initially succeeded.
+    try {
+      const currentDoc = frame?.contentDocument;
+      if (!currentDoc) throw new Error('Iframe non accessibile (origine diversa)');
+      void currentDoc.documentElement;
+      win = frame.contentWindow;
+      doc = currentDoc;
+    } catch {
+      if (state.engine !== 'cross-origin') {
+        emit('Runtime aggiornato: ' + state.engine + ' → cross-origin');
+      }
+      win = null;
+      doc = null;
+      canvas = null;
+      state.engine = 'cross-origin';
+      state.patched = false;
+      state.scene = [];
+      state.draws = [];
+      return;
+    }
+    let next = 'unknown';
+    try {
+      next = gameAdapter?.engine || engineType();
+    } catch (error) {
+      const message = 'Runtime non accessibile: ' + String(error);
+      if (state.errors.at(-1) !== message) state.errors.push(message);
+    }
     if (next !== state.engine) {
       const previous = state.engine;
       state.engine = next;
