@@ -178,6 +178,16 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
 
 
 class MirrorHandler(SimpleHTTPRequestHandler):
+    extensions_map = {
+        **SimpleHTTPRequestHandler.extensions_map,
+        ".js": "text/javascript; charset=utf-8",
+        ".mjs": "text/javascript; charset=utf-8",
+        ".wasm": "application/wasm",
+        ".svg": "image/svg+xml",
+        ".woff2": "font/woff2",
+        ".unityweb": "application/octet-stream",
+    }
+
     def __init__(self, *args, repo: Path, catalog_bytes: bytes,
                  roots: dict[str, Path], **kwargs):
         self.repo = repo
