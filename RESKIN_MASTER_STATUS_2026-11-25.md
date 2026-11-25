@@ -262,6 +262,22 @@ Il documento conserva gli audit e i voti storici e ora registra anche le **corre
 - La nuova `scripts/recapture_69_gameplay.py` usa **host di gameplay specifici e verificati nell'audit**. Su 3 giochi di controllo (Mahjongg, Hexastack, Color Water Sort 3D): **+3 file pertinenti, 233.130 byte, 0 download error**. Questi tre smoke test verificano il **filtro/trasporto**, non l'avvio completo.
 - Avviata una ricattura filtrata estesa ai 69 titoli; l'esito finale, il numero di risorse nuove realmente utili e i test Play/inspector per singolo titolo devono essere **verificati dai risultati locali**, non dedotti dal semplice avvio dello script.
 
+### Diagnosi browser locale mirata
+
+Un controllo Playwright sul server Windows `127.0.0.1:8000` ha distinto **iframe HTML caricato** da **render/gameplay reale**:
+
+| Titolo | Riscontro concreto | Implicazione |
+|---|---|---|
+| Mahjongg | Documento `Mahjongg Solitaire`, canvas `816×391`, motore `pixi`, nessun errore JS nel boot | Menu iniziale renderizzato; **Play → gameplay** non ancora certificato |
+| Hexastack | Documento `Hex-production`, canvas `2671×1280` creato dopo il load | Runtime inizialmente rilevato come `dom`; **patch** per aggiornare lo stato dinamicamente. Test successivo: `runtime=canvas`, 1 canvas, PASS |
+| Hangman | Iframe aperto ma **0 canvas, 0 immagini, body vuoto**, nessun pageerror visibile | Il solo HTTP/HTML non equivale ad avvio; approfondire file/SDK/loader |
+| Wordmeister | Canvas `960×540`, 15 draw tracciati, nessun pageerror | Baseline di comparazione per runtime e texture inspector |
+| Hearts: Classic | Canvas tecnico `300×150` con CSS `0×0`, errore JS **`data is not defined`** | Blocco runtime concreto da risolvere (dati di inizializzazione), non ridurre il punteggio teorico |
+| Paper.io 2 | Canvas visibile, errori JS ripetuti **`Cannot read properties of undefined (reading 'skinList')`** | Analizzare inizializzazione gioco, ordine delle dipendenze e selettore skin |
+| Guess Their Answer / Cubes 2048 Royale | App mostra `3D · adapter richiesto` senza avviare l'HTML in automatico | Il test passivo non ha tentato il gameplay; richiede attivazione sperimentale e adapter engine |
+
+**Non chiamare questi errori risolti.** L'inspector ora riconosce anche un canvas nato dopo il load, ma l'avvio completo e la selezione di sprite 3D/Pixi richiedono test separati e correzioni specifiche.
+
 ### Problemi ancora aperti
 
 1. Portare ciascun titolo da `HTML locale` a un **ciclo gameplay reale** (menu → Play → gioco → settings/pause → livello successivo) e acquisire gli asset caricati in ciascuno stato.
