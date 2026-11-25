@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamescubes2048",
+  "title": "Cubes 2048.io",
+  "engine": "html5",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:05:02.991926+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "3026a4db99daaf62a70333b1f04014cd76e5a56b4e9376d172390f6f3f799de8",
+        "metrics": {
+          "entropy": 0.182,
+          "dominantFraction": 0.985,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "3026a4db99daaf62a70333b1f04014cd76e5a56b4e9376d172390f6f3f799de8",
+        "metrics": {
+          "entropy": 0.182,
+          "dominantFraction": 0.985,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "3026a4db99daaf62a70333b1f04014cd76e5a56b4e9376d172390f6f3f799de8",
+        "metrics": {
+          "entropy": 0.182,
+          "dominantFraction": 0.985,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 0,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
