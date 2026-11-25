@@ -238,6 +238,8 @@ class MirrorHandler(SimpleHTTPRequestHandler):
                 prefix = stream.read(96)
         except (OSError, ValueError):
             return False
+        if lower.endswith(".gz"):
+            return not prefix.startswith(b"\x1f\x8b")
         if ".wasm." in lower:
             return prefix.startswith(b"\x00asm")
         if ".data." in lower:
@@ -252,11 +254,15 @@ class MirrorHandler(SimpleHTTPRequestHandler):
                 b'"use strict"'))
         return False
 
+    def send_response(self, code, message=None):
+        self.response_status = code
+        super().send_response(code, message)
+
     def end_headers(self) -> None:
         # Compressed Unity files may have been transparently decompressed
         # before being written to disk. Check file content, not just suffix.
         lower = urlsplit(self.path).path.lower()
-        if not self._already_decoded(self.path):
+        if self.response_status == 200 and not self._already_decoded(self.path):
             if lower.endswith(".br"):
                 self.send_header("Content-Encoding", "br")
             elif lower.endswith(".gz"):
