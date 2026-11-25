@@ -171,3 +171,22 @@ remain visible even if the game's HTML can load.
 
 Browser opening or image interception alone is not evidence of complete
 gameplay, correct animation sequences or full-engine reskinnability.
+
+
+## 2026-11-25 · Verified URL mapping, isolated sprite preview and safe 69-game capture
+
+- `reskinner/original-urls.json` maps the **69 existing game IDs to 69 CrazyGames original pages**. This mapping was checked against the archived Windows deep-audit: 69 matching slugs, 0 mismatches. It does **not** prove successful gameplay or that all files are present. `python scripts/test_original_url_mapping.py` checks one-to-one catalog integrity.
+- The Canvas2D inspector now retains the **source crop rectangle** of each `drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)` operation and displays a **standalone source image/frame preview** in the inspector panel. It does not present the complete game canvas as a sprite. A Playwright test on local Wordmeister validated image selection and isolated cropping with no JS page errors. Pixi, Unity, WebGL shader, server-side multiplayer and unexposed runtime objects still need suitable adapters.
+- The original capture of these pages accidentally included **portal catalog tiles and advertising** under `imgs.crazygames.com`, `builds.crazygames.com`, etc. Do **not** count these as new gameplay assets. The reversible cleanup `scripts/quarantine_portal_reskin_captures.py` moved **2,289 files / 92,098,767 bytes** from *new incremental capture manifests only* into a local private quarantine folder, retaining SHA checks and original paths. No copyright assets were pushed to this repository.
+- For new captures run from the Windows checkout containing the **69-game deep audit** at `%USERPROFILE%\\Downloads\\_mirror_69_deep_audit_20261125.json`:
+
+  ```powershell
+  py scripts/recapture_69_gameplay.py --game mahjongg --seconds 8 --click-play
+  py scripts/recapture_69_gameplay.py --seconds 8 --click-play
+  ```
+
+  The new script permits saves from **game-specific, audit-verified hosts only**, writes `_reskin_69_incremental.json` next to each mirror's hosts folder and a cumulative `_reskin_69_capture_summary.json` under Downloads. Repeated runs are incremental; query variants have SHA-based suffixes. Headless Play-button detection covers only accessible HTML buttons in nested game frames; canvas-based Play screens and later levels often require guided interaction. Console, WebGL, 3D, iframe, login and backend dependencies still require per-game verification.
+
+- The measured full local baseline before this recapture was **4,710 files / ~1.78 GB**, **20 games with missing HTML asset references**, **26 needing follow-up**; these are prior static-audit figures, not revised run-time completion metrics. A filtered 3-game smoke capture (Mahjongg, Hexastack, Color Water Sort 3D) succeeded with **3 new game-host files / 233,130 bytes** and zero reported failed response downloads. Later full-game and multi-screen verification is still outstanding.
+
+Do not call any game 'playable, complete, or fully reskinnable' based solely on matching URL, HTML 200, a successful URL mirror or Canvas2D isolated-preview test. Confirm boot, Play, gameplay, additional screens, object/asset mapping, live preview and export for each game.
