@@ -35,7 +35,8 @@ def slug(value: str) -> str:
 def display_from_slug(value: str) -> str:
     # Fallback only: actual titles come from audit rows where available.
     value = value.replace("-", " ").replace("_", " ").strip()
-    return " ".join(w.capitalize() if not w.isupper() else w for w in value.split())
+    result = " ".join(w.capitalize() if not w.isupper() else w for w in value.split())
+    return re.sub(r"\\b3d\\b", "3D", result, flags=re.I)
 
 
 def audit_rows(filename: str, old: bool) -> dict[str, dict]:
@@ -49,7 +50,7 @@ def audit_rows(filename: str, old: bool) -> dict[str, dict]:
         cols = [c.strip() for c in line.strip().strip("|").split("|")]
         try:
             if old:
-                name = cols[1].strip("\`")
+                name = cols[1].strip("`")
                 key = slug(name)
                 title = display_from_slug(name)
                 engine, graphics = cols[2], cols[3]
@@ -115,36 +116,36 @@ def technology(meta: dict, audit: dict, paths: list[str]) -> str:
 
 
 def availability(entry: str | None, engine: str, graphics: str, image_count: int) -> dict:
+    if engine in {"unity", "flash", "defold", "iframe"}:
+        return {
+            "status": "blocked",
+            "label": "Motore non supportato",
+            "reason": (
+                "Runtime compilato o servizio esterno: nessun adapter 1:1. " +
+                ("Manca anche l'entrypoint HTML locale." if not entry else
+                 "Puoi tentare l'HTML per analisi visiva, non il reskin runtime.")
+            ),
+            "capabilities": ["file-inventory", "attempt-launch"] if entry
+                            else ["file-inventory"],
+        }
+    if "3d" in graphics.lower() or engine == "playcanvas":
+        return {
+            "status": "limited",
+            "label": "3D · adapter richiesto",
+            "reason": (
+                "Mesh, materiali e scene 3D non sono mappati dall'inspector 2D. " +
+                ("Manca anche l'entrypoint locale." if not entry
+                 else "Avvio HTML tentabile senza promessa di compatibilità.")
+            ),
+            "capabilities": ["attempt-launch", "file-inventory", "dom"] if entry
+                            else ["file-inventory"],
+        }
     if not entry:
         return {
             "status": "missing",
             "label": "File di avvio assenti",
             "reason": "Gli ZIP/manifest non includono un entrypoint locale avviabile.",
             "capabilities": ["asset-inventory"] if image_count else [],
-        }
-    if engine in {"unity", "flash", "defold"}:
-        return {
-            "status": "blocked",
-            "label": f"Adapter {engine.upper()} mancante",
-            "reason": "Asset/scena nel runtime compilato: avvio non convalidato, "
-                      "nessun accesso 1:1 ai singoli oggetti dal generico inspector.",
-            "capabilities": ["file-inventory", "attempt-launch"],
-        }
-    if engine == "iframe":
-        return {
-            "status": "blocked",
-            "label": "Iframe / servizi esterni",
-            "reason": "Dipendenza da origine o servizi esterni: runtime e oggetti "
-                      "non ispezionabili come contenuti del mirror locale.",
-            "capabilities": ["file-inventory", "attempt-launch"],
-        }
-    if "3d" in graphics.lower() or engine == "playcanvas":
-        return {
-            "status": "limited",
-            "label": "3D · reskin avanzato richiesto",
-            "reason": "Il generico inspector non mappa mesh, materiali, shader "
-                      "e scene 3D senza un adapter specifico.",
-            "capabilities": ["attempt-launch", "file-inventory", "dom"],
         }
     return {
         "status": "experimental",
@@ -179,7 +180,12 @@ def main() -> None:
         game_name = str(meta.get("game") or base.rsplit("/", 1)[-1])
         game_key = slug(game_name)
         official = slug(str(meta.get("official_slug") or game_name))
-        record = audit.get(official) or audit.get(game_key) or {}
+        aliases = {
+            "fouruno": "foonoonlinemultiplayer",
+            "wordsearchlyg": "wordsearch",
+        }
+        record = (audit.get(official) or audit.get(game_key) or
+                  audit.get(aliases.get(game_key, "")) or {})
         # Names from older reports that use distinct ZIP filenames.
         if not record and game_name == "find-the-cow(cat)":
             record = {"title": "Nut Sort: Build the City", "engine": "Defold",
@@ -206,6 +212,7 @@ def main() -> None:
                 "kind": kind,
                 "extension": ext,
                 "name": p.rsplit("/", 1)[-1],
+                "bytes": (ROOT / p).stat().st_size,
             })
         images = sum(a["kind"] == "image" for a in assets)
         status = availability(entry, engine, graphics, images)
