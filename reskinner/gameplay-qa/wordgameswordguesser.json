@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "id": "wordgameswordguesser",
+  "title": "WorldGuessr",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:07:28.791208+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "1bca46223de37f984f2a45a528edc816e091d2cfb3a1b3702c470f3700a17a0e",
+        "metrics": {
+          "entropy": 4.904,
+          "dominantFraction": 0.058,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "1bca46223de37f984f2a45a528edc816e091d2cfb3a1b3702c470f3700a17a0e",
+        "metrics": {
+          "entropy": 4.904,
+          "dominantFraction": 0.058,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "1bca46223de37f984f2a45a528edc816e091d2cfb3a1b3702c470f3700a17a0e",
+        "metrics": {
+          "entropy": 4.904,
+          "dominantFraction": 0.058,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/street2.webp"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/css/f8edebdd450eb22a.css"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/css/829ec1e5e9320891.css"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/chunks/webpack-a2fe15f1a8293434.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/chunks/framework-aa65945cbb7cc75e.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/chunks/main-afcad00e93e200df.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/chunks/pages/_app-71097fd212e492a2.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/_next/static/chunks/606f3222-c08b1bd53108e709.js"
+      }
+    ],
+    "externalRequestFailures": 1,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
