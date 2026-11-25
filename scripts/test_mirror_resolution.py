@@ -43,6 +43,22 @@ class MirrorAssetResolutionTests(unittest.TestCase):
         self.assertEqual(
             self.handler.resolve_unique_hashed_asset(parts), str(path.resolve()))
 
+    def test_foono_play_bots_absolute_navigation(self) -> None:
+        entry = self.save(
+            self.root, "foony.com/games/foono-online-card-game/index.html",
+            b"<!doctype html><title>Foono</title>")
+        self.assertEqual(self.handler.translate_path(
+            "/games/foono-online-card-game/index.html?night_session=4"),
+            str(entry.resolve()))
+
+    def test_ambiguous_absolute_game_navigation_is_rejected(self) -> None:
+        path = "games/foono-online-card-game/index.html"
+        self.save(self.root, "foony.com/" + path, b"game A")
+        self.save(self.root, "other.example.com/" + path, b"game B")
+        self.assertEqual(
+            self.handler.translate_path("/" + path),
+            str((self.repo / "__invalid__").resolve()))
+
     def test_hashed_imports_use_one_file_index(self) -> None:
         first = self.save(
             self.root, "foony.com/games/foono/assets/"
