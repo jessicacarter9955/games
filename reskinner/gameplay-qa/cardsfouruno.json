@@ -215,5 +215,21 @@
     "blockedHosts": [
       "foony.com"
     ]
+  },
+  "moduleResolutionRegression": {
+    "source": "Windows Chromium Playwright strict-offline, separate baseline and candidate servers",
+    "fixCommit": "9909ba92fc629f534d6557112fbfaf772f93807f",
+    "baseline": {
+      "observedUnique404": 166,
+      "observedUniqueSuccessfulJs": 1
+    },
+    "candidate": {
+      "observedUnique404": 0,
+      "observedUniqueSuccessfulJs": 57,
+      "pageErrors": []
+    },
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "Observed within bounded test window; not a complete dependency graph or gameplay certification."
   }
 }
