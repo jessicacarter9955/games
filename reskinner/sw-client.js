@@ -7,16 +7,31 @@
 let registration = null;
 let unavailable = '';
 
+// Catalog and gameplay must remain usable even if a browser silently stalls
+// Service Worker registration (e.g. blocked profiles or private browsing).
+function withDeadline(promise, label, ms = 4500) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(label + ' timeout')), ms);
+    Promise.resolve(promise).then(
+      value => { clearTimeout(timer); resolve(value); },
+      error => { clearTimeout(timer); reject(error); },
+    );
+  });
+}
+
 export async function initializeAssetReskin() {
   if (!('serviceWorker' in navigator) || !window.isSecureContext) {
     unavailable='Serve localhost oppure HTTPS per sostituire le texture del motore.';
     return {available:false,reason:unavailable};
   }
   try {
-    registration=await navigator.serviceWorker.register('/2night-reskin-sw.js',{
-      scope:'/',updateViaCache:'none',
-    });
-    await navigator.serviceWorker.ready;
+    registration=await withDeadline(
+      navigator.serviceWorker.register('/2night-reskin-sw.js',{
+        scope:'/',updateViaCache:'none',
+      }),
+      'Service Worker registration');
+    await withDeadline(navigator.serviceWorker.ready,
+                       'Service Worker activation');
     if (!navigator.serviceWorker.controller) {
       await Promise.race([
         new Promise(resolve=>navigator.serviceWorker.addEventListener(
