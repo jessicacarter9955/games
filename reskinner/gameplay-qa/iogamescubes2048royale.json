@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamescubes2048royale",
+  "title": "Cubes 2048 Royale",
+  "engine": "html5",
+  "source": "Windows local Playwright strict-offline; 75s per-game watchdog",
+  "testedAt": "2026-11-25T13:57:48.152565+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "qa-timeout",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "diagnostics": {
+    "reason": "Per-game watchdog stopped browser process after 75 seconds. No successful gameplay screenshot or interaction certified."
+  },
+  "notes": "Timeout non equivale a game impossibile da reskinnare; richiede revisione runtime e test controllato."
+}
