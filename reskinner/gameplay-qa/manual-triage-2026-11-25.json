@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "source": "Manual screenshots + Copy log reports from 2026-11-25 local Reskinner testing",
   "createdAt": "2026-11-25T17:25:04.815Z",
-  "updatedAt": "2026-11-25T17:25:04.815Z",
+  "updatedAt": "2026-11-25T17:39:30Z",
   "goal": "Original 1:1 playable/reskinnable mirrors. Do not certify menu/loading screen as gameplay.",
   "scope": "Six newly reported manual failures; gameplay count baseline 3/69; prior three green remain excluded from new testing.",
   "certifiedGreen": 0,
@@ -17,7 +17,12 @@
         "iframeTitle": "",
         "iframeURL": "about:",
         "canvas": 0,
-        "errorsCaptured": 0
+        "errorsCaptured": 0,
+        "verifiedWindowsNavigation": [
+          "original local entrypoint loaded",
+          "iframe navigated to about:blank"
+        ],
+        "verifiedWindowsHTTP404": 0
       },
       "hypotheses": [
         "Unexpected iframe navigation to about:blank or host-dependent boot script",
@@ -37,10 +42,12 @@
       "evidence": {
         "exception": "ReferenceError: data is not defined",
         "location": "game.js:11343:25",
-        "assetGallery404": true
+        "assetGallery404": true,
+        "originCheckConfirmed": true,
+        "verifiedWindowsHTTP404": 0
       },
       "hypotheses": [
-        "Required script/bootstrap data missing or evaluated before being initialized"
+        "Intentional source-domain validation rejects local origin; distinguish licensing/host requirements from missing files"
       ],
       "nextActions": [
         "Inspect game.js around 11343 and origin of data global",
@@ -57,16 +64,38 @@
         "exception": "TypeError: Cannot read properties of undefined (reading 'skinList')",
         "location": "index.js:4012:20856",
         "repetition": 44,
-        "warning": "THREE.Material envMap undefined"
+        "warning": "THREE.Material envMap undefined",
+        "latestRetestErrors": [
+          "Cannot read properties of undefined (reading 'territory')",
+          "Later JSON parser received HTML instead of JSON",
+          "Missing fonts/AvenirNextRoundedBold/Data.json, glb/Crown.glb, Patterns/*.png, etc."
+        ]
       },
       "hypotheses": [
         "Missing or uninitialized profile/skins payload supplied by game service",
         "Secondary WebGL material warning not necessarily fatal"
       ],
       "nextActions": [
-        "Trace skinList origin and data request",
-        "Check whether playable offline single-player mode actually exists",
-        "Retest after grounding fix; do not spoof multiplayer server"
+        "Batch-recover observed missing original game assets from pinned CDN (scripts/recover_browser_404_assets.py)",
+        "Recheck JSON/territory errors and actual gameplay with second interaction"
+      ],
+      "fixes": [
+        {
+          "type": "source-guard",
+          "status": "applied_windows",
+          "detail": "q.user?.skinList initialization guard",
+          "script": "scripts/repair_known_local_game_errors.py",
+          "backupCreated": true
+        },
+        {
+          "type": "original-cdn-assets",
+          "status": "recovered_windows",
+          "assets": [
+            "config.json",
+            "packs/Scene.pack"
+          ],
+          "script": "scripts/recover_verified_original_assets.py"
+        }
       ]
     },
     {
@@ -82,7 +111,13 @@
           "BasicCharacter_7.glb missing",
           "ShopCharacter_BasicCharacter_7.json missing",
           "skin instantiate undefined"
-        ]
+        ],
+        "latestHeadlessQA": {
+          "noJSExceptions": true,
+          "noHTTP404": true,
+          "durationApproxSeconds": 8,
+          "gameplayVerified": false
+        }
       },
       "hypotheses": [
         "Recoverable game assets missing on Windows mirror",
@@ -92,6 +127,23 @@
         "Fix verified JS defect with original intended variable, not arbitrary stub",
         "Recover templates and GLB where available",
         "Retest matchmaking and confirm gameplay interactions"
+      ],
+      "fixes": [
+        {
+          "type": "error-handler",
+          "status": "applied_windows",
+          "detail": "assetName -> asset.name in asset load rejection",
+          "backupCreated": true
+        },
+        {
+          "type": "original-cdn-assets",
+          "status": "recovered_windows",
+          "assets": [
+            "BasicCharacter_7.json",
+            "BasicCharacter_7.glb",
+            "ShopCharacter_BasicCharacter_7.json"
+          ]
+        }
       ]
     },
     {
@@ -106,13 +158,21 @@
         "engineObjects": 0,
         "errorsNoted": 34,
         "missingOfferAssetsAVIF": true,
-        "networkError": "Failed to fetch from Pixi loader"
+        "networkError": "Failed to fetch from Pixi loader",
+        "latestHeadlessQA": {
+          "noJSExceptions": true,
+          "noHTTP404": true,
+          "durationApproxSeconds": 8,
+          "gameplayVerified": false,
+          "sceneInspectorObjects": 0
+        }
       },
       "hypotheses": [
         "Missing AVIF texture assets; runtime SDK/loader issues",
         "Pixi app stage not exposed via known global window.app.stage"
       ],
       "nextActions": [
+        "Inspect whether Pixi stage can be accessed in its bundled runtime; provide conservative canvas fallback if not",
         "Verify which assets are optional shop decorations vs load blockers",
         "Check SDK initialization under authorized local integration",
         "Create robust Pixi inspector where actual stage is exposed; fallback labeled Canvas otherwise"
@@ -127,16 +187,45 @@
         "body": "Finding game... We're trying to find worthy opponents for you!",
         "error": "Error attempting to identify user! {}",
         "warning": "GameAnalytics collector unreachable",
-        "assetGallery404": true
+        "assetGallery404": true,
+        "corsOriginBlocked": "https://cubes-api-prod-knaql.ondigitalocean.app/all/v1/find-or-create-cg-user?context=Cubes2048",
+        "corsLocalOrigin": "http://127.0.0.1:8001"
       },
       "hypotheses": [
         "Live identity/matchmaking service required; some gallery thumbnail paths unavailable"
       ],
       "nextActions": [
+        "Platform game backend does not allow localhost CORS preflight; needs supported service integration or original legitimate offline mode",
         "Trace identity request and service origin",
         "Determine if legitimate local practice mode exists",
         "Distinguish backend blockers from static images 404; no fake bots or forged certification"
       ]
     }
-  ]
+  ],
+  "serverRepair": {
+    "status": "verified_on_windows",
+    "server": "127.0.0.1:8001",
+    "restarted": true,
+    "assetOverlayExamples": [
+      {
+        "game": "cardsheartsclassic",
+        "file": "branding/logo.png",
+        "before": 404,
+        "after": 200
+      },
+      {
+        "game": "triviaguesstheiranswers",
+        "file": "files/assets/193571201/1/GroundTexture.png",
+        "before": 404,
+        "after": 200
+      },
+      {
+        "game": "iogamescubes2048royale",
+        "file": "assets/img/offscreen_indicator.png",
+        "before": 404,
+        "after": 200
+      }
+    ],
+    "note": "Stale server process was replaced with updated server. HTTP success only, not gameplay evidence."
+  }
 }
