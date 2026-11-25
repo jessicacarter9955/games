@@ -25,7 +25,8 @@ const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
   ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const localURL = s => typeof s === 'string' && s.startsWith('/extracted/') &&
+const localURL = s => typeof s === 'string' &&
+  (s.startsWith('/extracted/') || s.startsWith('/local-mirror/')) &&
   !s.includes('\\') && !s.includes('..') && !/[\n\r<>"']/.test(s) ? s : null;
 const statusClass = status => knownStatuses.includes(status) ? status : 'missing';
 const dotClass = status => ({experimental:'yellow',limited:'neutral',
