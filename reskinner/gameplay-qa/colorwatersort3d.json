@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "colorwatersort3d",
+  "title": "Color Water Sort 3d",
+  "engine": "playcanvas",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:07.172653+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "f2965d0775434853b90edfe37dc31645251aa31deec20fdcfc7388b2a43f70bc",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "f2965d0775434853b90edfe37dc31645251aa31deec20fdcfc7388b2a43f70bc",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "f2965d0775434853b90edfe37dc31645251aa31deec20fdcfc7388b2a43f70bc",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 1
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
