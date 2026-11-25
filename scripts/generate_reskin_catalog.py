@@ -22,7 +22,8 @@ EXTRACTED = "extracted/"
 OUT = ROOT / "reskinner" / "catalog.json"
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
-ATLAS_EXTS = {".xml", ".json", ".atlas", ".plist"}
+# Only explicit atlas metadata, not arbitrary JSON settings/SDK manifests.
+ATLAS_EXTS = {".xml", ".atlas", ".plist"}
 MODEL_EXTS = {".glb", ".gltf", ".fbx", ".obj", ".dds", ".ktx", ".basis"}
 VIDEO_EXTS = {".mp4", ".webm"}
 SKIP_ENTRIES = ("gameframe", "crazygames.com", "cdn-cgi", "portal")
