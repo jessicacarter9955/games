@@ -54,17 +54,25 @@ class LocalWebSocket:
         address = urlsplit(uri)
         if address.scheme != "ws" or address.hostname not in ("127.0.0.1", "localhost"):
             raise ValueError("Only local non-TLS CDP WebSocket endpoints allowed")
+        self.client = None
+        try:
+            import websocket  # websocket-client: available on the Windows bridge
+            self.client = websocket.create_connection(
+                uri, timeout=9, suppress_origin=True)
+            return
+        except ImportError:
+            pass
         self.socket = socket.create_connection((address.hostname, address.port), 9)
         self.socket.settimeout(9)
         self.buffer = b""
         key = base64.b64encode(os.urandom(16)).decode("ascii")
         request = (
-            f"GET {address.path}?{address.query} HTTP/1.1\r\n"
+            f"GET {address.path + ('?' + address.query if address.query else '')} HTTP/1.1\r\n"
             f"Host: {address.netloc}\r\n"
             "Upgrade: websocket\r\nConnection: Upgrade\r\n"
             f"Sec-WebSocket-Key: {key}\r\n"
             "Sec-WebSocket-Version: 13\r\n"
-            f"Origin: http://{address.hostname}:{address.port}\r\n\r\n"
+            "\r\n"
         )
         self.socket.sendall(request.encode("ascii"))
         data = b""
@@ -103,9 +111,15 @@ class LocalWebSocket:
         self.socket.sendall(bytes(header) + key + masked)
 
     def send_json(self, obj: dict) -> None:
+        if self.client is not None:
+            self.client.send(json.dumps(obj, separators=(",", ":")))
+            return
         self.send_frame(json.dumps(obj, separators=(",", ":")).encode("utf-8"))
 
     def receive_json(self, timeout: float) -> dict:
+        if self.client is not None:
+            self.client.settimeout(max(0.05, timeout))
+            return json.loads(self.client.recv())
         self.socket.settimeout(max(0.05, timeout))
         parts: list[bytes] = []
         while True:
@@ -136,6 +150,9 @@ class LocalWebSocket:
                 return json.loads(b"".join(parts).decode("utf-8"))
 
     def close(self):
+        if self.client is not None:
+            self.client.close()
+            return
         try:
             self.socket.close()
         except OSError:
@@ -512,7 +529,8 @@ def main() -> int:
     port=args.port or free_port()
     process=None
     try:
-        with tempfile.TemporaryDirectory(prefix="2night-cdp-") as profile:
+        with tempfile.TemporaryDirectory(
+                prefix="2night-cdp-", ignore_cleanup_errors=True) as profile:
             process=launch_debugger(browser,port,Path(profile),args.headless)
             endpoint=debugger_target(port)
             cdp=CDP(endpoint)
