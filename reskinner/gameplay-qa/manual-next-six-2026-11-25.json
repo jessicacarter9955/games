@@ -20,9 +20,9 @@
         "gem-9-P7gP-q.mp3 404"
       ],
       "next": [
-        "Find and recover matching original modules under exact version /domino-duel-uit/239/assets",
-        "Separate optional telemetry and platform-origin checks from required Play with computer logic",
-        "Retest Play with computer to real domino table and interaction"
+        "Compare user manual menu with headless boot and inspect session/update gate",
+        "Test original Play with computer (offline vs GamePush origin restriction)",
+        "Verify tile distribution and moves"
       ],
       "gameplayVerified": false,
       "inspectorValidated": false,
@@ -38,7 +38,15 @@
             "gem-9-P7gP-q.mp3"
           ]
         }
-      ]
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameHTTP404": 0,
+        "pageExceptions": 0,
+        "menuInHeadless": "",
+        "clickPlayWithComputer": "not found in headless",
+        "gameplayVerified": false
+      }
     },
     {
       "id": "iogamestileman",
@@ -52,25 +60,37 @@
         "/discord.png /re.png /loading.gif 404"
       ],
       "next": [
-        "Inspect exact obfuscated call sites",
-        "Recover root assets from original eu1.tileman.io host",
-        "Try official Local mode and real input without inventing server state"
+        "Trace toUpperCase undefined call in original obfuscated game script",
+        "Fix no-Referer root image URLs at source or guarded per-game mapping",
+        "Test actual Local game mode and two moves"
       ],
       "gameplayVerified": false,
       "inspectorValidated": false,
       "fixes": [
         {
-          "type": "root-assets",
-          "status": "already-present-http-verified",
-          "count": 3,
+          "type": "embedded-keyboard-lock-fallback",
+          "status": "applied_and_postfix_error_absent_Windows",
+          "backupPresent": true,
+          "script": "scripts/repair_tileman_embed.py"
+        },
+        {
+          "type": "root-asset-routing",
+          "status": "HTTP200_with_referrer_but_headless404_remains",
           "paths": [
             "/discord.png",
             "/re.png",
             "/loading.gif"
-          ],
-          "httpStatus": 200
+          ]
         }
-      ]
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "keyboardLockExceptionAbsent": true,
+        "remainingError": "Cannot read properties of undefined (reading 'toUpperCase')",
+        "playClick": "timeout",
+        "canvasVisible": false,
+        "gameplayVerified": false
+      }
     },
     {
       "id": "wordgameswordwipe",
@@ -83,12 +103,39 @@
         "@Inject param undefined on _0x5e08ad"
       ],
       "next": [
-        "Locate original function and DOM parent/anchor mismatch",
-        "Check side effects of iframe instrumentation vs standalone",
-        "Retest and verify interactive word grid"
+        "Inspect actual Word Wipe game screenshots; identify a real word grid",
+        "Perform two authentic tile selection gestures and validate cleared letters / score changes",
+        "Do not mark green based on zero errors alone"
       ],
       "gameplayVerified": false,
-      "inspectorValidated": false
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "incremental-CDN-recovery",
+          "status": "verified_Windows",
+          "count": 51,
+          "passes": [
+            3,
+            11,
+            33,
+            4,
+            0
+          ],
+          "source": "original word-wipe.game-files.crazygames.com CDN"
+        }
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameCanvas": {
+          "width": 741,
+          "height": 341,
+          "visible": true
+        },
+        "gameHTTP404": 0,
+        "pageExceptions": 0,
+        "consoleErrors": 0,
+        "gameplayVerified": false
+      }
     },
     {
       "id": "iogamesagario",
@@ -101,12 +148,18 @@
         "Third-party Facebook pixel failed (likely nonessential)"
       ],
       "next": [
-        "Trace actual frame URL and redirect chain in browser",
-        "Check original static asset capture / subresource origin without bypassing browser protections",
-        "Determine legitimate local/offline mode and separate inspector cross-origin limit"
+        "Inspect why local iframe navigates to Chrome error page",
+        "Verify original SDK and legitimately accessible backend requirements",
+        "Do not mislabel cross-origin block as gameplay"
       ],
       "gameplayVerified": false,
-      "inspectorValidated": false
+      "inspectorValidated": false,
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "frameNavigation": "chrome-error://chromewebdata/",
+        "crossOriginInspectorUnavailable": true,
+        "gameplayVerified": false
+      }
     },
     {
       "id": "cardsfouruno",
@@ -120,9 +173,9 @@
         "/assets/late-DM0uVa_S.css and index CSS, font and flag 404"
       ],
       "next": [
-        "Map original foony.com absolute root assets to correct local host",
-        "Recover missing lazy modules from canonical originals where publicly available",
-        "Retest Play Bots and actual interaction; no backend simulation"
+        "Identify required Foony Play Bots path and backend dependencies",
+        "Retest a real bot round with card selection and turn transitions",
+        "Avoid fake matchmaker and unauthorized API calls"
       ],
       "gameplayVerified": false,
       "inspectorValidated": false,
@@ -143,7 +196,15 @@
           "status": "recovered",
           "file": "m/Ja.js"
         }
-      ]
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameHTTP404": 0,
+        "pageExceptions": 0,
+        "playBotsButtonClicked": true,
+        "menuUnchanged": true,
+        "gameplayVerified": false
+      }
     },
     {
       "id": "iogamesevowarsio",
@@ -156,25 +217,44 @@
         "Adinplay/CPMStar ad scripts failed (separate optional errors)"
       ],
       "next": [
-        "Recover exact game images from original evowars.io path in bounded batches",
-        "Verify PNG signatures and content hashes",
-        "Retest age/start then game scene and movement/interaction"
+        "Use actual age-gate/start controls in test without bypassing consent",
+        "Verify arena spawn and movement, not initial canvas or ad errors",
+        "Locate original font balooBhaina2.ttf if legitimately available, but do not fabricate"
       ],
       "gameplayVerified": false,
       "inspectorValidated": false,
       "fixes": [
         {
-          "type": "cdn-asset-recovery",
-          "status": "recovered",
-          "count": 83,
-          "folder": "images",
-          "format": "png",
-          "validation": "PNG signature, SHA256 and original host"
+          "type": "original-CDN-recovery",
+          "status": "verified_Windows",
+          "reportedLogPNG": 83,
+          "subsequentBrowser404Assets": 159,
+          "totalRecovered": 242,
+          "remainingSpecificOriginalCDN404": [
+            "balooBhaina2.ttf"
+          ],
+          "finalObservedGame404": 0
         }
-      ]
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameCanvas": {
+          "width": 741,
+          "height": 326,
+          "visible": true
+        },
+        "ageStartGateRemaining": true,
+        "clickPlayAttempt": "timeout though PLAY disappeared after attempted click",
+        "gameHTTP404": 0,
+        "otherThirdPartyAdHTTP400403404": true,
+        "pageErrors": [
+          "Uncaught (in promise) false"
+        ],
+        "gameplayVerified": false
+      }
     }
   ],
-  "updatedAt": "2026-11-25T19:15:00Z",
+  "updatedAt": "2026-11-25T19:24:00Z",
   "recoverySummary": {
     "requested": 91,
     "recovered": 88,
@@ -189,5 +269,13 @@
     "commit": "2bcb6f2d63fd3d708eb85a20ba3020e494d947c5",
     "service": "127.0.0.1:8001",
     "verified": "7 original asset URLs returned 200 with correct game Referer"
+  },
+  "followup": {
+    "stage": "Post-mirror-recovery browser retests complete. Gallery server restarted to refresh asset index; restart confirmation pending.",
+    "previousCertifiedBaseline": 3,
+    "newlyCertified": 0,
+    "script": "scripts/retest_next_six_user_games.py",
+    "screenshotsDirOnWindows": "Downloads/_2night_reskin_qa/manual-next6-after-recovery-20261125",
+    "proofRule": "Gameplay is unverified unless game content visible and two meaningful actual inputs change gameplay state."
   }
 }
