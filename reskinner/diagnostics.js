@@ -117,6 +117,7 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
   const feedback=document.getElementById('diagFeedback');
   const entries=[];
   let activeWindow=null;
+  let activeDocument=null;
   let disposers=[];
   let currentGame='';
   let noticeTimeout=null;
@@ -165,6 +166,7 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
     for(const undo of disposers){try{undo();}catch{}}
     disposers=[];
     activeWindow=null;
+    activeDocument=null;
   }
 
   function attachFrame() {
@@ -172,9 +174,11 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
     let win;
     try {win=frame?.contentWindow;void win?.document?.documentElement;}
     catch{return;}
-    if(!win||win===activeWindow||!win.document?.documentElement)return;
+    if(!win||!win.document?.documentElement)return;
+    if(win===activeWindow&&win.document===activeDocument)return;
     detachFrame();
     activeWindow=win;
+    activeDocument=win.document;
     const error=e=>{
       if(e.target && e.target!==win && (e.target.src||e.target.href)){
         put('error','iframe-resource',safeURL(e.target.src||e.target.href));return;
