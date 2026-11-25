@@ -175,5 +175,28 @@
     "fullPlaythroughVerified": false,
     "inspectorValidated": false,
     "notes": "A real letter placement was verified, not a complete word submission or game completion. Earlier evidence preserved."
+  },
+  "liveSceneReskinRetest": {
+    "source": "Windows Chromium Playwright through actual Reskinner UI on isolated server with gallery and hashed module fixes",
+    "asset": "letters_blue.png",
+    "dimensions": [
+      364,
+      84
+    ],
+    "isolatedPreview": true,
+    "assetSelection": true,
+    "replacementSaved": true,
+    "liveGameTextureVerified": true,
+    "observed": "Original blue letter tiles on active board become magenta after the replacement; visually reviewed private before/after screenshots.",
+    "markerBeforeFraction": 0,
+    "markerAfterFraction": 0.00468979075036652,
+    "markerReloadedFraction": 0,
+    "persistenceInEquivalentSceneVerified": false,
+    "notes": "Reload produced a different first-turn board without the same placed tiles; zero marker pixels cannot establish whether persistence failed. Full inspector validation remains false pending equivalent-scene persistence.",
+    "screenshots": {
+      "before": "159202d64cfbc6eb8e63fd5a615a5a66f10d152d568d08da5569319b347cdd97",
+      "after": "8ddc0b818c5b0af3dae68ef7d4b0adbbdf88b546f1b671142c601786dd7a3c32",
+      "reloaded": "cd400c9219dd589a6df38f798a55c2e2f575a8af38b7f7a40be0321da56233dc"
+    }
   }
 }
