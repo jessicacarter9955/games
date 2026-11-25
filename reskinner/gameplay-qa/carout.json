@@ -80,5 +80,31 @@
     "qaError": null,
     "urlAfterPlay": ""
   },
-  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "binaryRepairRetest": {
+    "source": "Windows Chromium Playwright strict-offline; direct original CDN binary verification",
+    "baseline": {
+      "errors": [
+        "Invalid or unexpected token",
+        "unityFramework is not defined"
+      ],
+      "bytes": 158946,
+      "sha256": "0bb9a47e44b24db42a2dd8ffa6fc082f4d8f424069961ff94906a59e0a8fb0a7",
+      "format": "corrupted compressed Unity framework with UTF-8 replacement bytes"
+    },
+    "repair": {
+      "path": "Build/Build_Playgama.framework.js.unityweb",
+      "bytes": 87641,
+      "sha256": "dfa0b2f902a33fb5e35d481b384ce883366cbad7882b58501a79ea2dc4210737",
+      "stored": "private Windows mirror; original saved in private backup",
+      "wasmAndDataMatchedOriginal": true
+    },
+    "retest": {
+      "pageErrors": [],
+      "httpErrors": [],
+      "body": "Loading GPU",
+      "gameplayVerified": false
+    },
+    "notes": "Unity loader progresses beyond prior framework exception. GPU loading is not actual gameplay."
+  }
 }
