@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "triviatriviacrack",
+  "title": "Trivia Crack",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:58:17.981403+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "57c644ef8e869e5365bf5d9cbd1768808a6d9a65b44b9a19a7f3a1b204412b75",
+        "metrics": {
+          "entropy": 4.102,
+          "dominantFraction": 0.109,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "1e54398946d51583e9cd03cb703126f2025b6b712ac954fbd300882725a49364",
+        "metrics": {
+          "entropy": 4.498,
+          "dominantFraction": 0.124,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 123.31,
+      "fractionChanged": 0.9
+    },
+    "inputDiff": {
+      "meanRGBDelta": 70.82,
+      "fractionChanged": 0.89
+    },
+    "canvasBefore": [
+      {
+        "w": 1280,
+        "h": 720,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 1280,
+        "h": 720,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/triviatriviacrack/trivia-crack.game-files.crazygames.com/trivia-crack/6/sdk/media/music/trivia_crack_menu.mp4"
+      }
+    ],
+    "blockedExternalRequestCount": 1
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
