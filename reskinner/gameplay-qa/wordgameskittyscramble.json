@@ -96,5 +96,30 @@
       ],
       "screenshotHash": "3992dc212b5fa00117c23b1943218c817b28c58d39444c986e5f362ffdd99abe"
     }
+  },
+  "cocosRecoveryRetest": {
+    "source": "Windows private mirror; qa_reverse_certify1800_job and qa_reverse_kitty_connector_job",
+    "engine": {
+      "path": "cleverapps/res/cocoslib-3_17_2-5c22ebe65d.js",
+      "oldBytes": 155653,
+      "newBytes": 512016,
+      "newSha256": "63a98a5d60b39d8fb7f77b333d28d84d72d487d52ae52747939f70087afc21b2"
+    },
+    "intermediateRetest": {
+      "gameplayVerified": false,
+      "errors": [
+        "Invalid or unexpected token"
+      ],
+      "httpErrors": []
+    },
+    "connector": {
+      "path": "connector-v1.511.10-4b6a998541.js",
+      "oldBytes": 142183,
+      "newBytes": 482799,
+      "newSha256": "862543428ec734244b7712a91a0e8fc1bf0a1900fb4abaed2b8f2e356049f982",
+      "decompressed": true
+    },
+    "gameplayVerified": false,
+    "notes": "Final post-connector gameplay test not yet concluded."
   }
 }
