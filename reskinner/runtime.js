@@ -65,6 +65,18 @@ export function createRuntimeInspector(frame, options = {}) {
     if (doc.querySelector('canvas[data-engine*="unity"],#unity-canvas')) return 'unity';
     return observeCanvas() ? 'canvas' : 'dom';
   };
+  function refreshRuntime() {
+    // Engines often create their renderer *after* the iframe load event.
+    // A one-shot DOM detection left working Pixi/Canvas scenes uninspectable.
+    if (!win || !doc) return;
+    const next = gameAdapter?.engine || engineType();
+    if (next !== state.engine) {
+      const previous = state.engine;
+      state.engine = next;
+      emit('Runtime aggiornato: ' + previous + ' → ' + next);
+    }
+    observeCanvas();
+  }
   function frameScale(targetCanvas) {
     const cr = targetCanvas.getBoundingClientRect();
     return { rect: cr, x: cr.width / Math.max(1,targetCanvas.width),
@@ -227,6 +239,7 @@ export function createRuntimeInspector(frame, options = {}) {
   }
   function pick(point) {
     if (!win||!doc) return null;
+    refreshRuntime();
     try {
       if (gameAdapter?.pick) {
         const item=gameAdapter.pick({win,doc,gameId,point,options});
@@ -258,6 +271,7 @@ export function createRuntimeInspector(frame, options = {}) {
     return null;
   }
   function getReport() {
+    refreshRuntime();
     const n=observeCanvas();
     return {engine:state.engine,canvas:!!n,drawCalls:state.samples,
       knownDraws:state.draws.length,engineObjects:state.scene.length,
