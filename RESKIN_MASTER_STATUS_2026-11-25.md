@@ -284,3 +284,32 @@ Un controllo Playwright sul server Windows `127.0.0.1:8000` ha distinto **iframe
 2. Gestire engines e giochi senza risorse separabili (`Unity/Defold/iframe/3D`) e scrivere adapter veri su evidenza del runtime; per Hexastack/Pixi e Cubes 2048 Royale verificare la scena e la texture reale prima di chiamare uno sprite isolato.
 3. Correggere i blocchi già riferiti: Mahjongg dopo Play, Hangman bianco, Hearts non avviato, Paper.io 2 nero, Guess Their Answer loader finale, e box DIV di Cubes 2048 Royale non corrispondenti a texture isolate.
 4. Rigenerare il catalogo dinamico e riavviare il server locale **dopo** la nuova cattura per rendere visibili i nuovi file; nessuna ricattura da sola garantisce la riproduzione offline.
+
+## 10. Checkpoint incrementali per gioco: preservazione dei progressi
+
+**Nuova regola operativa richiesta il 25/11/2026:** salvare un checkpoint e
+pubblicare commit separati per ciascun gioco verificato, senza attendere che
+tutti i 69 siano terminati. Per convenzione i metadati osservati della passata
+sono in [`reskinner/progress/`](reskinner/progress/README.md), un file
+`<id>.json` per gioco. I commit per gioco vanno eseguiti senza aggiungere
+asset originali CrazyGames al repository pubblico.
+
+**Checkpoint confermati e pubblicati:** 23/69, in 23 commit distinti, tratti
+dalle prime 23 righe concluse della ricattura filtrata Windows
+`reskin69_filtered_full_20261125`. Il job risultava ancora `running`
+ma senza ulteriori righe dopo `homedesigndecorate` all'ultimo controllo.
+**Questo non significa 23 giochi pronti nel preview/inspector:** indica
+soltanto 23 passate di mirror registrate. Tra i 23, Piece of Cake Merge
+riporta 6 errori download e Home Design Decorate 2.
+
+- **Consegna del codice:** ad ogni fix validato fare commit e push immediato
+  sul branch, con identificazione del gioco e test eseguito.
+- **Consegna dei risultati:** una registrazione JSON/commit per gioco, con
+  contatori e stato specifico della passata; aggiornamenti senza duplicati.
+- **Protezione del materiale locale:** file/asset dei giochi non vengono
+  pubblicati sul repository pubblico; il mirror rimane sul PC Windows e
+  necessita di backup locale autorizzato distinto.
+- **Automazione di controllo:** configurato controllo periodico del bridge
+  e dei nuovi checkpoint; verifica esiti reali prima del push. Il PC non
+  dispone attualmente di `gh` autenticato o di credenziali Git per push
+  autonomi: non descrivere questo sistema come *push Git locale*.
