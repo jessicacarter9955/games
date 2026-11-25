@@ -67,11 +67,34 @@ def main() -> int:
                  "--output",str(output)]
             if args.headless: cmd.append("--headless")
             if args.native: cmd.append("--native")
-            result=subprocess.run(cmd,timeout=900,check=False)
+            # Forward a *compact* event after each game. Otherwise the
+            # Windows bridge reports only "running" until the entire batch
+            # finishes, making stalled engines difficult to distinguish.
+            with subprocess.Popen(cmd,stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT,text=True,
+                                  encoding="utf-8",errors="replace",
+                                  bufsize=1) as child:
+                assert child.stdout is not None
+                for line in child.stdout:
+                    if line.startswith("HYBRID_GAME "):
+                        try:
+                            item=json.loads(line[len("HYBRID_GAME "):])
+                            print("HYBRID_PROGRESS",json.dumps({
+                                "id":item.get("id"),
+                                "status":item.get("status"),
+                                "visual_changes":item.get("visual_changes",0),
+                                "errors":len(item.get("errors") or []),
+                                "http_errors":len(item.get("httpErrors") or []),
+                            }),flush=True)
+                        except ValueError:
+                            print(line.rstrip()[:1000],flush=True)
+                    else:
+                        print(line.rstrip()[:1800],flush=True)
+                returncode=child.wait()
             print("HYBRID_RUN_FINISHED",json.dumps({
-                "returncode":result.returncode,
+                "returncode":returncode,
                 "summary":str(output/"summary.json")}),flush=True)
-            return result.returncode
+            return returncode
         finally:
             server.terminate()
             try:server.wait(timeout=8)
