@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -41,6 +42,22 @@ class MirrorAssetResolutionTests(unittest.TestCase):
         parts = ("assets", "solid-vendor-vMdafsZ3.js")
         self.assertEqual(
             self.handler.resolve_unique_hashed_asset(parts), str(path.resolve()))
+
+    def test_hashed_imports_use_one_file_index(self) -> None:
+        first = self.save(
+            self.root, "foony.com/games/foono/assets/"
+            "solid-vendor-vMdafsZ3.js", b"var vendor = 1;")
+        second = self.save(
+            self.root, "foony.com/games/foono/assets/"
+            "NumberUtils-g4Ou7l33.js", b"var numbers = 2;")
+        self.assertEqual(self.handler.resolve_unique_hashed_asset(
+            ("assets", first.name)), str(first.resolve()))
+        # Each additional module must be O(1) without walking 69 game
+        # directories again. Performance is essential for Foono boot.
+        with patch.object(Path, "rglob", side_effect=AssertionError(
+                "hashed module must reuse the filename index")):
+            self.assertEqual(self.handler.resolve_unique_hashed_asset(
+                ("assets", second.name)), str(second.resolve()))
 
     def test_conflicting_same_named_modules_are_not_aliased(self) -> None:
         parts = ("assets", "solid-vendor-vMdafsZ3.js")
