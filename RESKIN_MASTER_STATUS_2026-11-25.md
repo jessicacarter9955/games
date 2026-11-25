@@ -237,4 +237,34 @@ Un titolo è **validato end-to-end** solo se avvia almeno un ciclo di gameplay r
 
 ## 8. Stato di questo documento
 
-Questo file **documenta e preserva** decisioni, audit, numeri e bug noti. **Non** rappresenta una nuova campagna di cattura CDN, una nuova analisi empirica di tutti i 69 giochi né la correzione del codice dell'inspector.
+Il documento conserva gli audit e i voti storici e ora registra anche le **correzioni tecniche effettuate il 25/11**. Le metriche statiche non sono una verifica completa di 69 giochi; il completamento richiede i controlli end-to-end della sezione 7.
+
+
+## 9. Interventi verificati il 25/11/2026: URL, mirror sicuro e sprite inspector
+
+### URL e coerenza mapping
+
+- `reskinner/original-urls.json`: **69 URL canonici per 69 ID catalogo**, con nessun duplicato. `scripts/test_original_url_mapping.py` eseguito sul bridge Windows con esito positivo.
+- La riconciliazione degli URL **contro le righe del deep-audit dei mirror del PC** (`_mirror_69_deep_audit_20261125.json`) ha prodotto **69 same / 0 mismatch / 0 senza match**. È coerenza con lo storico, **non** prova che il gioco remoto e quello locale abbiano stessi build o comportamento; Carout rimane da confrontare empiricamente.
+
+### Primo aggiornamento inspector, provato nel browser
+
+- `reskinner/runtime.js`: conserva il rettangolo `sx, sy, sw, sh` delle chiamate Canvas2D `drawImage` oltre al box di rendering; evita di unire frame di atlas diversi alla medesima firma.
+- `reskinner/app.js` e `styles.css`: sidebar con **canvas di anteprima isolata della risorsa esatta/ritaglio**, distinguendo oggetti con e senza texture identificata, senza fare passare l'intero canvas per uno sprite.
+- **Test Playwright su Wordmeister Windows, porta 8000:** selezione `main_title.png`; sidebar `RISORSA ISOLATA · frame atlas`, preview `320×110` con pixel e nessun `pageerror`. Test atlas isolato su 3 frame: PASS. Questo **non** valida Pixi/PlayCanvas/Unity né la navigazione fra tutte le scene.
+- Test script Windows corretto perché una vecchia procedura sovrascriveva i file JS con snapshot storici; ora il test non esegue quel downgrade. La sincronizzazione dei nuovi script è stata fatta usando un commit immutabile per evitare cache branch stale.
+
+### Audit dei file spuri e ricattura incrementale
+
+- Lo storico audit locale resta **69 giochi / 4.710 file / ~1,78 GB**, con 20 titoli che hanno riferimenti HTML non risolti e 26 da approfondire. Queste sono cifre precedenti all'ultima passata, non un indice di completamento del gameplay.
+- Una prima nuova passata **non filtrata** aveva registrato molte immagini di catalogo e pubblicità dai domini `imgs.crazygames.com` e `builds.crazygames.com`; il conteggio iniziale `Mahjongg +297 file` era **fuorviante** e non deve essere letto come +297 risorse di gioco.
+- La pulizia reversibile `scripts/quarantine_portal_reskin_captures.py` ha spostato sul PC **2.289 file, 92.098.767 byte** da manifest incrementali con host estranei in `_reskin_69_portal_quarantine_20261125`, conservando verifiche SHA e senza cancellare gli originali. Nessun file di gioco viene caricato su GitHub.
+- La nuova `scripts/recapture_69_gameplay.py` usa **host di gameplay specifici e verificati nell'audit**. Su 3 giochi di controllo (Mahjongg, Hexastack, Color Water Sort 3D): **+3 file pertinenti, 233.130 byte, 0 download error**. Questi tre smoke test verificano il **filtro/trasporto**, non l'avvio completo.
+- Avviata una ricattura filtrata estesa ai 69 titoli; l'esito finale, il numero di risorse nuove realmente utili e i test Play/inspector per singolo titolo devono essere **verificati dai risultati locali**, non dedotti dal semplice avvio dello script.
+
+### Problemi ancora aperti
+
+1. Portare ciascun titolo da `HTML locale` a un **ciclo gameplay reale** (menu → Play → gioco → settings/pause → livello successivo) e acquisire gli asset caricati in ciascuno stato.
+2. Gestire engines e giochi senza risorse separabili (`Unity/Defold/iframe/3D`) e scrivere adapter veri su evidenza del runtime; per Hexastack/Pixi e Cubes 2048 Royale verificare la scena e la texture reale prima di chiamare uno sprite isolato.
+3. Correggere i blocchi già riferiti: Mahjongg dopo Play, Hangman bianco, Hearts non avviato, Paper.io 2 nero, Guess Their Answer loader finale, e box DIV di Cubes 2048 Royale non corrispondenti a texture isolate.
+4. Rigenerare il catalogo dinamico e riavviare il server locale **dopo** la nuova cattura per rendere visibili i nuovi file; nessuna ricattura da sola garantisce la riproduzione offline.
