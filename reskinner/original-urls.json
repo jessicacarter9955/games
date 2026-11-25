@@ -1,0 +1,697 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-11-25",
+  "note": "URL associations for 69 existing catalog games; not proof of playable/offline mirror. Preserve original local resource copyrights.",
+  "games": [
+    {
+      "id": "mahjongg",
+      "game": "Mahjongg",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/mahjongg-solitaire",
+      "slug": "mahjongg-solitaire",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "user-provided",
+      "gameplayVerified": false
+    },
+    {
+      "id": "hexastack",
+      "game": "Hexastack",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/hexa-stack",
+      "slug": "hexa-stack",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "user-provided",
+      "gameplayVerified": false
+    },
+    {
+      "id": "colorwatersort3d",
+      "game": "Color Water Sort 3d",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/color-water-sort-3d",
+      "slug": "color-water-sort-3d",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cuttherope",
+      "game": "Cuttherope",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/cut-the-rope-ebx",
+      "slug": "cut-the-rope-ebx",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "blocksandthatit",
+      "game": "Blocks And That'it",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/block-tour-kfz",
+      "slug": "block-tour-kfz",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "findthecowcat",
+      "game": "Nut Sort: Build the City",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/nut-sort-build-the-city",
+      "slug": "nut-sort-build-the-city",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "dropmergenumbers",
+      "game": "Drop Merge Numbers",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/drop-merge-the-numbers",
+      "slug": "drop-merge-the-numbers",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "blockpuzzlemaster",
+      "game": "Block Puzzle Master",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/block-puzzle-master",
+      "slug": "block-puzzle-master",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "finddifferences",
+      "game": "Find Differences",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/find-it---find-the-differences",
+      "slug": "find-it---find-the-differences",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "carout",
+      "game": "Carout",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/car-out-jam-parking-puzzle",
+      "slug": "car-out-jam-parking-puzzle",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "nutspuzzlesortbycolor",
+      "game": "Nuts Puzzle Sort By Color",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/nuts-puzzle-sort-by-color",
+      "slug": "nuts-puzzle-sort-by-color",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "hexasort",
+      "game": "Hexasort",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/hexa-sort",
+      "slug": "hexa-sort",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "watersort",
+      "game": "Watersort",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/cups---water-sort-puzzle",
+      "slug": "cups---water-sort-puzzle",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "pieceofcakemerge",
+      "game": "Pieceofcakemerge",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/piece-of-cake-merge-and-bake",
+      "slug": "piece-of-cake-merge-and-bake",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "jigpicsolitaire",
+      "game": "Jigpic Solitaire",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/jigpic-solitaire",
+      "slug": "jigpic-solitaire",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "pixelblast",
+      "game": "Pixelblast",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/pixel-blast",
+      "slug": "pixel-blast",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "twistedtangle",
+      "game": "Twistedtangle",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/twisted-tangle-nmt",
+      "slug": "twisted-tangle-nmt",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "whatsthedifferenceonline",
+      "game": "What S The Difference Online",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/what-s-the-difference-online",
+      "slug": "what-s-the-difference-online",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "goodstriplematch",
+      "game": "Goodstriplematch",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/goods-triple-match-3d",
+      "slug": "goods-triple-match-3d",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "jewelacademy",
+      "game": "Jewel Academy",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/jewel-academy",
+      "slug": "jewel-academy",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "lavaoraqua",
+      "game": "Lavaoraqua",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/lava-and-aqua",
+      "slug": "lava-and-aqua",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "sandtrix",
+      "game": "Sandtrix",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/sandtrix",
+      "slug": "sandtrix",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "homedesigndecorate",
+      "game": "Home Design Decorate",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/home-design---decorate-house",
+      "slug": "home-design---decorate-house",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "complexmerge3parktown",
+      "game": "Complex Merge 3 Park Town",
+      "category": "Puzzles",
+      "url": "https://www.crazygames.com/game/park-town",
+      "slug": "park-town",
+      "mappingEvidence": "catalog-archive-alias",
+      "verification": "portal-identified",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameshangman",
+      "game": "Hangman",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/hangman-cfc",
+      "slug": "hangman-cfc",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameswordmeister",
+      "game": "Wordmeister",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/wordmeister",
+      "slug": "wordmeister",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsheartsclassic",
+      "game": "Hearts: Classic",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/hearts-classic",
+      "slug": "hearts-classic",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamespaperio",
+      "game": "Paper.io 2",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/paper-io-2",
+      "slug": "paper-io-2",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviaguesstheiranswers",
+      "game": "Guess Their Answer",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/guess-their-answer",
+      "slug": "guess-their-answer",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamescubes2048royale",
+      "game": "Cubes 2048 Royale",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/cubes-2048-royale",
+      "slug": "cubes-2048-royale",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsspades",
+      "game": "Spades",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/spades",
+      "slug": "spades",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameswordofwonders",
+      "game": "Words of Wonders",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/words-of-wonders",
+      "slug": "words-of-wonders",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviatriviacrack",
+      "game": "Trivia Crack",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/trivia-crack",
+      "slug": "trivia-crack",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardslasvegaspoker",
+      "game": "Las Vegas Poker",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/las-vegas-poker",
+      "slug": "las-vegas-poker",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamesunoonline",
+      "game": "Uno Online",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/uno-online",
+      "slug": "uno-online",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameswordsearchlyg",
+      "game": "Word Search",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/word-search-lyg",
+      "slug": "word-search-lyg",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsginrummyonline",
+      "game": "Gin Rummy Online",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/gin-rummy-online",
+      "slug": "gin-rummy-online",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsdominoduel",
+      "game": "Domino Duel",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/domino-duel-uit",
+      "slug": "domino-duel-uit",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsfouruno",
+      "game": "Foono Online Multiplayer",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/foono-online-multiplayer-card-game",
+      "slug": "foono-online-multiplayer-card-game",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviamillionarequiz",
+      "game": "Millionaire Quiz",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/millionaire-quiz",
+      "slug": "millionaire-quiz",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameswording",
+      "game": "Wording",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/wording",
+      "slug": "wording",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsspidersolitaire",
+      "game": "Spider Solitaire",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/spider-solitaire-fuw",
+      "slug": "spider-solitaire-fuw",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviagooglefeud",
+      "game": "Google Feud",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/google-feud",
+      "slug": "google-feud",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardssocialsolitaire",
+      "game": "Social Solitaire",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/social-solitaire",
+      "slug": "social-solitaire",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgamesdeathnotetype",
+      "game": "Death Note Type",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/death-note-type",
+      "slug": "death-note-type",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamestileman",
+      "game": "TileMan.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/tileman-io",
+      "slug": "tileman-io",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameswordwipe",
+      "game": "Word Wipe",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/word-wipe",
+      "slug": "word-wipe",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviawwwcrazygawordgeoflagsandcapitalscom",
+      "game": "World Geography: Flags and Capitals",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/world-geography-flags-and-capitals",
+      "slug": "world-geography-flags-and-capitals",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamesevowarsio",
+      "game": "EvoWars.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/evowarsio",
+      "slug": "evowarsio",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamesagario",
+      "game": "Agar.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/agario",
+      "slug": "agario",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "trivialogoquizgamewordtrivia",
+      "game": "Logo Quiz: Game World Trivia",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/logo-quiz-game-world-trivia",
+      "slug": "logo-quiz-game-world-trivia",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsclassiccardgamescollection",
+      "game": "Classic Card Games Collection",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/classic-card-games-collection",
+      "slug": "classic-card-games-collection",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviamemebattle",
+      "game": "MemeBattle: What's That Meme?",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/memebattle-what-s-that-meme",
+      "slug": "memebattle-what-s-that-meme",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamesdiepio",
+      "game": "Diep.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/diepio",
+      "slug": "diepio",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogameshexanautio",
+      "game": "Hexanaut.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/hexanaut-io",
+      "slug": "hexanaut-io",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviasoccereuropequiz",
+      "game": "Soccer Europe Quiz",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/soccer-europe-quiz",
+      "slug": "soccer-europe-quiz",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviatotortrivia",
+      "game": "ToT or Trivia",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/tot-or-trivia",
+      "slug": "tot-or-trivia",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviapainttheflag",
+      "game": "Paint the Flag",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/paint-the-flag",
+      "slug": "paint-the-flag",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamessurvev",
+      "game": "Survev",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/survev",
+      "slug": "survev",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardsduowithfriends",
+      "game": "DUO With Friends",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/duo-with-friends",
+      "slug": "duo-with-friends",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "triviaopenguesser",
+      "game": "OpenGuessr",
+      "category": "trivia",
+      "url": "https://www.crazygames.com/game/openguessr",
+      "slug": "openguessr",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgamescrocwords",
+      "game": "Crocword",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/crocword",
+      "slug": "crocword",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamesgulperio",
+      "game": "Gulper.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/gulper-io",
+      "slug": "gulper-io",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamesholey",
+      "game": "Holey.io Battle Royale",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/holey-io-battle-royale",
+      "slug": "holey-io-battle-royale",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamescubes2048",
+      "game": "Cubes 2048.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/cubes-2048-io",
+      "slug": "cubes-2048-io",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameskittyscramble",
+      "game": "Kitty Scramble",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/kitty-scramble",
+      "slug": "kitty-scramble",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "cardskingsqueensolitairetripeaks",
+      "game": "Kings and Queens Solitaire TriPeaks",
+      "category": "cards",
+      "url": "https://www.crazygames.com/game/kings-and-queens-solitaire-tripeaks",
+      "slug": "kings-and-queens-solitaire-tripeaks",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "wordgameswordguesser",
+      "game": "WorldGuessr",
+      "category": "Word games",
+      "url": "https://www.crazygames.com/game/worldguessr",
+      "slug": "worldguessr",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    },
+    {
+      "id": "iogamessnakeio",
+      "game": "Snake.io",
+      "category": "io games",
+      "url": "https://www.crazygames.com/game/snake-io",
+      "slug": "snake-io",
+      "mappingEvidence": "catalog-title",
+      "verification": "original-audit",
+      "gameplayVerified": false
+    }
+  ]
+}
