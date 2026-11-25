@@ -1,0 +1,58 @@
+name: Validate multi-game reskinner
+
+on:
+  push:
+    branches:
+      - feat/multigame-reskinner
+    paths:
+      - 'reskinner/**'
+      - 'scripts/generate_reskin_catalog.py'
+      - 'scripts/test_reskin_catalog.py'
+      - 'RESKIN_AUDIT*.md'
+      - 'extracted/**'
+      - '.github/workflows/reskinner-validate.yml'
+  pull_request:
+    paths:
+      - 'reskinner/**'
+      - 'scripts/generate_reskin_catalog.py'
+      - 'scripts/test_reskin_catalog.py'
+      - 'RESKIN_AUDIT*.md'
+      - 'extracted/**'
+      - '.github/workflows/reskinner-validate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout mirrored games
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Structural catalog checks (committed)
+        run: python3 scripts/test_reskin_catalog.py
+      - name: Regenerate catalog from extracted files
+        run: python3 scripts/generate_reskin_catalog.py
+      - name: Structural catalog checks (regenerated)
+        run: python3 scripts/test_reskin_catalog.py
+      - name: Validate browser modules
+        run: |
+          node --check reskinner/app.js
+          node --check reskinner/runtime.js
+          node --check reskinner/storage.js
+          node --check reskinner/adapters.js
+      - name: Catalog generation diagnostics
+        run: |
+          python3 - <<'PY'
+          import json
+          d = json.load(open("reskinner/catalog.json", encoding="utf-8"))
+          print("Games:", d["total"])
+          print("Compatibility:", d["counts"])
+          print("Assets:", sum(len(g["assets"]) for g in d["games"]))
+          PY
