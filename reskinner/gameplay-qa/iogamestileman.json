@@ -107,5 +107,59 @@
     ],
     "blockedExternalRequestCount": 2
   },
-  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded.",
+  "latestRetest": {
+    "testedAt": "2026-11-25T14:34:48.610156+00:00",
+    "serverCommit": "b721214",
+    "mode": "Windows Chromium strict-offline",
+    "result": "loaded-no-gameplay-proof",
+    "gameplayVerified": false,
+    "playActionVerified": true,
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "969b1487452f970905b32c8db8015405ca9aa8e98c3cc93d1ab74d6535c8ab5b"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "6c7e95549f6f1fabe174f6ae1fdee5318af87b26cbdf3dc04a95e59871281e6e"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "caaba9f6af55346ed2600a7c36a17f317b91d76876757acc17458bb834b303e4"
+      }
+    ],
+    "pageErrors": [
+      "Cannot read properties of undefined (reading 'toUpperCase')"
+    ],
+    "httpErrors": [
+      {
+        "path": "/discord.png",
+        "status": 404
+      },
+      {
+        "path": "/re.png",
+        "status": 404
+      },
+      {
+        "path": "/loading.gif",
+        "status": 404
+      },
+      {
+        "path": "/",
+        "status": 404
+      },
+      {
+        "path": "/",
+        "status": 404
+      }
+    ],
+    "blockedHosts": [
+      "www.googletagmanager.com",
+      "api.adinplay.com",
+      "eu1.tileman.io",
+      "usa.tileman.io",
+      "asia.tileman.io"
+    ]
+  }
 }
