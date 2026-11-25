@@ -103,15 +103,15 @@
         "@Inject param undefined on _0x5e08ad"
       ],
       "next": [
-        "Inspect actual Word Wipe game screenshots; identify a real word grid",
-        "Perform two authentic tile selection gestures and validate cleared letters / score changes",
-        "Do not mark green based on zero errors alone"
+        "Wait longer / inspect original Word Wipe loader and remaining startup gate; evidence currently shows loading bar, not actual word grid",
+        "Confirm Play -> interactive grid, drag real letters, then repeat two different valid words",
+        "Inspect selectable image/atlas objects for live reskinning; do not award green until actual gameplay"
       ],
       "gameplayVerified": false,
       "inspectorValidated": false,
       "fixes": [
         {
-          "type": "incremental-CDN-recovery",
+          "type": "boot-CDN-recovery",
           "status": "verified_Windows",
           "count": 51,
           "passes": [
@@ -120,21 +120,40 @@
             33,
             4,
             0
+          ]
+        },
+        {
+          "type": "post-Play-CDN-recovery",
+          "status": "verified_Windows",
+          "count": 4,
+          "passes": [
+            4,
+            0
           ],
-          "source": "original word-wipe.game-files.crazygames.com CDN"
+          "assetsFirstDetected": [
+            "GameScreen_bitmaps_0.png",
+            "GameScreen_bitmaps_1.png",
+            "bomb_particle_1.png",
+            "bomb_particle_2.png",
+            "tile_clear_particle.png"
+          ],
+          "note": "Five 404s observed on initial click; four unique observed in next recovery pass; final post-click scan zero 404."
         }
       ],
       "latestRetest": {
-        "browser": "Playwright Chromium Windows",
+        "browser": "Real Windows Playwright Chromium",
         "gameCanvas": {
           "width": 741,
           "height": 341,
           "visible": true
         },
+        "clickPlay": "clicked at observed green original Canvas button",
+        "postClickVisual": "original Word Wipe title with dark loading/progress bar, no confirmed letter grid",
         "gameHTTP404": 0,
         "pageExceptions": 0,
         "consoleErrors": 0,
-        "gameplayVerified": false
+        "gameplayVerified": false,
+        "screenshotOnWindows": "Downloads/_2night_reskin_qa/manual-next6-wordwipe-interactive/after-play.png"
       }
     },
     {
@@ -254,7 +273,7 @@
       }
     }
   ],
-  "updatedAt": "2026-11-25T19:24:00Z",
+  "updatedAt": "2026-11-25T19:33:00Z",
   "recoverySummary": {
     "requested": 91,
     "recovered": 88,
@@ -271,11 +290,21 @@
     "verified": "7 original asset URLs returned 200 with correct game Referer"
   },
   "followup": {
-    "stage": "Post-mirror-recovery browser retests complete. Gallery server restarted to refresh asset index; restart confirmation pending.",
+    "stage": "Browser QA completed after CDN recovery; Word Wipe authentic Canvas Play action tested and after-Play 404s restored; visual screenshot still shows loading bar, no game board.",
     "previousCertifiedBaseline": 3,
     "newlyCertified": 0,
     "script": "scripts/retest_next_six_user_games.py",
     "screenshotsDirOnWindows": "Downloads/_2night_reskin_qa/manual-next6-after-recovery-20261125",
-    "proofRule": "Gameplay is unverified unless game content visible and two meaningful actual inputs change gameplay state."
+    "proofRule": "Gameplay is unverified unless game content visible and two meaningful actual inputs change gameplay state.",
+    "catalogRefresh": {
+      "status": "performed_and_verified",
+      "url": "http://127.0.0.1:8001/reskinner/catalog.json",
+      "games": 69,
+      "imageCounts": {
+        "wordgameswordwipe": 36,
+        "iogamesevowarsio": 387
+      },
+      "note": "Counts before 4 additional post-Play assets; another refresh is needed."
+    }
   }
 }
