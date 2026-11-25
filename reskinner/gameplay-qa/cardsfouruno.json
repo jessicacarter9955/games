@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "id": "cardsfouruno",
+  "title": "Foono Online Multiplayer",
+  "engine": "iframe",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:22.227813+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "06eac3d6895e6943b914c99ef4f5dc03692b042aa1ce72ab3ae2de79d97c45ae",
+        "metrics": {
+          "entropy": 1.381,
+          "dominantFraction": 0.836,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "06eac3d6895e6943b914c99ef4f5dc03692b042aa1ce72ab3ae2de79d97c45ae",
+        "metrics": {
+          "entropy": 1.381,
+          "dominantFraction": 0.836,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "36386449133a451d8666d65426be44c9f50de6a2944a6ddb31899c6a661feb7b",
+        "metrics": {
+          "entropy": 1.798,
+          "dominantFraction": 0.68,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 12.07,
+      "fractionChanged": 0.109
+    },
+    "canvasBefore": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/fonts/Exo2-latin-c8f4d0d9.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/index-Cy5NeRM2.css"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/img/flags/us.svg"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/rolldown-runtime-XhbT90kL.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/solid-vendor-vMdafsZ3.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/createGlobalStore-31p-ne8-.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/NumberUtils-g4Ou7l33.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/battleships-6FROMMY9.js"
+      }
+    ],
+    "blockedExternalRequestCount": 25
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}
