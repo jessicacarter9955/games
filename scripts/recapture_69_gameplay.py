@@ -63,8 +63,38 @@ def target_for(root: Path, url: str) -> Path:
     return root / host / Path(*parts)
 
 
+def trusted_hosts(row: dict, catalog_game: dict, audit_games: list) -> set[str]:
+    """Only the game-specific hosts identified before recapture are eligible."""
+    def norm(value):
+        return re.sub(r"[^a-z0-9]", "", str(value).lower())
+
+    zip_name = Path(catalog_game["sourceZip"]).stem
+    source = "old" if catalog_game["category"] == "Puzzles" else "new"
+    matches = [
+        g for g in audit_games if g.get("source") == source and
+        norm(g.get("game", "")) in {
+            norm(zip_name), norm(catalog_game["id"]),
+            norm(catalog_game["title"]),
+            *(["nutsortbuildthecity"] if catalog_game["id"] == "findthecowcat" else [])
+        }
+    ]
+    if len(matches) != 1:
+        raise ValueError("Cannot verify mirror host ownership: " + row["id"])
+    hosts = {str(host).lower() for host in matches[0].get("hosts", [])}
+    for url in matches[0].get("loader_urls", []):
+        host = urlsplit(url).hostname
+        if host:
+            hosts.add(host.lower())
+    hosts.add(row["slug"] + ".game-files.crazygames.com")
+    return {h for h in hosts if h not in SKIP_EXACT and
+            not any(h == x or h.endswith("." + x) for x in SKIP) and
+            h not in {"imgs.crazygames.com", "builds.crazygames.com",
+                      "api.crazygames.com", "model.crazygames.com"}}
+
+
 async def capture(row: dict, root: Path, browser, seconds: int,
-                  click_play: bool, max_file_mb: int) -> dict:
+                  click_play: bool, max_file_mb: int,
+                  approved_hosts: set[str]) -> dict:
     root.mkdir(parents=True, exist_ok=True)
     manifest_path = root.parent / "_reskin_69_incremental.json"
     try:
@@ -88,6 +118,8 @@ async def capture(row: dict, root: Path, browser, seconds: int,
         url = response.url
         if not safe_response(url, response.request.resource_type):
             return
+        if (urlsplit(url).hostname or "").lower() not in approved_hosts:
+            return  # Portal, ads, embeds of unrelated games: never save.
         if response.status < 200 or response.status >= 300:
             if len(failures) < 100:
                 failures.append({"url": url, "status": response.status})
@@ -179,6 +211,11 @@ async def main():
     args = parser.parse_args()
     links = json.loads(SOURCES.read_text(encoding="utf-8"))["games"]
     catalog, roots = build_index(args.downloads, ROOT)
+    audit_path = args.downloads / "_mirror_69_deep_audit_20261125.json"
+    if not audit_path.is_file():
+        parser.error("Trusted host audit missing: " + str(audit_path))
+    audit_games = json.loads(audit_path.read_text(encoding="utf-8"))["games"]
+    catalog_by_id = {g["id"]: g for g in catalog["games"]}
     if len(links) != catalog["total"] or len(links) != 69:
         parser.error("Sources/catalog must both contain 69 games")
     root_ids = {g["id"] for g in catalog["games"]}
@@ -203,9 +240,11 @@ async def main():
                     results.append({"id": row["id"], "error": "missing_root"})
                     continue
                 try:
+                    allowed = trusted_hosts(
+                        row, catalog_by_id[row["id"]], audit_games)
                     results.append(await capture(
                         row, root, browser, args.seconds, args.click_play,
-                        args.max_file_mb
+                        args.max_file_mb, allowed
                     ))
                 except Exception as exc:
                     results.append({"id": row["id"], "error": str(exc)[:300]})
