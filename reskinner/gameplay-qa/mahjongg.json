@@ -143,5 +143,20 @@
     "matchedPairVerified": false,
     "inspectorValidated": false,
     "notes": "Actual playable board and coherent tile selection confirmed visually. No completed matching pair, full playthrough, or live tile replacement certified. Initial evidence fields remain from first run."
+  },
+  "previewerGameplayRetest": {
+    "source": "Windows Chromium Playwright through actual Reskinner iframe on isolated local mirror server",
+    "networkMode": "strict-offline",
+    "testedOn": "2026-11-25",
+    "gameplayVerified": true,
+    "observed": "Actual Mahjongg board visible after Play; exposed tile receives yellow selection highlight after subsequent click.",
+    "pageErrors": [],
+    "httpErrors": [],
+    "screenshots": {
+      "boot": "5ddce25da53752c6fd80b53ada6d0895494d79fc959b18e3f05c926193c93e72",
+      "board": "41996415d2fa4421fe2a134f630c04932e7bc7d1f82367b0c304f41060b442aa",
+      "selected": "d0b98135683be1ee66087bb4ea3d8bd714f3cb74a461b19b09a1d985a84f59ad"
+    },
+    "fullPlaythroughVerified": false
   }
 }
