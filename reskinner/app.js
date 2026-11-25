@@ -479,11 +479,10 @@ async function launchGame(force=false){
     log('Bloccato: entrypoint assente per '+game.title);return;
   }
   if(['blocked','limited'].includes(game.status)&&!force){
-    notice(game.label,game.reason+
-      ' Puoi tentare l’avvio dell’HTML per analisi visiva, ma non verrà presentato '+
-      'come reskinning 1:1 supportato.',
-      'Tenta avvio (sperimentale)',()=>{void launchGame(true)});
-    log('Gioco '+game.title+' richiede adapter specifico');return;
+    // Preview should still be attempted; adapter support and reskin grade
+    // remain independent. Keep the limitation visible in the status label.
+    log('Avvio HTML sperimentale per '+game.title+
+      ': il motore può richiedere adapter e servizi online.');
   }
   const url=localURL(game.entry);
   if(!url){notice('Percorso non autorizzato','L’entrypoint non è nel mirror locale.');return;}
