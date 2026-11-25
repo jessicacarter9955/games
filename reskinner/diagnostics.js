@@ -2,8 +2,8 @@
  * The report is assembled locally. Nothing is uploaded or transmitted.
  * It never captures cookies, authorization headers or request bodies.
  */
-const MAX_MESSAGES=100;
-const MAX_RESOURCES=60;
+const MAX_MESSAGES=85;
+const MAX_RESOURCES=45;
 const MAX_TEXT=1000;
 
 function clean(value, max=MAX_TEXT) {
@@ -130,13 +130,19 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
     panel?.classList.toggle('has-errors',errors>0);
   };
   const put=(level,kind,message)=>{
-    const entry={
-      at:new Date().toISOString(),level,kind,message:clean(message,1600),
-    };
-    if(entries.some(e=>e.kind===entry.kind&&e.message===entry.message &&
-       Date.parse(entry.at)-Date.parse(e.at)<250))return;
-    entries.push(entry);
-    if(entries.length>MAX_MESSAGES)entries.shift();
+    const at=new Date().toISOString();
+    const value=clean(message,1600);
+    const existing=entries.find(e=>e.level===level&&e.kind===kind&&e.message===value);
+    if(existing){
+      existing.occurrences=(existing.occurrences||1)+1;
+      existing.lastSeen=at;
+      return;
+    }
+    entries.push({at,level,kind,message:value,occurrences:1});
+    if(entries.length>MAX_MESSAGES){
+      // Keep the first errors (often the real root cause) plus recent failures.
+      entries.splice(Math.min(24,entries.length-1),1);
+    }
     update();
   };
   const feedbackText=(message,error=false)=>{
@@ -258,9 +264,13 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
     let runtime=null;
     try{runtime=getRuntimeReport?.()||null;}
     catch(error){runtime={error:clean(error)};}
-    // Avoid serializing engine objects / enormous graphs.
-    try{runtime=JSON.parse(JSON.stringify(runtime).slice(0,6500));}
-    catch{runtime={note:'Runtime details unavailable'};}
+    // Avoid serializing engine objects / enormous graphs or raw query tokens.
+    try{
+      const serialized=JSON.stringify(runtime);
+      runtime=serialized.length>6500?
+        {excerpt:clean(serialized,6500),truncated:true}:
+        JSON.parse(clean(serialized,serialized.length));
+    }catch{runtime={note:'Runtime details unavailable'};}
     const child=activeWindow;
     const timings=[
       ...resourceErrors(window,'reskinner'),
