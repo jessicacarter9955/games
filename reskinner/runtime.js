@@ -3,6 +3,7 @@
  * calls. WebGL/Unity/PlayCanvas scenes require a game-specific adapter.
  * Never claims pixels to be a named sprite without source evidence.
  */
+import { resolveGameAdapter } from './adapters.js';
 const MAX_DRAWS = 650;
 const MAX_TREE_NODES = 1800;
 
@@ -44,6 +45,7 @@ export function createRuntimeInspector(frame, options = {}) {
   let canvas = null;
   let frameRect = null;
   let gameId = options.gameId || '';
+  const gameAdapter = resolveGameAdapter(gameId);
   const overrides = new Map();        // local path -> decoded HTMLImageElement
   const blobs = new Map();            // local path -> object URL, owned by caller
   const state = { draws: [], lastDraw: 0, lastClear: 0, samples: 0, patched: false,
@@ -221,10 +223,22 @@ export function createRuntimeInspector(frame, options = {}) {
   }
   function pick(point) {
     if (!win||!doc) return null;
+    try {
+      if (gameAdapter?.pick) {
+        const item=gameAdapter.pick({win,doc,gameId,point,options});
+        if (item) return item;
+      }
+    } catch (error) { state.errors.push('adapter.pick: '+String(error)); }
     const p={x:finite(point.x),y:finite(point.y)};
     const dom = pickDOM(p);
     if(dom)return dom;
     state.scene = engineScene();
+    try {
+      if (gameAdapter?.scan) {
+        const objects=gameAdapter.scan({win,doc,gameId,point:p});
+        if(Array.isArray(objects))state.scene.unshift(...objects.filter(Boolean));
+      }
+    } catch (error) { state.errors.push('adapter.scan: '+String(error)); }
     state.sceneUpdated=performance.now();
     const named = state.scene.filter(item=>within(item,p));
     if(named.length)return named.at(-1);
@@ -247,6 +261,12 @@ export function createRuntimeInspector(frame, options = {}) {
   }
   async function swap(assetPath,blob) {
     if(!win||!doc)throw new Error('Gioco non avviato');
+    try {
+      if (gameAdapter?.swap) {
+        const result=await gameAdapter.swap({win,doc,gameId,assetPath,blob});
+        if(result?.ok) return result;
+      }
+    } catch(error) { state.errors.push('adapter.swap: '+String(error)); }
     const src=normPath(assetPath);
     if(!src)throw new Error('Puoi modificare solo asset presenti nell’origine locale');
     const url=URL.createObjectURL(blob);
@@ -297,7 +317,11 @@ export function createRuntimeInspector(frame, options = {}) {
       doc=frame?.contentDocument;
       frameRect=frame?.getBoundingClientRect();
       if(!win||!doc)throw new Error('Iframe non accessibile (origine diversa)');
-      state.engine=engineType();
+      state.engine=gameAdapter?.engine || engineType();
+      if(gameAdapter?.attach) {
+        try { gameAdapter.attach({win,doc,gameId,frame}); }
+        catch(e) {state.errors.push('adapter.attach: '+String(e));}
+      }
       instrumentCanvas2D();
       emit('Runtime collegato: '+state.engine);
       return getReport();
@@ -308,6 +332,8 @@ export function createRuntimeInspector(frame, options = {}) {
     }
   }
   function destroy() {
+    try {gameAdapter?.dispose?.({win,doc,gameId});}
+    catch(e) {state.errors.push('adapter.dispose: '+String(e));}
     for(const url of blobs.values())URL.revokeObjectURL(url);
     blobs.clear();overrides.clear();
     // No unpatch: the iframe is discarded on game change, so the patch dies.
