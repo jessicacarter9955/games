@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "id": "whatsthedifferenceonline",
+  "title": "What S The Difference Online",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:08:51.913583+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "367627d4118759328c8ca51db542966d5eef24116e44b5108e1152d0e16a49d1",
+        "metrics": {
+          "entropy": 0.518,
+          "dominantFraction": 0.95,
+          "nearUniform": true,
+          "paletteColors": 31
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "276b415320ba8d820a195df7f469114b5c8da25a46d592f6b69d3577bd36c772",
+        "metrics": {
+          "entropy": 0.528,
+          "dominantFraction": 0.949,
+          "nearUniform": false,
+          "paletteColors": 31
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "1945bcc2de4c7e6c081766df91237c8d0165706bbf6acd084e1aeef6870f5796",
+        "metrics": {
+          "entropy": 0.51,
+          "dominantFraction": 0.951,
+          "nearUniform": true,
+          "paletteColors": 30
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.07,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.08,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/index.php/settings"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/json/manifests/1795615732073/preload.json"
+      }
+    ],
+    "externalRequestFailures": 0,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}
