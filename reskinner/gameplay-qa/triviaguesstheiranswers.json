@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "triviaguesstheiranswers",
+  "title": "Guess Their Answer",
+  "engine": "html5",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:54:14.305766+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "1be8b8c9c9cb6a41bc7a51d51e10e675be2c0bdd273764358d284f5bd69e59f8",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "1be8b8c9c9cb6a41bc7a51d51e10e675be2c0bdd273764358d284f5bd69e59f8",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "1be8b8c9c9cb6a41bc7a51d51e10e675be2c0bdd273764358d284f5bd69e59f8",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Failed to fetch"
+    ],
+    "httpErrors": [],
+    "externalRequestsBlocked": 2
+  },
+  "notes": "Screenshot originali solo sul PC Windows; screenshot/menu/canvas/HTML non equivalgono a gameplay."
+}
