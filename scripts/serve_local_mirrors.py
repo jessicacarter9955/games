@@ -328,10 +328,16 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             root = self.roots.get(refparts[1])
             if root is None:
                 return None
-            base = root.joinpath(*refparts[2:-1]).resolve()
-            candidate = base.joinpath(*parts).resolve()
-            candidate.relative_to(root)
-            return str(candidate) if candidate.is_file() else None
+            host = (root / refparts[2]).resolve()
+            host.relative_to(root)
+            page_directory = root.joinpath(*refparts[2:-1]).resolve()
+            page_directory.relative_to(host)
+            for base in (host, page_directory):
+                candidate = base.joinpath(*parts).resolve()
+                candidate.relative_to(host)
+                if candidate.is_file():
+                    return str(candidate)
+            return None
         except (ValueError, OSError):
             return None
 
