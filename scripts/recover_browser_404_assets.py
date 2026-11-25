@@ -34,16 +34,25 @@ MAP={
     "hexastack":(
         DL/"_chatgpt_games_full_mirrors"/"hexastack"/"hosts",
         "hexa-stack.game-files.crazygames.com","hexa-stack/59"),
+    "wordgameswordwipe":(
+        BASE/"Word games"/"word-wipe"/"hosts",
+        "word-wipe.game-files.crazygames.com","word-wipe/3"),
+    "iogamesevowarsio":(
+        BASE/"io games"/"evowarsio"/"hosts",
+        "evowars.io",""),
+    "cardsdominoduel":(
+        BASE/"cards"/"dominoduel"/"hosts",
+        "domino-duel-uit.game-files.crazygames.com","domino-duel-uit/239"),
 }
 ALLOWED={".png",".jpg",".jpeg",".webp",".avif",".gif",".svg",".json",
          ".glb",".gltf",".bin",".pack",".woff",".woff2",".ttf",".otf",
-         ".mp3",".ogg",".wav",".css",".js",".mjs",".wasm",".atlas",".xml"}
+         ".mp3",".ogg",".wav",".css",".js",".mjs",".wasm",".atlas",".xml",".txt"}
 MAX_FILE=32*1024*1024
 
 
-def collect_missing(game: str, port: int, seconds: float) -> tuple[list[str], dict]:
+def collect_missing(game: str, port: int, seconds: float, click: str = '') -> tuple[list[str], dict]:
     _,host,version=MAP[game]
-    prefix=f"/local-mirror/{game}/{host}/{version}/"
+    prefix=f"/local-mirror/{game}/{host}/"+(version.strip("/")+"/" if version else "")
     failures=set()
     ignored=0
     with sync_playwright() as pw:
@@ -71,6 +80,14 @@ def collect_missing(game: str, port: int, seconds: float) -> tuple[list[str], di
             page.goto(f"http://127.0.0.1:{port}/reskinner/#game={game}",
                       wait_until="domcontentloaded",timeout=25000)
             page.wait_for_timeout(int(seconds*1000))
+            if click:
+                try:
+                    item=page.frame_locator("#gameFrame").get_by_text(click,exact=True)
+                    if item.count() and item.first.is_visible():
+                        item.first.click(timeout=4500)
+                        page.wait_for_timeout(5000)
+                except Exception as e:
+                    print("BROWSER_CLICK_NOT_CONFIRMED",game,repr(e)[:200],flush=True)
         finally:
             context.close()
             browser.close()
@@ -110,7 +127,7 @@ def recover_one(game:str, name:str, apply:bool)->dict:
             raise ValueError("Invalid path component")
         if filename.suffix.lower() not in ALLOWED:
             raise ValueError("File extension not allowlisted")
-        source=f"https://{host}/{version}/"+quote(name,safe="/-_.()")
+        source=f"https://{host}/"+(version.strip("/")+"/" if version else "")+quote(name,safe="/-_.()")
         result={"relative":name,"source":source,"destination":str(filename)}
         if filename.exists():
             result.update(status="already_present",bytes=filename.stat().st_size)
@@ -150,11 +167,12 @@ def main():
     parser.add_argument("--game",choices=MAP.keys(),default="iogamespaperio")
     parser.add_argument("--port",type=int,default=8001)
     parser.add_argument("--seconds",type=float,default=9)
+    parser.add_argument("--click",default="")
     parser.add_argument("--limit",type=int,default=100)
     parser.add_argument("--workers",type=int,default=7)
     parser.add_argument("--apply",action="store_true")
     a=parser.parse_args()
-    names,metadata=collect_missing(a.game,a.port,a.seconds)
+    names,metadata=collect_missing(a.game,a.port,a.seconds,a.click)
     selected=names[:a.limit]
     print("BROWSER_404_AUDIT",json.dumps({
         "game":a.game,"captured":len(names),"selected":len(selected),
