@@ -110,8 +110,9 @@ async def capture(row: dict, root: Path, browser, seconds: int,
     stats = {"new": 0, "existing": 0, "failed": 0, "bytes_new": 0}
     tasks: set = set()
     sem = asyncio.Semaphore(6)
-    context = await browser.new_context(accept_downloads=False)
-    page = await context.new_page()
+    context = await asyncio.wait_for(
+        browser.new_context(accept_downloads=False), timeout=20)
+    page = await asyncio.wait_for(context.new_page(), timeout=20)
     page.on("pageerror", lambda e: errors.append(str(e)[:400]))
 
     async def save(response):
@@ -134,7 +135,9 @@ async def capture(row: dict, root: Path, browser, seconds: int,
                 length = int(response.headers.get("content-length", 0) or 0)
                 if length > max_file_mb * 1048576:
                     return
-                body = await response.body()
+                # Some third-party/streaming responses never finish. Bound
+                # each body read so one response cannot stall the whole batch.
+                body = await asyncio.wait_for(response.body(), timeout=20)
                 if not body or len(body) > max_file_mb * 1048576:
                     return
                 dest.parent.mkdir(parents=True, exist_ok=True)
@@ -178,8 +181,18 @@ async def capture(row: dict, root: Path, browser, seconds: int,
         errors.append("navigation: " + str(exc)[:350])
     finally:
         if tasks:
-            await asyncio.gather(*list(tasks), return_exceptions=True)
-        await context.close()
+            done, pending = await asyncio.wait(list(tasks), timeout=25)
+            if pending:
+                errors.append(f"{len(pending)} asset response tasks timed out")
+                stats["failed"] += len(pending)
+                for task in pending:
+                    task.cancel()
+                # Do not wait indefinitely for third-party streams.
+                await asyncio.sleep(0)
+        try:
+            await asyncio.wait_for(context.close(), timeout=15)
+        except (asyncio.TimeoutError, Exception) as exc:
+            errors.append("context close: " + str(exc)[:180])
     report = {
         "id": row["id"], "source_url": row["url"], "started": started,
         "captured_at": datetime.now(timezone.utc).isoformat(),
@@ -203,6 +216,8 @@ async def main():
                         help="Game ID or URL slug, repeat for multiple games")
     parser.add_argument("--seconds", type=int, default=12)
     parser.add_argument("--click-play", action="store_true")
+    parser.add_argument("--start-after", default="",
+                        help="Resume from the game following this ID or URL slug")
     parser.add_argument("--max-file-mb", type=int, default=250)
     parser.add_argument("--headed", action="store_true")
     parser.add_argument("--report", type=Path,
@@ -221,6 +236,14 @@ async def main():
     root_ids = {g["id"] for g in catalog["games"]}
     if set(row["id"] for row in links) != root_ids:
         parser.error("Source URLs do not match catalog IDs")
+    if args.start_after:
+        matches = [
+            i for i, row in enumerate(links)
+            if row["id"] == args.start_after or row["slug"] == args.start_after
+        ]
+        if len(matches) != 1:
+            parser.error("Unknown --start-after game ID or slug")
+        links = links[matches[0] + 1:]
     if args.game:
         requested = set(args.game)
         links = [
@@ -230,6 +253,29 @@ async def main():
         if not links:
             parser.error("No matching game ids or slugs")
     results = []
+
+    def checkpoint(complete: bool = False) -> None:
+        summary = {
+            "captured_at": datetime.now(timezone.utc).isoformat(),
+            "complete": complete,
+            "games_attempted": len(results),
+            "new_files": sum(r.get("stats", {}).get("new", 0) for r in results),
+            "bytes_new": sum(
+                r.get("stats", {}).get("bytes_new", 0) for r in results),
+            "errors": [r["id"] for r in results
+                       if r.get("error") or r.get("page_errors")],
+            "results": [
+                {"id": r["id"], **r.get("stats", {}),
+                 "error": r.get("error"),
+                 "page_errors": r.get("page_errors", [])[:3]}
+                for r in results
+            ],
+        }
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        tmp = args.report.with_name(args.report.name + ".tmp")
+        tmp.write_text(json.dumps(summary, indent=2, ensure_ascii=False),
+                       encoding="utf-8")
+        tmp.replace(args.report)
     async with async_playwright() as play:
         browser = await play.chromium.launch(headless=not args.headed)
         try:
@@ -239,35 +285,31 @@ async def main():
                     print(row["id"] + ": missing local mirror root", flush=True)
                     results.append({"id": row["id"], "error": "missing_root"})
                     continue
+                print(f"START {row['id']}", flush=True)
                 try:
                     allowed = trusted_hosts(
                         row, catalog_by_id[row["id"]], audit_games)
-                    results.append(await capture(
-                        row, root, browser, args.seconds, args.click_play,
-                        args.max_file_mb, allowed
+                    results.append(await asyncio.wait_for(
+                        capture(row, root, browser, args.seconds,
+                                args.click_play, args.max_file_mb, allowed),
+                        timeout=max(100, args.seconds + 80)
                     ))
                 except Exception as exc:
-                    results.append({"id": row["id"], "error": str(exc)[:300]})
+                    print(f"FAILED {row['id']}: {str(exc)[:150]}",
+                          flush=True)
+                    results.append({"id": row["id"],
+                                    "error": str(exc)[:300]})
+                checkpoint()
         finally:
             await browser.close()
-    summary = {
-        "captured_at": datetime.now(timezone.utc).isoformat(),
+    checkpoint(complete=True)
+    print("SUMMARY " + json.dumps({
         "games_attempted": len(results),
-        "new_files": sum(r.get("stats", {}).get("new", 0) for r in results),
-        "bytes_new": sum(r.get("stats", {}).get("bytes_new", 0) for r in results),
-        "errors": [r["id"] for r in results
-                   if r.get("error") or r.get("page_errors")],
-        "results": [
-            {"id": r["id"], **r.get("stats", {}),
-             "error": r.get("error"), "page_errors": r.get("page_errors", [])[:3]}
-            for r in results
-        ],
-    }
-    args.report.write_text(json.dumps(summary, indent=2, ensure_ascii=False),
-                           encoding="utf-8")
-    print("SUMMARY " + json.dumps(
-        {key: summary[key] for key in ("games_attempted", "new_files", "bytes_new")},
-        ensure_ascii=False), flush=True)
+        "new_files": sum(r.get("stats", {}).get("new", 0)
+                         for r in results),
+        "bytes_new": sum(r.get("stats", {}).get("bytes_new", 0)
+                         for r in results),
+    }, ensure_ascii=False), flush=True)
 
 
 if __name__ == "__main__":
