@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import tempfile
+import hashlib
 import unittest
 from unittest.mock import patch
 from pathlib import Path
@@ -120,6 +121,48 @@ class MirrorAssetResolutionTests(unittest.TestCase):
             self.handler.translate_path(req),
             str((self.repo / req.lstrip("/")).resolve()))
 
+
+    def test_exact_versioned_capture_is_served(self) -> None:
+        resource = "example-cdn.com/game/assets/ui.json"
+        url = "https://" + resource + "?v=2"
+        suffix = hashlib.sha256(url.encode()).hexdigest()[:12]
+        cached = self.save(self.root, resource + "__q_" + suffix, b"{}")
+        request = "/local-mirror/cardsfouruno/" + resource + "?v=2"
+        self.assertEqual(self.handler.translate_path(request),
+                         str(cached.resolve()))
+        self.assertEqual(self.handler.guess_type(str(cached)), "application/json")
+        other = request.replace("v=2", "v=3")
+        self.assertEqual(self.handler.translate_path(other),
+                         str((self.root / resource).resolve()))
+
+    def test_versioned_capture_preserves_local_override(self) -> None:
+        resource = "example-cdn.com/game/assets/ui.json"
+        suffix = hashlib.sha256(
+            ("https://" + resource + "?v=2").encode()).hexdigest()[:12]
+        self.save(self.root, resource + "__q_" + suffix, b"original")
+        canonical = self.save(self.root, resource, b"local edit")
+        request = "/local-mirror/cardsfouruno/" + resource + "?v=2"
+        self.assertEqual(self.handler.translate_path(request),
+                         str(canonical.resolve()))
+
+    def test_signed_query_is_not_aliased(self) -> None:
+        resource = "example-cdn.com/game/assets/ui.json"
+        suffix = hashlib.sha256(
+            ("https://" + resource + "?token=secret").encode()).hexdigest()[:12]
+        self.save(self.root, resource + "__q_" + suffix, b"private")
+        request = "/local-mirror/cardsfouruno/" + resource + "?token=secret"
+        self.assertEqual(self.handler.translate_path(request),
+                         str((self.root / resource).resolve()))
+
+    def test_conflicting_http_https_cache_is_not_aliased(self) -> None:
+        resource = "example-cdn.com/game/assets/ui.json"
+        for scheme in ("https", "http"):
+            suffix = hashlib.sha256(
+                (scheme + "://" + resource + "?v=2").encode()).hexdigest()[:12]
+            self.save(self.root, resource + "__q_" + suffix, scheme.encode())
+        request = "/local-mirror/cardsfouruno/" + resource + "?v=2"
+        self.assertEqual(self.handler.translate_path(request),
+                         str((self.root / resource).resolve()))
 
 if __name__ == "__main__":
     unittest.main()
