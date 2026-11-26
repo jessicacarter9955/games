@@ -7,7 +7,7 @@ import { initializeDiagnostics } from './diagnostics.js';
 const byId = id => document.getElementById(id);
 const UI = Object.fromEntries([
   'gameCount','assetCount','toggleList','closeList','gameSidebar','mobileBackdrop',
-  'searchGames','statusFilter','sortGames','gameList','downloadCatalog',
+  'searchGames','categoryFilter','statusFilter','sortGames','gameList','downloadCatalog',
   'currentGame','currentDesc','gameStatus','techLabel','modePlay','modeInspect',
   'retryGame','fullscreenGame','gameStage','gameFrame','inspectSurface','hoverBox',
   'hoverName','stageNotice','stageDiagnostic','runtimeState','viewportState',
@@ -76,12 +76,25 @@ function renderCount(){
   const totalAssets=catalog.games.reduce((sum,g)=>sum+g.assetCount,0);
   UI.assetCount.textContent=fmt(totalAssets)+' asset indicizzati';
 }
+const viewParams=new URLSearchParams(location.search);
+function populateCategories(){
+  const categories=[...new Set(catalog.games.map(g=>g.category))];
+  for(const category of categories.sort((a,b)=>a.localeCompare(b,'it'))){
+    const option=document.createElement('option');
+    option.value=category;option.textContent=category==='Word games'?'Word Games':category;
+    UI.categoryFilter.append(option);
+  }
+  const requested=categories.find(c=>normalize(c)===normalize(viewParams.get('category')));
+  if(requested)UI.categoryFilter.value=requested;
+}
 function filters(){
   if(!catalog)return [];
   let list=catalog.games.filter(g=>{
     const text=normalize([g.title,g.category,g.engine,g.reportedEngine].join(' '));
     const query=normalize(UI.searchGames.value).trim();
     return (!query||text.includes(query)) &&
+      (UI.categoryFilter.value==='all'||g.category===UI.categoryFilter.value) &&
+      !(viewParams.get('wordtest')==='1' && UI.categoryFilter.value==='Word games' && g.id==='wordgamesdeathnotetype') &&
       (UI.statusFilter.value==='all'||g.status===UI.statusFilter.value);
   });
   const sort=UI.sortGames.value;
@@ -572,7 +585,7 @@ function bind(){
   UI.gameList.addEventListener('keydown',e=>{
     if(e.key==='Escape')closeMobileList();
   });
-  for(const key of ['searchGames','statusFilter','sortGames']){
+  for(const key of ['searchGames','categoryFilter','statusFilter','sortGames']){
     UI[key].addEventListener(key==='searchGames'?'input':'change',renderGameList);
   }
   UI.searchAssets.addEventListener('input',renderAssets);
@@ -655,12 +668,12 @@ async function boot(){
     catalog=await response.json();
     if(!Array.isArray(catalog.games)||catalog.games.length!==catalog.total)
       throw new Error('Inventario incoerente');
-    renderCount();renderGameList();
+    populateCategories();renderCount();renderGameList();
     const hinted=decodeURIComponent(
       location.hash.replace(/^#game=/,'').replace(/^#/,''));
-    const valid=catalog.games.find(g=>g.id===hinted);
-    const preferred=valid||catalog.games.find(g=>g.status==='experimental')||
-      catalog.games[0];
+    const visible=filters();
+    const valid=visible.find(g=>g.id===hinted);
+    const preferred=valid||visible.find(g=>g.status==='experimental')||visible[0];
     if(preferred)await selectGame(preferred.id);
     log('Catalogo: '+catalog.total+' giochi. Compatibilità verificata per entrypoint, non per gameplay.');
   }catch(error){
