@@ -18,6 +18,7 @@ import hashlib
 import json
 import mimetypes
 import re
+import struct
 import threading
 from collections import Counter
 from datetime import datetime, timezone
@@ -76,6 +77,40 @@ def game_root_candidates(category: str, name: str) -> set[str]:
     if name == "nut-sort-build-the-city":
         variants.add("findthecowcat")
     return variants
+
+
+# These three exceptions were verified in the original game.js loader
+# (bridge issue #6, comment 7187346236), not guessed from a basename.
+WOW_ATLAS_ALIASES = {
+    "words-of-wonders.game-files.crazygames.com/words-of-wonders/119/assets/fortuneWheel/glow_transition/glow_transition.json": "glow_transition.png",
+    "words-of-wonders.game-files.crazygames.com/words-of-wonders/119/assets/fortuneWheel/lightning_transition/spark1/spark1.json": "spark1.png",
+    "words-of-wonders.game-files.crazygames.com/words-of-wonders/119/assets/fortuneWheel/lightning_transition/spark2/spark2.json": "spark2.png",
+}
+
+
+def verified_atlas_alias(file: Path, root: Path, game_id: str) -> tuple[Path, str] | None:
+    if game_id != "wordgameswordofwonders":
+        return None
+    alias = WOW_ATLAS_ALIASES.get(file.relative_to(root).as_posix())
+    if not alias:
+        return None
+    try:
+        data = json.loads(file.read_text(encoding="utf-8"))
+        meta = data["meta"]
+        if meta["image"] != "spritesheet.png" or not isinstance(data["frames"], dict):
+            return None
+        target = file.parent / alias
+        if target.is_symlink():
+            return None
+        with target.open("rb") as stream:
+            header = stream.read(24)
+        if header[:16] != b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR":
+            return None
+        if struct.unpack(">II", header[16:24]) != (meta["size"]["w"], meta["size"]["h"]):
+            return None
+        return target, meta["image"]
+    except (OSError, ValueError, KeyError, TypeError, struct.error):
+        return None
 
 
 def json_atlas_texture(file: Path) -> Path | None:
@@ -170,6 +205,11 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
             kind = ("image" if ext in IMAGE else "atlas" if ext in ATLAS
                     else "model" if ext in MODEL else None)
             texture = json_atlas_texture(file) if ext == ".json" else None
+            declared_image = None
+            if ext == ".json" and texture is None:
+                verified = verified_atlas_alias(file, root, game_id)
+                if verified:
+                    texture, declared_image = verified
             if texture is not None:
                 kind = "atlas"
             if kind is None:
@@ -189,6 +229,8 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 new_assets[asset_path]["atlasTexture"] = (
                     Path("local-mirror") / game_id / texture.relative_to(root)
                 ).as_posix()
+                if declared_image:
+                    new_assets[asset_path]["atlasDeclaredImage"] = declared_image
 
         if entries or fallback_entries:
             def entry_rank(p: Path) -> tuple[int, int, int]:
