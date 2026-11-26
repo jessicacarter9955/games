@@ -78,6 +78,38 @@ def game_root_candidates(category: str, name: str) -> set[str]:
     return variants
 
 
+def json_atlas_texture(file: Path) -> Path | None:
+    """Link only a declared, existing sibling texture, never guess by size."""
+    if file.suffix.lower() != ".json":
+        return None
+    try:
+        if file.stat().st_size > 4 * 1024 * 1024:
+            return None
+        obj = json.loads(file.read_text(encoding="utf-8"))
+        if not isinstance(obj, dict):
+            return None
+        packed = obj.get("0")
+        if isinstance(packed, str):
+            header = packed.splitlines()[0] if packed else ""
+            match = re.fullmatch(r"([^;]+\.png);\d+,\d+;[^;]+", header,
+                                 flags=re.I)
+            name = match.group(1) if match else None
+        elif isinstance(obj.get("frames"), (dict, list)):
+            meta = obj.get("meta")
+            name = meta.get("image") if isinstance(meta, dict) else None
+        else:
+            return None
+        if (not isinstance(name, str) or not name.lower().endswith(".png")
+                or "/" in name or "\\" in name or name.startswith(".")):
+            return None
+        target = file.parent / name
+        if target.is_file() and not target.is_symlink():
+            return target
+    except (OSError, ValueError, TypeError):
+        pass
+    return None
+
+
 def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Path]]:
     original = json.loads((repo / "reskinner/catalog.json").read_text(
         encoding="utf-8"))
@@ -137,6 +169,9 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
             ext = file.suffix.lower()
             kind = ("image" if ext in IMAGE else "atlas" if ext in ATLAS
                     else "model" if ext in MODEL else None)
+            texture = json_atlas_texture(file) if ext == ".json" else None
+            if texture is not None:
+                kind = "atlas"
             if kind is None:
                 continue
             full = Path("local-mirror") / game_id / relative
@@ -150,6 +185,10 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 "bytes": file.stat().st_size,
                 "localMirror": True,
             }
+            if texture is not None:
+                new_assets[asset_path]["atlasTexture"] = (
+                    Path("local-mirror") / game_id / texture.relative_to(root)
+                ).as_posix()
 
         if entries or fallback_entries:
             def entry_rank(p: Path) -> tuple[int, int, int]:
