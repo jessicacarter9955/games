@@ -159,7 +159,8 @@ export async function loadAtlasFrames(asset,meta) {
   if(!response.ok)throw new Error('Metadata atlas HTTP '+response.status);
   const text=await response.text();
   let frames;
-  if(meta.extension==='.json')frames=parseJsonAtlas(text,asset.name);
+  if(meta.extension==='.json')frames=parseJsonAtlas(text,
+    meta.atlasTexture===asset.path ? (meta.atlasDeclaredImage||asset.name) : asset.name);
   else if(meta.extension==='.plist')frames=cocosPlist(text);
   else if(meta.extension==='.atlas')frames=libgdx(text,asset.name);
   else frames=sparrow(text);
