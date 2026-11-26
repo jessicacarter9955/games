@@ -14,8 +14,58 @@ export function findAtlasMetadata(game, asset) {
   if (!game || !asset || !/\.png$/i.test(asset.name)) return null;
   const base=stem(asset.name);
   const dir=asset.path.slice(0,asset.path.lastIndexOf('/')+1);
-  return game.assets.find(a=>a.kind==='atlas' && a.path.startsWith(dir) &&
+  const exact=game.assets.filter(a=>a.kind==='atlas' &&
+    a.atlasTexture===asset.path && a.extension==='.json');
+  if(exact.length===1)return exact[0];
+  if(exact.length>1)return null;
+  return game.assets.find(a=>a.kind==='atlas' &&
+    a.path.slice(0,a.path.lastIndexOf('/')+1)===dir &&
     stem(a.name)===base && /\.(xml|plist|atlas)$/i.test(a.extension)) || null;
+}
+
+/* TexturePacker JSON and CleverApps packed atlases (metadata key "0").
+ * Unknown flags and rotated packed frames are deliberately not editable.
+ */
+export function parseJsonAtlas(text,imageName) {
+  const data=JSON.parse(text);
+  const out=[];
+  const add=(name,x,y,w,h,rotated,extra={})=>{
+    if(typeof name!=='string'||!name||
+       ![x,y,w,h].every(Number.isSafeInteger)||x<0||y<0||w<=0||h<=0)return;
+    out.push({name,x,y,w,h,rotated,frameX:0,frameY:0,
+      logicalW:w,logicalH:h,...extra});
+  };
+  if(typeof data?.['0']==='string'){
+    const [header,...rows]=data['0'].split(/\r?\n/);
+    const info=header.match(/^([^;]+\.png);(\d+),(\d+);[^;]+$/i);
+    if(!info||info[1]!==imageName)return [];
+    const W=Number(info[2]),H=Number(info[3]);
+    for(const row of rows){
+      const m=row.match(/^([^;]+);(\d+),(\d+);(\d+),(\d+)(?:;(.*))?$/);
+      if(!m)continue;
+      const [,name,x,y,w,h,flag]=m;
+      const b=[x,y,w,h].map(Number);
+      // The rotation/trim conventions differ among packed atlases.
+      // Exclude uncertain regions rather than corrupt neighboring sprites.
+      if(flag!==undefined && flag!=='0')continue;
+      if(b[0]+b[2]>W||b[1]+b[3]>H)continue;
+      add(name,...b,false);
+    }
+  }else if(data?.meta?.image===imageName && data.frames){
+    const entries=Array.isArray(data.frames)
+      ?data.frames.map(f=>[f.filename,f]):Object.entries(data.frames);
+    for(const [name,f] of entries){
+      const b=f?.frame;if(!b)continue;
+      const rotated=f.rotated===true;
+      const W=data.meta.size?.w,H=data.meta.size?.h;
+      if(Number.isFinite(W)&&Number.isFinite(H)&&
+         (b.x+b.w>W||b.y+b.h>H))continue;
+      add(name,b.x,b.y,b.w,b.h,rotated,{
+        frameX:f.spriteSourceSize?.x||0,frameY:f.spriteSourceSize?.y||0,
+        logicalW:f.sourceSize?.w||b.w,logicalH:f.sourceSize?.h||b.h});
+    }
+  }
+  return out;
 }
 
 function sparrow(text) {
@@ -109,7 +159,8 @@ export async function loadAtlasFrames(asset,meta) {
   if(!response.ok)throw new Error('Metadata atlas HTTP '+response.status);
   const text=await response.text();
   let frames;
-  if(meta.extension==='.plist')frames=cocosPlist(text);
+  if(meta.extension==='.json')frames=parseJsonAtlas(text,asset.name);
+  else if(meta.extension==='.plist')frames=cocosPlist(text);
   else if(meta.extension==='.atlas')frames=libgdx(text,asset.name);
   else frames=sparrow(text);
   if(!frames.length)throw new Error('Metadati senza frame riconosciuti');
