@@ -8,6 +8,7 @@ offline playable copy. It never tries to bypass authentication or DRM.
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 import asyncio
 import hashlib
 import json
@@ -94,7 +95,8 @@ def trusted_hosts(row: dict, catalog_game: dict, audit_games: list) -> set[str]:
 
 async def capture(row: dict, root: Path, browser, seconds: int,
                   click_play: bool, max_file_mb: int,
-                  approved_hosts: set[str]) -> dict:
+                  approved_hosts: set[str], download_slots: asyncio.Semaphore,
+                  host_slots: dict[str, asyncio.Semaphore]) -> dict:
     root.mkdir(parents=True, exist_ok=True)
     manifest_path = root.parent / "_reskin_69_incremental.json"
     try:
@@ -110,9 +112,14 @@ async def capture(row: dict, root: Path, browser, seconds: int,
     stats = {"new": 0, "existing": 0, "failed": 0, "bytes_new": 0}
     tasks: set = set()
     sem = asyncio.Semaphore(6)
+    in_flight: set[Path] = set()
     context = await asyncio.wait_for(
         browser.new_context(accept_downloads=False), timeout=20)
-    page = await asyncio.wait_for(context.new_page(), timeout=20)
+    try:
+        page = await asyncio.wait_for(context.new_page(), timeout=20)
+    except BaseException:
+        await context.close()
+        raise
     page.on("pageerror", lambda e: errors.append(str(e)[:400]))
 
     async def save(response):
@@ -121,7 +128,7 @@ async def capture(row: dict, root: Path, browser, seconds: int,
             return
         if (urlsplit(url).hostname or "").lower() not in approved_hosts:
             return  # Portal, ads, embeds of unrelated games: never save.
-        if response.status < 200 or response.status >= 300:
+        if response.status != 200:
             if len(failures) < 100:
                 failures.append({"url": url, "status": response.status})
             stats["failed"] += 1
@@ -130,7 +137,11 @@ async def capture(row: dict, root: Path, browser, seconds: int,
         if dest.is_file() and dest.stat().st_size > 0:
             stats["existing"] += 1
             return
-        async with sem:
+        if dest in in_flight:
+            return
+        in_flight.add(dest)
+        host = (urlsplit(url).hostname or '').lower()
+        async with sem, host_slots[host], download_slots:
             try:
                 length = int(response.headers.get("content-length", 0) or 0)
                 if length > max_file_mb * 1048576:
@@ -141,7 +152,9 @@ async def capture(row: dict, root: Path, browser, seconds: int,
                 if not body or len(body) > max_file_mb * 1048576:
                     return
                 dest.parent.mkdir(parents=True, exist_ok=True)
-                dest.write_bytes(body)
+                tmp = dest.with_name(dest.name + '.capture-tmp')
+                tmp.write_bytes(body)
+                tmp.replace(dest)
                 entries[url] = {
                     "url": url, "path": str(dest.relative_to(root)),
                     "bytes": len(body), "sha256": hashlib.sha256(body).hexdigest(),
@@ -153,6 +166,8 @@ async def capture(row: dict, root: Path, browser, seconds: int,
                 stats["failed"] += 1
                 if len(failures) < 100:
                     failures.append({"url": url, "reason": str(exc)[:250]})
+            finally:
+                in_flight.discard(dest)
 
     def on_response(response):
         t = asyncio.create_task(save(response))
@@ -180,6 +195,7 @@ async def capture(row: dict, root: Path, browser, seconds: int,
     except Exception as exc:
         errors.append("navigation: " + str(exc)[:350])
     finally:
+        context.remove_listener("response", on_response)
         if tasks:
             done, pending = await asyncio.wait(list(tasks), timeout=25)
             if pending:
@@ -188,7 +204,7 @@ async def capture(row: dict, root: Path, browser, seconds: int,
                 for task in pending:
                     task.cancel()
                 # Do not wait indefinitely for third-party streams.
-                await asyncio.sleep(0)
+                await asyncio.gather(*pending, return_exceptions=True)
         try:
             await asyncio.wait_for(context.close(), timeout=15)
         except (asyncio.TimeoutError, Exception) as exc:
@@ -201,8 +217,10 @@ async def capture(row: dict, root: Path, browser, seconds: int,
         "complete_offline": False,
         "note": "Only responses seen in this browser session; no bypass or gameplay guarantee",
     }
-    manifest_path.write_text(json.dumps(report, indent=2, ensure_ascii=False),
-                             encoding="utf-8")
+    tmp = manifest_path.with_suffix('.tmp')
+    tmp.write_text(json.dumps(report, indent=2, ensure_ascii=False),
+                   encoding="utf-8")
+    tmp.replace(manifest_path)
     print(f"{row['id']}: +{stats['new']} files, "
           f"{stats['existing']} existing, {stats['failed']} failed", flush=True)
     return report
@@ -215,6 +233,12 @@ async def main():
     parser.add_argument("--game", action="append", default=[],
                         help="Game ID or URL slug, repeat for multiple games")
     parser.add_argument("--seconds", type=int, default=12)
+    parser.add_argument("--workers", type=int, choices=range(1, 5), default=1,
+                        help="Concurrent browser contexts; use 2 on low-RAM PCs")
+    parser.add_argument("--download-limit", type=int, choices=range(1, 13),
+                        default=6, help="Global concurrent response body reads")
+    parser.add_argument("--per-host-limit", type=int, choices=range(1, 7),
+                        default=3)
     parser.add_argument("--click-play", action="store_true")
     parser.add_argument("--start-after", default="",
                         help="Resume from the game following this ID or URL slug")
@@ -252,12 +276,23 @@ async def main():
         ]
         if not links:
             parser.error("No matching game ids or slugs")
+    selected_roots = [roots[row['id']].resolve() for row in links
+                      if row['id'] in roots]
+    if len(set(selected_roots)) != len(selected_roots):
+        parser.error('Selected games share a mirror root; refuse concurrent writes')
+    if len({p.parent for p in selected_roots}) != len(selected_roots):
+        parser.error('Selected games share a manifest directory')
     results = []
+    download_slots = asyncio.Semaphore(args.download_limit)
+    host_slots = defaultdict(lambda: asyncio.Semaphore(args.per_host_limit))
 
     def checkpoint(complete: bool = False) -> None:
         summary = {
             "captured_at": datetime.now(timezone.utc).isoformat(),
             "complete": complete,
+            "workers": args.workers,
+            "download_limit": args.download_limit,
+            "per_host_limit": args.per_host_limit,
             "games_attempted": len(results),
             "new_files": sum(r.get("stats", {}).get("new", 0) for r in results),
             "bytes_new": sum(
@@ -278,29 +313,48 @@ async def main():
         tmp.replace(args.report)
     async with async_playwright() as play:
         browser = await play.chromium.launch(headless=not args.headed)
-        try:
-            for row in links:
-                root = roots.get(row["id"])
-                if not root:
-                    print(row["id"] + ": missing local mirror root", flush=True)
-                    results.append({"id": row["id"], "error": "missing_root"})
-                    continue
-                print(f"START {row['id']}", flush=True)
+        queue = asyncio.Queue()
+        for row in links:
+            queue.put_nowait(row)
+
+        async def worker():
+            while not queue.empty():
+                row = queue.get_nowait()
                 try:
-                    allowed = trusted_hosts(
-                        row, catalog_by_id[row["id"]], audit_games)
-                    results.append(await asyncio.wait_for(
-                        capture(row, root, browser, args.seconds,
-                                args.click_play, args.max_file_mb, allowed),
-                        timeout=max(100, args.seconds + 80)
-                    ))
-                except Exception as exc:
-                    print(f"FAILED {row['id']}: {str(exc)[:150]}",
-                          flush=True)
-                    results.append({"id": row["id"],
-                                    "error": str(exc)[:300]})
-                checkpoint()
+                    root = roots.get(row["id"])
+                    if not root:
+                        result = {"id": row["id"], "error": "missing_root"}
+                    else:
+                        print(f"START {row['id']}", flush=True)
+                        try:
+                            allowed = trusted_hosts(
+                                row, catalog_by_id[row["id"]], audit_games)
+                            result = await asyncio.wait_for(
+                                capture(row, root, browser, args.seconds,
+                                        args.click_play, args.max_file_mb, allowed,
+                                        download_slots, host_slots),
+                                timeout=max(100, args.seconds + 80))
+                        except Exception as exc:
+                            print(f"FAILED {row['id']}: {str(exc)[:150]}",
+                                  flush=True)
+                            result = {"id": row["id"],
+                                      "error": str(exc)[:300]}
+                    results.append(result)
+                    # Synchronous atomic checkpoint: exactly one event-loop
+                    # writer at a time, no await between append and replace.
+                    checkpoint()
+                finally:
+                    queue.task_done()
+
+        jobs = [asyncio.create_task(worker())
+                for _ in range(min(args.workers, len(links)))]
+        try:
+            await asyncio.gather(*jobs)
         finally:
+            for job in jobs:
+                if not job.done():
+                    job.cancel()
+            await asyncio.gather(*jobs, return_exceptions=True)
             await browser.close()
     checkpoint(complete=True)
     print("SUMMARY " + json.dumps({
