@@ -462,6 +462,43 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         except (ValueError, OSError):
             return None
 
+    def resolve_worldguessr_css_media(self, parts: tuple[str, ...]) -> str | None:
+        """Resolve static media referenced by this game's captured CSS only.
+
+        A browser's CSS Referer can lose the /local-mirror prefix. Require
+        the exact original stylesheet and an explicit URL in its contents.
+        No API requests, remote proxy, or guessing of unrelated assets.
+        """
+        if (len(parts) != 4 or parts[:3] != ("_next", "static", "media")
+                or not re.fullmatch(r"[A-Za-z0-9_.-]+\.(?:woff2|png)", parts[3])):
+            return None
+        try:
+            ref = urlsplit(self.headers.get("Referer", ""))
+            if (ref.scheme != "http" or ref.hostname not in {"127.0.0.1", "localhost"}
+                    or ref.port != self.server.server_port):
+                return None
+            if not re.fullmatch(r"/_next/static/css/[a-f0-9]{16}\.css", ref.path):
+                return None
+            root = self.roots.get("wordgameswordguesser")
+            if root is None:
+                return None
+            host = (root / "www.worldguessr.com").resolve()
+            host.relative_to(root.resolve())
+            css = (host / ref.path.lstrip("/")).resolve()
+            css.relative_to(host)
+            if not css.is_file() or css.stat().st_size > 2 * 1024 * 1024:
+                return None
+            content = css.read_text(encoding="utf-8")
+            target_url = "/" + "/".join(parts)
+            if not re.search(r"url\(\s*['\"]?" + re.escape(target_url) +
+                             r"['\"]?\s*\)", content):
+                return None
+            candidate = host.joinpath(*parts).resolve()
+            candidate.relative_to(host)
+            return str(candidate) if candidate.is_file() else None
+        except (OSError, ValueError):
+            return None
+
     def resolve_foony_root_resource(self, parts: tuple[str, ...]) -> str | None:
         """Original Foony modules import /assets, /fonts, /img and /m.
 
@@ -710,6 +747,7 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
         if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
             alias = (self.resolve_game_absolute_resource(parts) or
+                     self.resolve_worldguessr_css_media(parts) or
                      self.resolve_foony_root_resource(parts) or
                      self.resolve_unique_hashed_asset(parts) or
                      self.resolve_unique_game_navigation(parts))
