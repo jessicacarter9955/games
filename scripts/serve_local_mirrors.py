@@ -40,6 +40,19 @@ EXTENSIONLESS_ENTRIES = {
     "complexmerge3parktown": (
         "internal.id-prod-redbrix.fxtools.gl/Play/rbwparktown/iframe/crazygames"),
 }
+TAPTAP_RUNTIME_PATH = (
+    "/extracted/Arcade/tap-tap-shots/"
+    "tap-tap-shots.game-files.crazygames.com/tap-tap-shots/13/"
+    "scripts/c3runtime.js"
+)
+TAPTAP_RUNTIME_SHA256 = (
+    "8e5912a73980f1dfd18bbb7bf712e31bfd3980d29cc4897993f06ff65dac1c67"
+)
+TAPTAP_DOMAIN_CHECK = b'return () => f0(f1(), "crazygames");'
+TAPTAP_LOCAL_CHECK = (
+    b'return () => /^(127\\.0\\.0\\.1|localhost)$/.test(f1()) ? 0 : '
+    b'f0(f1(), "crazygames");'
+)
 
 
 def add_game_diagnostics(html: bytes) -> bytes:
@@ -50,6 +63,15 @@ def add_game_diagnostics(html: bytes) -> bytes:
     if not head:
         return html
     return html[:head.end()] + DIAGNOSTIC_SCRIPT + html[head.end():]
+
+
+def allow_local_taptap_runtime(original: bytes) -> bytes | None:
+    """Extend this captured build's portal domain gate for localhost QA only."""
+    if hashlib.sha256(original).hexdigest() != TAPTAP_RUNTIME_SHA256:
+        return None
+    if original.count(TAPTAP_DOMAIN_CHECK) != 1:
+        return None
+    return original.replace(TAPTAP_DOMAIN_CHECK, TAPTAP_LOCAL_CHECK)
 
 
 def slug(value: str) -> str:
@@ -515,6 +537,18 @@ class MirrorHandler(SimpleHTTPRequestHandler):
 
     def send_head(self):
         path = urlsplit(self.path).path
+        if path == TAPTAP_RUNTIME_PATH:
+            target = Path(self.translate_path(self.path))
+            try:
+                content = allow_local_taptap_runtime(target.read_bytes())
+                if content is not None:
+                    self.send_response(200)
+                    self.send_header("Content-Type", "text/javascript; charset=utf-8")
+                    self.send_header("Content-Length", str(len(content)))
+                    self.end_headers()
+                    return io.BytesIO(content)
+            except OSError:
+                pass
         extensionless = path == (
             "/local-mirror/complexmerge3parktown/" +
             EXTENSIONLESS_ENTRIES["complexmerge3parktown"])
