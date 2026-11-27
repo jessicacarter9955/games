@@ -446,9 +446,10 @@ class MirrorHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(self.catalog_bytes[offset:offset + 64 * 1024])
 
     def copyfile(self, source, outputfile) -> None:
-        # Use bounded writes for large local game binaries. On Windows the
-        # default copyfileobj transfer can leave the final bytes unsent.
-        while chunk := source.read(64 * 1024):
+        # Chrome on Windows dropped the tail of a 42 MB Unity WASM response
+        # with 64 KiB writes. The standard HTTP server's 16 KiB writes
+        # delivered that same file completely.
+        while chunk := source.read(16 * 1024):
             outputfile.write(chunk)
 
     def resolve_game_absolute_resource(self, parts: tuple[str, ...]) -> str | None:
