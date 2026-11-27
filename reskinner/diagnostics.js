@@ -2,8 +2,8 @@
  * The report is assembled locally. Nothing is uploaded or transmitted.
  * It never captures cookies, authorization headers or request bodies.
  */
-const MAX_MESSAGES=85;
-const MAX_RESOURCES=45;
+const MAX_MESSAGES=300;
+const MAX_RESOURCES=300;
 const MAX_TEXT=1000;
 
 function clean(value, max=MAX_TEXT) {
@@ -120,6 +120,7 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
   let activeDocument=null;
   let disposers=[];
   let currentGame='';
+  let droppedMessages=0;
   let noticeTimeout=null;
 
   const update=()=>{
@@ -142,6 +143,7 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
     if(entries.length>MAX_MESSAGES){
       // Keep the first errors (often the real root cause) plus recent failures.
       entries.splice(Math.min(24,entries.length-1),1);
+      droppedMessages++;
     }
     update();
   };
@@ -167,6 +169,20 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
   };
   window.addEventListener('error',onError,true);
   window.addEventListener('unhandledrejection',onRejection);
+  const onGameDiagnostic=event=>{
+    if(event.source!==getFrame()?.contentWindow)return;
+    try{
+      const origin=new URL(event.origin);
+      if(origin.port!==location.port||
+          !['127.0.0.1','localhost'].includes(origin.hostname))return;
+    }catch{return;}
+    const data=event.data;
+    if(!data||data.type!=='2night-game-diagnostic'||
+        typeof data.message!=='string'||typeof data.kind!=='string')return;
+    put(data.level==='warning'?'warning':'error',
+      'iframe-'+clean(data.kind,40),data.message);
+  };
+  window.addEventListener('message',onGameDiagnostic);
 
   function detachFrame() {
     for(const undo of disposers){try{undo();}catch{}}
@@ -222,6 +238,7 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
   function setGame(id){
     currentGame=id||'';
     entries.length=0;
+    droppedMessages=0;
     detachFrame();
     update();
     feedbackText('');
@@ -232,11 +249,12 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
 
   function resourceErrors(win,where) {
     try {
-      return win.performance.getEntriesByType('resource')
-        .filter(e=>Number(e.responseStatus)>=400)
-        .slice(-MAX_RESOURCES)
-        .map(e=>({source:where,status:e.responseStatus,url:safeURL(e.name)}));
-    }catch {return [];}
+      const errors=win.performance.getEntriesByType('resource')
+        .filter(e=>Number(e.responseStatus)>=400);
+      return {records:errors.slice(-MAX_RESOURCES)
+        .map(e=>({source:where,status:e.responseStatus,url:safeURL(e.name)})),
+        omitted:Math.max(0,errors.length-MAX_RESOURCES)};
+    }catch {return {records:[],omitted:0};}
   }
 
   function iframeState(){
@@ -272,10 +290,13 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
         JSON.parse(clean(serialized,serialized.length));
     }catch{runtime={note:'Runtime details unavailable'};}
     const child=activeWindow;
-    const timings=[
-      ...resourceErrors(window,'reskinner'),
-      ...(child?resourceErrors(child,'game'):[]),
-    ].slice(-MAX_RESOURCES);
+    const topResources=resourceErrors(window,'reskinner');
+    const gameResources=child?resourceErrors(child,'game'):
+      {records:[],omitted:0};
+    const combined=[...topResources.records,...gameResources.records];
+    const timings=combined.slice(-MAX_RESOURCES);
+    const omittedResources=topResources.omitted+gameResources.omitted+
+      Math.max(0,combined.length-MAX_RESOURCES);
     const messages=getMessages?.()||[];
     return {
       type:'2Night Reskinner diagnostic report',
@@ -289,8 +310,10 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
       runtime,
       recentReskinnerEvents:messages.slice(-35).map(m=>clean(m,400)),
       capturedErrors:entries.slice(-MAX_MESSAGES),
+      droppedMessages,
       failedResourceTimings:timings,
-      caveat:'Event listeners attach during iframe loading. Early console messages, service worker failures and inaccessible cross-origin content may not be captured. Network timing only includes HTTP statuses exposed by the browser. No cookies, headers, tokens or request bodies included.',
+      omittedResourceTimings:omittedResources,
+      caveat:'Local HTML receives an early diagnostic bridge. Browser-internal errors, service worker failures and remote cross-origin frames may remain invisible to page JavaScript. Network timing includes only HTTP statuses exposed by the browser. No cookies, headers, tokens or request bodies included.',
     };
   }
 
@@ -379,5 +402,6 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
     detachFrame();
     window.removeEventListener('error',onError,true);
     window.removeEventListener('unhandledrejection',onRejection);
+    window.removeEventListener('message',onGameDiagnostic);
   }};
 }

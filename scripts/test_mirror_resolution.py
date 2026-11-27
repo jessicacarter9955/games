@@ -9,7 +9,7 @@ from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 
-from serve_local_mirrors import MirrorHandler
+from serve_local_mirrors import MirrorHandler, add_game_diagnostics
 
 
 class MirrorAssetResolutionTests(unittest.TestCase):
@@ -33,6 +33,15 @@ class MirrorAssetResolutionTests(unittest.TestCase):
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_bytes(content)
         return p
+
+    def test_diagnostics_precedes_game_scripts_without_rewriting_html(self) -> None:
+        html = b'<!doctype html><head><script src="game.js"></script></head>'
+        enhanced = add_game_diagnostics(html)
+        self.assertLess(enhanced.index(b'game-diagnostics-bridge.js'),
+                        enhanced.index(b'game.js'))
+        self.assertEqual(add_game_diagnostics(enhanced), enhanced)
+        self.assertEqual(add_game_diagnostics(b'<body>fragment</body>'),
+                         b'<body>fragment</body>')
 
     def test_nested_referrerless_hashed_module_is_served(self) -> None:
         path = self.save(

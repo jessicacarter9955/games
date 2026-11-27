@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import mimetypes
 import re
@@ -34,6 +35,21 @@ MODEL = {".glb", ".gltf", ".fbx", ".obj", ".dds", ".ktx", ".ktx2", ".basis"}
 ENTRIES = {"index.html", "game.html"}
 HTML_FALLBACK = {".html", ".htm"}
 UNITY_WRAPPER_MARKER = "/unity/unity"
+DIAGNOSTIC_SCRIPT = b'<script src="/reskinner/game-diagnostics-bridge.js"></script>'
+EXTENSIONLESS_ENTRIES = {
+    "complexmerge3parktown": (
+        "internal.id-prod-redbrix.fxtools.gl/Play/rbwparktown/iframe/crazygames"),
+}
+
+
+def add_game_diagnostics(html: bytes) -> bytes:
+    """Install local diagnostics before the game's first head script."""
+    if DIAGNOSTIC_SCRIPT in html:
+        return html
+    head = re.search(br"<head(?:\s[^>]*)?>", html, flags=re.I)
+    if not head:
+        return html
+    return html[:head.end()] + DIAGNOSTIC_SCRIPT + html[head.end():]
 
 
 def slug(value: str) -> str:
@@ -211,6 +227,9 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 continue
             total += 1
             if relative.name.lower() in ENTRIES:
+                entries.append(relative)
+            elif (relative.as_posix() == EXTENSIONLESS_ENTRIES.get(game_id)
+                  and file.read_bytes().lstrip().lower().startswith(b"<!doctype html")):
                 entries.append(relative)
             elif (file.suffix.lower() in HTML_FALLBACK and
                   UNITY_WRAPPER_MARKER in
@@ -434,6 +453,30 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         if urlsplit(self.path).path == "/reskinner/catalog.json":
             return self.send_catalog(head=True)
         super().do_HEAD()
+
+    def send_head(self):
+        path = urlsplit(self.path).path
+        extensionless = path == (
+            "/local-mirror/complexmerge3parktown/" +
+            EXTENSIONLESS_ENTRIES["complexmerge3parktown"])
+        if (path.startswith(("/local-mirror/", "/extracted/")) and
+                (path.lower().endswith((".html", ".htm")) or extensionless)):
+            target = Path(self.translate_path(self.path))
+            try:
+                if target.is_file() and target.stat().st_size <= 2 * 1024 * 1024:
+                    original = target.read_bytes()
+                    content = add_game_diagnostics(original)
+                    if content != original:
+                        self.send_response(200)
+                        self.send_header("Content-Type", "text/html" if extensionless
+                                         else self.guess_type(str(target)))
+                        self.send_header("Content-Length", str(len(content)))
+                        self.send_header("Cache-Control", "no-store")
+                        self.end_headers()
+                        return io.BytesIO(content)
+            except OSError:
+                pass
+        return super().send_head()
 
     def send_catalog(self, head: bool) -> None:
         self.send_response(200)
