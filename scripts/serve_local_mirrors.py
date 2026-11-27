@@ -288,8 +288,14 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
             entry = min(entry_candidates, key=entry_rank)
             is_unity_wrapper = entry in fallback_entries
             is_local_bootstrap = "_reskin_local_bootstrap" in entry.parts
+            is_local_ruffle = (
+                game["engine"].lower() == "flash" and
+                (root / "_runtime/ruffle/ruffle.js").is_file() and
+                any((root / entry.parent).glob("*.swf"))
+            )
             game["entryKind"] = (
                 "local-unity-bootstrap" if is_local_bootstrap else
+                "local-flash-ruffle" if is_local_ruffle else
                 "unity-portal-wrapper" if is_unity_wrapper else "html"
             )
             game["entry"] = "/" + quote(
@@ -302,6 +308,11 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                 game.update(
                     status="limited",
                     label="Unity WebGL · bootstrap locale (QA necessaria)",
+                )
+            elif is_local_ruffle:
+                game.update(
+                    status="limited",
+                    label="Flash originale via Ruffle · QA necessaria",
                 )
             elif game["status"] == "missing":
                 engine = game["engine"].lower()
@@ -332,6 +343,11 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
                     "gameplay NON certificato; sprite nei binari non isolabili "
                     "senza adapter. " + old_reason
                 )
+            elif is_local_ruffle:
+                game["reason"] = (
+                    "SWF originale recuperato e caricato con Ruffle locale; "
+                    "gameplay e ispezione runtime NON certificati."
+                )
             else:
                 game["reason"] = (
                     "Entrypoint individuato nel mirror Windows, non verificato "
@@ -348,6 +364,47 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
         game["localMirrorFiles"] = total
         game["reskinTransport"] = (
             "same-origin-image-get" if game["imageCount"] else "none")
+
+    # Some captures retain the publisher's actual launcher under its original
+    # filename instead of index.html. Expose only known launcher shapes from
+    # the game's own extracted directory; do not invent an HTML entrypoint.
+    for game in games:
+        if game.get("entry") or game.get("category") != "Arcade":
+            continue
+        if not game.get("base"):
+            continue
+        base = (repo / game["base"]).resolve()
+        try:
+            base.relative_to(repo.resolve())
+        except ValueError:
+            continue
+        if not base.is_dir():
+            continue
+        candidates = []
+        for file in base.rglob("*.html"):
+            if not file.is_file() or file.is_symlink():
+                continue
+            relative = file.relative_to(base).as_posix().lower()
+            if relative.startswith("playzool.com/games/"):
+                candidates.append((0, file, "publisher-html"))
+            elif UNITY_WRAPPER_MARKER in "/" + relative:
+                candidates.append((1, file, "unity-portal-wrapper"))
+        if not candidates:
+            continue
+        _, entry, kind = min(candidates, key=lambda row: (row[0], len(row[1].parts)))
+        game["entry"] = "/" + quote(entry.relative_to(repo).as_posix(), safe="/-._~")
+        game["entryKind"] = kind
+        game["entryCount"] = len(candidates)
+        game["reason"] = (
+            "Launcher HTML originale recuperato; gameplay non verificato. "
+            if kind == "publisher-html" else
+            "Wrapper Unity originale recuperato; richiede inizializzazione "
+            "dal portale e build WebGL completa. "
+        ) + game.get("reason", "").replace(
+            "Manca anche l'entrypoint HTML locale.", ""
+        ).replace(
+            "Gli ZIP/manifest non includono un entrypoint locale avviabile.", ""
+        ).strip()
 
     original.update(
         generated=datetime.now(timezone.utc).isoformat(),
