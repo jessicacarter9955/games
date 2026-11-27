@@ -85,8 +85,9 @@ def make_html(game_id: str, title: str, root: Path,
     urls = {name: asset_url(game_id, root, path)
             for name, path in files.items()}
     # Relative external StreamingAssets can be absent; do not claim completeness.
+    # Unity's StreamingAssets directory is a sibling of Build, not its child.
     urls["streaming"] = asset_url(
-        game_id, root, files["data"].parent / "StreamingAssets")
+        game_id, root, files["data"].parent.parent / "StreamingAssets")
     cfg = json.dumps({
         "loaderUrl": urls["loader"],
         "dataUrl": urls["data"],
