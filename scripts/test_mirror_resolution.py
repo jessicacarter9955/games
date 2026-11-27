@@ -135,6 +135,36 @@ class MirrorAssetResolutionTests(unittest.TestCase):
         self.assertEqual(self.handler.translate_path(other),
                          str((self.root / resource).resolve()))
 
+    def test_game_relative_font_uses_exact_file_in_its_own_host(self) -> None:
+        font = self.save(self.root, "gulper.io/fonts/ComicNeue-Regular.woff2",
+                         b"original font")
+        self.assertEqual(self.handler.translate_path(
+            "/local-mirror/cardsfouruno/fonts/ComicNeue-Regular.woff2"),
+            str(font.resolve()))
+
+    def test_referrer_scoped_local_mirror_asset(self) -> None:
+        svg = self.save(self.root, "diep.io/assets/fa/crown.svg", b"<svg/>")
+        self.handler.headers["Referer"] = (
+            "http://127.0.0.1:8002/local-mirror/cardsfouruno/"
+            "diep.io/index.html")
+        self.assertEqual(self.handler.translate_path(
+            "/local-mirror/assets/fa/crown.svg"), str(svg.resolve()))
+
+    def test_unreferenced_local_mirror_asset_is_rejected(self) -> None:
+        self.save(self.root, "diep.io/assets/fa/crown.svg", b"<svg/>")
+        self.assertEqual(self.handler.translate_path(
+            "/local-mirror/assets/fa/crown.svg"),
+            str((self.repo / "__invalid__").resolve()))
+
+    def test_ambiguous_game_relative_font_is_not_aliased(self) -> None:
+        self.save(self.root, "gulper.io/fonts/ComicNeue-Regular.woff2",
+                  b"first")
+        self.save(self.root, "other.example/fonts/ComicNeue-Regular.woff2",
+                  b"second")
+        self.assertEqual(self.handler.translate_path(
+            "/local-mirror/cardsfouruno/fonts/ComicNeue-Regular.woff2"),
+            str((self.root / "fonts/ComicNeue-Regular.woff2").resolve()))
+
     def test_versioned_capture_preserves_local_override(self) -> None:
         resource = "example-cdn.com/game/assets/ui.json"
         suffix = hashlib.sha256(

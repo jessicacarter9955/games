@@ -754,6 +754,13 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         parts = Path(decoded.lstrip("/")).parts
         if not parts or ".." in parts or any(p.startswith(".") for p in parts):
             return str(self.repo / "__invalid__")
+        # A captured page can prefix its root-relative asset with
+        # /local-mirror while omitting the game ID. Use only the original
+        # mirrored host identified by a same-origin Referer.
+        if (len(parts) >= 3 and parts[0] == "local-mirror"
+                and parts[1] not in self.roots):
+            return (self.resolve_game_absolute_resource(parts[1:]) or
+                    str(self.repo / "__invalid__"))
         if len(parts) >= 4 and parts[0] == "local-mirror":
             root = self.roots.get(parts[1])
             if not root:
@@ -767,6 +774,23 @@ class MirrorHandler(SimpleHTTPRequestHandler):
                 cached = self.resolve_versioned_capture(root, candidate, path)
                 if cached:
                     return cached
+                # Some captured pages use /local-mirror/<game>/fonts/... and
+                # omit their own host directory. Resolve only an exact file
+                # under one host belonging to that same game.
+                if not (root / parts[2]).is_dir():
+                    matches = []
+                    try:
+                        for host in root.iterdir():
+                            if not host.is_dir() or host.is_symlink():
+                                continue
+                            target = host.joinpath(*parts[2:]).resolve()
+                            target.relative_to(host.resolve())
+                            if target.is_file() and not target.is_symlink():
+                                matches.append(target)
+                    except (OSError, ValueError):
+                        matches = []
+                    if len(matches) == 1:
+                        return str(matches[0])
             return str(candidate)
         # Ensure '/reskinner/' and '/extracted/' are served only from the repo.
         if parts[0] not in {"reskinner", "extracted", "2night-reskin-sw.js"}:
