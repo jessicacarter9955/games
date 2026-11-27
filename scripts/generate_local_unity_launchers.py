@@ -28,12 +28,23 @@ def asset_url(game_id: str, root: Path, path: Path) -> str:
 def select_build(root: Path) -> dict[str, Path] | None:
     """Match a loader and its three Unity WebGL core files in ONE Build directory."""
     groups: dict[Path, list[Path]] = defaultdict(list)
+    captured_loaders: set[str] = set()
+    manifest = root.parent / "_game-capture-manifest.json"
+    try:
+        metadata = json.loads(manifest.read_text(encoding="utf-8"))
+        captured_loaders = {
+            Path(url).name for url in metadata.get("loader_urls", [])
+            if isinstance(url, str) and url.endswith(".js")
+            and "/Build/" in url
+        }
+    except (OSError, ValueError, TypeError):
+        pass
     for file in root.rglob("*"):
         if file.is_file() and not file.is_symlink():
             filename = file.name.lower()
-            if (filename.endswith(".loader.js") or
+            if (filename.endswith(".loader.js") or file.name in captured_loaders or
                     filename.endswith((".data.br", ".framework.js.br",
-                                       ".wasm.br", ".data.gz",
+                                       ".js.br", ".wasm.br", ".data.gz",
                                        ".framework.js.gz", ".wasm.gz"))):
                 groups[file.parent].append(file)
 
@@ -50,9 +61,11 @@ def select_build(root: Path) -> dict[str, Path] | None:
     for folder, files in groups.items():
         for compression in ("br", "gz"):
             selected = {
-                "loader": first(files, ".loader.js"),
+                "loader": first(files, ".loader.js") or next(
+                    (p for p in files if p.name in captured_loaders), None),
                 "data": first(files, ".data." + compression),
-                "framework": first(files, ".framework.js." + compression),
+                "framework": first(files, ".framework.js." + compression)
+                or first(files, ".js." + compression),
                 "code": first(files, ".wasm." + compression),
             }
             if all(selected.values()):

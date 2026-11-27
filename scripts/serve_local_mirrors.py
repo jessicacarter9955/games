@@ -42,6 +42,23 @@ def slug(value: str) -> str:
 
 def local_roots(downloads: Path) -> list[tuple[str, str, Path]]:
     result = []
+    imported = downloads / "_chatgpt_import130_cdn_mirrors"
+    try:
+        records = json.loads((imported / "_mirror_index.json").read_text(
+            encoding="utf-8"))
+        for row in records:
+            category, name = row["category"], row["game"]
+            if not isinstance(category, str) or not isinstance(name, str):
+                continue
+            if not re.fullmatch(r"[A-Za-z0-9 _-]+", category) or not re.fullmatch(
+                    r"[a-z0-9-]+", name):
+                continue
+            base = imported / category / name / "hosts"
+            if base.is_dir() and not base.is_symlink():
+                result.append((category, name, base))
+    except (ValueError, OSError, KeyError, TypeError):
+        pass
+
     new = downloads / "_chatgpt_new45_cdn_mirrors"
     try:
         records = json.loads((new / "_loader_manifest_45.json").read_text(
@@ -425,7 +442,14 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
         if not head:
-            self.wfile.write(self.catalog_bytes)
+            for offset in range(0, len(self.catalog_bytes), 64 * 1024):
+                self.wfile.write(self.catalog_bytes[offset:offset + 64 * 1024])
+
+    def copyfile(self, source, outputfile) -> None:
+        # Use bounded writes for large local game binaries. On Windows the
+        # default copyfileobj transfer can leave the final bytes unsent.
+        while chunk := source.read(64 * 1024):
+            outputfile.write(chunk)
 
     def resolve_game_absolute_resource(self, parts: tuple[str, ...]) -> str | None:
         """Resolve original game-root URLs using a verified local Referer.
@@ -769,6 +793,11 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         super().log_message(format, *args)
 
 
+class NightThreadingServer(ThreadingHTTPServer):
+    request_queue_size = 128
+    daemon_threads = True
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--downloads", type=Path,
@@ -779,7 +808,7 @@ def main() -> None:
     payload = json.dumps(catalog,ensure_ascii=False).encode("utf-8")
     handler = partial(MirrorHandler, repo=REPO,
                       catalog_bytes=payload, roots=roots)
-    with ThreadingHTTPServer(("127.0.0.1", args.port), handler) as httpd:
+    with NightThreadingServer(("127.0.0.1", args.port), handler) as httpd:
         print("2Night games mirror server:", httpd.server_address, flush=True)
         print("Catalog:", catalog["total"], "titles,",
               catalog["localMirrorGames"], "local mirrors,",
