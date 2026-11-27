@@ -395,8 +395,10 @@ def build_index(downloads: Path, repo: Path = REPO) -> tuple[dict, dict[str, Pat
         game["entry"] = "/" + quote(entry.relative_to(repo).as_posix(), safe="/-._~")
         game["entryKind"] = kind
         game["entryCount"] = len(candidates)
+        if kind == "publisher-html":
+            game.update(status="limited", label="HTML originale · QA necessaria")
         game["reason"] = (
-            "Launcher HTML originale recuperato; gameplay non verificato. "
+            "Launcher HTML originale recuperato; gameplay NON certificato. "
             if kind == "publisher-html" else
             "Wrapper Unity originale recuperato; richiede inizializzazione "
             "dal portale e build WebGL completa. "
