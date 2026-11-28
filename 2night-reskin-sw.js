@@ -58,8 +58,8 @@ async function replacements() {
     for (const row of rows) {
       if (!row || !(row.blob instanceof Blob)) continue;
       const relative = typeof row.assetPath === 'string' ? row.assetPath : '';
-      const key = '/' + relative.replace(/\\/g,'/');
-      if (safePath(key) && IMAGE.test(key)) map.set(key,row.blob);
+      const key = '/' + relative.replace(/\\/g,'/').replace(/^\/+/, '');
+      if (safePath(key) && IMAGE.test(key)) map.set(row.gameId+'|'+key,row.blob);
     }
     return map;
   });
@@ -77,7 +77,14 @@ self.addEventListener('fetch', event => {
   event.respondWith((async () => {
     try {
       const patches=await replacements();
-      const replacement=patches.get(pathname);
+      // Fail closed: the original, unscoped requests, and non-game pages never get patches.
+      const client=event.clientId?await self.clients.get(event.clientId):null;
+      if(!client)return fetch(event.request);
+      const doc=new URL(client.url);
+      const game=doc.searchParams.get('night_game'),variant=doc.searchParams.get('night_variant');
+      if(!safePath(doc.pathname)||!game||!variant||variant==='original')return fetch(event.request);
+      const scope=variant==='legacy'?game:game+'@'+variant;
+      const replacement=patches.get(scope+'|'+pathname);
       if (replacement) {
         return new Response(replacement,{
           status:200,

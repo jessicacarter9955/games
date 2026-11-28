@@ -4,6 +4,7 @@ import { saveDraft, readDraft, listDrafts, clearDraft, downloadBlob, downloadJSO
 import { initializeAssetReskin, invalidateReskinCache, assetReskinAvailable } from './sw-client.js';
 import { findAtlasMetadata, loadAtlasFrames, previewAtlasFrame, patchAtlasFrame } from './atlas.js';
 import { initializeDiagnostics } from './diagnostics.js';
+import {scope, versions, activeVersion, prepareVersions, selectVersion, forkVersion, versionURL, exportVersion} from './versions.js';
 
 const byId = id => document.getElementById(id);
 const UI = Object.fromEntries([
@@ -32,6 +33,27 @@ let atlasRequest=0;
 let quickDiagnostics=null;
 let universalInspector=null;
 let pinnedRegion=null;
+let branch={id:'original',locked:true,name:'Originale'};
+let comparing=false, versionBusy=false;
+const draftScope=()=>game?scope(game.id,branch.id):null;
+function renderVersions(){
+ const select=byId('reskinVersion');
+ select.replaceChildren(...(game?versions(game.id):[]).map(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name+(v.locked?' · protetta':'');return o;}));
+ select.value=branch.id;
+ byId('versionState').textContent=branch.locked?'Sola lettura · crea una variante per modificare':'Variante modificabile · originale protetto';
+ byId('versionCompare').disabled=!game?.entry||branch.id==='original';
+ byId('versionFork').disabled=!game||versionBusy;byId('versionCheckpoint').disabled=!game||versionBusy||branch.locked;
+ byId('versionPackage').disabled=!game||versionBusy;
+ UI.chooseReplacement.disabled=branch.locked;UI.atlasPatchButton.disabled=branch.locked;
+}
+function stopCompare(){comparing=false;byId('originalFrame').removeAttribute('src');byId('originalFrame').hidden=true;UI.gameStage.classList.remove('version-compare');byId('versionCompare').textContent='Prima / dopo';}
+function startCompare(){
+ if(!game?.entry||branch.id==='original')return;
+ comparing=true;const url=versionURL(game.entry,game.id,'original');if(game.engine==='unity')url.searchParams.set('useLocalSdk','true');
+ const frame=byId('originalFrame');frame.hidden=false;frame.src=url.href;UI.gameStage.classList.add('version-compare');byId('versionCompare').textContent='Chiudi confronto';updateMode('play');
+}
+async function changeBranch(id){if(!game||versionBusy)return;stopCompare();selectVersion(game.id,id);branch=activeVersion(game.id);renderVersions();await loadDraftList();renderAssetDetails();await launchGame(true);}
+async function createBranch(locked){if(!game||versionBusy)return;const current=game;const parent=branch.id;const name=prompt(locked?'Nome checkpoint protetto':'Nome nuova variante',locked?'Checkpoint '+new Date().toLocaleDateString('it-IT'):'Reskin 02');if(!name?.trim())return;versionBusy=true;renderVersions();try{const id=await forkVersion(current.id,parent,name,locked);versionBusy=false;if(game===current)await changeBranch(id);}catch(e){log('Versioning: '+e.message);}finally{versionBusy=false;renderVersions();}}
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
@@ -175,7 +197,10 @@ function updateRuntime(){
 }
 async function loadDraftList(){
   try{
-    saved=await listDrafts(game.id);
+    const current=game, currentBranch=branch.id, key=draftScope();
+    const rows=key?await listDrafts(key):[];
+    if(game!==current||branch.id!==currentBranch)return;
+    saved=rows;
     UI.draftCount.textContent=saved.length?
       saved.length+' '+(saved.length===1?'asset modificato e salvato':'asset modificati e salvati')+' in questo browser':
       'Nessuna modifica locale per questo gioco.';
@@ -317,8 +342,8 @@ async function updateAtlasPreview(){
       'Attenzione: stesso rettangolo usato da '+frame.shared.length+
       ' altri frame ('+frame.shared.slice(0,4).join(', ')+').':
       'Frame con rettangolo indipendente.';
-  UI.atlasPatchButton.disabled=!!frame.rotated;
-  const asset=selectedAsset,activeGame=game?.id;
+  UI.atlasPatchButton.disabled=branch.locked||!!frame.rotated;
+  const asset=selectedAsset,activeGame=draftScope();
   try{
     const draft=activeGame?await readDraft(activeGame,asset.path):null;
     if(selectedAsset!==asset)return;
@@ -385,7 +410,8 @@ function renderAssetDetails(){
     'I modelli 3D e i metadata non sono reskinnabili con un semplice PNG.';
   UI.reskinStatus.className='hint';
   const has=saved.some(x=>x.assetPath===a.path);
-  UI.restoreAsset.disabled=!has;
+  UI.chooseReplacement.disabled=branch.locked;
+  UI.restoreAsset.disabled=branch.locked||!has;
   UI.exportAsset.disabled=!has;
   UI.atlasPanel.hidden=true;
   if(image)void showAtlasForAsset(a);
@@ -405,7 +431,8 @@ async function readDimensions(source){
 }
 async function replaceAsset(file){
   if(!selectedAsset||!game||!file)return;
-  const asset=selectedAsset,active=game;
+  const asset=selectedAsset,active=game,version=branch.id,key=draftScope();
+  if(branch.locked||!key){log('Originale protetto: crea una variante.');return;}
   if(!/\.png$/i.test(file.name)||file.size>20*1024*1024){
     UI.reskinStatus.textContent='Carica un PNG inferiore a 20 MB.';
     UI.reskinStatus.className='hint error';return;
@@ -426,9 +453,11 @@ async function replaceAsset(file){
         ', PNG '+repl.width+'×'+repl.height+
         '. Il reskin 1:1 deve preservare la geometria.');
     }
-    await saveDraft(active.id,asset.path,file,orig);
+    if(game!==active||branch.id!==version)throw Error('Versione cambiata durante importazione');
+    await saveDraft(key,asset.path,file,orig);
     const invalidated = await invalidateReskinCache();
     let result={message:'Bozza salvata'};
+    if(game!==active||branch.id!==version)return;
     if(runtime&&loaded)result=await runtime.swap(asset.url,file);
     await loadDraftList();
     renderAssetDetails();
@@ -450,7 +479,8 @@ async function replaceAsset(file){
 async function restoreAsset(){
   if(!game||!selectedAsset)return;
   try{
-    await clearDraft(game.id,selectedAsset.path);
+    if(branch.locked||!draftScope())return;
+    await clearDraft(draftScope(),selectedAsset.path);
     await invalidateReskinCache();
     runtime?.restore(selectedAsset.url);
     await loadDraftList();renderAssetDetails();
@@ -461,14 +491,15 @@ async function restoreAsset(){
 }
 async function exportAsset(){
   if(!game||!selectedAsset)return;
-  const draft=await readDraft(game.id,selectedAsset.path);
+  const key=draftScope();if(!key)return;
+  const draft=await readDraft(key,selectedAsset.path);
   if(draft)downloadBlob(draft.blob,selectedAsset.name.replace(/\.[^.]+$/,'')+'-reskin.png');
 }
 async function exportManifest(){
   if(!game)return;
   await loadDraftList();
   downloadJSON({
-    version:1,gameId:game.id,game:game.title,
+    version:1,gameId:game.id,game:game.title,branch:branch.id,
     sourceRepository:catalog?.repository,createdAt:new Date().toISOString(),
     items:saved.map(x=>({asset:x.assetPath,width:x.width,height:x.height,
       bytes:x.blob?.size||0,type:x.blob?.type||'image/png',modified:x.updatedAt})),
@@ -478,9 +509,10 @@ async function exportManifest(){
 }
 async function activateStoredDrafts(id){
   try{
-    const drafts=await listDrafts(id);
+    const key=draftScope(),version=branch.id;
+    const drafts=key?await listDrafts(key):[];
     for(const row of drafts){
-      if(!runtime||game?.id!==id)break;
+      if(!runtime||game?.id!==id||branch.id!==version)break;
       const asset=game.assets.find(a=>a.path===row.assetPath);
       if(!asset)continue;
       try{await runtime.swap(asset.url,row.blob);}
@@ -564,7 +596,7 @@ async function launchGame(force=false){
     notice('Caricamento non riuscito','Controlla la console e gli asset locali.');
     log('Errore caricamento iframe');
   };
-  const previewUrl = new URL(url, location.origin);
+  const previewUrl = versionURL(url,id,branch.id);
   previewUrl.searchParams.set('night_session', String(epoch));
   // The official SDK supports local development mode on loopback.
   if(localClicker && ['localhost','127.0.0.1'].includes(location.hostname)){
@@ -581,7 +613,10 @@ async function launchGame(force=false){
 async function selectGame(id){
   const next=catalog?.games.find(g=>g.id===id);
   if(!next)return;
-  game=next;selectedAsset=null;saved=[];
+  stopCompare();game=next;selectedAsset=null;saved=[];branch={id:'original',locked:true,name:'Originale'};
+  try{branch=await prepareVersions(next.id);}catch(e){log('Versioning non disponibile: '+e.message);}
+  if(game!==next)return;
+  renderVersions();
   quickDiagnostics?.setGame(game.id);
   ++launchId;
   clearRuntime();
@@ -611,6 +646,11 @@ function closeMobileList(){
   UI.mobileBackdrop.hidden=true;
 }
 function bind(){
+  byId('reskinVersion').addEventListener('change',e=>void changeBranch(e.target.value));
+  byId('versionFork').addEventListener('click',()=>void createBranch(false));
+  byId('versionCheckpoint').addEventListener('click',()=>void createBranch(true));
+  byId('versionPackage').addEventListener('click',()=>{if(game)void exportVersion(game.id,branch.id).catch(e=>log(e.message));});
+  byId('versionCompare').addEventListener('click',()=>comparing?stopCompare():startCompare());
   universalInspector=mountUniversalInspector({getRuntime:()=>runtime,getGame:()=>game,onSelect:item=>{if(!loaded)return;updateMode('inspect');applyHover(item);}});
   quickDiagnostics=initializeDiagnostics({
     getGame:()=>game,
@@ -661,15 +701,16 @@ function bind(){
     const file=event.target.files?.[0];
     event.target.value='';
     void (async()=>{
-      const asset=selectedAsset,currentGame=game;
+      const asset=selectedAsset,currentGame=game,currentBranch=branch.id,key=draftScope();
+      if(branch.locked||!key)return;
       const frame=atlasFrames.find(f=>f.name===UI.atlasFrameSelect.value);
       if(!file||!asset||!frame||!currentGame)return;
       UI.reskinStatus.className='hint';
       UI.reskinStatus.textContent='Composizione del frame nell’atlante…';
       try {
-        const previous=await readDraft(currentGame.id,asset.path);
+        const previous=await readDraft(key,asset.path);
         const composed=await patchAtlasFrame(asset,frame,file,previous?.blob||null);
-        if(selectedAsset!==asset||game!==currentGame)return;
+        if(selectedAsset!==asset||game!==currentGame||branch.id!==currentBranch)return;
         atlasWanted=frame.name;
         await replaceAsset(composed);
       } catch(error){

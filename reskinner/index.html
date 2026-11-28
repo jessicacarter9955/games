@@ -89,7 +89,17 @@
             <button id="fullscreenGame" type="button" class="button ghost" disabled>⤢ Schermo intero</button>
           </div>
         </div>
+        <div class="version-bar">
+          <label for="reskinVersion">Versione</label><select id="reskinVersion" aria-label="Versione del gioco"></select>
+          <button id="versionFork" class="button ghost" type="button">＋ Nuova variante</button>
+          <button id="versionCheckpoint" class="button ghost" type="button">Checkpoint</button>
+          <button id="versionCompare" class="button ghost" type="button" disabled>Prima / dopo</button>
+          <button id="versionPackage" class="button ghost" type="button">↓ Pacchetto</button>
+          <span id="versionState" role="status">Originale protetto</span>
+        </div>
         <div class="game-stage" id="gameStage">
+          <iframe id="originalFrame" title="Originale (confronto)" hidden sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms" allow="autoplay; gamepad" referrerpolicy="same-origin"></iframe>
+          <div class="compare-original-label">Originale</div><div class="compare-variant-label">Versione selezionata</div>
           <iframe id="gameFrame" title="Gioco HTML5 da ispezionare" hidden
             allow="fullscreen; autoplay; gamepad"
             referrerpolicy="same-origin"

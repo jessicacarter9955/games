@@ -47,7 +47,7 @@ def main() -> int:
         source = base / "extracted" / "test"
         source.mkdir(parents=True)
         (source / "marker.png").write_bytes(png((255, 0, 0)))
-        (base / "index.html").write_text(
+        (source / "index.html").write_text(
             "<!doctype html><title>2Night SW Test</title>"
             '<img id="sprite" src="/extracted/test/marker.png" width="4" height="4"/>',
             encoding="utf-8",
@@ -72,7 +72,7 @@ def main() -> int:
             with sync_playwright() as playwright:
                 browser = playwright.chromium.launch(headless=True)
                 page = browser.new_page()
-                page.goto(url, wait_until="load")
+                page.goto(url + '/extracted/test/index.html?night_game=test&night_variant=original', wait_until="load")
                 pixel = """async (suffix) => {
                   const img = new Image();
                   img.src = '/extracted/test/marker.png?' + suffix;
@@ -125,7 +125,11 @@ def main() -> int:
                     worker.postMessage({type:'2NIGHT_PATCHES_CHANGED'},[channel.port2]);
                   });
                 }""", list(png((0, 0, 255))))
+                assert page.evaluate(pixel, "original-after-save") == [255,0,0,255]
+                page.goto(url + '/extracted/test/index.html?night_game=test&night_variant=legacy')
                 changed = page.evaluate(pixel, "patched")
+                page.goto(url + '/extracted/test/index.html?night_game=test&night_variant=other')
+                assert page.evaluate(pixel, "other-branch") == [255,0,0,255]
                 assert changed == [0, 0, 255, 255], f"Patch not intercepted: {changed}"
                 response = page.request.get(url + "/extracted/test/marker.png")
                 # Playwright request API is separate from the controlled client,

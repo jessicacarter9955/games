@@ -77,3 +77,10 @@ export function downloadBlob(blob,filename){
 export function downloadJSON(data,filename){
   downloadBlob(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),filename);
 }
+
+export async function copyDraftScope(from,to){
+  const items=await listDrafts(from);
+  await transaction('readwrite',st=>{
+    for(const row of items)st.add({...row,key:key(to,row.assetPath),gameId:to});
+  });
+}
