@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamestileman",
+  "title": "TileMan.io",
+  "engine": "iframe",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T14:00:27.353073+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "loaded-no-gameplay-proof",
+  "playActionVerified": true,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "97629d5f5633548ef6a824d614a2dca2a4b622b1907e91692a890f1fd8a41b45",
+        "metrics": {
+          "entropy": 0.874,
+          "dominantFraction": 0.91,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "6aef1cd26a76c66d413291ef71e81ae17bf53b9f29ae94390c2dfd5750acddee",
+        "metrics": {
+          "entropy": 0.874,
+          "dominantFraction": 0.91,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "6aef1cd26a76c66d413291ef71e81ae17bf53b9f29ae94390c2dfd5750acddee",
+        "metrics": {
+          "entropy": 0.874,
+          "dominantFraction": 0.91,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.01,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/swload.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/style.css"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/socket.io.min.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/hammer.min.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/fi.min.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/chroma.min.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/skull.png"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/adsbygoogle.js"
+      }
+    ],
+    "blockedExternalRequestCount": 2
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded.",
+  "latestRetest": {
+    "testedAt": "2026-11-25T14:34:48.610156+00:00",
+    "serverCommit": "b721214",
+    "mode": "Windows Chromium strict-offline",
+    "result": "loaded-no-gameplay-proof",
+    "gameplayVerified": false,
+    "playActionVerified": true,
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "969b1487452f970905b32c8db8015405ca9aa8e98c3cc93d1ab74d6535c8ab5b"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "6c7e95549f6f1fabe174f6ae1fdee5318af87b26cbdf3dc04a95e59871281e6e"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "caaba9f6af55346ed2600a7c36a17f317b91d76876757acc17458bb834b303e4"
+      }
+    ],
+    "pageErrors": [
+      "Cannot read properties of undefined (reading 'toUpperCase')"
+    ],
+    "httpErrors": [
+      {
+        "path": "/discord.png",
+        "status": 404
+      },
+      {
+        "path": "/re.png",
+        "status": 404
+      },
+      {
+        "path": "/loading.gif",
+        "status": 404
+      },
+      {
+        "path": "/",
+        "status": 404
+      },
+      {
+        "path": "/",
+        "status": 404
+      }
+    ],
+    "blockedHosts": [
+      "www.googletagmanager.com",
+      "api.adinplay.com",
+      "eu1.tileman.io",
+      "usa.tileman.io",
+      "asia.tileman.io"
+    ]
+  }
+}

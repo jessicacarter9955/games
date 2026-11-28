@@ -28,6 +28,10 @@ jobs:
           fetch-depth: 0
       - name: Extract archives
         run: python3 scripts/extract_archives.py
+      - name: Refresh and validate 2Night reskinner catalog
+        run: |
+          python3 scripts/generate_reskin_catalog.py
+          python3 scripts/test_reskin_catalog.py
       - name: Commit extracted files
         run: |
           git config user.name "github-actions[bot]"

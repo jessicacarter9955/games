@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "lavaoraqua",
+  "title": "Lavaoraqua",
+  "engine": "html5",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:09:13.633575+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "b8336357f9080df171f349407be4a909f4905828900bb2dd81126c63e6537126",
+        "metrics": {
+          "entropy": 0.134,
+          "dominantFraction": 0.987,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "b8336357f9080df171f349407be4a909f4905828900bb2dd81126c63e6537126",
+        "metrics": {
+          "entropy": 0.134,
+          "dominantFraction": 0.987,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "b8336357f9080df171f349407be4a909f4905828900bb2dd81126c63e6537126",
+        "metrics": {
+          "entropy": 0.134,
+          "dominantFraction": 0.987,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 1,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

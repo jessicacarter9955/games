@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamesgulperio",
+  "title": "Gulper.io",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:05:10.601192+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "3a73975258cb260f3e810f518e16414b6fbc5066b099c3e29b6c2ccec6395633",
+        "metrics": {
+          "entropy": 0.194,
+          "dominantFraction": 0.984,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "724b4cb1407a4740bcd8473f45e65f7abf3f29947666b1b83b27d1c9e808f85d",
+        "metrics": {
+          "entropy": 0.196,
+          "dominantFraction": 0.984,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "724b4cb1407a4740bcd8473f45e65f7abf3f29947666b1b83b27d1c9e808f85d",
+        "metrics": {
+          "entropy": 0.196,
+          "dominantFraction": 0.984,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/fonts/ComicNeue-Regular.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/fonts/ComicNeue-Bold.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/fonts/source-sans-pro-v11-latin-300.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/js/all.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesgulperio/fonts/ComicNeue-Regular.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/cdn-cgi/challenge-platform/scripts/jsd/main.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/iogamesgulperio/fonts/ComicNeue-Regular.woff"
+      }
+    ],
+    "externalRequestFailures": 1,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

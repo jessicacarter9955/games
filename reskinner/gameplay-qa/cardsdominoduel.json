@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "cardsdominoduel",
+  "title": "Domino Duel",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:14.225566+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "02553ea2bfe3ee26311e2d4a5e4550315afef3fef49019296bf7fe9e39548606",
+        "metrics": {
+          "entropy": 2.378,
+          "dominantFraction": 0.679,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "02553ea2bfe3ee26311e2d4a5e4550315afef3fef49019296bf7fe9e39548606",
+        "metrics": {
+          "entropy": 2.378,
+          "dominantFraction": 0.679,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "02553ea2bfe3ee26311e2d4a5e4550315afef3fef49019296bf7fe9e39548606",
+        "metrics": {
+          "entropy": 2.378,
+          "dominantFraction": 0.679,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Failed to fetch dynamically imported module: http://127.0.0.1:8001/local-mirror/cardsdominoduel/domino-duel-uit.game-files.crazygames.com/domino-duel-uit/239/assets/opponent-avatars.config-BbOmVTFK.js"
+    ],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/cardsdominoduel/domino-duel-uit.game-files.crazygames.com/domino-duel-uit/239/sdk_bundle/gp/gamepush.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/local-mirror/cardsdominoduel/domino-duel-uit.game-files.crazygames.com/domino-duel-uit/239/assets/opponent-avatars.config-BbOmVT"
+      }
+    ],
+    "blockedExternalRequestCount": 6
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}

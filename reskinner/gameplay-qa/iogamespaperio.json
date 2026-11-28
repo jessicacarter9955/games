@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamespaperio",
+  "title": "Paper.io 2",
+  "engine": "html5",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:54:06.079410+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "8c7315a673e00f271041a21a2851ec0b946a3ed15b700a8f28f1865f6d0f3b75",
+        "metrics": {
+          "entropy": 2.278,
+          "dominantFraction": 0.481,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "8c7315a673e00f271041a21a2851ec0b946a3ed15b700a8f28f1865f6d0f3b75",
+        "metrics": {
+          "entropy": 2.278,
+          "dominantFraction": 0.481,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "8c7315a673e00f271041a21a2851ec0b946a3ed15b700a8f28f1865f6d0f3b75",
+        "metrics": {
+          "entropy": 2.278,
+          "dominantFraction": 0.481,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      },
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      },
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      },
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      },
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      },
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      },
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "TypeError: Cannot read properties of undefined (reading 'SDK')"
+    ],
+    "httpErrors": [],
+    "externalRequestsBlocked": 1
+  },
+  "notes": "Screenshot originali solo sul PC Windows; screenshot/menu/canvas/HTML non equivalgono a gameplay."
+}

@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-25T19:06:00Z",
+  "source": "User's six 2Night Reskinner diagnostic reports, including two pasted-text file uploads",
+  "scope": "Newly reported six games, in addition to manual-triage-2026-11-25.json (previous six)",
+  "result": "none yet certified",
+  "strictCriterion": "Only real local menu -> start -> gameplay -> interaction with visual and network evidence can yield gameplayVerified true; neither page load, animation, nor screenshot change alone qualifies",
+  "issues": [
+    {
+      "id": "cardsdominoduel",
+      "title": "Domino Duel",
+      "status": "blocked",
+      "engine": "html5",
+      "observed": "Domino home/menu; live gameplay not evidenced",
+      "exactErrors": [
+        "GamePush origin_not_allowed",
+        "Dynamic import opponent-avatars.config-BbOmVTFK.js 404",
+        "RewardAcceptModal-COdSUv6M.js 404",
+        "SchedulersModal-D2m5nxHd.js 404",
+        "gem-9-P7gP-q.mp3 404"
+      ],
+      "next": [
+        "Compare user manual menu with headless boot and inspect session/update gate",
+        "Test original Play with computer (offline vs GamePush origin restriction)",
+        "Verify tile distribution and moves"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "cdn-asset-recovery",
+          "status": "recovered",
+          "count": 4,
+          "files": [
+            "opponent-avatars.config-BbOmVTFK.js",
+            "RewardAcceptModal-COdSUv6M.js",
+            "SchedulersModal-D2m5nxHd.js",
+            "gem-9-P7gP-q.mp3"
+          ]
+        }
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameHTTP404": 0,
+        "pageExceptions": 0,
+        "menuInHeadless": "",
+        "clickPlayWithComputer": "not found in headless",
+        "gameplayVerified": false
+      }
+    },
+    {
+      "id": "iogamestileman",
+      "title": "TileMan.io",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "Full menu but failed game runtime; canvas 300x150 invisible",
+      "exactErrors": [
+        "hra.min.js:1:201955 Cannot read properties of null (reading lock)",
+        "hra.min.js:1:67243 ReferenceError pw is not defined (8 occurrences)",
+        "/discord.png /re.png /loading.gif 404"
+      ],
+      "next": [
+        "Trace toUpperCase undefined call in original obfuscated game script",
+        "Fix no-Referer root image URLs at source or guarded per-game mapping",
+        "Test actual Local game mode and two moves"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "embedded-keyboard-lock-fallback",
+          "status": "applied_and_postfix_error_absent_Windows",
+          "backupPresent": true,
+          "script": "scripts/repair_tileman_embed.py"
+        },
+        {
+          "type": "root-asset-routing",
+          "status": "HTTP200_with_referrer_but_headless404_remains",
+          "paths": [
+            "/discord.png",
+            "/re.png",
+            "/loading.gif"
+          ]
+        }
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "keyboardLockExceptionAbsent": true,
+        "remainingError": "Cannot read properties of undefined (reading 'toUpperCase')",
+        "playClick": "timeout",
+        "canvasVisible": false,
+        "gameplayVerified": false
+      }
+    },
+    {
+      "id": "wordgameswordwipe",
+      "title": "Word Wipe",
+      "status": "blocked",
+      "engine": "html5",
+      "observed": "Empty body and canvas size 0x0",
+      "exactErrors": [
+        "main.js unhandled promise NotFoundError insertBefore: reference node is not a child of this node",
+        "@Inject param undefined on _0x5e08ad"
+      ],
+      "next": [
+        "Wait longer / inspect original Word Wipe loader and remaining startup gate; evidence currently shows loading bar, not actual word grid",
+        "Confirm Play -> interactive grid, drag real letters, then repeat two different valid words",
+        "Inspect selectable image/atlas objects for live reskinning; do not award green until actual gameplay"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "boot-CDN-recovery",
+          "status": "verified_Windows",
+          "count": 51,
+          "passes": [
+            3,
+            11,
+            33,
+            4,
+            0
+          ]
+        },
+        {
+          "type": "post-Play-CDN-recovery",
+          "status": "verified_Windows",
+          "count": 4,
+          "passes": [
+            4,
+            0
+          ],
+          "assetsFirstDetected": [
+            "GameScreen_bitmaps_0.png",
+            "GameScreen_bitmaps_1.png",
+            "bomb_particle_1.png",
+            "bomb_particle_2.png",
+            "tile_clear_particle.png"
+          ],
+          "note": "Five 404s observed on initial click; four unique observed in next recovery pass; final post-click scan zero 404."
+        }
+      ],
+      "latestRetest": {
+        "browser": "Real Windows Playwright Chromium",
+        "gameCanvas": {
+          "width": 741,
+          "height": 341,
+          "visible": true
+        },
+        "clickPlay": "clicked at observed green original Canvas button",
+        "postClickVisual": "original Word Wipe title with dark loading/progress bar, no confirmed letter grid",
+        "gameHTTP404": 0,
+        "pageExceptions": 0,
+        "consoleErrors": 0,
+        "gameplayVerified": false,
+        "screenshotOnWindows": "Downloads/_2night_reskin_qa/manual-next6-wordwipe-interactive/after-play.png"
+      }
+    },
+    {
+      "id": "iogamesagario",
+      "title": "Agar.io",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "iframe sameOrigin false, no accessible content",
+      "exactErrors": [
+        "Iframe non accessibile (origine diversa)",
+        "Third-party Facebook pixel failed (likely nonessential)"
+      ],
+      "next": [
+        "Inspect why local iframe navigates to Chrome error page",
+        "Verify original SDK and legitimately accessible backend requirements",
+        "Do not mislabel cross-origin block as gameplay"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false,
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "frameNavigation": "chrome-error://chromewebdata/",
+        "crossOriginInspectorUnavailable": true,
+        "gameplayVerified": false
+      }
+    },
+    {
+      "id": "cardsfouruno",
+      "title": "Foono Online Multiplayer",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "FOON-O menu but Play Bots not confirmed",
+      "exactErrors": [
+        "Missing lazy modules from absolute /assets and /m paths including realtime-AohzANgl.js, HowlFactoryModule-Hole5-GE.js, idle-k65mPGKF.js",
+        "GET_REALTIME_TOKEN and GET_IP_REPUTATION external APIs fail",
+        "/assets/late-DM0uVa_S.css and index CSS, font and flag 404"
+      ],
+      "next": [
+        "Identify required Foony Play Bots path and backend dependencies",
+        "Retest a real bot round with card selection and turn transitions",
+        "Avoid fake matchmaker and unauthorized API calls"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "server-absolute-root-alias",
+          "status": "http-verified",
+          "urlSamples": [
+            "/assets/realtime-AohzANgl.js",
+            "/assets/late-DM0uVa_S.css",
+            "/assets/HowlFactoryModule-Hole5-GE.js",
+            "/m/Ja.js"
+          ],
+          "httpStatus": 200
+        },
+        {
+          "type": "cdn-asset-recovery",
+          "status": "recovered",
+          "file": "m/Ja.js"
+        }
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameHTTP404": 0,
+        "pageExceptions": 0,
+        "playBotsButtonClicked": true,
+        "menuUnchanged": true,
+        "gameplayVerified": false
+      }
+    },
+    {
+      "id": "iogamesevowarsio",
+      "title": "EvoWars.io",
+      "status": "blocked",
+      "engine": "iframe",
+      "observed": "Age/start screen and canvas rendering, many image load failures; gameplay not proven",
+      "exactErrors": [
+        "Dozens of image errors under /images/*.png including ghost, HUD, maps, minimap, flags, UI sprites",
+        "Adinplay/CPMStar ad scripts failed (separate optional errors)"
+      ],
+      "next": [
+        "Use actual age-gate/start controls in test without bypassing consent",
+        "Verify arena spawn and movement, not initial canvas or ad errors",
+        "Locate original font balooBhaina2.ttf if legitimately available, but do not fabricate"
+      ],
+      "gameplayVerified": false,
+      "inspectorValidated": false,
+      "fixes": [
+        {
+          "type": "original-CDN-recovery",
+          "status": "verified_Windows",
+          "reportedLogPNG": 83,
+          "subsequentBrowser404Assets": 159,
+          "totalRecovered": 242,
+          "remainingSpecificOriginalCDN404": [
+            "balooBhaina2.ttf"
+          ],
+          "finalObservedGame404": 0
+        }
+      ],
+      "latestRetest": {
+        "browser": "Playwright Chromium Windows",
+        "gameCanvas": {
+          "width": 741,
+          "height": 326,
+          "visible": true
+        },
+        "ageStartGateRemaining": true,
+        "clickPlayAttempt": "timeout though PLAY disappeared after attempted click",
+        "gameHTTP404": 0,
+        "otherThirdPartyAdHTTP400403404": true,
+        "pageErrors": [
+          "Uncaught (in promise) false"
+        ],
+        "gameplayVerified": false
+      }
+    }
+  ],
+  "updatedAt": "2026-11-25T19:33:20Z",
+  "recoverySummary": {
+    "requested": 91,
+    "recovered": 88,
+    "alreadyPresent": 3,
+    "failed": 0,
+    "platform": "Windows",
+    "script": "scripts/recover_reported_game_assets.py",
+    "commit": "27189ddb8f3cf385d6e69264d825094b3bae107b",
+    "note": "Original CDN bytes verified. Zero gameplay certifications awarded."
+  },
+  "serverRepair": {
+    "commit": "2bcb6f2d63fd3d708eb85a20ba3020e494d947c5",
+    "service": "127.0.0.1:8001",
+    "verified": "7 original asset URLs returned 200 with correct game Referer"
+  },
+  "followup": {
+    "stage": "Browser QA completed after CDN recovery; Word Wipe authentic Canvas Play action tested and after-Play 404s restored; visual screenshot still shows loading bar, no game board.",
+    "previousCertifiedBaseline": 3,
+    "newlyCertified": 0,
+    "script": "scripts/retest_next_six_user_games.py",
+    "screenshotsDirOnWindows": "Downloads/_2night_reskin_qa/manual-next6-after-recovery-20261125",
+    "proofRule": "Gameplay is unverified unless game content visible and two meaningful actual inputs change gameplay state.",
+    "catalogRefresh": {
+      "status": "performed_and_verified",
+      "url": "http://127.0.0.1:8001/reskinner/catalog.json",
+      "serverJobId": "qa_new6_final_server8001_20261125",
+      "games": 69,
+      "imageCounts": {
+        "wordgameswordwipe": 40,
+        "iogamesevowarsio": 387,
+        "cardsfouruno": 90
+      },
+      "fileCounts": {
+        "wordgameswordwipe": 59,
+        "iogamesevowarsio": 409,
+        "cardsdominoduel": 57
+      },
+      "note": "Numbers verified from refreshed server after all original asset recoveries. Image count is not gameplay proof."
+    }
+  }
+}

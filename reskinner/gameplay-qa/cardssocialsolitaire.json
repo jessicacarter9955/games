@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "cardssocialsolitaire",
+  "title": "Social Solitaire",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T14:00:00.191559+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "0535e0affdc283d4044c05068eba0a7b400822f59bd7a52e334d8bf93344d731",
+        "metrics": {
+          "entropy": 4.888,
+          "dominantFraction": 0.057,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "canvas-readback"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "37b3d2d1ac1bcb784d5dfe37b740221f140f74915b2b97fc13e6e244ce5f3f07",
+        "metrics": {
+          "entropy": 4.832,
+          "dominantFraction": 0.077,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "3b41186cd81930d1e847d8cf6a4aecc95b69db09eb31825229600e0192642155",
+        "metrics": {
+          "entropy": 4.834,
+          "dominantFraction": 0.076,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 6.38,
+      "fractionChanged": 0.103
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.1,
+      "fractionChanged": 0.001
+    },
+    "canvasBefore": [
+      {
+        "w": 1080,
+        "h": 680,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 1080,
+        "h": 680,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 1
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}

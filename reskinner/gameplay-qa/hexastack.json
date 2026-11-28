@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "hexastack",
+  "title": "Hexastack",
+  "engine": "pixi",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:54:21.955627+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-empty",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "1958ad422dfe6b5945a64d636e2a899882ac46b4193db5bd307682de33e3155a",
+        "metrics": {
+          "entropy": 4.7,
+          "dominantFraction": 0.076,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "3ef4d634daae9bdeda276651370687371b1a4a52480f66ca2d9474bd671f57c5",
+        "metrics": {
+          "entropy": 4.706,
+          "dominantFraction": 0.076,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "6a2e2dcc687dd05888d128113b251d0fadceca34b23e424415cd316f8f5a143a",
+        "metrics": {
+          "entropy": 4.706,
+          "dominantFraction": 0.076,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.08,
+      "fractionChanged": 0.001
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.06,
+      "fractionChanged": 0.001
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Unknown error on loading CrazyGames SDK"
+    ],
+    "httpErrors": [],
+    "externalRequestsBlocked": 4
+  },
+  "notes": "Screenshot originali solo sul PC Windows; screenshot/menu/canvas/HTML non equivalgono a gameplay."
+}

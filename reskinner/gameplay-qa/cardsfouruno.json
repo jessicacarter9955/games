@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "id": "cardsfouruno",
+  "title": "Foono Online Multiplayer",
+  "engine": "iframe",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:22.227813+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "06eac3d6895e6943b914c99ef4f5dc03692b042aa1ce72ab3ae2de79d97c45ae",
+        "metrics": {
+          "entropy": 1.381,
+          "dominantFraction": 0.836,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "06eac3d6895e6943b914c99ef4f5dc03692b042aa1ce72ab3ae2de79d97c45ae",
+        "metrics": {
+          "entropy": 1.381,
+          "dominantFraction": 0.836,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "36386449133a451d8666d65426be44c9f50de6a2944a6ddb31899c6a661feb7b",
+        "metrics": {
+          "entropy": 1.798,
+          "dominantFraction": 0.68,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 12.07,
+      "fractionChanged": 0.109
+    },
+    "canvasBefore": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/fonts/Exo2-latin-c8f4d0d9.woff2"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/index-Cy5NeRM2.css"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/img/flags/us.svg"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/rolldown-runtime-XhbT90kL.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/solid-vendor-vMdafsZ3.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/createGlobalStore-31p-ne8-.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/NumberUtils-g4Ou7l33.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1:8001/assets/battleships-6FROMMY9.js"
+      }
+    ],
+    "blockedExternalRequestCount": 25
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded.",
+  "latestRetest": {
+    "testedAt": "2026-11-25T14:34:40.534833+00:00",
+    "serverCommit": "b721214",
+    "mode": "Windows Chromium strict-offline",
+    "result": "play-not-confirmed",
+    "gameplayVerified": false,
+    "playActionVerified": false,
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "eca3fd59cda59d7aa8d50ea500dee9de404f381c8373b3c062a6ba69299550d4"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "eca3fd59cda59d7aa8d50ea500dee9de404f381c8373b3c062a6ba69299550d4"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "21a52d1998e4a072df9574e38aac280a48e6fa31f5de9efbc53a2fa959ef2d99"
+      }
+    ],
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "path": "/assets/rolldown-runtime-XhbT90kL.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/solid-vendor-vMdafsZ3.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/createGlobalStore-31p-ne8-.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/NumberUtils-g4Ou7l33.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/battleships-6FROMMY9.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/breakout-GfcOJ_g7.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/bubbleshooter-tqK4DXgF.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/BubbleShooterMatchType-ybMqsVoo.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/foonyflippers-NeLoJv98.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/checkers-z4jT4GU6.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/dinomight-kf7ld7cM.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/chess-dCfsbbiM.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/fourinarow-pEwhrQla.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/go-pe8tdx13.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/reversi-O-W5t66Y.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/mancala-ORGNUJT2.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/oneinarow-b4n95IpE.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/paintjob-s9T1YKEo.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/thieving-PZjcuPQW.js",
+        "status": 404
+      },
+      {
+        "path": "/assets/tictactoe-3dnmuadu.js",
+        "status": 404
+      }
+    ],
+    "blockedHosts": [
+      "foony.com"
+    ]
+  },
+  "moduleResolutionRegression": {
+    "source": "Windows Chromium Playwright strict-offline, separate baseline and candidate servers",
+    "fixCommit": "9909ba92fc629f534d6557112fbfaf772f93807f",
+    "baseline": {
+      "observedUnique404": 166,
+      "observedUniqueSuccessfulJs": 1
+    },
+    "candidate": {
+      "observedUnique404": 0,
+      "observedUniqueSuccessfulJs": 57,
+      "pageErrors": []
+    },
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "Observed within bounded test window; not a complete dependency graph or gameplay certification."
+  }
+}

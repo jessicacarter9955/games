@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "source": "Manual screenshots + Copy log reports from 2026-11-25 local Reskinner testing",
+  "createdAt": "2026-11-25T17:25:04.815Z",
+  "updatedAt": "2026-11-25T17:44:15Z",
+  "goal": "Original 1:1 playable/reskinnable mirrors. Do not certify menu/loading screen as gameplay.",
+  "scope": "Six newly reported manual failures; gameplay count baseline 3/69; prior three green remain excluded from new testing.",
+  "certifiedGreen": 0,
+  "warning": "status=blocked means not yet demonstrably playable; hypotheses are not validated fixes. Missing /extracted images may originate from Reskinner asset gallery.",
+  "issues": [
+    {
+      "id": "wordgameshangman",
+      "title": "Hangman",
+      "status": "blocked",
+      "symptom": "Blank white game viewport, DOM runtime detected with no canvas.",
+      "evidence": {
+        "iframeTitle": "",
+        "iframeURL": "about:",
+        "canvas": 0,
+        "errorsCaptured": 0,
+        "verifiedWindowsNavigation": [
+          "original local entrypoint loaded",
+          "iframe navigated to about:blank"
+        ],
+        "verifiedWindowsHTTP404": 0
+      },
+      "hypotheses": [
+        "Unexpected iframe navigation to about:blank or host-dependent boot script",
+        "Missing or blocked entry dependency not captured by onload"
+      ],
+      "nextActions": [
+        "Inspect original local index.html and navigation URLs",
+        "Capture document/console/network events at document-start in Chrome CDP",
+        "Repair only observed missing dependency/redirect"
+      ]
+    },
+    {
+      "id": "cardsheartsclassic",
+      "title": "Hearts: Classic",
+      "status": "blocked",
+      "symptom": "Black canvas with no visible cards.",
+      "evidence": {
+        "exception": "ReferenceError: data is not defined",
+        "location": "game.js:11343:25",
+        "assetGallery404": true,
+        "originCheckConfirmed": true,
+        "verifiedWindowsHTTP404": 0
+      },
+      "hypotheses": [
+        "Intentional source-domain validation rejects local origin; distinguish licensing/host requirements from missing files"
+      ],
+      "nextActions": [
+        "Inspect game.js around 11343 and origin of data global",
+        "Check failed bootstrap requests separately from reskinner gallery thumbnails",
+        "Retest card table with actual interaction"
+      ]
+    },
+    {
+      "id": "iogamespaperio",
+      "title": "Paper.io 2",
+      "status": "blocked",
+      "symptom": "Black gameplay area with some UI icons and coins.",
+      "evidence": {
+        "exception": "TypeError: Cannot read properties of undefined (reading 'skinList')",
+        "location": "index.js:4012:20856",
+        "repetition": 44,
+        "warning": "THREE.Material envMap undefined",
+        "latestRetestErrors": [
+          "Cannot read properties of undefined (reading 'territory')",
+          "Later JSON parser received HTML instead of JSON",
+          "Missing fonts/AvenirNextRoundedBold/Data.json, glb/Crown.glb, Patterns/*.png, etc."
+        ],
+        "lastMissingRuntimeAssetCheck": {
+          "observed404": 0,
+          "scanDurationSeconds": 10,
+          "verifiedWindows": true
+        }
+      },
+      "hypotheses": [
+        "Missing or uninitialized profile/skins payload supplied by game service",
+        "Secondary WebGL material warning not necessarily fatal"
+      ],
+      "nextActions": [
+        "Verify visual gameplay and multiple meaningful interactions on updated 8001 server",
+        "If runtime exceptions remain, locate exact state initialization; do not certify from static asset success"
+      ],
+      "fixes": [
+        {
+          "type": "source-guard",
+          "status": "applied_windows",
+          "detail": "q.user?.skinList initialization guard",
+          "script": "scripts/repair_known_local_game_errors.py",
+          "backupCreated": true
+        },
+        {
+          "type": "original-cdn-assets",
+          "status": "recovered_windows",
+          "assets": [
+            "config.json",
+            "packs/Scene.pack"
+          ],
+          "script": "scripts/recover_verified_original_assets.py"
+        },
+        {
+          "type": "original-cdn-browser404-recovery",
+          "status": "recovered_windows",
+          "totalRecovered": 34,
+          "passes": [
+            22,
+            12,
+            0
+          ],
+          "script": "scripts/recover_browser_404_assets.py",
+          "originalHost": "paper-io-2.game-files.crazygames.com"
+        }
+      ]
+    },
+    {
+      "id": "triviaguesstheiranswers",
+      "title": "Guess Their Answer",
+      "status": "blocked",
+      "symptom": "PlayCanvas scene reaches Searching for opponents indefinitely.",
+      "evidence": {
+        "exception": "ReferenceError: assetName is not defined",
+        "location": "__game-scripts.js:16780:11",
+        "errors": [
+          "BasicCharacter_7.json missing",
+          "BasicCharacter_7.glb missing",
+          "ShopCharacter_BasicCharacter_7.json missing",
+          "skin instantiate undefined"
+        ],
+        "latestHeadlessQA": {
+          "noJSExceptions": true,
+          "noHTTP404": true,
+          "durationApproxSeconds": 8,
+          "gameplayVerified": false
+        }
+      },
+      "hypotheses": [
+        "Recoverable game assets missing on Windows mirror",
+        "Matchmaking may require external backend"
+      ],
+      "nextActions": [
+        "Fix verified JS defect with original intended variable, not arbitrary stub",
+        "Recover templates and GLB where available",
+        "Retest matchmaking and confirm gameplay interactions"
+      ],
+      "fixes": [
+        {
+          "type": "error-handler",
+          "status": "applied_windows",
+          "detail": "assetName -> asset.name in asset load rejection",
+          "backupCreated": true
+        },
+        {
+          "type": "original-cdn-assets",
+          "status": "recovered_windows",
+          "assets": [
+            "BasicCharacter_7.json",
+            "BasicCharacter_7.glb",
+            "ShopCharacter_BasicCharacter_7.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hexastack",
+      "title": "Hexastack",
+      "status": "blocked",
+      "symptom": "Partially renders canvas, engine objects inspector remains zero and numerous errors.",
+      "evidence": {
+        "engine": "pixi",
+        "canvas": true,
+        "drawCalls": 1,
+        "engineObjects": 0,
+        "errorsNoted": 34,
+        "missingOfferAssetsAVIF": true,
+        "networkError": "Failed to fetch from Pixi loader",
+        "latestHeadlessQA": {
+          "noJSExceptions": true,
+          "noHTTP404": true,
+          "durationApproxSeconds": 8,
+          "gameplayVerified": false,
+          "sceneInspectorObjects": 0
+        }
+      },
+      "hypotheses": [
+        "Missing AVIF texture assets; runtime SDK/loader issues",
+        "Pixi app stage not exposed via known global window.app.stage"
+      ],
+      "nextActions": [
+        "Inspect whether Pixi stage can be accessed in its bundled runtime; provide conservative canvas fallback if not",
+        "Verify which assets are optional shop decorations vs load blockers",
+        "Check SDK initialization under authorized local integration",
+        "Create robust Pixi inspector where actual stage is exposed; fallback labeled Canvas otherwise"
+      ],
+      "fixes": [
+        {
+          "type": "inspector-improvement",
+          "status": "committed_needs_browser_retest",
+          "detail": "72 CSS px canvas pixel region selection with honest non-sprite labeling",
+          "commit": "16f4fbbde4f463e2d11c6cc2276aee3e0f9bf1de"
+        }
+      ]
+    },
+    {
+      "id": "iogamescubes2048royale",
+      "title": "Cubes 2048 Royale",
+      "status": "blocked",
+      "symptom": "Stuck on Finding game... trying to find worthy opponents.",
+      "evidence": {
+        "body": "Finding game... We're trying to find worthy opponents for you!",
+        "error": "Error attempting to identify user! {}",
+        "warning": "GameAnalytics collector unreachable",
+        "assetGallery404": true,
+        "corsOriginBlocked": "https://cubes-api-prod-knaql.ondigitalocean.app/all/v1/find-or-create-cg-user?context=Cubes2048",
+        "corsLocalOrigin": "http://127.0.0.1:8001"
+      },
+      "hypotheses": [
+        "Live identity/matchmaking service required; some gallery thumbnail paths unavailable"
+      ],
+      "nextActions": [
+        "Platform game backend does not allow localhost CORS preflight; needs supported service integration or original legitimate offline mode",
+        "Trace identity request and service origin",
+        "Determine if legitimate local practice mode exists",
+        "Distinguish backend blockers from static images 404; no fake bots or forged certification"
+      ]
+    }
+  ],
+  "serverRepair": {
+    "status": "verified_on_windows",
+    "server": "127.0.0.1:8001",
+    "restarted": true,
+    "assetOverlayExamples": [
+      {
+        "game": "cardsheartsclassic",
+        "file": "branding/logo.png",
+        "before": 404,
+        "after": 200
+      },
+      {
+        "game": "triviaguesstheiranswers",
+        "file": "files/assets/193571201/1/GroundTexture.png",
+        "before": 404,
+        "after": 200
+      },
+      {
+        "game": "iogamescubes2048royale",
+        "file": "assets/img/offscreen_indicator.png",
+        "before": 404,
+        "after": 200
+      }
+    ],
+    "note": "Stale server process was replaced with updated server. HTTP success only, not gameplay evidence."
+  }
+}

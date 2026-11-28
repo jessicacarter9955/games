@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "pixelblast",
+  "title": "Pixelblast",
+  "engine": "unity",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:07:27.712665+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "qa-timeout",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": null,
+  "evidence": {
+    "screenshots": [],
+    "playDiff": null,
+    "inputDiff": null,
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": false
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 0,
+    "qaError": "Per-game watchdog stopped browser process after 75 seconds",
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

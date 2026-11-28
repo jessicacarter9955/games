@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamesholey",
+  "title": "Holey.io Battle Royale",
+  "engine": "html5",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:05:17.771898+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "a9e8df594d3776e0f24df2c07bea5c31e5e4dc781b158f31ae74f54cb589a012",
+        "metrics": {
+          "entropy": 0.911,
+          "dominantFraction": 0.733,
+          "nearUniform": false,
+          "paletteColors": 4
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "a9e8df594d3776e0f24df2c07bea5c31e5e4dc781b158f31ae74f54cb589a012",
+        "metrics": {
+          "entropy": 0.911,
+          "dominantFraction": 0.733,
+          "nearUniform": false,
+          "paletteColors": 4
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "a9e8df594d3776e0f24df2c07bea5c31e5e4dc781b158f31ae74f54cb589a012",
+        "metrics": {
+          "entropy": 0.911,
+          "dominantFraction": 0.733,
+          "nearUniform": false,
+          "paletteColors": 4
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 3,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

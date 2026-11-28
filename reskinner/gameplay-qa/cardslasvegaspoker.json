@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "cardslasvegaspoker",
+  "title": "Las Vegas Poker",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:58:33.502103+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "12384cd0644ed45f5ada9c512271708a1a69a35eeb64eb83b96f7608c58ee6d2",
+        "metrics": {
+          "entropy": 0.068,
+          "dominantFraction": 0.995,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "12384cd0644ed45f5ada9c512271708a1a69a35eeb64eb83b96f7608c58ee6d2",
+        "metrics": {
+          "entropy": 0.068,
+          "dominantFraction": 0.995,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "12384cd0644ed45f5ada9c512271708a1a69a35eeb64eb83b96f7608c58ee6d2",
+        "metrics": {
+          "entropy": 0.068,
+          "dominantFraction": 0.995,
+          "nearUniform": true,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Cannot read properties of undefined (reading 'SDK')"
+    ],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 1
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "nutspuzzlesortbycolor",
+  "source": "Windows bridge reskin69_filtered_full_20261125",
+  "capturedAtDate": "2026-11-25",
+  "stage": "mirror_capture_pass",
+  "completedGameplay": false,
+  "inspectorValidated": false,
+  "stats": {
+    "newFiles": 2,
+    "existingFiles": 4,
+    "failedRequests": 0
+  },
+  "details": "Checkpoint based on per-game capture log. Counts reflect observed game-host responses, not all assets or end-to-end playability. Raw third-party files remain on Windows."
+}

@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "id": "mahjongg",
+  "title": "Mahjongg",
+  "engine": "html5, canvas 2d",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:52:54.367924+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "gameplay-verified-tile-selection",
+  "playActionVerified": true,
+  "gameplayVerified": true,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "1506f0458ac5674aa7f74056cf903dab8452b38d30053adc84f2baa4ac4117f2",
+        "metrics": {
+          "entropy": 4.546,
+          "dominantFraction": 0.078,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "66b146a988ffb554286fe93afaaa537bdc122ed02a615afdc15d9ed327bbb5b9",
+        "metrics": {
+          "entropy": 4.565,
+          "dominantFraction": 0.077,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "422191ad0717d83c17be3cfbf1aa39fc771f887b8ad2c61b422672272e36db78",
+        "metrics": {
+          "entropy": 4.564,
+          "dominantFraction": 0.076,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.46,
+      "fractionChanged": 0.005
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.79,
+      "fractionChanged": 0.01
+    },
+    "canvasBefore": [
+      {
+        "w": 1080,
+        "h": 680,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 1080,
+        "h": 680,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestsBlocked": 8
+  },
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML.",
+  "reskinUiRetest": {
+    "source": "Windows Chromium, real Reskinner UI",
+    "assetSelection": true,
+    "isolatedPreview": false,
+    "replacementSaved": true,
+    "replacementServed": true,
+    "persistedAfterReload": true,
+    "liveGameTextureVerified": false,
+    "assetName": "preloader.gif",
+    "dimensions": [
+      125,
+      110
+    ],
+    "runtime": "pixi; no Canvas2D draw calls observed",
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "A private synthetic replacement was served at the original asset URL after reload. This tests resource transport and persistence, not actual gameplay or the replacement of a live tile."
+  },
+  "initialResult": "play-not-confirmed",
+  "initialPlayActionVerified": false,
+  "latestGameplayRetest": {
+    "source": "Windows Chromium Playwright strict-offline at localhost:8001, visual review of private screenshots",
+    "testedOn": "2026-11-25",
+    "baseline": {
+      "afterPlay": "empty green board",
+      "missingRequiredResource": "assets/puzzles/standard.json",
+      "httpStatus": 404
+    },
+    "repair": {
+      "source": "original game CDN",
+      "relativePath": "assets/puzzles/standard.json",
+      "bytes": 4424,
+      "sha256": "29b13a29d500797aeb32a7a48c14f5a01023b65860fd99324d5c8fee3b46b3bb",
+      "stored": "private Windows mirror only"
+    },
+    "after": {
+      "httpErrors": [],
+      "pageErrors": [],
+      "boardVisible": true,
+      "visibleTileCounter": 144,
+      "playAction": {
+        "x": 540,
+        "y": 598
+      },
+      "secondAction": {
+        "kind": "select exposed Mahjongg tile",
+        "x": 479,
+        "y": 334,
+        "observed": "tile outlined yellow at center of real board",
+        "changedRegion": [
+          452,
+          285,
+          524,
+          381
+        ]
+      },
+      "screenshots": {
+        "boot": "e860c12a796ad6a17dd2ecf39aab89385cd028d02113b1ce6e7c5bfdc32f801f",
+        "board": "65f97f9b9994f2939d459f2dce0735d33ea7a7ef1831134d0eb010d12cbb741a",
+        "selected": "a4ff7c4ec9af633fc4cf48fca8f4cbc63ab048deec1ceb6813b8c328784a0b02"
+      }
+    },
+    "gameplayVerified": true,
+    "fullPlaythroughVerified": false,
+    "matchedPairVerified": false,
+    "inspectorValidated": false,
+    "notes": "Actual playable board and coherent tile selection confirmed visually. No completed matching pair, full playthrough, or live tile replacement certified. Initial evidence fields remain from first run."
+  },
+  "previewerGameplayRetest": {
+    "source": "Windows Chromium Playwright through actual Reskinner iframe on isolated local mirror server",
+    "networkMode": "strict-offline",
+    "testedOn": "2026-11-25",
+    "gameplayVerified": true,
+    "observed": "Actual Mahjongg board visible after Play; exposed tile receives yellow selection highlight after subsequent click.",
+    "pageErrors": [],
+    "httpErrors": [],
+    "screenshots": {
+      "boot": "5ddce25da53752c6fd80b53ada6d0895494d79fc959b18e3f05c926193c93e72",
+      "board": "41996415d2fa4421fe2a134f630c04932e7bc7d1f82367b0c304f41060b442aa",
+      "selected": "d0b98135683be1ee66087bb4ea3d8bd714f3cb74a461b19b09a1d985a84f59ad"
+    },
+    "fullPlaythroughVerified": false
+  }
+}

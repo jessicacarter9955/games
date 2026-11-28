@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "carout",
+  "title": "Carout",
+  "engine": "unity",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:04:02.565214+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "568d384c38c65cc6f3d5bf83f274c0af93ff4e7ee2293f698d59baa05b75a65c",
+        "metrics": {
+          "entropy": 3.218,
+          "dominantFraction": 0.52,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "d2cbf3125042ff6f63c6de245420d6b3b668f007e3ace7fe70eb6e4c56109418",
+        "metrics": {
+          "entropy": 3.235,
+          "dominantFraction": 0.517,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "611c0f5f72db144d08046357216c840026b98ba5496f60c0c35a759e84fc284d",
+        "metrics": {
+          "entropy": 3.236,
+          "dominantFraction": 0.517,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0.05,
+      "fractionChanged": 0.001
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0.01,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Invalid or unexpected token",
+      "unityFramework is not defined"
+    ],
+    "httpErrors": [],
+    "externalRequestFailures": 3,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "binaryRepairRetest": {
+    "source": "Windows Chromium Playwright strict-offline; direct original CDN binary verification",
+    "baseline": {
+      "errors": [
+        "Invalid or unexpected token",
+        "unityFramework is not defined"
+      ],
+      "bytes": 158946,
+      "sha256": "0bb9a47e44b24db42a2dd8ffa6fc082f4d8f424069961ff94906a59e0a8fb0a7",
+      "format": "corrupted compressed Unity framework with UTF-8 replacement bytes"
+    },
+    "repair": {
+      "path": "Build/Build_Playgama.framework.js.unityweb",
+      "bytes": 87641,
+      "sha256": "dfa0b2f902a33fb5e35d481b384ce883366cbad7882b58501a79ea2dc4210737",
+      "stored": "private Windows mirror; original saved in private backup",
+      "wasmAndDataMatchedOriginal": true
+    },
+    "retest": {
+      "pageErrors": [],
+      "httpErrors": [],
+      "body": "Loading GPU",
+      "gameplayVerified": false
+    },
+    "notes": "Unity loader progresses beyond prior framework exception. GPU loading is not actual gameplay."
+  }
+}

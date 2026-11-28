@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="description" content="2Night Multi-Game Reskinner: catalogo dei giochi ZIP, inspector runtime e bozze di reskin senza toccare gli originali."/>
+  <title>2Night | Multi-Game Reskinner</title>
+  <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="./asset-library.css"/>
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">◈</span>
+        <div><strong>2Night <span>Reskinner</span></strong><small>Games ZIP · branch indipendente</small></div>
+      </div>
+      <div class="header-stats">
+        <span id="gameCount">Caricamento catalogo…</span>
+        <span class="sep">·</span><span id="assetCount">—</span>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="refreshWorkspace" class="button ghost" title="Ricarica il Reskinner mantenendo gioco, variante e confronto">↻ Aggiorna</button>
+        <button type="button" id="globalAssetManager" class="button ghost">▦ Asset Manager</button>
+        <button type="button" id="toggleList" class="button ghost mobile-only" aria-label="Apri elenco giochi">☰ Giochi</button>
+        <button type="button" id="downloadCatalog" class="button ghost" title="Esporta riepilogo catalogo">↓ Catalogo</button>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="game-sidebar" id="gameSidebar" aria-label="Catalogo giochi">
+        <div class="section-head">
+          <div><h1>Seleziona gioco</h1><p>69 archivi · stato tecnico reale</p></div>
+          <button id="closeList" class="button ghost mobile-only" aria-label="Chiudi elenco">✕</button>
+        </div>
+        <label class="field" for="searchGames">Cerca per nome, categoria o motore</label>
+        <input id="searchGames" class="search" type="search" placeholder="Cerca tra i giochi…" autocomplete="off"/>
+        <div class="filters">
+          <label class="field" for="categoryFilter">Categoria</label>
+          <select id="categoryFilter"><option value="all">Tutte le categorie</option></select>
+          <label class="field" for="statusFilter">Compatibilità</label>
+          <select id="statusFilter">
+            <option value="all">Tutti i giochi</option>
+            <option value="experimental">🟡 2D sperimentali</option>
+            <option value="limited">⚪ 3D / limitati</option>
+            <option value="blocked">🔴 Motore non supportato</option>
+            <option value="missing">⚫ Avvio mancante</option>
+          </select>
+          <label class="field" for="sortGames">Ordinamento</label>
+          <select id="sortGames">
+            <option value="score">Punteggio storico</option>
+            <option value="status">Disponibilità tecnica</option>
+            <option value="title">Nome A–Z</option>
+          </select>
+        </div>
+        <div class="legend" aria-label="Legenda di compatibilità">
+          <span><i class="dot yellow"></i> Sperimentale</span>
+          <span><i class="dot neutral"></i> Limitato</span>
+          <span><i class="dot red"></i> Non supportato</span>
+          <span><i class="dot muted"></i> Mancante</span>
+        </div>
+        <div class="game-list" id="gameList" role="listbox" aria-label="Giochi disponibili"></div>
+        <div class="sidebar-foot">
+          <strong>Nota sui punteggi</strong>
+          <p>Il voto precedente misura la difficoltà stimata di reskin. Non conferma che il gioco sia avviabile, completo o ispezionabile.</p>
+        </div>
+      </aside>
+
+      <main class="main-workspace">
+        <div class="workspace-heading">
+          <div class="heading-title">
+            <span class="eyebrow">GAME WORKSPACE</span>
+            <h2 id="currentGame">Seleziona un gioco</h2>
+            <p id="currentDesc">Un runtime compatibile verrà aperto qui.</p>
+          </div>
+          <div class="heading-meta">
+            <span id="gameStatus" class="pill muted">In attesa</span>
+            <span id="techLabel" class="mini-chip">—</span>
+          </div>
+        </div>
+
+        <div class="stage-toolbar">
+          <div class="stage-modes">
+            <button type="button" id="modePlay" class="button mode selected" aria-pressed="true">▶ Gioca</button>
+            <button type="button" id="modeInspect" class="button mode" aria-pressed="false">⌖ Ispeziona LIVE</button>
+          </div>
+          <div class="stage-actions">
+            <button id="retryGame" type="button" class="button ghost" disabled>↻ Ricarica</button>
+            <button id="fullscreenGame" type="button" class="button ghost" disabled>⤢ Schermo intero</button>
+          </div>
+        </div>
+        <div class="version-bar">
+          <label for="reskinVersion">Versione</label><select id="reskinVersion" aria-label="Versione del gioco"></select>
+          <button id="versionFork" class="button ghost" type="button">＋ Nuova variante</button>
+          <button id="versionCheckpoint" class="button ghost" type="button">Checkpoint</button>
+          <button id="versionCompare" class="button ghost" type="button" disabled>Prima / dopo</button>
+          <label id="compareVersionLabel" for="compareVersion" hidden>Confronta con</label><select id="compareVersion" hidden aria-label="Versione di confronto"></select>
+          <button id="versionPackage" class="button ghost" type="button">↓ Pacchetto</button>
+          <span id="versionState" role="status">Originale protetto</span>
+        </div>
+        <div class="game-stage" id="gameStage">
+          <iframe id="originalFrame" title="Originale (confronto)" hidden sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms" allow="autoplay; gamepad" referrerpolicy="same-origin"></iframe>
+          <div class="compare-original-label">Originale</div><div class="compare-variant-label">Versione selezionata</div>
+          <iframe id="gameFrame" title="Gioco HTML5 da ispezionare" hidden
+            allow="fullscreen; autoplay; gamepad"
+            referrerpolicy="same-origin"
+            sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+          <div id="inspectSurface" class="inspect-surface" hidden>
+            <div id="hoverBox" class="hover-box" hidden>
+              <div id="hoverName" class="hover-label"></div>
+            </div>
+          </div>
+          <div id="stageNotice" class="stage-notice">
+            <div class="notice-icon">◈</div>
+            <h3>In attesa del catalogo</h3>
+            <p>Carico giochi e compatibilità dal repository ZIP.</p>
+          </div>
+          <div id="stageDiagnostic" class="stage-diagnostic" role="status" aria-live="polite">—</div>
+        </div>
+        <div class="workspace-foot">
+          <span id="runtimeState">Runtime non collegato</span>
+          <span id="viewportState">Viewport —</span>
+          <div class="quick-diagnostics" id="quickDiagnostics"
+               aria-label="Diagnostica rapida senza DevTools">
+            <span class="quick-diagnostics-count"
+                  title="Errori rilevati in questa sessione">🐞 <span id="diagErrorCount">0</span></span>
+            <button id="copyDiagnostics" type="button"
+                    class="button ghost quick-diagnostics-button"
+                    title="Copia errori, URL falliti e stato del gioco senza premere F12">⧉ Copia log</button>
+            <button id="captureScreenshot" type="button"
+                    class="button ghost quick-diagnostics-button"
+                    title="Copia solo il canvas del gioco negli appunti (Ctrl+V in chat)">▣ Screenshot</button>
+            <span id="diagFeedback" class="quick-diagnostics-feedback"
+                  role="status" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="library-header">
+          <div>
+            <h2>Risorse del gioco</h2>
+            <p id="librarySubtitle">Immagini, atlas e modelli trovati nel repository.</p>
+          </div>
+          <div class="library-filters">
+            <input id="searchAssets" type="search" placeholder="Filtra asset…" aria-label="Filtra asset"/>
+            <select id="assetKind" aria-label="Tipologia asset">
+              <option value="all">Tutti</option>
+              <option value="image">Immagini</option>
+              <option value="atlas">Atlas/metadati</option>
+              <option value="model">Modelli/texture 3D</option>
+            </select>
+          </div>
+        </div>
+        <div id="assetGrid" class="asset-grid" aria-label="Risorse grafiche"></div>
+      </main>
+
+      <aside class="inspector-sidebar" aria-label="Inspector e reskin">
+        <div class="inspector-head">
+          <h2>Inspector <span>LIVE</span></h2>
+          <p>Passa il mouse sopra un elemento nel gioco; per giocare passa alla modalità ▶.</p>
+        </div>
+        <div id="runtimeInfo" class="inspector-section">
+          <div class="section-kicker">RUNTIME</div>
+          <div class="empty-detail">Seleziona un gioco per visualizzare il runtime e le capacità effettive.</div>
+        </div>
+        <div class="inspector-section">
+          <div class="section-kicker">ELEMENTO IN HOVER</div>
+          <div id="hoverInfo" class="empty-detail">Nessun elemento selezionato.</div>
+        </div>
+        <details id="universalInspector" class="inspector-section">
+          <summary class="section-kicker">UNIVERSAL INSPECTOR · OGGETTI</summary>
+          <button id="uiScan" type="button" class="button ghost block">Scansiona runtime</button>
+          <input id="uiObjectSearch" type="search" placeholder="Cerca oggetto" aria-label="Cerca oggetto runtime"/>
+          <p id="uiObjectSummary" class="hint">Nessuna scansione</p>
+          <div id="uiObjectRows" style="max-height:240px;overflow:auto"></div>
+          <pre id="uiObjectDetails" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px">Seleziona un oggetto</pre>
+          <p id="uiLimits" class="hint">Avvia un gioco locale.</p>
+          <button id="uiRecord" type="button" class="button ghost block">● Registra hover</button>
+          <p id="uiTimeline" class="hint">Nessun campione</p>
+          <button id="uiExport" type="button" class="button ghost block">Esporta oggetti e campioni JSON</button>
+        </details>
+        <div class="inspector-section">
+          <div class="section-kicker">RESKIN ASSET</div>
+          <div id="assetDetail" class="empty-detail">Seleziona una texture nella libreria per sostituirla.</div>
+          <div id="reskinControls" hidden>
+            <p id="reskinLayerState" class="hint">Livello risorse: inizializzazione…</p>
+            <label class="field" for="replacementFile">PNG di sostituzione (dimensioni 1:1)</label>
+            <input type="file" id="replacementFile" accept="image/png" hidden/>
+            <button id="chooseReplacement" type="button" class="button primary block">↑ Carica PNG sostitutivo</button>
+            <div class="reskin-buttons">
+              <button id="restoreAsset" type="button" class="button ghost" disabled>↶ Ripristina</button>
+              <button id="exportAsset" type="button" class="button ghost" disabled>↓ Esporta PNG</button>
+              <button id="applyReskinGame" type="button" class="button primary" disabled>↻ Ricarica con reskin</button>
+            </div>
+            <div id="atlasPanel" class="atlas-panel" hidden>
+              <div class="section-kicker">FRAME ATLAS · COMPATIBILITÀ 1:1</div>
+              <p id="atlasInfo" class="hint">Analisi dei frame…</p>
+              <label class="field" for="atlasFrameSelect">Frame da modificare</label>
+              <select id="atlasFrameSelect" aria-label="Frame texture atlas"></select>
+              <div class="atlas-preview-box">
+                <canvas id="atlasPreview" width="96" height="96"
+                  aria-label="Anteprima del frame selezionato"></canvas>
+                <div>
+                  <p id="atlasDimensions" class="hint"></p>
+                  <p id="atlasWarning" class="hint"></p>
+                </div>
+              </div>
+              <input id="atlasPatchFile" type="file" accept="image/png" hidden/>
+              <button id="atlasPatchButton" type="button"
+                class="button primary block">↑ Sostituisci questo frame</button>
+              <p class="footnote">La posizione nell’atlante resta identica.
+                Un rettangolo condiviso cambierà in tutti i frame che lo utilizzano.
+                Per applicare il PNG durante il gioco premi «Ricarica con reskin».</p>
+            </div>
+            <div id="reskinStatus" class="hint"></div>
+          </div>
+        </div>
+        <div class="inspector-section inspector-bottom">
+          <div class="section-kicker">BOZZE LOCALI</div>
+          <div id="draftCount" class="muted-text">Nessuna modifica salvata.</div>
+          <button id="exportManifest" type="button" class="button ghost block">↓ Esporta manifest delle modifiche</button>
+          <p class="footnote">Le bozze restano in IndexedDB e vengono fornite ai giochi con lo stesso URL delle texture originali durante il caricamento. Per visualizzare una texture già in memoria usa «Ricarica con reskin». Non modifica ZIP o GitHub. Texture incorporate in asset binari, mesh, UV e shader richiedono adapter specifici.</p>
+        </div>
+      </aside>
+    </div>
+    <div id="mobileBackdrop" class="mobile-backdrop" hidden></div>
+  </div>
+  <script type="module" src="./app.js"></script>
+  <script type="module" src="./asset-library.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "id": "jigpicsolitaire",
+  "title": "Jigpic Solitaire",
+  "engine": "html5",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:05:54.688283+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "288df074df1b271093e5ecb64070a0eefefdcc2b9d4958a27565cb7b9be5e828",
+        "metrics": {
+          "entropy": 3.559,
+          "dominantFraction": 0.41,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "288df074df1b271093e5ecb64070a0eefefdcc2b9d4958a27565cb7b9be5e828",
+        "metrics": {
+          "entropy": 3.559,
+          "dominantFraction": 0.41,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "288df074df1b271093e5ecb64070a0eefefdcc2b9d4958a27565cb7b9be5e828",
+        "metrics": {
+          "entropy": 3.559,
+          "dominantFraction": 0.41,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Event",
+      "Event",
+      "Event",
+      "Event",
+      "Event"
+    ],
+    "httpErrors": [],
+    "externalRequestFailures": 1,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

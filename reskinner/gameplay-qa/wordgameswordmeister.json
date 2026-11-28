@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "id": "wordgameswordmeister",
+  "title": "Wordmeister",
+  "engine": "html5",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:53:37.035971+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "gameplay-verified-letter-placement",
+  "playActionVerified": true,
+  "gameplayVerified": true,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "c7fb591da49a57debcd4a354a5c9f021b03be844a23c04da84e2b54133764fd8",
+        "metrics": {
+          "entropy": 4.767,
+          "dominantFraction": 0.09,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "c7fb591da49a57debcd4a354a5c9f021b03be844a23c04da84e2b54133764fd8",
+        "metrics": {
+          "entropy": 4.767,
+          "dominantFraction": 0.09,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "c7fb591da49a57debcd4a354a5c9f021b03be844a23c04da84e2b54133764fd8",
+        "metrics": {
+          "entropy": 4.767,
+          "dominantFraction": 0.09,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [
+      {
+        "w": 960,
+        "h": 540,
+        "visible": true
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 960,
+        "h": 540,
+        "visible": true
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestsBlocked": 3
+  },
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML.",
+  "reskinUiRetest": {
+    "source": "Windows Chromium, real Reskinner UI",
+    "assetSelection": false,
+    "isolatedPreview": true,
+    "replacementSaved": false,
+    "replacementServed": false,
+    "persistedAfterReload": false,
+    "liveGameTextureVerified": false,
+    "runtime": "canvas; 4 tracked draws",
+    "assetName": "main_title.png",
+    "catalogMatches": 2,
+    "selectedArchiveImageDimensions": [
+      0,
+      0
+    ],
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "Inspector isolated the real menu texture; first gallery entry points to an archived path that fails to decode. Baseline for gallery repair."
+  },
+  "galleryRegression": {
+    "source": "Windows Playwright, real Reskinner UI, isolated baseline and candidate servers",
+    "fixCommit": "85d14b423613de58b2891e8137df0acd47252152",
+    "baseline": {
+      "matchingAssets": 2,
+      "decoded": false,
+      "dimensions": [
+        0,
+        0
+      ]
+    },
+    "candidate": {
+      "matchingAssets": 1,
+      "excludedMissingArchiveAssets": 48,
+      "decoded": true,
+      "dimensions": [
+        960,
+        330
+      ],
+      "replacementSaved": true,
+      "replacementServed": true,
+      "markerBeforeFraction": 0,
+      "markerAfterFraction": 0.5425204918032787,
+      "visibleInMenu": true,
+      "persistedAfterReload": true
+    },
+    "gameplayVerified": false,
+    "inspectorValidated": false,
+    "notes": "Verified menu texture replacement and persistence only; no gameplay-scene certification."
+  },
+  "initialResult": "play-not-confirmed",
+  "initialPlayActionVerified": false,
+  "latestGameplayRetest": {
+    "source": "Windows Chromium Playwright strict-offline at localhost:8001; private screenshots visually reviewed",
+    "testedOn": "2026-11-25",
+    "actions": [
+      {
+        "kind": "Play",
+        "x": 540,
+        "y": 466
+      },
+      {
+        "kind": "Select character",
+        "x": 540,
+        "y": 420
+      },
+      {
+        "kind": "Start board",
+        "x": 540,
+        "y": 380
+      },
+      {
+        "kind": "Dismiss first-turn dialog",
+        "x": 724,
+        "y": 241
+      },
+      {
+        "kind": "Drag letter from rack onto board",
+        "from": [
+          224,
+          590
+        ],
+        "to": [
+          397,
+          300
+        ]
+      }
+    ],
+    "observed": "Real board visible; after drag the first rack slot is empty and a letter is visible at the central board square.",
+    "pageErrors": [],
+    "httpErrors": [],
+    "screenshots": {
+      "boot": "12cf866ecfdc91068240ab1d19db9efd6f9c3afa825653bfdc25cc5161314bd4",
+      "board": "f2c5cb33e4813bcd384b37e45401d82ce48fd1f8482b4a238152c6c6f758af82",
+      "afterMove": "56f9c5711e0dc1a4bdc321630c0d42b079510278f5c64aacaddac5aaf3cd6261"
+    },
+    "gameplayVerified": true,
+    "fullPlaythroughVerified": false,
+    "inspectorValidated": false,
+    "notes": "A real letter placement was verified, not a complete word submission or game completion. Earlier evidence preserved."
+  },
+  "liveSceneReskinRetest": {
+    "source": "Windows Chromium Playwright through actual Reskinner UI on isolated server with gallery and hashed module fixes",
+    "asset": "letters_blue.png",
+    "dimensions": [
+      364,
+      84
+    ],
+    "isolatedPreview": true,
+    "assetSelection": true,
+    "replacementSaved": true,
+    "liveGameTextureVerified": true,
+    "observed": "Original blue letter tiles on active board become magenta after the replacement; visually reviewed private before/after screenshots.",
+    "markerBeforeFraction": 0,
+    "markerAfterFraction": 0.00468979075036652,
+    "markerReloadedFraction": 0,
+    "persistenceInEquivalentSceneVerified": false,
+    "notes": "Reload produced a different first-turn board without the same placed tiles; zero marker pixels cannot establish whether persistence failed. Full inspector validation remains false pending equivalent-scene persistence.",
+    "screenshots": {
+      "before": "159202d64cfbc6eb8e63fd5a615a5a66f10d152d568d08da5569319b347cdd97",
+      "after": "8ddc0b818c5b0af3dae68ef7d4b0adbbdf88b546f1b671142c601786dd7a3c32",
+      "reloaded": "cd400c9219dd589a6df38f798a55c2e2f575a8af38b7f7a40be0321da56233dc"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "triviapainttheflag",
+  "title": "Paint the Flag",
+  "engine": "unity",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:03:55.445467+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "unity-portal-wrapper",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "19dc5d79143839c978e2c4445dd7a8a801a3d8145b46fba4a5ae65b86b9b9186",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "19dc5d79143839c978e2c4445dd7a8a801a3d8145b46fba4a5ae65b86b9b9186",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "19dc5d79143839c978e2c4445dd7a8a801a3d8145b46fba4a5ae65b86b9b9186",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 0,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

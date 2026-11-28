@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "pieceofcakemerge",
+  "title": "Pieceofcakemerge",
+  "engine": "defold",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:06:06.151853+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "0073aab73ab079d27a912b56304adb907e35d5acafd1b5bfdfd8582f7bd6343b",
+        "metrics": {
+          "entropy": 1.858,
+          "dominantFraction": 0.719,
+          "nearUniform": false,
+          "paletteColors": 17
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "3744c0526f4caedcb00a6bc8aa5fec6e354d53461a8c7b99f2d8cbd97ad6c506",
+        "metrics": {
+          "entropy": 4.847,
+          "dominantFraction": 0.056,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "3744c0526f4caedcb00a6bc8aa5fec6e354d53461a8c7b99f2d8cbd97ad6c506",
+        "metrics": {
+          "entropy": 4.847,
+          "dominantFraction": 0.056,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 123.55,
+      "fractionChanged": 1
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": false,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Unable to resolve CrazyGames"
+    ],
+    "httpErrors": [],
+    "externalRequestFailures": 20,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

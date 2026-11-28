@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "id": "iogamesdiepio",
+  "title": "Diep.io",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:02:11.629566+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/assets/index-d51d48e2.js"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/assets/index-7dcee479.css"
+      },
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/cdn-cgi/challenge-platform/scripts/jsd/main.js"
+      }
+    ],
+    "externalRequestFailures": 3,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "binaryRepairRetest": {
+    "source": "Windows Chromium Playwright strict-offline; original CDN binary",
+    "baseline": {
+      "format": "WAT text instead of binary",
+      "bytes": 67011588,
+      "sha256": "912c2397ace85775689a29c9d95952f2cda72b5a2a2574d12efbb24a80055c5c"
+    },
+    "repair": {
+      "path": "diep.wasm",
+      "bytes": 6688515,
+      "sha256": "299623df9475acc42611c410abea903800a35c5dafa734a06a30bb8daa91e866",
+      "format": "WebAssembly binary",
+      "stored": "private Windows mirror with original backup"
+    },
+    "retest": {
+      "pageErrors": [],
+      "menuBodyObserved": true,
+      "status": "Connecting...; New update available!",
+      "remainingHttpErrors": "root-relative UI icons and challenge script",
+      "gameplayVerified": false
+    },
+    "notes": "Valid WASM restored, menu visible in DOM, but connecting state and current-version compatibility not certified. No gameplay claim."
+  }
+}

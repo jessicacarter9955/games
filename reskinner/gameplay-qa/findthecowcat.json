@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "findthecowcat",
+  "title": "Nut Sort: Build the City",
+  "engine": "defold",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:01:57.331142+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "9cf0d29e980aae76912405f9da9c63f75f15811f9f3d9c0e89240a872a692ede",
+        "metrics": {
+          "entropy": 1.316,
+          "dominantFraction": 0.845,
+          "nearUniform": false,
+          "paletteColors": 31
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "9cf0d29e980aae76912405f9da9c63f75f15811f9f3d9c0e89240a872a692ede",
+        "metrics": {
+          "entropy": 1.316,
+          "dominantFraction": 0.845,
+          "nearUniform": false,
+          "paletteColors": 31
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "9cf0d29e980aae76912405f9da9c63f75f15811f9f3d9c0e89240a872a692ede",
+        "metrics": {
+          "entropy": 1.316,
+          "dominantFraction": 0.845,
+          "nearUniform": false,
+          "paletteColors": 31
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Cannot read properties of undefined (reading 'SDK')"
+    ],
+    "httpErrors": [],
+    "externalRequestFailures": 1,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

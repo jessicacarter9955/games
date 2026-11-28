@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cardsspades",
+  "title": "Spades",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:57:50.578610+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "qa-error",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": []
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 1,
+    "qaError": "Page.goto: Timeout 19000ms exceeded. Call log:   - navigating to \"http://127.0.0.1:8001/local-mirror/cardsspades/spades.game-files.crazygames.com/spades/1/index.html\", waiting until \"domcontentloaded\" "
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}

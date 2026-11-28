@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "cardsheartsclassic",
+  "title": "Hearts: Classic",
+  "engine": "html5",
+  "source": "Windows local Playwright strict-offline",
+  "testedAt": "2026-11-25T13:53:58.441771+00:00",
+  "entryKind": "html",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "ec9196a3a612e5594711b671addb70ff66ddad792627114041c683a9bd28f047",
+        "metrics": {
+          "entropy": 0,
+          "dominantFraction": 1,
+          "nearUniform": true,
+          "paletteColors": 1
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "canvasBefore": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      }
+    ],
+    "canvasAfter": [
+      {
+        "w": 300,
+        "h": 150,
+        "visible": false
+      }
+    ]
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "data is not defined"
+    ],
+    "httpErrors": [],
+    "externalRequestsBlocked": 1
+  },
+  "notes": "Screenshot originali solo sul PC Windows. Non classificare come gameplay riuscito un menu, un canvas, una variazione grafica o un caricamento HTML."
+}

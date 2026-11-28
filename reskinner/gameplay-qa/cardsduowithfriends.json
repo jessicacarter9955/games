@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "id": "cardsduowithfriends",
+  "title": "DUO With Friends",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:04:20.878619+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "d9345cebe86314ea62e0162e08e480d1338a88a06370f59fe1c9b114f75d10e6",
+        "metrics": {
+          "entropy": 4.62,
+          "dominantFraction": 0.165,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "bdd9ff39aa2e69cc640380190aaa5b1e9809978a1ca231658ed97ca272fd9026",
+        "metrics": {
+          "entropy": 4.972,
+          "dominantFraction": 0.055,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "86418c6f3ab63b2b149348107fad16a2d88bb3971697f6c773af403666f783c9",
+        "metrics": {
+          "entropy": 4.826,
+          "dominantFraction": 0.081,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 53.44,
+      "fractionChanged": 0.856
+    },
+    "inputDiff": {
+      "meanRGBDelta": 55.86,
+      "fractionChanged": 0.998
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [
+      {
+        "code": 404,
+        "url": "http://127.0.0.1/local-mirror/cardsduowithfriends/duowfriends.eu/StreamingAssets/aa/settings.json"
+      }
+    ],
+    "externalRequestFailures": 12,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows."
+}

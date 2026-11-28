@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "triviagooglefeud",
+  "title": "Google Feud",
+  "engine": "html5",
+  "source": "Windows Playwright strict-offline",
+  "testedAt": "2026-11-25T13:59:30.096380+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "play-not-confirmed",
+  "playActionVerified": false,
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "25c20b2df7c554197904ad31be4884453e05bf39dec379967d1396749c8372d9",
+        "metrics": {
+          "entropy": 1.754,
+          "dominantFraction": 0.78,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "25c20b2df7c554197904ad31be4884453e05bf39dec379967d1396749c8372d9",
+        "metrics": {
+          "entropy": 1.754,
+          "dominantFraction": 0.78,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "60f3698accb329b933405a54efc7c316c09ce4c73181f53d3a1945c6fe733e18",
+        "metrics": {
+          "entropy": 1.761,
+          "dominantFraction": 0.778,
+          "nearUniform": false,
+          "paletteColors": 32
+        },
+        "method": "browser-screenshot"
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 4.12,
+      "fractionChanged": 0.054
+    },
+    "canvasBefore": [],
+    "canvasAfter": []
+  },
+  "diagnostics": {
+    "pageErrors": [
+      "Cannot destructure property 'CrazySDK' of 'window.CrazyGames' as it is undefined."
+    ],
+    "httpErrors": [],
+    "blockedExternalRequestCount": 5
+  },
+  "notes": "Playwright strict-offline screenshots and controls are evidence, not certification of real gameplay; no proprietary asset uploaded."
+}

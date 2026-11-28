@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "cardskingsqueensolitairetripeaks",
+  "title": "Kings and Queens Solitaire TriPeaks",
+  "engine": "iframe",
+  "source": "Windows local Playwright",
+  "networkMode": "strict-offline",
+  "testedAt": "2026-11-25T14:05:40.506901+00:00",
+  "stage": "post-Play gameplay evidence check",
+  "result": "blank-or-uniform",
+  "playActionVerified": false,
+  "playActions": [
+    {
+      "type": "canvas-probe",
+      "label": null,
+      "x": 540,
+      "y": 388
+    }
+  ],
+  "gameplayVerified": false,
+  "inspectorValidated": false,
+  "entryKind": "html",
+  "evidence": {
+    "screenshots": [
+      {
+        "file": "00-boot.jpg",
+        "sha256": "53350d20edaecafd0cb1eacb2ae1ab411dba90ae0e330e83e827d165a02ca6ec",
+        "metrics": {
+          "entropy": 0.014,
+          "dominantFraction": 0.999,
+          "nearUniform": true,
+          "paletteColors": 17
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "01-after-play.jpg",
+        "sha256": "53350d20edaecafd0cb1eacb2ae1ab411dba90ae0e330e83e827d165a02ca6ec",
+        "metrics": {
+          "entropy": 0.014,
+          "dominantFraction": 0.999,
+          "nearUniform": true,
+          "paletteColors": 17
+        },
+        "method": "browser-screenshot",
+        "status": null
+      },
+      {
+        "file": "02-after-input.jpg",
+        "sha256": "53350d20edaecafd0cb1eacb2ae1ab411dba90ae0e330e83e827d165a02ca6ec",
+        "metrics": {
+          "entropy": 0.014,
+          "dominantFraction": 0.999,
+          "nearUniform": true,
+          "paletteColors": 17
+        },
+        "method": "browser-screenshot",
+        "status": null
+      }
+    ],
+    "playDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "inputDiff": {
+      "meanRGBDelta": 0,
+      "fractionChanged": 0
+    },
+    "visibleCanvasBefore": true,
+    "visibleCanvasAfter": true
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "httpErrors": [],
+    "externalRequestFailures": 4,
+    "qaError": null,
+    "urlAfterPlay": ""
+  },
+  "note": "This is a browser observation, not proof of true gameplay; screenshots remain private on Windows.",
+  "reverseLaunchRetest": {
+    "source": "Windows Playwright, isolated Reskinner previewer, qa_reverse1730_launch_job",
+    "gameplayVerified": false,
+    "localizedStaticCdnReferences": 6,
+    "offline": {
+      "engine": "cocos",
+      "remoteConfigFailed": true,
+      "bodyProbeTimeout": true
+    },
+    "remote": {
+      "engine": "cocos",
+      "trackedDraws": 2,
+      "screenshotHash": "d23968996b83f81117b016da55fdf40acac1222a978bf5fabcf4f1f265be2a0b"
+    }
+  }
+}
