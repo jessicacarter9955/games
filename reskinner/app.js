@@ -494,6 +494,18 @@ async function launchGame(force=false){
   if(!game)return;
   const id=game.id,epoch=++launchId;
   clearRuntime();updateRuntime();
+  const localClicker = ['idlecandyclicker2','idlecapybaraclicker','idlecapybaraclicker2',
+    'idleitalianbrainrotclickerusp','idleplanetclicker2'].includes(id);
+  if(localClicker && location.hostname==='127.0.0.1'){
+    const target = new URL(location.href);
+    target.hostname='localhost';
+    target.hash='game='+encodeURIComponent(id);
+    notice('Avvio Unity su localhost',
+      'Questi cinque build possono bloccarsi su 127.0.0.1. La preview locale su localhost usa il CrazySDK in modalità sviluppo. Le bozze del browser restano separate tra i due indirizzi.',
+      'Apri questo gioco su localhost',()=>window.open(target.href,'_blank','noopener'));
+    log('Avvio Unity clicker: usa localhost per evitare il blocco rilevato.');
+    return;
+  }
   if(!game.entry){
     notice('Avvio impossibile', 'Manca un index.html locale nei file recuperati. '+
       'Puoi consultare il catalogo asset e i motivi di incompatibilità.');
@@ -539,8 +551,6 @@ async function launchGame(force=false){
     notice('Caricamento non riuscito','Controlla la console e gli asset locali.');
     log('Errore caricamento iframe');
   };
-  const localClicker = ['idlecandyclicker2','idlecapybaraclicker','idlecapybaraclicker2',
-    'idleitalianbrainrotclickerusp','idleplanetclicker2'].includes(id);
   const previewUrl = new URL(url, location.origin);
   previewUrl.searchParams.set('night_session', String(epoch));
   // The official SDK supports local development mode on loopback.
