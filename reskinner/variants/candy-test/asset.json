@@ -4,11 +4,18 @@
   "style": "3d glassmorphism",
   "asset": "tap-hand.png",
   "role": "Auto click icon",
+  "texture": "untitled (30)",
+  "texturePathId": 24,
+  "spritePathId": 87,
+  "textureSize": [
+    640,
+    640
+  ],
   "master": "2Night - 3d glassmorphism - Candy Clicker hand.png (ChatGPT Library)",
-  "dimensions": [
+  "runtimeDerivative": [
     96,
     95
   ],
-  "status": "prepared, target mapping pending",
-  "geometry": "preserve original sprite and layout"
+  "geometry": "Original Unity sprite rect, position and pivot; contained art, mirrored to match hand orientation",
+  "status": "reproducible patch recipe; generated binary stays local"
 }
