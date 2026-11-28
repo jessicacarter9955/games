@@ -51,7 +51,7 @@ def build(source, asset, destination):
         raise ValueError("Destination must be different from original")
     raw = source.read_bytes()
     items = entries(raw)
-    with tempfile.TemporaryDirectory(prefix="2night-candy-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="2night-candy-", ignore_cleanup_errors=True) as tmp:
         root=Path(tmp).resolve()
         for name,data in items:
             path=(root/name).resolve()
@@ -101,6 +101,10 @@ def build(source, asset, destination):
         result={"game":"idlecandyclicker2","variant":"candy-test","style":"3d glassmorphism","role":"Auto click icon","texture":"untitled (30)","texturePathId":24,"spritePathId":87,"textureSize":[640,640],"originalAlphaBounds":list(bbox),"replacementBounds":[x,y,x+image.width,y+image.height],"originalSHA256":sha(raw),"variantSHA256":sha(output),"originalBytes":len(raw),"variantBytes":len(output),"sourceAssetSHA256":sha(asset.read_bytes()),"originalUnchanged":True}
         destination.with_suffix(".json").write_text(json.dumps(result,indent=2),encoding="utf8")
         print(json.dumps(result))
+        # Close Windows handles before TemporaryDirectory cleanup where possible.
+        del check_tex, check, texture, target, sprite, env
+        import gc
+        gc.collect()
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
