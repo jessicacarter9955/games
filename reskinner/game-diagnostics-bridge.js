@@ -96,7 +96,7 @@
   if(window.__nightWebGLInspector)return;
   const states=new WeakMap(), contexts=new Set();
   const MAX_TEXTURES=1200;
-  let pending=null, captured=null, lastCapture=0, active=false, scratch=null;
+  let pending=null, captured=null, lastCapture=0, active=false, scratch=null, pngRequest=null;
   function state(gl){
     let s=states.get(gl);
     if(!s){s={gl,unit:0,bindings:new Map(),textures:new Map(),drawCalls:0};
@@ -171,12 +171,34 @@
       if(varied){captured={canvas:c,width:w,height:h,data:p,at:performance.now()};pending=null;}
     }catch{pending=null;}
   }
+  function captureFullPNG(){
+    if(!pngRequest)return;
+    const req=pngRequest,c=req.canvas;
+    if(!c.isConnected||!c.width||!c.height)return;
+    try{
+      const out=document.createElement('canvas');out.width=c.width;out.height=c.height;
+      const ctx=out.getContext('2d',{willReadFrequently:true});ctx.drawImage(c,0,0);
+      const p=ctx.getImageData(0,0,out.width,out.height).data;
+      let varied=false;
+      for(let i=4;i<p.length;i+=Math.max(4,Math.floor(p.length/512/4)*4)){
+        if(Math.abs(p[i]-p[0])+Math.abs(p[i+1]-p[1])+Math.abs(p[i+2]-p[2])+Math.abs(p[i+3]-p[3])>24){varied=true;break;}
+      }
+      if(!varied)return;
+      pngRequest=null;clearTimeout(req.timer);
+      out.toBlob(blob=>blob?req.resolve(blob):req.reject(Error('PNG non disponibile')),'image/png');
+    }catch(e){pngRequest=null;clearTimeout(req.timer);req.reject(e);}
+  }
   // Capture after the game's RAF callback, before the compositor clears the backbuffer.
   const raf=window.requestAnimationFrame;
   if(typeof raf==='function')window.requestAnimationFrame=function(callback){
-    return raf.call(this,function(time){try{return callback.call(this,time);}finally{if(pending)capture();}});
+    return raf.call(this,function(time){try{return callback.call(this,time);}finally{if(pending)capture();if(pngRequest)captureFullPNG();}});
   };
   window.__nightWebGLInspector={
+    capturePNG(canvas){return new Promise((resolve,reject)=>{
+      if(pngRequest){reject(Error('Cattura già in corso'));return;}
+      const req={canvas,resolve,reject,timer:setTimeout(()=>{if(pngRequest===req)pngRequest=null;reject(Error('Nessun frame renderizzato leggibile'));},4000)};
+      pngRequest=req;captureFullPNG();
+    });},
     setActive(value){active=!!value;if(!active){pending=null;captured=null;}},
     request(canvas){if(active&&canvas&&(!captured||captured.canvas!==canvas||performance.now()-captured.at>180)){
       pending=canvas;

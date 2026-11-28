@@ -342,55 +342,30 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
   async function screenshot() {
     if(shotButton.disabled)return;
     shotButton.disabled=true;
-    feedbackText('Se Chrome lo chiede, scegli “Questa scheda” e premi Condividi.');
-    let stream=null;
+    feedbackText('Acquisizione del solo gioco…');
     try {
-      let png=null;
-      if(navigator.mediaDevices?.getDisplayMedia){
-        // Chrome must ask user permission. Browser tab capture works with
-        // Unity, WebGL and tainted game canvases without reading their pixels.
-        stream=await navigator.mediaDevices.getDisplayMedia({
-          video:{displaySurface:'browser',frameRate:15},
-          audio:false,preferCurrentTab:true,selfBrowserSurface:'include',
-        });
-        const video=await mediaFrame(stream);
-        const canvas=document.createElement('canvas');
-        canvas.width=video.videoWidth;canvas.height=video.videoHeight;
-        if(!canvas.width||!canvas.height)throw Error('Video senza dimensioni');
-        canvas.getContext('2d').drawImage(video,0,0);
-        png=await toPNG(canvas);
-        video.pause();video.srcObject=null;
-      } else {
-        png=await fallbackCanvas(getFrame());
-      }
-      // The download is always provided, even if clipboard access is denied.
-      downloadFile(png,makeFilename(currentGame,'png'));
-      let copied=false;
-      try {
-        if(navigator.clipboard?.write && window.ClipboardItem){
-          await navigator.clipboard.write([new ClipboardItem({'image/png':png})]);
-          copied=true;
-        }
-      }catch{}
-      feedbackText(copied?
-        'Screenshot copiato e PNG scaricato. Incollalo qui!':
-        'Screenshot PNG scaricato: allegalo qui in chat.');
+      // Pass a promise to ClipboardItem synchronously in the click handler.
+      // No tab sharing, no system screenshot and no local download.
+      if(!navigator.clipboard?.write||!window.ClipboardItem)
+        throw Error('Appunti immagine non disponibili: usa Chrome su localhost o HTTPS.');
+      const capture=(async()=>{
+        const frame=getFrame(),win=frame?.contentWindow;
+        if(!win||frame.hidden)throw Error('Avvia il gioco prima di catturarlo.');
+        const doc=frame.contentDocument;
+        const canvas=[...doc.querySelectorAll('canvas')].filter(c=>c.width>40&&c.height>40&&c.getBoundingClientRect().width>0)
+          .sort((a,b)=>b.width*b.height-a.width*a.height)[0];
+        if(!canvas)throw Error('Nessun canvas visibile: la cattura DOM non è ancora supportata.');
+        if(win.__nightWebGLInspector?.capturePNG)return await win.__nightWebGLInspector.capturePNG(canvas);
+        const ctx=canvas.getContext('2d');
+        if(!ctx)throw Error('Cattura WebGL non disponibile: ricarica il gioco.');
+        return await toPNG(canvas);
+      })();
+      capture.catch(()=>{});
+      await navigator.clipboard.write([new ClipboardItem({'image/png':capture})]);
+      feedbackText('Screenshot del gioco copiato. Incollalo qui con Ctrl+V.');
     } catch(error) {
-      if(error?.name==='NotAllowedError'||error?.name==='AbortError'){
-        feedbackText('Cattura annullata: scegli “Questa scheda” nella finestra di Chrome.',true);
-      } else {
-        try {
-          const png=await fallbackCanvas(getFrame());
-          downloadFile(png,makeFilename(currentGame,'png'));
-          feedbackText('PNG del Canvas scaricato. Allegalo qui.');
-        }catch{
-          feedbackText('Screenshot non disponibile: '+clean(error.message||error,140),true);
-        }
-      }
-    } finally {
-      stream?.getTracks().forEach(track=>track.stop());
-      shotButton.disabled=false;
-    }
+      feedbackText('Screenshot non copiato: '+clean(error.message||error,160),true);
+    } finally {shotButton.disabled=false;}
   }
 
   copyButton?.addEventListener('click',()=>void copyReport());
