@@ -155,6 +155,18 @@
           <div class="section-kicker">ELEMENTO IN HOVER</div>
           <div id="hoverInfo" class="empty-detail">Nessun elemento selezionato.</div>
         </div>
+        <details id="universalInspector" class="inspector-section">
+          <summary class="section-kicker">UNIVERSAL INSPECTOR · OGGETTI</summary>
+          <button id="uiScan" type="button" class="button ghost block">Scansiona runtime</button>
+          <input id="uiObjectSearch" type="search" placeholder="Cerca oggetto" aria-label="Cerca oggetto runtime"/>
+          <p id="uiObjectSummary" class="hint">Nessuna scansione</p>
+          <div id="uiObjectRows" style="max-height:240px;overflow:auto"></div>
+          <pre id="uiObjectDetails" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px">Seleziona un oggetto</pre>
+          <p id="uiLimits" class="hint">Avvia un gioco locale.</p>
+          <button id="uiRecord" type="button" class="button ghost block">● Registra hover</button>
+          <p id="uiTimeline" class="hint">Nessun campione</p>
+          <button id="uiExport" type="button" class="button ghost block">Esporta oggetti e campioni JSON</button>
+        </details>
         <div class="inspector-section">
           <div class="section-kicker">RESKIN ASSET</div>
           <div id="assetDetail" class="empty-detail">Seleziona una texture nella libreria per sostituirla.</div>

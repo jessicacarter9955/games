@@ -1,4 +1,5 @@
 import { createRuntimeInspector } from './runtime.js';
+import { mountUniversalInspector } from './universal-inspector.js';
 import { saveDraft, readDraft, listDrafts, clearDraft, downloadBlob, downloadJSON } from './storage.js';
 import { initializeAssetReskin, invalidateReskinCache, assetReskinAvailable } from './sw-client.js';
 import { findAtlasMetadata, loadAtlasFrames, previewAtlasFrame, patchAtlasFrame } from './atlas.js';
@@ -29,6 +30,7 @@ let resourceLayer = {available:false,reason:'Layer non inizializzato'};
 let atlasFrames=[], atlasMeta=null, atlasWanted='', atlasAssetPath='';
 let atlasRequest=0;
 let quickDiagnostics=null;
+let universalInspector=null;
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
@@ -245,6 +247,7 @@ function showHover(item){
 }
 function applyHover(item){
   selectedObject=item;
+  universalInspector?.observe(item);
   showHover(item);
   if(!item||mode!=='inspect'){
     UI.hoverBox.hidden=true;return;
@@ -475,6 +478,7 @@ async function activateStoredDrafts(id){
   }catch(e){log('Bozze locali non disponibili: '+String(e.message||e));}
 }
 function clearRuntime(){
+  universalInspector?.reset();
   if(runtime){runtime.destroy();runtime=null;}
   UI.hoverBox.hidden=true;
   selectedObject=null;
@@ -576,6 +580,7 @@ function closeMobileList(){
   UI.mobileBackdrop.hidden=true;
 }
 function bind(){
+  universalInspector=mountUniversalInspector({getRuntime:()=>runtime,getGame:()=>game,onSelect:item=>{if(!loaded)return;updateMode('inspect');applyHover(item);}});
   quickDiagnostics=initializeDiagnostics({
     getGame:()=>game,
     getFrame:()=>UI.gameFrame,

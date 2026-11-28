@@ -35,6 +35,9 @@ function matrixBox(x, y, w, h, matrix) {
   const left = Math.min(...xs), top = Math.min(...ys);
   return box(left, top, Math.max(...xs)-left, Math.max(...ys)-top);
 }
+function matrixProperties(m){
+  return m ? {a:m.a,b:m.b,c:m.c,d:m.d,e:m.e,f:m.f} : null;
+}
 function cssBox(rect, frameRect) {
   return box(rect.left-frameRect.left, rect.top-frameRect.top, rect.width, rect.height);
 }
@@ -48,6 +51,9 @@ export function createRuntimeInspector(frame, options = {}) {
   const gameAdapter = resolveGameAdapter(gameId);
   const overrides = new Map();        // local path -> decoded HTMLImageElement
   const blobs = new Map();            // local path -> object URL, owned by caller
+  const objectIds = new WeakMap();
+  let nextObjectId=0;
+  const identify = object => {if(!objectIds.has(object))objectIds.set(object,++nextObjectId);return objectIds.get(object);};
   const state = { draws: [], lastDraw: 0, lastClear: 0, samples: 0, patched: false,
     engine: 'unknown', errors: [], scene: [], sceneUpdated: 0 };
 
@@ -150,7 +156,7 @@ export function createRuntimeInspector(frame, options = {}) {
             if (oldIndex>=0) inspectorState.draws.splice(oldIndex,1);
             inspectorState.draws.push({ type:'image', name:labelPath(src),
               source:src, crop, bounds, canvas:this.canvas, signature,
-              renderAt:performance.now(), replaced:!!replacement });
+              renderAt:performance.now(), properties:{opacity:this.globalAlpha, transform:matrixProperties(this.getTransform?.()), composite:this.globalCompositeOperation}, replaced:!!replacement });
             if (inspectorState.draws.length>MAX_DRAWS) inspectorState.draws.shift();
             inspectorState.lastDraw = performance.now();
             inspectorState.samples++;
@@ -179,6 +185,7 @@ export function createRuntimeInspector(frame, options = {}) {
         if(oldIndex>=0) inspectorState.draws.splice(oldIndex,1);
         inspectorState.draws.push({type:'text',name:String(text).slice(0,120),
           source:'Canvas2D.fillText',bounds,canvas:this.canvas,signature,
+          properties:{font:this.font,align:this.textAlign,baseline:this.textBaseline,opacity:this.globalAlpha,transform:matrixProperties(this.getTransform?.())},
           renderAt:performance.now()});
         if(inspectorState.draws.length>MAX_DRAWS)inspectorState.draws.shift();
       } catch { /* no impact on game text */ }
@@ -193,10 +200,11 @@ export function createRuntimeInspector(frame, options = {}) {
     const seen = new WeakSet();
     const result = [];
     let nodes = 0;
-    function walk(node, depth) {
+    function walk(node, depth, parentId = null) {
       if (!node || typeof node !== 'object' || seen.has(node) || depth > 18 ||
         nodes++ > MAX_TREE_NODES || node.visible === false) return;
       seen.add(node);
+      const objectId=identify(node);
       try {
         let r = null, source = '';
         if (typeof node.getBounds === 'function') {
@@ -215,12 +223,15 @@ export function createRuntimeInspector(frame, options = {}) {
         if (r && r.w>1 && r.h>1 && r.w*r.h<25e6) {
           result.push({type:'engine',name:String(named).slice(0,120),
             source:String(source), ...r, engine:state.engine,
-            treeDepth:depth, renderAt:performance.now()});
+            treeDepth:depth, objectId,parentId, coordinateSpace:'engine-native',
+            properties:{x:node.x,y:node.y,rotation:node.rotation,angle:node.angle,scaleX:node.scaleX??node.scale?.x,scaleY:node.scaleY??node.scale?.y,opacity:node.alpha,depth:node.depth,zIndex:node.zIndex,text:typeof node.text==='string'?node.text.slice(0,500):undefined},
+            renderAt:performance.now()});
         }
       } catch { /* skip nodes with broken getters */ }
-      const children = node.children || node.list || node._children ||
-        node.members || node.getChildren?.();
-      if (Array.isArray(children)) children.forEach(child=>walk(child,depth+1));
+      try {
+        const children = node.children || node.list || node._children || node.members || node.getChildren?.();
+        if(Array.isArray(children))children.forEach(child=>walk(child,depth+1,objectId));
+      }catch{}
     }
     walk(root,0);
     return result;
@@ -245,6 +256,43 @@ export function createRuntimeInspector(frame, options = {}) {
     }catch(e){state.errors.push(String(e).slice(0,180));}
     return [];
   }
+  function domProperties(element){
+    try {
+      const s=win.getComputedStyle(element);
+      return {opacity:s.opacity,transform:s.transform,zIndex:s.zIndex,
+        position:s.position,font:s.font,color:s.color,
+        text:element.children.length===0?String(element.textContent||'').slice(0,500):undefined};
+    }catch{return {};}
+  }
+  function snapshot(){
+    refreshRuntime();
+    if(!doc||!win)return {engine:state.engine,objects:[],limitations:['Iframe non accessibile']};
+    const dom=[];
+    const walker=doc.createTreeWalker(doc.body||doc.documentElement,1);
+    let node=walker.currentNode,visited=0;
+    while(node&&visited++<MAX_TREE_NODES){
+      try{
+        const r=node.getBoundingClientRect(),style=win.getComputedStyle(node);
+        if(r.width>0&&r.height>0&&style.visibility!=='hidden'&&style.display!=='none'&&
+           !['SCRIPT','STYLE','HEAD'].includes(node.tagName)){
+          dom.push({type:'dom',name:node.id||node.tagName.toLowerCase(),objectId:identify(node),
+            parentId:node.parentElement?identify(node.parentElement):null,
+            source:normPath(node.currentSrc||node.src||''),...cssBox(r,{left:0,top:0}),
+            properties:domProperties(node),coordinateSpace:'iframe-css'});
+        }
+      }catch{}
+      node=walker.nextNode();
+    }
+    state.scene=engineScene();
+    const draws=state.draws.map(drawToViewport).filter(Boolean).map((d,i)=>{
+      const {canvas,bounds,...safe}=d;
+      return {...safe,objectId:'draw-'+d.signature,coordinateSpace:'iframe-css',drawOrder:i};
+    });
+    const limitations=['Canvas2D: chiamate osservate, non gerarchia semantica.',
+      'Coordinate engine-native: non convertite se camera/viewport non noti.',
+      'Unity/WebGL privato: nessuna identificazione di sprite senza adapter.'];
+    return {engine:state.engine,objects:[...dom,...state.scene,...draws],limitations,truncated:!!node};
+  }
   function pickDOM(p) {
     if (!doc) return null;
     const element = doc.elementFromPoint(p.x,p.y);
@@ -260,7 +308,7 @@ export function createRuntimeInspector(frame, options = {}) {
     return {type:'dom',name:element.getAttribute('aria-label') ||
       element.alt || element.id || element.tagName.toLowerCase(),
       source:normPath(source), tag:element.tagName.toLowerCase(),
-      element,...cssBox(r,{left:0,top:0})};
+      element,objectId:identify(element),properties:domProperties(element),...cssBox(r,{left:0,top:0})};
   }
   function pick(point) {
     if (!win||!doc) return null;
@@ -394,5 +442,5 @@ export function createRuntimeInspector(frame, options = {}) {
     // No unpatch: the iframe is discarded on game change, so the patch dies.
     win=null;doc=null;canvas=null;state.draws.length=0;
   }
-  return {attach,pick,getReport,swap,restore,destroy};
+  return {attach,pick,getReport,snapshot,swap,restore,destroy};
 }
