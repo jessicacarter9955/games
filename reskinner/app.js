@@ -539,7 +539,15 @@ async function launchGame(force=false){
     notice('Caricamento non riuscito','Controlla la console e gli asset locali.');
     log('Errore caricamento iframe');
   };
-  UI.gameFrame.src=url+'?night_session='+epoch;
+  const localClicker = ['idlecandyclicker2','idlecapybaraclicker','idlecapybaraclicker2',
+    'idleitalianbrainrotclickerusp','idleplanetclicker2'].includes(id);
+  const previewUrl = new URL(url, location.origin);
+  previewUrl.searchParams.set('night_session', String(epoch));
+  // The official SDK supports local development mode on loopback.
+  if(localClicker && ['localhost','127.0.0.1'].includes(location.hostname)){
+    previewUrl.searchParams.set('useLocalSdk','true');
+  }
+  UI.gameFrame.src=previewUrl.href;
   UI.stageDiagnostic.textContent='Caricamento '+url+'…';
   window.setTimeout(()=>{
     if(epoch!==launchId||loaded||!game)return;
