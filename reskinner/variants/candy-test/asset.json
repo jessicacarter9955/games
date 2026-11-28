@@ -1,0 +1,14 @@
+{
+  "gameId": "idlecandyclicker2",
+  "variant": "candy-test",
+  "style": "3d glassmorphism",
+  "asset": "tap-hand.png",
+  "role": "Auto click icon",
+  "master": "2Night - 3d glassmorphism - Candy Clicker hand.png (ChatGPT Library)",
+  "dimensions": [
+    96,
+    95
+  ],
+  "status": "prepared, target mapping pending",
+  "geometry": "preserve original sprite and layout"
+}
