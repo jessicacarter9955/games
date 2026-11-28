@@ -28,6 +28,8 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qsl, quote, unquote, urlsplit
 
+from asset_library import build_library
+
 REPO = Path(__file__).resolve().parents[1]
 IMAGE = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif"}
 ATLAS = {".xml", ".atlas", ".plist"}
@@ -526,6 +528,8 @@ class MirrorHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(repo), **kwargs)
 
     def do_GET(self):
+        if urlsplit(self.path).path == "/reskinner/asset-library.json":
+            return self.send_asset_library()
         if urlsplit(self.path).path == "/reskinner/catalog.json":
             return self.send_catalog(head=False)
         super().do_GET()
@@ -570,6 +574,18 @@ class MirrorHandler(SimpleHTTPRequestHandler):
             except OSError:
                 pass
         return super().send_head()
+
+    def send_asset_library(self) -> None:
+        dedup = dict(parse_qsl(urlsplit(self.path).query)).get("dedup") == "1"
+        result = build_library(json.loads(self.catalog_bytes), self.repo,
+                               self.roots, dedup=dedup)
+        payload = json.dumps(result, ensure_ascii=False).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        for offset in range(0, len(payload), 16 * 1024):
+            self.wfile.write(payload[offset:offset + 16 * 1024])
 
     def send_catalog(self, head: bool) -> None:
         self.send_response(200)

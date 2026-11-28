@@ -7,6 +7,7 @@
   <meta name="description" content="2Night Multi-Game Reskinner: catalogo dei giochi ZIP, inspector runtime e bozze di reskin senza toccare gli originali."/>
   <title>2Night | Multi-Game Reskinner</title>
   <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="./asset-library.css"/>
 </head>
 <body>
   <div id="app">
@@ -20,6 +21,7 @@
         <span class="sep">·</span><span id="assetCount">—</span>
       </div>
       <div class="header-actions">
+        <button type="button" id="globalAssetManager" class="button ghost">▦ Asset Manager</button>
         <button type="button" id="toggleList" class="button ghost mobile-only" aria-label="Apri elenco giochi">☰ Giochi</button>
         <button type="button" id="downloadCatalog" class="button ghost" title="Esporta riepilogo catalogo">↓ Catalogo</button>
       </div>
@@ -200,5 +202,6 @@
     <div id="mobileBackdrop" class="mobile-backdrop" hidden></div>
   </div>
   <script type="module" src="./app.js"></script>
+  <script type="module" src="./asset-library.js"></script>
 </body>
 </html>
