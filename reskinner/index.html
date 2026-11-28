@@ -21,6 +21,7 @@
         <span class="sep">·</span><span id="assetCount">—</span>
       </div>
       <div class="header-actions">
+        <button type="button" id="refreshWorkspace" class="button ghost" title="Ricarica il Reskinner mantenendo gioco, variante e confronto">↻ Aggiorna</button>
         <button type="button" id="globalAssetManager" class="button ghost">▦ Asset Manager</button>
         <button type="button" id="toggleList" class="button ghost mobile-only" aria-label="Apri elenco giochi">☰ Giochi</button>
         <button type="button" id="downloadCatalog" class="button ghost" title="Esporta riepilogo catalogo">↓ Catalogo</button>
@@ -94,6 +95,7 @@
           <button id="versionFork" class="button ghost" type="button">＋ Nuova variante</button>
           <button id="versionCheckpoint" class="button ghost" type="button">Checkpoint</button>
           <button id="versionCompare" class="button ghost" type="button" disabled>Prima / dopo</button>
+          <label id="compareVersionLabel" for="compareVersion" hidden>Confronta con</label><select id="compareVersion" hidden aria-label="Versione di confronto"></select>
           <button id="versionPackage" class="button ghost" type="button">↓ Pacchetto</button>
           <span id="versionState" role="status">Originale protetto</span>
         </div>

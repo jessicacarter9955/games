@@ -109,7 +109,7 @@ async function fallbackCanvas(frame) {
   return png;
 }
 
-export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMessages}){
+export function initializeDiagnostics({getGame,getFrame,getCaptureFrames,getRuntimeReport,getMessages}){
   const panel=document.getElementById('quickDiagnostics');
   const copyButton=document.getElementById('copyDiagnostics');
   const shotButton=document.getElementById('captureScreenshot');
@@ -348,8 +348,8 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
       // No tab sharing, no system screenshot and no local download.
       if(!navigator.clipboard?.write||!window.ClipboardItem)
         throw Error('Appunti immagine non disponibili: usa Chrome su localhost o HTTPS.');
-      const capture=(async()=>{
-        const frame=getFrame(),win=frame?.contentWindow;
+      const captureOne=async(frame)=>{
+        const win=frame?.contentWindow;
         if(!win||frame.hidden)throw Error('Avvia il gioco prima di catturarlo.');
         const doc=frame.contentDocument;
         const canvas=[...doc.querySelectorAll('canvas')].filter(c=>c.width>40&&c.height>40&&c.getBoundingClientRect().width>0)
@@ -359,6 +359,20 @@ export function initializeDiagnostics({getGame,getFrame,getRuntimeReport,getMess
         const ctx=canvas.getContext('2d');
         if(!ctx)throw Error('Cattura WebGL non disponibile: ricarica il gioco.');
         return await toPNG(canvas);
+      };
+      const capture=(async()=>{
+        const frames=getCaptureFrames?.()||[{frame:getFrame(),label:''}];
+        const pngs=await Promise.all(frames.map(v=>captureOne(v.frame)));
+        if(pngs.length===1)return pngs[0];
+        const images=await Promise.all(pngs.map(blob=>createImageBitmap(blob)));
+        try{
+          const height=Math.max(...images.map(im=>im.height)),gap=4;
+          const widths=images.map(im=>Math.round(im.width*height/im.height));
+          const out=document.createElement('canvas');out.width=widths.reduce((a,b)=>a+b,0)+gap*(images.length-1);out.height=height;
+          const ctx=out.getContext('2d');ctx.fillStyle='#202a37';ctx.fillRect(0,0,out.width,out.height);
+          let x=0;for(let i=0;i<images.length;i++){ctx.drawImage(images[i],x,0,widths[i],height);x+=widths[i]+gap;}
+          return await toPNG(out);
+        }finally{images.forEach(im=>im.close());}
       })();
       capture.catch(()=>{});
       await navigator.clipboard.write([new ClipboardItem({'image/png':capture})]);

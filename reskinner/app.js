@@ -35,24 +35,49 @@ let universalInspector=null;
 let pinnedRegion=null;
 let branch={id:'original',locked:true,name:'Originale'};
 let comparing=false, versionBusy=false;
+let compareId='original';
+const initialView=new URLSearchParams(location.search);
+function updateViewURL(){if(!game)return;const url=new URL(location.href);url.hash='game='+encodeURIComponent(game.id);url.searchParams.set('version',branch.id);if(comparing){url.searchParams.set('compare','1');url.searchParams.set('against',compareId);}else{url.searchParams.delete('compare');url.searchParams.delete('against');}history.replaceState(null,'',url);}
 const draftScope=()=>game?scope(game.id,branch.id):null;
 function renderVersions(){
  const select=byId('reskinVersion');
  select.replaceChildren(...(game?versions(game.id):[]).map(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name+(v.locked?' · protetta':'');return o;}));
  select.value=branch.id;
  byId('versionState').textContent=branch.locked?'Sola lettura · crea una variante per modificare':'Variante modificabile · originale protetto';
- byId('versionCompare').disabled=!game?.entry||branch.id==='original';
+ const others=game?versions(game.id).filter(v=>v.id!==branch.id):[];
+ const against=byId('compareVersion');
+ if(!others.some(v=>v.id===compareId))compareId=others[0]?.id||'original';
+ against.replaceChildren(...others.map(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name;return o;}));
+ against.value=compareId;against.disabled=!others.length;
+ byId('versionCompare').disabled=!game?.entry||!others.length;
+ byId('compareVersionLabel').hidden=!comparing;against.hidden=!comparing;
  byId('versionFork').disabled=!game||versionBusy;byId('versionCheckpoint').disabled=!game||versionBusy||branch.locked;
  byId('versionPackage').disabled=!game||versionBusy;
  UI.chooseReplacement.disabled=branch.locked;UI.atlasPatchButton.disabled=branch.locked;
 }
-function stopCompare(){comparing=false;byId('originalFrame').removeAttribute('src');byId('originalFrame').hidden=true;UI.gameStage.classList.remove('version-compare');byId('versionCompare').textContent='Prima / dopo';}
-function startCompare(){
- if(!game?.entry||branch.id==='original')return;
- comparing=true;const url=versionURL(game.entry,game.id,'original');if(game.engine==='unity')url.searchParams.set('useLocalSdk','true');
- const frame=byId('originalFrame');frame.hidden=false;frame.src=url.href;UI.gameStage.classList.add('version-compare');byId('versionCompare').textContent='Chiudi confronto';updateMode('play');
+function stopCompare(){
+ comparing=false;const frame=byId('originalFrame');frame.removeAttribute('src');frame.hidden=true;
+ UI.gameStage.classList.remove('version-compare');byId('versionCompare').textContent='Prima / dopo';
+ byId('compareVersion').hidden=true;byId('compareVersionLabel').hidden=true;
+ byId('captureScreenshot').textContent='▣ Screenshot';updateViewURL();
 }
-async function changeBranch(id){if(!game||versionBusy)return;stopCompare();selectVersion(game.id,id);branch=activeVersion(game.id);renderVersions();await loadDraftList();renderAssetDetails();await launchGame(true);}
+function startCompare(){
+ if(!game?.entry||!versions(game.id).some(v=>v.id===compareId&&v.id!==branch.id))return;
+ comparing=true;const url=versionURL(game.entry,game.id,compareId);
+ if(game.engine==='unity'&&['localhost','127.0.0.1'].includes(location.hostname))url.searchParams.set('useLocalSdk','true');
+ const frame=byId('originalFrame');frame.hidden=false;frame.src=url.href;
+ UI.gameStage.classList.add('version-compare');byId('versionCompare').textContent='Solo versione selezionata';
+ byId('compareVersion').hidden=false;byId('compareVersionLabel').hidden=false;
+ document.querySelector('.compare-original-label').textContent=versions(game.id).find(v=>v.id===compareId)?.name||'Confronto';
+ document.querySelector('.compare-variant-label').textContent=branch.name;
+ byId('captureScreenshot').textContent='▣ Screenshot confronto';updateMode('play');updateViewURL();
+}
+async function changeBranch(id){
+ if(!game||versionBusy||id===branch.id)return;
+ const keepCompare=comparing;stopCompare();selectVersion(game.id,id);branch=activeVersion(game.id);
+ renderVersions();await loadDraftList();renderAssetDetails();await launchGame(true);
+ if(keepCompare)startCompare();else updateViewURL();
+}
 async function createBranch(locked){if(!game||versionBusy)return;const current=game;const parent=branch.id;const name=prompt(locked?'Nome checkpoint protetto':'Nome nuova variante',locked?'Checkpoint '+new Date().toLocaleDateString('it-IT'):'Reskin 02');if(!name?.trim())return;versionBusy=true;renderVersions();try{const id=await forkVersion(current.id,parent,name,locked);versionBusy=false;if(game===current)await changeBranch(id);}catch(e){log('Versioning: '+e.message);}finally{versionBusy=false;renderVersions();}}
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
@@ -610,12 +635,14 @@ async function launchGame(force=false){
       'Potrebbero mancare file o servizi CDN.');
   },15000);
 }
-async function selectGame(id){
+async function selectGame(id,requested=null){
   const next=catalog?.games.find(g=>g.id===id);
   if(!next)return;
   stopCompare();game=next;selectedAsset=null;saved=[];branch={id:'original',locked:true,name:'Originale'};
   try{branch=await prepareVersions(next.id);}catch(e){log('Versioning non disponibile: '+e.message);}
   if(game!==next)return;
+  if(requested?.version&&versions(next.id).some(v=>v.id===requested.version)){selectVersion(next.id,requested.version);branch=activeVersion(next.id);}
+  compareId=requested?.against||'original';
   renderVersions();
   quickDiagnostics?.setGame(game.id);
   ++launchId;
@@ -628,7 +655,8 @@ async function selectGame(id){
   try{location.hash='game='+encodeURIComponent(game.id)}catch{}
   await loadDraftList();
   closeMobileList();
-  void launchGame(false);
+  await launchGame(false);
+  if(requested?.compare)startCompare();else updateViewURL();
 }
 function updatePointer(event){
   if(!runtime||mode!=='inspect'||!loaded||pinnedRegion)return;
@@ -646,6 +674,8 @@ function closeMobileList(){
   UI.mobileBackdrop.hidden=true;
 }
 function bind(){
+  byId('refreshWorkspace').addEventListener('click',()=>location.reload());
+  byId('compareVersion').addEventListener('change',e=>{compareId=e.target.value;if(comparing)startCompare();});
   byId('reskinVersion').addEventListener('change',e=>void changeBranch(e.target.value));
   byId('versionFork').addEventListener('click',()=>void createBranch(false));
   byId('versionCheckpoint').addEventListener('click',()=>void createBranch(true));
@@ -655,6 +685,7 @@ function bind(){
   quickDiagnostics=initializeDiagnostics({
     getGame:()=>game,
     getFrame:()=>UI.gameFrame,
+    getCaptureFrames:()=>comparing?[{frame:byId('originalFrame'),label:versions(game.id).find(v=>v.id===compareId)?.name||'Confronto'},{frame:UI.gameFrame,label:branch.name}]:[{frame:UI.gameFrame,label:branch.name}],
     getRuntimeReport:()=>runtime?.getReport?.()||null,
     getMessages:()=>requestLog,
   });
@@ -753,7 +784,7 @@ async function boot(){
     const visible=filters();
     const valid=visible.find(g=>g.id===hinted);
     const preferred=valid||visible.find(g=>g.status==='experimental')||visible[0];
-    if(preferred)await selectGame(preferred.id);
+    if(preferred)await selectGame(preferred.id,{version:initialView.get('version'),compare:initialView.get('compare')==='1',against:initialView.get('against')});
     log('Catalogo: '+catalog.total+' giochi. Compatibilità verificata per entrypoint, non per gameplay.');
   }catch(error){
     notice('Catalogo non disponibile',String(error.message||error)+
