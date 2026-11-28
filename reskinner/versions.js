@@ -33,8 +33,21 @@ export async function forkVersion(game,parent,name,locked=false){
   data[game].active=id;write(data);
   return id;
 }
+function inheritedCandyVariant(game,id){
+  if(game!=='idlecandyclicker2'||id==='original')return false;
+  const all=versions(game),seen=new Set();
+  while(id&&!seen.has(id)){
+    if(id==='candy-test')return true;
+    seen.add(id);id=all.find(v=>v.id===id)?.parent;
+  }
+  return false;
+}
 export function versionURL(entry,game,id){
   const url=new URL(entry,location.origin);
+  // Separate generated launcher changes the Unity data URL, not the original.
+  if(inheritedCandyVariant(game,id)&&url.pathname.endsWith('/_reskin_local_bootstrap/index.html')){
+    url.pathname=url.pathname.replace(/index\.html$/,'index.candy-reskin-01.html');
+  }
   url.searchParams.set('night_game',game);
   url.searchParams.set('night_variant',id);
   return url;
@@ -49,5 +62,5 @@ export async function exportVersion(game,id){
     });
     return {assetPath:r.assetPath,width:r.width,height:r.height,updatedAt:r.updatedAt,data};
   }));
-  downloadJSON({schema:1,gameId:game,branch,ancestry:versions(game),assets},game+'-'+id+'.reskin.json');
+  downloadJSON({schema:1,gameId:game,branch,ancestry:versions(game),binaryVariant:inheritedCandyVariant(game,id)?'candy-test':null,assets},game+'-'+id+'.reskin.json');
 }
