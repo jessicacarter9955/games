@@ -31,6 +31,7 @@ let atlasFrames=[], atlasMeta=null, atlasWanted='', atlasAssetPath='';
 let atlasRequest=0;
 let quickDiagnostics=null;
 let universalInspector=null;
+let pinnedRegion=null;
 const requestLog = [];
 const fmt = n => Number(n||0).toLocaleString('it-IT');
 const esc = s => String(s??'').replace(/[&<>"']/g, ch =>
@@ -60,6 +61,8 @@ function log(message){
 }
 function updateMode(value){
   mode=value;
+  runtime?.setInspectMode?.(mode==='inspect');
+  if(mode!=='inspect')pinnedRegion=null;
   UI.modePlay.classList.toggle('selected',mode==='play');
   UI.modeInspect.classList.toggle('selected',mode==='inspect');
   UI.modePlay.setAttribute('aria-pressed',String(mode==='play'));
@@ -149,6 +152,8 @@ function updateRuntime(){
     '<dt>Canvas</dt><dd>'+(safeReport.canvas?'rilevato':'non rilevato')+'</dd>'+
     '<dt>Draw image 2D</dt><dd>'+fmt(safeReport.drawCalls)+'</dd>'+
     '<dt>Elementi runtime</dt><dd>'+fmt(safeReport.engineObjects)+'</dd>'+
+    '<dt>Texture WebGL osservate</dt><dd>'+fmt(safeReport.webgl?.textures?.length||0)+'</dd>'+
+    '<dt>Draw WebGL (ispezione)</dt><dd>'+fmt(safeReport.webgl?.drawCalls||0)+'</dd>'+
     '<dt>Stato</dt><dd>'+esc(game.status)+'</dd>'+
     '<dt>PNG intercettabili</dt><dd>'+fmt(game.assets.filter(a=>
       a.kind==='image' && /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(a.name)).length)+'</dd>'+
@@ -230,7 +235,7 @@ function showHover(item){
       ?'<div class="sprite-preview"><div class="hint">RISORSA ISOLATA'+
        (item.crop?' · frame atlas':'')+'</div><canvas id="spritePreviewCanvas" '+
        'aria-label="Anteprima isolata della risorsa"></canvas></div>'
-      :'<p class="hint">Nessuna texture isolabile identificata per questo box.</p>')+
+      :item.type==='webgl-region'?'<div class="sprite-preview"><div class="hint">RITAGLIO VISIVO · NON TEXTURE</div><canvas id="webglCrop"></canvas></div>': '<p class="hint">Nessuna texture isolabile identificata per questo box.</p>')+
     '<div class="box-model"><div class="box-inner"><small>RENDER BOX · CSS PX</small>'+
       Math.round(w)+' × '+Math.round(h)+'</div></div>'+
     '<dl class="kv">'+
@@ -241,9 +246,16 @@ function showHover(item){
     '<dt>Sorgente</dt><dd>'+esc(item.type||'unknown')+'</dd></dl>'+
     (item.type==='canvas'?'<p class="hint">Il motore rende su canvas senza '+
       'esporre questo sprite: non possiamo identificarlo per nome senza un adapter dedicato.</p>':
+      ['webgl-region','webgl-pending'].includes(item.type)?'<p class="hint">'+esc(item.note)+'</p>':
       item.type==='canvas-region'?'<p class="hint">'+esc(item.note)+
       ' Questa selezione evidenzia una regione reale, non una texture isolata.</p>':'');
   drawSelectedSprite(item);
+  if(item.type==='webgl-region')runtime?.visualPreview?.(item,byId('webglCrop'));
+  if(item.type==='webgl-region'&&pinnedRegion){
+    const edit=document.createElement('div');edit.className='hint';edit.textContent='Regione fissata · modifica box CSS px';
+    for(const k of ['x','y','w','h']){const label=document.createElement('label');label.textContent=k+' ';const input=document.createElement('input');input.type='number';input.value=Math.round(item[k]);input.style.width='65px';input.onchange=()=>{const v=Number(input.value);if(Number.isFinite(v)&&(k==='x'||k==='y'||v>0)){pinnedRegion={...pinnedRegion,[k]:v};applyHover(pinnedRegion);}};label.append(input);edit.append(label);}
+    const release=document.createElement('button');release.type='button';release.className='button ghost block';release.textContent='Sblocca hover';release.onclick=()=>{pinnedRegion=null;if(lastPointer)applyHover(runtime.pick(lastPointer));else applyHover(null);};edit.append(release);UI.hoverInfo.append(edit);
+  }
 }
 function applyHover(item){
   selectedObject=item;
@@ -479,6 +491,7 @@ async function activateStoredDrafts(id){
 }
 function clearRuntime(){
   universalInspector?.reset();
+  pinnedRegion=null;
   if(runtime){runtime.destroy();runtime=null;}
   UI.hoverBox.hidden=true;
   selectedObject=null;
@@ -533,7 +546,7 @@ async function launchGame(force=false){
       if(doc?.title?.toLowerCase().includes('error response')){
         throw new Error('La pagina ha risposto con un errore HTTP');
       }
-      runtime=createRuntimeInspector(UI.gameFrame,{gameId:id,log});
+      runtime=createRuntimeInspector(UI.gameFrame,{gameId:id,engine:game.engine,log});
       runtime.attach();
       loaded=true;
       UI.stageNotice.hidden=true;
@@ -583,7 +596,7 @@ async function selectGame(id){
   void launchGame(false);
 }
 function updatePointer(event){
-  if(!runtime||mode!=='inspect'||!loaded)return;
+  if(!runtime||mode!=='inspect'||!loaded||pinnedRegion)return;
   const rect=UI.gameFrame.getBoundingClientRect();
   const point={x:event.clientX-rect.left,y:event.clientY-rect.top};
   if(point.x<0||point.y<0||point.x>rect.width||point.y>rect.height){
@@ -625,9 +638,10 @@ function bind(){
   });
   UI.inspectSurface.addEventListener('pointermove',updatePointer);
   UI.inspectSurface.addEventListener('pointerdown',updatePointer);
-  UI.inspectSurface.addEventListener('pointerleave',()=>{lastPointer=null;applyHover(null);});
+  UI.inspectSurface.addEventListener('pointerleave',()=>{lastPointer=null;if(!pinnedRegion)applyHover(null);});
   UI.inspectSurface.addEventListener('click',()=>{
     // Click is optional. Hover always identifies a sprite first.
+    if(selectedObject?.type==='webgl-region'){pinnedRegion={...selectedObject};applyHover(pinnedRegion);return;}
     const source=selectedObject?.source;
     if(!source||!game)return;
     const asset=game.assets.find(a=>localURL(a.url)===source);
@@ -673,11 +687,12 @@ function bind(){
   });
   UI.closeList.addEventListener('click',closeMobileList);
   UI.mobileBackdrop.addEventListener('click',closeMobileList);
-  window.addEventListener('resize',()=>{if(lastPointer&&runtime&&mode==='inspect')
+  window.addEventListener('resize',()=>{if(pinnedRegion){pinnedRegion=null;applyHover(null);}if(lastPointer&&runtime&&mode==='inspect')
     applyHover(runtime.pick(lastPointer));});
+  window.setInterval(()=>{if(loaded&&runtime&&game?.engine==='unity'&&mode==='inspect'&&lastPointer&&!pinnedRegion)applyHover(runtime.pick(lastPointer));},240);
   inspectorTick=window.setInterval(()=>{
     if(!runtime||!loaded)return;
-    if(mode==='inspect'&&lastPointer)applyHover(runtime.pick(lastPointer));
+    if(mode==='inspect'&&lastPointer&&!pinnedRegion)applyHover(runtime.pick(lastPointer));
     updateRuntime();
   },850);
 }

@@ -88,3 +88,105 @@
     }).observe({type:'resource',buffered:true});
   }catch{}
 })();
+
+
+// WebGL inspection transport: only read frames when explicitly requested by Inspector.
+// Never change render state, shaders, preserveDrawingBuffer or publisher SDK.
+(()=>{
+  if(window.__nightWebGLInspector)return;
+  const states=new WeakMap(), contexts=new Set();
+  const MAX_TEXTURES=1200;
+  let pending=null, captured=null, lastCapture=0, active=false, scratch=null;
+  function state(gl){
+    let s=states.get(gl);
+    if(!s){s={gl,unit:0,bindings:new Map(),textures:new Map(),drawCalls:0};
+      states.set(gl,s);contexts.add(s);}
+    return s;
+  }
+  function wrap(proto,name,after){
+    const desc=Object.getOwnPropertyDescriptor(proto,name);
+    if(typeof desc?.value!=='function')return;
+    const original=desc.value;
+    try{Object.defineProperty(proto,name,{...desc,value:function(...args){
+      const result=original.apply(this,args);
+      try{after(this,args,result);}catch{}
+      return result;
+    }});}catch{}
+  }
+  function bound(s,target){
+    // Cube faces are bound via TEXTURE_CUBE_MAP, not individual faces.
+    return s.bindings.get(s.unit+':'+(target>=34069&&target<=34074?34067:target));
+  }
+  function upload(gl,args,kind){
+    const s=state(gl),tex=bound(s,args[0]);
+    if(!tex)return;
+    let info=s.textures.get(tex);
+    if(!info){if(s.textures.size>=MAX_TEXTURES)return;
+      info={id:'gltex-'+s.textures.size+'-'+(++serial),uploads:0};s.textures.set(tex,info);}
+    info.uploads++;info.target=args[0];info.method=kind;
+    if(kind==='texImage2D'||kind==='compressedTexImage2D'||kind==='texStorage2D'){
+      const src=kind==='texImage2D'&&args.length===6?args[5]:null;
+      const w=src?.videoWidth||src?.naturalWidth||src?.width||
+        (kind==='texStorage2D'?args[3]:args.length>=8?args[3]:undefined);
+      const h=src?.videoHeight||src?.naturalHeight||src?.height||
+        (kind==='texStorage2D'?args[4]:args.length>=8?args[4]:undefined);
+      if(Number.isFinite(w)&&w>0)info.width=w;
+      if(Number.isFinite(h)&&h>0)info.height=h;
+      const url=src?.currentSrc||src?.src;
+      if(typeof url==='string'){try{const u=new URL(url,location.href);
+        if(u.origin===location.origin)info.source=u.pathname;}catch{}}
+      info.format=kind==='texStorage2D'?args[2]:args[2];
+    }
+  }
+  let serial=0;
+  const prototypes=[window.WebGLRenderingContext?.prototype,window.WebGL2RenderingContext?.prototype].filter(Boolean);
+  for(const proto of prototypes){
+    wrap(proto,'activeTexture',(gl,a)=>{state(gl).unit=a[0]-33984;});
+    wrap(proto,'bindTexture',(gl,a)=>{const s=state(gl);s.bindings.set(s.unit+':'+a[0],a[1]);});
+    wrap(proto,'deleteTexture',(gl,a)=>{const s=state(gl);s.textures.delete(a[0]);
+      for(const [key,value] of s.bindings)if(value===a[0])s.bindings.delete(key);});
+    for(const method of ['texImage2D','texSubImage2D','compressedTexImage2D','texStorage2D'])
+      wrap(proto,method,(gl,a)=>upload(gl,a,method));
+    for(const method of ['drawArrays','drawElements','drawArraysInstanced','drawElementsInstanced','drawRangeElements'])
+      wrap(proto,method,(gl)=>{if(active)state(gl).drawCalls++;});
+  }
+  function capture(){
+    if(!active||!pending||performance.now()-lastCapture<160)return;
+    const c=pending;
+    if(!c.isConnected||!c.width||!c.height){pending=null;return;}
+    lastCapture=performance.now();
+    try{
+      const scale=Math.min(1,480/Math.max(c.width,c.height));
+      const w=Math.max(1,Math.round(c.width*scale)),h=Math.max(1,Math.round(c.height*scale));
+      scratch ||= document.createElement('canvas');
+      if(scratch.width!==w)scratch.width=w;if(scratch.height!==h)scratch.height=h;
+      const ctx=scratch.getContext('2d',{willReadFrequently:true});
+      ctx.clearRect(0,0,w,h);ctx.drawImage(c,0,0,w,h);
+      const image=ctx.getImageData(0,0,w,h);
+      // A cleared or unavailable WebGL backbuffer must not produce fake objects.
+      let varied=false;const p=image.data;
+      for(let i=4;i<p.length;i+=Math.max(4,Math.floor(p.length/256/4)*4)){
+        if(Math.abs(p[i]-p[0])+Math.abs(p[i+1]-p[1])+Math.abs(p[i+2]-p[2])+Math.abs(p[i+3]-p[3])>24){varied=true;break;}
+      }
+      if(varied){captured={canvas:c,width:w,height:h,data:p,at:performance.now()};pending=null;}
+    }catch{pending=null;}
+  }
+  // Capture after the game's RAF callback, before the compositor clears the backbuffer.
+  const raf=window.requestAnimationFrame;
+  if(typeof raf==='function')window.requestAnimationFrame=function(callback){
+    return raf.call(this,function(time){try{return callback.call(this,time);}finally{if(pending)capture();}});
+  };
+  window.__nightWebGLInspector={
+    setActive(value){active=!!value;if(!active){pending=null;captured=null;}},
+    request(canvas){if(active&&canvas&&(!captured||captured.canvas!==canvas||performance.now()-captured.at>180)){
+      pending=canvas;
+      // Fallback for games with a preserved buffer or non-RAF renderer.
+      if(!captured)capture();
+    }},
+    frame(canvas){return captured?.canvas===canvas&&performance.now()-captured.at<1500?captured:null;},
+    report(){const textures=[];let drawCalls=0;
+      for(const s of contexts){if(!s.gl.canvas?.isConnected)continue;drawCalls+=s.drawCalls;
+        for(const t of s.textures.values())if(textures.length<MAX_TEXTURES)textures.push({...t});}
+      return {contexts:[...contexts].filter(s=>s.gl.canvas?.isConnected).length,drawCalls,textures};}
+  };
+})();

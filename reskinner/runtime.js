@@ -4,6 +4,7 @@
  * Never claims pixels to be a named sprite without source evidence.
  */
 import { resolveGameAdapter } from './adapters.js';
+import { pickWebGL,cropWebGL } from './webgl-inspector.js';
 const MAX_DRAWS = 650;
 const MAX_TREE_NODES = 1800;
 
@@ -291,7 +292,10 @@ export function createRuntimeInspector(frame, options = {}) {
     const limitations=['Canvas2D: chiamate osservate, non gerarchia semantica.',
       'Coordinate engine-native: non convertite se camera/viewport non noti.',
       'Unity/WebGL privato: nessuna identificazione di sprite senza adapter.'];
-    return {engine:state.engine,objects:[...dom,...state.scene,...draws],limitations,truncated:!!node};
+    const gl=win.__nightWebGLInspector?.report();
+    const textures=(gl?.textures||[]).map(t=>({type:'webgl-texture',name:t.id+' · '+(t.width||'?')+'×'+(t.height||'?'),
+      objectId:t.id,source:t.source||'',properties:t,coordinateSpace:'texture-not-screen'}));
+    return {engine:state.engine,objects:[...textures,...dom,...state.scene,...draws],limitations,truncated:!!node};
   }
   function pickDOM(p) {
     if (!doc) return null;
@@ -309,6 +313,13 @@ export function createRuntimeInspector(frame, options = {}) {
       element.alt || element.id || element.tagName.toLowerCase(),
       source:normPath(source), tag:element.tagName.toLowerCase(),
       element,objectId:identify(element),properties:domProperties(element),...cssBox(r,{left:0,top:0})};
+  }
+  function setInspectMode(value){
+    refreshRuntime();
+    win?.__nightWebGLInspector?.setActive(value);
+  }
+  function visualPreview(item,target){
+    return cropWebGL(win,observeCanvas(),item,target);
   }
   function pick(point) {
     if (!win||!doc) return null;
@@ -337,6 +348,9 @@ export function createRuntimeInspector(frame, options = {}) {
     // This is an honest canvas fallback: no sprite name inferred.
     const c=observeCanvas(), cr=c?.getBoundingClientRect();
     if(cr&&within(box(cr.x,cr.y,cr.width,cr.height),p)) {
+      if(state.engine==='unity'||options.engine==='unity'||win.__nightWebGLInspector?.report().contexts){
+        return pickWebGL(win,c,p);
+      }
       // Hexastack's Pixi display tree is bundled privately. An inspectable
       // pixel region is still useful, but must NOT be mislabeled as a sprite,
       // and must never guess a texture URL from its colour or position.
@@ -360,7 +374,7 @@ export function createRuntimeInspector(frame, options = {}) {
     const n=observeCanvas();
     return {engine:state.engine,canvas:!!n,drawCalls:state.samples,
       knownDraws:state.draws.length,engineObjects:state.scene.length,
-      patched:state.patched,errors:state.errors.slice(-3)};
+      patched:state.patched,webgl:win?.__nightWebGLInspector?.report(),errors:state.errors.slice(-3)};
   }
   async function swap(assetPath,blob) {
     if(!win||!doc)throw new Error('Gioco non avviato');
@@ -442,5 +456,5 @@ export function createRuntimeInspector(frame, options = {}) {
     // No unpatch: the iframe is discarded on game change, so the patch dies.
     win=null;doc=null;canvas=null;state.draws.length=0;
   }
-  return {attach,pick,getReport,snapshot,swap,restore,destroy};
+  return {attach,pick,getReport,snapshot,swap,restore,destroy,setInspectMode,visualPreview};
 }
